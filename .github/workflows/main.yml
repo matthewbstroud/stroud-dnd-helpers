@@ -65,6 +65,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -115,7 +118,6 @@ jobs:
             `# The files that will be included.` \
             module.json                          \
             README.md                            \
-            CHANGELOG.md                         \
             LICENSE                              \
             templates                            \
             scripts/                             \
