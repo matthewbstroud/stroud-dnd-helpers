@@ -1,3 +1,5 @@
+// taken from https://github.com/chrisk123999/chris-premades/blob/master/scripts/helperFunctions.js
+
 export let chris = {
 	'dialog': async function _dialog(title, options) {
 		let buttons = options.map(([label,value]) => ({label,value}));
