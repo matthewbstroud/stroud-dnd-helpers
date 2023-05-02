@@ -27,7 +27,7 @@ export let combat = {
         
         await canvas.tokens.toggleCombat();
         await game.combat.rollNPC();
-        debugger;
+        
         var compatPlaylistId = settings.CombatPlaylist.getValue();
         if (!compatPlaylistId || compatPlaylistId == "none"){
             return;

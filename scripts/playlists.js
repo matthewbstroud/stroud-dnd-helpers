@@ -1,8 +1,7 @@
-import { numbers } from './numbers.js';
+import { numbers } from './Utility/numbers.js';
 import { settings } from './settings.js';
 export let playlists = {
     "start": function _start(playListId, random) {
-        debugger;
         let combatPlaylist = game.playlists.get(playListId);
         if (combatPlaylist) {
             if (combatPlaylist.playing) {
@@ -44,7 +43,6 @@ export let music = {
             playlists.start(combatPlaylistId, random);
         },
         "toggle": function _toggle(random){
-            debugger;
             random = random ?? true;
             let combatPlaylistId = settings.CombatPlaylist.getValue();
             if (!combatPlaylistId || combatPlaylistId == "none"){
