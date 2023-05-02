@@ -154,6 +154,22 @@
 		"path": "packs/sdnd-spells.db",
 		"type": "Item",
 		"module": "stroud-dnd-helpers"
+	  },
+	  {
+		"name": "SDND GM Macros",
+		"label": "SDND GM Macros",
+		"path": "packs/sdnd-gm-macros.db",
+		"type": "Macro",
+		"private": true,
+		"module": "stroud-dnd-helpers"
+	  },
+	  {
+		"name": "SDND Shared Macros",
+		"label": "SDND Shared Macros",
+		"path": "packs/sdnd-shared-macros.db",
+		"type": "Macro",
+		"private": false,
+		"module": "stroud-dnd-helpers"
 	  }
   ],
   "changelog": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/master/CHANGELOG.md",
