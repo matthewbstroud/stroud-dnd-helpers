@@ -1,5 +1,5 @@
 import { numbers } from './Utility/numbers.js';
-import { settings } from './settings.js';
+import { sdndSettings } from './settings.js';
 export let playlists = {
     "start": function _start(playListId, random) {
         let combatPlaylist = game.playlists.get(playListId);
@@ -35,7 +35,7 @@ export let music = {
     "combat": {
         "start": function _start(random){
             random = random ?? true;
-            let combatPlaylistId = settings.CombatPlaylist.getValue();
+            let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
             if (!combatPlaylistId || combatPlaylistId == "none"){
                 ui.notifications.notify('You must first select a combat playlist under settings.');
                 return;
@@ -44,7 +44,7 @@ export let music = {
         },
         "toggle": function _toggle(random){
             random = random ?? true;
-            let combatPlaylistId = settings.CombatPlaylist.getValue();
+            let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
             if (!combatPlaylistId || combatPlaylistId == "none"){
                 ui.notifications.notify('You must first select a combat playlist under settings.');
                 return;
