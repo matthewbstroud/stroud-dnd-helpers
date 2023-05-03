@@ -1,4 +1,5 @@
-import { registerSettings } from './settings.js';
+import { sdndConstants } from './constants.js';
+import { sdndSettings } from './settings.js';
 import { chris as helpers } from './helperFunctions.js';
 import { combat } from './combat.js';
 import { music } from './playlists.js';
@@ -7,14 +8,15 @@ Hooks.once('init', async function() {
 });
 
 Hooks.once('socketlib.ready', async function() {
-	socket = socketlib.registerModule('stroud-dnd-helpers');
+	socket = socketlib.registerModule(sdndConstants.MODULE_ID);
 });
 Hooks.once('ready', async function() {
-	registerSettings();
+	sdndSettings.registerSettings();
 	console.log("Loaded Stroud's DnD Helpers");
 });
 globalThis['stroudDnD'] = {
 	combat,
 	helpers,
-	music
+	music,
+	sdndSettings
 }

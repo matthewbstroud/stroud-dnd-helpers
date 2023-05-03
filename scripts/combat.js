@@ -1,4 +1,4 @@
-import { settings } from "./settings.js";
+import { sdndSettings } from "./settings.js";
 import { playlists } from "./playlists.js";
 
 export let combat = {
@@ -28,7 +28,7 @@ export let combat = {
         await canvas.tokens.toggleCombat();
         await game.combat.rollNPC();
         
-        var compatPlaylistId = settings.CombatPlaylist.getValue();
+        var compatPlaylistId = sdndSettings.CombatPlayList.getValue();
         if (!compatPlaylistId || compatPlaylistId == "none"){
             return;
         }
