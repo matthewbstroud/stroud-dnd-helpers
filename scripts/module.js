@@ -1,6 +1,5 @@
 import { sdndConstants } from './constants.js';
 import { sdndSettings } from './settings.js';
-import { chris as helpers } from './helperFunctions.js';
 import { combat } from './combat.js';
 import { music } from './playlists.js';
 export let socket;
@@ -16,7 +15,5 @@ Hooks.once('ready', async function() {
 });
 globalThis['stroudDnD'] = {
 	combat,
-	helpers,
-	music,
-	sdndSettings
+	music
 }
