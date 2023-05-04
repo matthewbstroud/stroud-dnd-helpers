@@ -4,6 +4,7 @@ import { combat } from './combat.js';
 import { music } from './playlists.js';
 import { gmFunctions } from './gm/gmFunctions.js';
 import { tokens } from './tokens.js';
+import { spells } from './spells/spells.js';
 
 export let socket;
 Hooks.once('init', async function() {
@@ -20,5 +21,5 @@ Hooks.once('ready', async function() {
 globalThis['stroudDnD'] = {
 	combat,
 	music,
-	tokens
+	spells
 }
