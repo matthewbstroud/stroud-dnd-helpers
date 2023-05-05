@@ -25,4 +25,8 @@ My collection of automation for DND 5e
 - Tidy5e Sheet  
 - Token Magic FX  
 - Visual Active Effects  
-  
+
+# Supported Spells
+|Spell|Compendium Spell|Cast or Use Macro|
+|---|---|---|
+|Hunter's Mark|True|True|
