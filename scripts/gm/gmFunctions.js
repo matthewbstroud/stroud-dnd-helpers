@@ -1,5 +1,5 @@
 import { socket } from "../module.js";
-
+import { identifyItem } from "../identification/identification.js";
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
     RUN_REMOTE: "RUN_REMOTE",
@@ -30,11 +30,12 @@ async function run(local, remote){
     }
 }
 
-export async function getTokenOrActor(uuid){
+async function getTokenOrActor(uuid){
     let tokenOrActor = await fromUuid(uuid);
     return tokenOrActor.actor ? tokenOrActor.actor : tokenOrActor;
 }
 export let gmFunctions = {
+    "getTokenOrActor": getTokenOrActor,
     "registerFunctions": async function _registerFunctions(socket) {
         for (let func in gmFunctions) {
             if (func == "registerFunctions") {
@@ -44,7 +45,7 @@ export let gmFunctions = {
         }
     },
     "createEffects": async function _createEffects(actorUuid, effectData /* [effectData] */) {
-        let actor = await getTokenOrActor(actorUuid);
+        let actor = await gmFunctions.getTokenOrActor(actorUuid);
         if (!actor) {
             ui.notifications.error($`Cannot find actor with uuid: ${actorUuid}`);
             return;
@@ -82,6 +83,12 @@ export let gmFunctions = {
             async () => canvas.scene.deleteEmbeddedDocuments("Token", arrayOfTokenIds),
             async () => socket.executeAsGM("deleteTokens", arrayOfTokenIds) 
         ); 
+    },
+    "identifyItem": async function _identifyItem(alias, token, itemID){
+        run(
+            async () => identifyItem(alias, token, itemID),
+            async () => socket.executeAsGM("identifyItem", alias, token, itemID)
+        );
     },
     "removeEffects": async function _removeEffects(effectIDs) {
         if (!effectIDs || effectIDs.length == 0) {
