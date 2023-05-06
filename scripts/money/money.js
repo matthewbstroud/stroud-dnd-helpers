@@ -1,4 +1,3 @@
-import { gmFunctions } from "../gm/gmFunctions.js";
 import { numbers } from "../Utility/numbers.js";
 
 const MONEY_MODE = {
@@ -7,6 +6,7 @@ const MONEY_MODE = {
 };
 
 export let money = {
+    /* Give a specified money to a single player or divide between all players. */
     "giveMoney": async function _giveMoney() {
         if (!game.user.isGM) {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
@@ -22,7 +22,25 @@ export let money = {
         if (controlledActors.length > 0) {
             sharees = controlledActors;
         }
-        _promptForAmount(MONEY_MODE.GIVE, sharees.map(s => s.uuid), gmFunctions.giveCurrency);
+        _promptForAmount(MONEY_MODE.GIVE, sharees.map(s => s.uuid), moneyInternal.giveCurrency);
+    },
+    /* Take a specified money from a single player or all players. */
+    "takeMoney": async function _takeMoney() {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor);
+        if (sharees.length == 0) {
+            ui.notifications.notify('There are no character tokens in this scene.');
+            return;
+        }
+
+        let controlledActors = canvas.tokens.controlled.filter((token) => token.actor && token.actor.type == 'character').map(t => t.actor);
+        if (controlledActors.length > 0) {
+            sharees = controlledActors;
+        }
+        _promptForAmount(MONEY_MODE.TAKE, sharees.map(s => s.uuid), moneyInternal.takeCurrency);
     }
 };
 
@@ -44,6 +62,10 @@ export let moneyInternal = {
         if (sharedCopper > 0) { strShareAmount += "<span style='color:#9D5934'>" + sharedCopper + "cp</span>"; }
         return strShareAmount;
     },
+    "getTotalCopper": function _getTotalCopper(actor) {
+        let targetCurrency = actor.system.currency;
+        return (targetCurrency.pp * 1000) + (targetCurrency.gp * 100) + (targetCurrency.ep * 50) + (targetCurrency.sp * 10) + targetCurrency.cp;
+    },
     "giveCurrency": async function _giveCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP) {
         let sharees = actorUuids.map(uuid => fromUuidSync(uuid));
         let actorCount = sharees.length;
@@ -55,13 +77,60 @@ export let moneyInternal = {
         }
 
         let strOutput = `<b>Cha-ching!</b><br />`;
-        let sharedAmount = this.getShareAmount(splitCP);
+        let sharedAmount = moneyInternal.getShareAmount(splitCP);
         sharees.forEach(actor => {
             let actorCurrency = actor.system.currency;
             let actorCurrentCP = (actorCurrency.pp * 1000) + (actorCurrency.gp * 100) + (actorCurrency.ep * 50) + (actorCurrency.sp * 10) + actorCurrency.cp;
             let actorNewTotal = actorCurrentCP + splitCP;
-            this.updateActorCurrency(actor, actorNewTotal);
+            moneyInternal.updateActorCurrency(actor, actorNewTotal);
             strOutput += `${actor.name} received: ${sharedAmount}<br />`;
+        });
+
+        ChatMessage.create({ content: strOutput });
+    },
+    "reduceCurrency": function _reduceCurrency(copper) {
+        let newPP = Math.floor(copper / 1000);
+        copper -= newPP * 1000;
+        let newGP = Math.floor(copper / 100);
+        copper -= newGP * 100;
+        let newEP = Math.floor(copper / 50);
+        copper -= newEP * 50;
+        let newSP = Math.floor(copper / 10);
+        copper -= newSP * 10;
+        return ({ pp: newPP, gp: newGP, ep: newEP, sp: newSP, cp: copper });
+    },
+    "takeCurrency": async function _takeCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP) {
+        debugger;
+        let targetActors = actorUuids.map(uuid => fromUuidSync(uuid));
+        if (!targetActors || targetActors.length == 0) {
+            return;
+        }
+        let actorCount = targetActors.length;
+        let totalToRemove = (totalPP * 1000) + (totalGP * 100) + (totalEP * 50) + (totalSP * 10) + totalCP;
+        let splitCP = Math.floor(totalToRemove / actorCount);
+        if (splitCP === 0) {
+            ui.notifications.notify(`Cannot take ${totalToShare} copper evenly between ${actorCount} people.`);
+            return;
+        }
+        let actorsAndCash = targetActors.map(a => ({ actor: a, totalCopper: moneyInternal.getTotalCopper(a) }));
+        // validated each character has enough money
+        let poorMan = actorsAndCash.find(a => a.totalCopper < splitCP);
+        if (poorMan) {
+            ChatMessage.create({ content: `${poorMan.actor.name} doesn't have enough money!` });
+            return;
+        }
+        let strOutput = "";
+        // remove the money
+        actorsAndCash.forEach(t => {
+            moneyInternal.updateActorCurrency(t.actor, (t.totalCopper - splitCP));
+            let amountTaken = moneyInternal.reduceCurrency(splitCP)
+            strOutput += "<b>Money taken from  " + t.actor.name + "</b>:<br />";
+            if (amountTaken.pp > 0) { strOutput += "<span style='color:#90A2B6'>" + amountTaken.pp + "pp</span>"; if (amountTaken.gp > 0 || amountTaken.ep > 0 || amountTaken.sp > 0 || amountTaken.cp > 0) { strOutput += ", "; } }
+            if (amountTaken.gp > 0) { strOutput += "<span style='color:#B08C34'>" + amountTaken.gp + "gp</span>"; if (amountTaken.ep > 0 || amountTaken.sp > 0 || amountTaken.cp > 0) { strOutput += ", "; } }
+            if (amountTaken.ep > 0) { strOutput += "<span style='color:#617480'>" + amountTaken.ep + "ep</span>"; if (amountTaken.sp > 0 || amountTaken.cp > 0) { strOutput += ", "; } }
+            if (amountTaken.sp > 0) { strOutput += "<span style='color:#717773'>" + amountTaken.sp + "sp</span>"; if (amountTaken.cp > 0) { strOutput += ", "; } }
+            if (amountTaken.cp > 0) { strOutput += "<span style='color:#9D5934'>" + amountTaken.cp + "cp</span>"; }
+            strOutput += "<br />";
         });
 
         ChatMessage.create({ content: strOutput });
@@ -87,99 +156,6 @@ export let moneyInternal = {
     }
 }
 
-
-/*
-async function _takeMoney() {
-    let allActorsInScene = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor);
-    let controlledActors = canvas.tokens.controlled.filter((token) => token.actor && token.actor.data.type == 'character').map(t => t.actor);
-
-    if ((!allActorsInScene || allActorsInScene.length == 0) && (!controlledActors || controlledActors.length == 0)) {
-        ui.notifications.notify('There are no player characters in this scene.');
-        return;
-    }
-
-    let permissionCheck = false;
-
-    if (game.user.isGM == true || game.user.isTrusted == true) { permissionCheck = true; }
-
-    if (!permissionCheck) {
-        ui.notifications.notify('You do not have permission to run this macro.');
-        return;
-    }
-
-    function updateActorCurrency(targetActor, newTotalCP) {
-        var newAmounts = reduceCurrency(newTotalCP);
-        targetActor.update(
-            {
-                "system.currency.pp": newAmounts.pp,
-                "system.currency.gp": newAmounts.gp,
-                "system.currency.ep": newAmounts.ep,
-                "system.currency.sp": newAmounts.sp,
-                "system.currency.cp": newAmounts.cp
-            });
-    }
-
-    function getTotalCopper(actor) {
-        let targetCurrency = actor.system.currency;
-        return (targetCurrency.pp * 1000) + (targetCurrency.gp * 100) + (targetCurrency.ep * 50) + (targetCurrency.sp * 10) + targetCurrency.cp;
-    }
-
-    function reduceCurrency(copper) {
-        let newPP = Math.floor(copper / 1000);
-        copper -= newPP * 1000;
-        let newGP = Math.floor(copper / 100);
-        copper -= newGP * 100;
-        let newEP = Math.floor(copper / 50);
-        copper -= newEP * 50;
-        let newSP = Math.floor(copper / 10);
-        copper -= newSP * 10;
-        return ({ pp: newPP, gp: newGP, ep: newEP, sp: newSP, cp: copper });
-    }
-
-    function removeCurrency(totalPP, totalGP, totalEP, totalSP, totalCP) {
-        let totalToRemove = (totalPP * 1000) + (totalGP * 100) + (totalEP * 50) + (totalSP * 10) + totalCP;
-        let targetActors = controlledActors;
-        if (!targetActors || targetActors.length === 0) {
-            // if no controlled actors take a distributed amount from the 
-            // player characters in the scene
-            targetActors = allActorsInScene;
-            totalToRemove = Math.floor(totalToRemove / targetActors.length);
-            if (totalToRemove <= 0) {
-                ui.notifications.notify(`Shared take amount is zero.`);
-                return;
-            }
-        }
-
-        let actorsAndCash = targetActors.map(a => ({ actor: a, totalCopper: getTotalCopper(a) }));
-
-        // validated each character has enough money
-        actorsAndCash.forEach(t => {
-            if (t.totalCopper < totalToRemove) {
-                ChatMessage.create({ content: `${t.actor.name} doesn't have enough money!` });
-                return;
-            }
-        });
-
-        let amountsTaken = reduceCurrency(totalToRemove);
-        let strOutput = "";
-        // remove the money
-        actorsAndCash.forEach(t => {
-            updateActorCurrency(t.actor, (t.totalCopper - totalToRemove))
-            strOutput += "<b>Money taken from  " + t.actor.name + "</b>:<br />";
-            if (amountsTaken.pp > 0) { strOutput += "<span style='color:#90A2B6'>" + amountsTaken.pp + "pp</span>"; if (amountsTaken.gp > 0 || amountsTaken.ep > 0 || amountsTaken.sp > 0 || amountsTaken.cp > 0) { strOutput += ", "; } }
-            if (amountsTaken.gp > 0) { strOutput += "<span style='color:#B08C34'>" + amountsTaken.gp + "gp</span>"; if (amountsTaken.ep > 0 || amountsTaken.sp > 0 || amountsTaken.cp > 0) { strOutput += ", "; } }
-            if (amountsTaken.ep > 0) { strOutput += "<span style='color:#617480'>" + amountsTaken.ep + "ep</span>"; if (amountsTaken.sp > 0 || amountsTaken.cp > 0) { strOutput += ", "; } }
-            if (amountsTaken.sp > 0) { strOutput += "<span style='color:#717773'>" + amountsTaken.sp + "sp</span>"; if (amountsTaken.cp > 0) { strOutput += ", "; } }
-            if (amountsTaken.cp > 0) { strOutput += "<span style='color:#9D5934'>" + amountsTaken.cp + "cp</span>"; }
-            strOutput += "<br />";
-        });
-
-        ChatMessage.create({ content: strOutput });
-    }
-
-
-}
-*/
 async function _promptForAmount(moneyMode, actorUuids, callback) {
     let title = `${moneyMode} Currency`;
     let label = moneyMode;

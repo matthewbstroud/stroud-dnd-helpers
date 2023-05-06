@@ -1,6 +1,5 @@
 import { socket } from "../module.js";
 import { identifyItem } from "../identification/identification.js";
-import { moneyInternal } from "../money/money.js";
 
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
@@ -87,12 +86,6 @@ export let gmFunctions = {
             async () => canvas.scene.deleteEmbeddedDocuments("Token", arrayOfTokenIds),
             async () => socket.executeAsGM("deleteTokens", arrayOfTokenIds) 
         ); 
-    },
-    "giveCurrency": async function _giveCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP){
-        run(
-            async () => moneyInternal.giveCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP),
-            async () => socket.executeAsGM("giveCurrency", actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP)
-        );
     },
     "identifyItem": async function _identifyItem(alias, token, itemID){
         run(
