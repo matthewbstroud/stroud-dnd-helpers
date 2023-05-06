@@ -1,4 +1,4 @@
-import { gmFunctions, getTokenOrActor } from "../../gm/gmFunctions.js";
+import { gmFunctions } from "../../gm/gmFunctions.js";
 import { getSpellData } from "../spells.js";
 
 const HUNTERS_MARK = "Hunter's Mark";
@@ -27,7 +27,7 @@ async function _itemMacro(speaker, actor, token, character, item, args) {
     if (args[0].hitTargets.length === 0) return;
     if (args[0].tag === "OnUse") {
         const targetUuid = args[0].hitTargets[0].uuid;
-        const caster = await getTokenOrActor(args[0].actorUuid);
+        const caster = await gmFunctions.getTokenOrActor(args[0].actorUuid);
 
         if (!caster || !targetUuid) {
             ui.notifications.warn("Hunter's Mark: no token/target selected");
@@ -128,7 +128,7 @@ async function _castOrUse() {
         return;
     }
 
-    let markedTarget = await getTokenOrActor(markedTargetID);
+    let markedTarget = await gmFunctions.getTokenOrActor(markedTargetID);
     if (markedTarget && markedTarget.system.attributes.hp.value > 0) {
         ui.notifications.notify(`${markedTarget.name} must be dead before you can move your mark!`);
         return;
@@ -155,7 +155,7 @@ async function _castOrUse() {
 }
 
 async function _moveMark(originID, oldTargetUuid, newTargetUuid) {
-    let markedTarget = await getTokenOrActor(oldTargetUuid);
+    let markedTarget = await gmFunctions.getTokenOrActor(oldTargetUuid);
     let priorEffect = markedTarget?.effects?.find(e => e.label == "Marked" && e.origin == originID);
     if (priorEffect) {
         await gmFunctions.removeEffects([priorEffect.uuid]);

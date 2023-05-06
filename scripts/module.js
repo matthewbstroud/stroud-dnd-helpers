@@ -3,7 +3,7 @@ import { sdndSettings } from './settings.js';
 import { combat } from './combat.js';
 import { music } from './playlists.js';
 import { gmFunctions } from './gm/gmFunctions.js';
-import { tokens } from './tokens.js';
+import { identification } from './identification/identification.js';
 import { spells } from './spells/spells.js';
 
 export let socket;
@@ -21,5 +21,6 @@ Hooks.once('ready', async function() {
 globalThis['stroudDnD'] = {
 	combat,
 	music,
-	spells
+	spells,
+	identification
 }
