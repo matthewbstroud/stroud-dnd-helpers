@@ -1,5 +1,7 @@
 import { socket } from "../module.js";
 import { identifyItem } from "../identification/identification.js";
+import { moneyInternal } from "../money/money.js";
+
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
     RUN_REMOTE: "RUN_REMOTE",
@@ -34,11 +36,14 @@ async function getTokenOrActor(uuid){
     let tokenOrActor = await fromUuid(uuid);
     return tokenOrActor.actor ? tokenOrActor.actor : tokenOrActor;
 }
+
+const INTERNAL_FUNCTIONS = new Set(["run", "getTokenOrActor", "registerFunctions"]);
 export let gmFunctions = {
+    "run": run,
     "getTokenOrActor": getTokenOrActor,
     "registerFunctions": async function _registerFunctions(socket) {
         for (let func in gmFunctions) {
-            if (func == "registerFunctions") {
+            if (INTERNAL_FUNCTIONS.has(func)) {
                 continue;
             }
             socket.register(func, this[func]);
@@ -83,6 +88,12 @@ export let gmFunctions = {
             async () => canvas.scene.deleteEmbeddedDocuments("Token", arrayOfTokenIds),
             async () => socket.executeAsGM("deleteTokens", arrayOfTokenIds) 
         ); 
+    },
+    "giveCurrency": async function _giveCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP){
+        run(
+            async () => moneyInternal.giveCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP),
+            async () => socket.executeAsGM("giveCurrency", actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP)
+        );
     },
     "identifyItem": async function _identifyItem(alias, token, itemID){
         run(
