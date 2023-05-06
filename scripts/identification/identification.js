@@ -128,7 +128,6 @@ export async function identifyItem(alias, targetUuid, itemID) {
 }
 
 async function _idenfityItemGM() {
-    debugger;
     if (!game.user.isGM){
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;

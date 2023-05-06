@@ -5,6 +5,7 @@ import { music } from './playlists.js';
 import { gmFunctions } from './gm/gmFunctions.js';
 import { identification } from './identification/identification.js';
 import { spells } from './spells/spells.js';
+import { money } from './money/money.js';
 
 export let socket;
 Hooks.once('init', async function() {
@@ -22,5 +23,6 @@ globalThis['stroudDnD'] = {
 	combat,
 	music,
 	spells,
-	identification
+	identification,
+	money
 }
