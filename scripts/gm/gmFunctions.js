@@ -37,9 +37,8 @@ async function getTokenOrActor(uuid){
     return tokenOrActor.actor ? tokenOrActor.actor : tokenOrActor;
 }
 
-const INTERNAL_FUNCTIONS = new Set(["run", "getTokenOrActor", "registerFunctions"]);
+const INTERNAL_FUNCTIONS = new Set(["getTokenOrActor", "registerFunctions"]);
 export let gmFunctions = {
-    "run": run,
     "getTokenOrActor": getTokenOrActor,
     "registerFunctions": async function _registerFunctions(socket) {
         for (let func in gmFunctions) {
