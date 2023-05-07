@@ -1,11 +1,31 @@
 import { numbers } from "../Utility/numbers.js";
-
+import { dialog } from "../dialog/dialog.js";
 const MONEY_MODE = {
     "GIVE": "Give",
-    "TAKE": "Take"
+    "TAKE": "Take",
+    "EQUALIZE": "Equalize"
 };
 
 export let money = {
+    "manageMoney": async function _manageMoney() {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
+        let buttons = [];
+        for (let property in MONEY_MODE) {
+            buttons.push({ "label": MONEY_MODE[property], "value": MONEY_MODE[property] });
+        }
+        let moneyMode = await dialog.createButtonDialog("Manage Money", buttons);
+        switch (moneyMode) {
+            case MONEY_MODE.GIVE:
+                return this.giveMoney();
+            case MONEY_MODE.TAKE:
+                return this.takeMoney();
+            case MONEY_MODE.EQUALIZE:
+                return moneyInternal.equalizeCurrency();
+        }
+    },
     /* Give a specified money to a single player or divide between all players. */
     "giveMoney": async function _giveMoney() {
         if (!game.user.isGM) {
@@ -45,6 +65,67 @@ export let money = {
 };
 
 export let moneyInternal = {
+    "equalizeCurrency": async function _equalizeCurrency() {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor);
+        if (sharees.length == 0) {
+            ui.notifications.notify('There are no character tokens in this scene.');
+            return;
+        }
+
+        let controlledActors = canvas.tokens.controlled.filter((token) => token.actor && token.actor.type == 'character').map(t => t.actor);
+        if (controlledActors.length > 0) {
+            sharees = controlledActors;
+        }
+        if (!sharees) {
+            return;
+        }
+        let actorCount = sharees.length;
+        let currentCash = sharees.map(a => a.system.currency);
+
+        let totalCP = 0;
+
+        currentCash.forEach(currency => {
+            totalCP += currency.pp * 1000;
+            totalCP += currency.gp * 100;
+            totalCP += currency.ep * 50;
+            totalCP += currency.sp * 10;
+            totalCP += currency.cp;
+        });
+
+        let splitCP = Math.floor(totalCP / actorCount);
+
+
+        let splitPP = Math.floor(splitCP / 1000);
+        splitCP -= splitPP * 1000;
+        let splitGP = Math.floor(splitCP / 100);
+        splitCP -= splitGP * 100;
+        let splitEP = Math.floor(splitCP / 50);
+        splitCP -= splitEP * 50;
+        let splitSP = Math.floor(splitCP / 10);
+        splitCP -= splitSP * 10;
+
+        sharees.forEach(actor => {
+            actor.update(
+                {
+                    "system.currency.pp": splitPP,
+                    "system.currency.gp": splitGP,
+                    "system.currency.ep": splitEP,
+                    "system.currency.sp": splitSP,
+                    "system.currency.cp": splitCP
+                });
+        });
+
+        let message = `Each character now has PP: ${splitPP} GP:${splitGP} EP:${splitEP} SP:${splitSP} CP:${splitCP}`;
+
+        ChatMessage.create({
+            content: message,
+            type: CONST.CHAT_MESSAGE_TYPES.OOC
+        });
+    },
     "getShareAmount": function getShareAmount(sharedCopper) {
         let splitPP = Math.floor(sharedCopper / 1000);
         sharedCopper -= splitPP * 1000;
