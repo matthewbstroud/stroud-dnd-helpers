@@ -3,6 +3,10 @@ import { playlists } from "./playlists.js";
 
 export let combat = {
     "startFilteredCombat": async function _startFilteredCombat() {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
         function shouldRelease(token) {
             const excludedFolders = ["Traps","Loot","Summons"];
             if (token.inCombat){
