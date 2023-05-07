@@ -1,6 +1,11 @@
 # Readme
 My collection of automation for DND 5e
-  
+
+# Utility Macros
+- Manage Money: Click to activate one of the following
+  - Give Money: Specify an amount of money to give to all or specific players.
+  - Take Money: Take an specified amount of money from a selected player or evenly from amount all players.
+  - Equalize Money: Get the sum of all players money and then distribute it equally across all characters.
   
 # Required Modules  
 | Module | Verified Version |  
