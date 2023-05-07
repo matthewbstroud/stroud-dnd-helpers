@@ -2,12 +2,17 @@
 My collection of automation for DND 5e
 
 # Utility Macros
+- **Chat**
+  - **Delete Chat Messages**: Delete messages that were created less than a specified number of minutes ago.  (Defaults to 30)
+  - **Prune Chat Log**: Delete messages older than a specified number of days.  (Defaults to 7)
 - **Combat**
   - **Start Filtered Combat**: Allows you to select everything on the battlefield, but exclude tokens that belong to specific folders or are already dead.
 - **Identification**: Helper methods for creating unidentified items and allowing them to be identified either by the Gamemaster or through the identify spell.
   - **Create Unidentified Item**:Create an unidentified item from the currently viewed magic item.  Item will be placed in the same folder as the original.
   - **Identify Item**: Macro for Gamemaster to identify an item in the player's inventory.  (Useful for NPC based identification.)
   - **ItemMacro for Identify Spell**:  Allows a player to cast identify and be presented with a list of unidentified items in their inventory.
+- **Journal**
+  - **Session Summaries**:  Generates a journal entry that is a snapshot of each player's current hp, experience, and money.
 - **Manage Money**: Click to activate one of the following
   - **Give Money**: Specify an amount of money to give to all or specific players.
   - **Take Money**: Take an specified amount of money from a selected player or evenly from amount all players.
@@ -31,7 +36,6 @@ My collection of automation for DND 5e
 | --- | --- |  
 | Midi-Qol | 10.0.36 |  
 | Automated Animations | 4.2.32 |  
-| Build-a-Bonus | 10.4.6 |  
 | Compendium Folders | 2.5.7 |  
 | DFreds Convenient Effects | 4.1.1 |  
 | Effect Macro | 10.0.15 |  
@@ -39,8 +43,6 @@ My collection of automation for DND 5e
 | Jules & Ben's Animated Assets | 0.5.2 |  
 | Sequencer | 10.0.0 |  
 | Socket Lib | 1.0.12 |  
-| Template Macro | 10.0.1 |  
-| Token Attacher | 4.5.11 |  
 | Warpgate | 1.16.0 |  
   
 # Optional supported modules:  
