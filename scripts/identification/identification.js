@@ -29,6 +29,10 @@ async function _itemMacro(speaker, actor, token, character, item, args){
 }
 
 async function _createUnidentifiedItem() {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
     let items = Object.values(ui.windows).filter(w => (w.object instanceof Item));
 
     if (!items || items.length == 0 || items.length > 1) {
