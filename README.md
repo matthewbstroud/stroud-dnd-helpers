@@ -17,7 +17,9 @@ My collection of automation for DND 5e
     - **Start**: Start combat music if it isn't already playing.
     - **Toggle**: Toggle the current state of combat music.
 - **Tokens**
-  - **Toggle NPC Name**: Works in conjunction with Hide Name from Combat Utility Belt.  Toggles an NPC token between display name hover owner and display name hover all.  Also toggles the hide npc name in CUB.
+  - **Manage Tokens**
+    - **Toggle NPC Name**: Works in conjunction with Hide Name from Combat Utility Belt.  Toggles an NPC token between display name hover owner and display name hover all.  Also toggles the hide npc name in CUB.
+    - **Show Token Art**: Show the character art associated with the selected token as an image popout.
 
 # Supported Spells
 |Spell|Compendium Spell|Cast or Use Macro|Comments
