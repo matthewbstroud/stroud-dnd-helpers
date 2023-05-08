@@ -1,22 +1,20 @@
 import { dialog } from "./dialog/dialog.js";
 
+const EXCLUDE_FROM_OPTIONS = new Set(["manageTokens"]);
 export let tokens = {
     "manageTokens": async function _manageTokens() {
         if (!game.user.isGM) {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let options = Object.entries(tokensInternal).map(( [k, v] ) => ({ 'label': _.startCase(k), 'value': k }));
+        let options = Object.entries(tokens).map(( [k, v] ) => ({ 'label': _.startCase(k), 'value': k })).filter(m => !EXCLUDE_FROM_OPTIONS.has(m.value));
         let option = await dialog.createButtonDialog("Manage Tokens", options);
         if (!option) {
             return;
         }
-        let tokenFunction = tokensInternal[option];
+        let tokenFunction = tokens[option];
         await tokenFunction();
-    }
-};
-
-let tokensInternal = {
+    },
     "showTokenArt": async function _showTokenArt() {
         if (!game.user.isGM) {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
@@ -76,3 +74,4 @@ let tokensInternal = {
         }
     }
 };
+
