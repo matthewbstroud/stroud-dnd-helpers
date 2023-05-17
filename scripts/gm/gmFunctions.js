@@ -1,6 +1,6 @@
 import { socket } from "../module.js";
 import { identifyItem } from "../identification/identification.js";
-
+import { keybinds } from "../keyboard/keybinds.js";
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
     RUN_REMOTE: "RUN_REMOTE",
@@ -106,5 +106,9 @@ export let gmFunctions = {
             },
             async () => socket.executeAsGM("removeEffects", effectIDs)
         );
+    },
+    "pushKeybindsToPlayers": async function _pushKeybindsToPlayers(){
+        keybinds.setCommonKeybinds();
     }
 };
+
