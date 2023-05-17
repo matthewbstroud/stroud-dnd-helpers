@@ -107,6 +107,14 @@
 		"compatibility": {
 			"verified": "4.2.32"
 		}
+	},
+	{
+		"id": "monks-active-tiles",
+		"type": "module",
+		"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
+		"compatibility": {
+			"verified": "10.15"
+		}
 	}],
 	"optional": [{
 		"id": "tidy5e-sheet",

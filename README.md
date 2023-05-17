@@ -46,6 +46,7 @@ My collection of automation for DND 5e
 | Effect Macro | 10.0.15 |  
 | Item Macro | 1.8.0 |  
 | Jules & Ben's Animated Assets | 0.5.2 |  
+| Monk's Active Tile Triggers | 10.15 |  
 | Sequencer | 10.0.0 |  
 | Socket Lib | 1.0.12 |  
 | Warpgate | 1.16.0 |  
