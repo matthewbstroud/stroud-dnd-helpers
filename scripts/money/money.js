@@ -181,7 +181,6 @@ export let moneyInternal = {
         return ({ pp: newPP, gp: newGP, ep: newEP, sp: newSP, cp: copper });
     },
     "takeCurrency": async function _takeCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP) {
-        debugger;
         let targetActors = actorUuids.map(uuid => fromUuidSync(uuid));
         if (!targetActors || targetActors.length == 0) {
             return;

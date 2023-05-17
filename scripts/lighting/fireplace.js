@@ -31,7 +31,7 @@ export let fireplace = {
             ui.notifications.notify(`Only a single sound should exist in the space this tile!`);
             return;
         }
-        createFireplace(guid.uuidv4(), fireplaceTile, lights[0], sound[0], toggleFireplaceMacro);
+        createFireplace(guid.uuidv4(), fireplaceTile, lights[0], sounds[0], toggleFireplaceMacro);
     },
     "toggleFireplace": async function _toggleFireplace(fireplaceID) {
         let light = canvas.scene.lights.find(l => l.getFlag("world", "fireplace") == fireplaceID);
@@ -53,17 +53,16 @@ export let fireplace = {
             ui.notifications.notify(`Fireplace ${fireplaceID} does not exist in this scene.`);
         }
     },
-    "rewireFireplaces": async function _rewireFireplaces(){
+    "rewireFireplaces": async function _rewireFireplaces() {
         let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions.find(a => a.data.entity.name == "toggleFireplace"));
         let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
         if (!toggleFireplaceMacro) {
             return;
         }
         for (let fireplace of fireplaces) {
-            debugger;
             let actions = fireplace.getFlag("monks-active-tiles", "actions");
             let scriptAction = actions.find(a => a.data.entity.name == "toggleFireplace");
-            if (!scriptAction){
+            if (!scriptAction) {
                 continue;
             }
             scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
@@ -72,7 +71,7 @@ export let fireplace = {
     }
 };
 
-async function ensureMacro(macroName, packId, parentFolderName){
+async function ensureMacro(macroName, packId, parentFolderName) {
     let macro = await game.macros.getName(macroName);
     if (!macro) {
         let pack = game.packs.get(packId);
@@ -81,7 +80,7 @@ async function ensureMacro(macroName, packId, parentFolderName){
             return null;
         }
         let packMacro = pack.index.getName(macroName);
-        if (!packMacro){
+        if (!packMacro) {
             ui.notifications.error(`Cannot find macro ${macroName} compendium ${packId}!`);
             return null;
         }
@@ -108,7 +107,9 @@ function createFireplace(fpName, tile, light, sound, macro) {
     light.setFlag("world", "fireplace", fpName);
     sound.setFlag("world", "fireplace", fpName);
     tile.document.update({
-        "img": "modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp",
+        "texture": {
+            "src": "modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp"
+        },
         "hidden": true,
         "locked": true,
         "flags.monks-active-tiles": {
@@ -134,7 +135,7 @@ function createFireplace(fpName, tile, light, sound, macro) {
                     "args": `"${fpName}"`,
                     "runasgm": "gm"
                 },
-                "id": uuidv4()
+                "id": fpName
             }],
             "files": []
         }
