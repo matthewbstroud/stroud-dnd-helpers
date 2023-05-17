@@ -1,13 +1,16 @@
 import { numbers } from "../Utility/numbers.js";
 
 export let dialog = {
-    "createButtonDialog": async function _createButtonDialog(title, buttons) {
+    "createButtonDialog": async function _createButtonDialog(title, buttons, direction) {
+        if (!direction) {
+            direction = "column";
+        }
         let selected = await warpgate.buttonDialog(
             {
                 buttons,
                 title
             },
-            'column'
+            direction
         );
         return selected;
     },

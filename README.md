@@ -6,6 +6,7 @@ My collection of automation for DND 5e
   - **Delete Chat Messages**: Delete messages that were created less than a specified number of minutes ago.  (Defaults to 30)
   - **Prune Chat Log**: Delete messages older than a specified number of days.  (Defaults to 7)
 - **Combat**
+  - **Apply Adhoc Damage**: A macro that allows you select 1 to many tokens and then apply any type of damage to them. Creates both a chat message and midi-QOL damage card.  You can specify in settings whether or not to automatically apply the damage card.
   - **Start Filtered Combat**: Allows you to select everything on the battlefield, but exclude tokens that belong to specific folders or are already dead.
 - **Identification**: Helper methods for creating unidentified items and allowing them to be identified either by the Gamemaster or through the identify spell.
   - **Create Unidentified Item**:Create an unidentified item from the currently viewed magic item.  Item will be placed in the same folder as the original.
