@@ -13,6 +13,11 @@ My collection of automation for DND 5e
   - **ItemMacro for Identify Spell**:  Allows a player to cast identify and be presented with a list of unidentified items in their inventory.
 - **Journal**
   - **Session Summaries**:  Generates a journal entry that is a snapshot of each player's current hp, experience, and money.
+- **Lighting**
+  - **Fireplaces**:  Functions for creating an active tile to toggle a fireplace light and sound effect on and off.
+    - **Create Fireplace**: draw a tile that overlaps your fireplace light and sound effect, then run this macro to create a monk's active tile that will toggle the fireplace on and off.
+    - **Toggle Fireplace**: a behind the scenes macro triggered by the fireplace tile.
+    - **Rewire Fireplaces**:  looks for fireplaces with the macro toggleFireplace.  This will automatically import the toggleFireplace macro from the compendium and set it as the active macro.  This function is there to fix any copied maps.
 - **Manage Money**: Click to activate one of the following
   - **Give Money**: Specify an amount of money to give to all or specific players.
   - **Take Money**: Take an specified amount of money from a selected player or evenly from amount all players.

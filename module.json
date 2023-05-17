@@ -149,14 +149,14 @@
   ],
   "packs": [
 	  {
-		"name": "SDND Spells",
+		"name": "SDND-Spells",
 		"label": "SDND Spells",
 		"path": "packs/sdnd-spells.db",
 		"type": "Item",
 		"module": "stroud-dnd-helpers"
 	  },
 	  {
-		"name": "SDND GM Macros",
+		"name": "SDND-GM-Macros",
 		"label": "SDND GM Macros",
 		"path": "packs/sdnd-gm-macros.db",
 		"type": "Macro",
@@ -164,7 +164,7 @@
 		"module": "stroud-dnd-helpers"
 	  },
 	  {
-		"name": "SDND Shared Macros",
+		"name": "SDND-Shared-Macros",
 		"label": "SDND Shared Macros",
 		"path": "packs/sdnd-shared-macros.db",
 		"type": "Macro",
