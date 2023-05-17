@@ -60,6 +60,9 @@ export const sdndConstants = {
             }
         ]
     },
+    "FOLDERS": {
+        "PLAYER_MACROS": "Player Macros"
+    },
     "PACKS": {
         "COMPENDIUMS": {
             "MACRO": {

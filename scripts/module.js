@@ -32,6 +32,7 @@ globalThis['stroudDnD'] = {
 	identification,
 	journal,
 	lighting,
+	macros,
 	money,
 	music,
 	spells,
