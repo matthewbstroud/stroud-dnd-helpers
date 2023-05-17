@@ -14,6 +14,8 @@ My collection of automation for DND 5e
 - **Journal**
   - **Session Summaries**:  Generates a journal entry that is a snapshot of each player's current hp, experience, and money.
 - **Lighting**
+  - **Lights**: Helper functions to manage lights.
+    - **Update**: Search for lights based on color and animation and change their settings.
   - **Fireplaces**:  Functions for creating an active tile to toggle a fireplace light and sound effect on and off.
     - **Create Fireplace**: draw a tile that overlaps your fireplace light and sound effect, then run this macro to create a monk's active tile that will toggle the fireplace on and off.
     - **Toggle Fireplace**: a behind the scenes macro triggered by the fireplace tile.
