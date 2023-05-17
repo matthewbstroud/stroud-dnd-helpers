@@ -38,6 +38,17 @@ export let sdndSettings = {
 			'default': 'none'
 		},
 		'getValue': () =>  getModuleSettingValue('CombatPlayList')
+	},
+	'AutoApplyAdhocDamage': {
+		'config': {
+			'name': 'Auto Apply Adhoc Damage',
+			'hint': 'When true the damage card will automatically be applied.',
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false
+		},
+		'getValue': () =>  getModuleSettingValue('AutoApplyAdhocDamage')
 	}
 };
 

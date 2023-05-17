@@ -15,6 +15,28 @@ export let tokens = {
         let tokenFunction = tokens[option];
         await tokenFunction();
     },
+    "releaseInvalidTokens": function _releaseInvalidTokens(allowInCombat) {
+        function shouldRelease(token, allowInCombat) {
+            const excludedFolders = ["Traps", "Loot", "Summons"];
+            if (!allowInCombat && token.inCombat) {
+                return true;
+            }
+            debugger;
+            var folderName = token?.actor?.folder?.name ?? "root";
+            if (excludedFolders.includes(folderName)) {
+                return true;
+            }
+            if (token.actor.effects.filter(e => e.label == "Dead").length > 0) {
+                return true;
+            }
+
+            return false;
+        }
+        let tokensToRelease = canvas.tokens.controlled.filter(t => shouldRelease(t, allowInCombat));
+        tokensToRelease.forEach(t => {
+            t.release();
+        });
+    },
     "showTokenArt": async function _showTokenArt() {
         if (!game.user.isGM) {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
