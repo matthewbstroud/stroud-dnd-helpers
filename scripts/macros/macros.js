@@ -35,7 +35,6 @@ const macroFolders = [
 export let macros = {
     "initFolders": async function _initFolders() {
         if (!game.user.isGM) {
-            ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
         for (let folder of macroFolders) {
