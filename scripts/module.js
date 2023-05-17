@@ -3,15 +3,18 @@ import { combat } from './combat.js';
 import { gmFunctions } from './gm/gmFunctions.js';
 import { identification } from './identification/identification.js';
 import { journal } from './journal/journal.js';
+import { lighting } from './lighting/lighting.js';
 import { money } from './money/money.js';
 import { music } from './playlists.js';
 import { sdndConstants } from './constants.js';
 import { sdndSettings } from './settings.js';
 import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
+import { macros } from './macros/macros.js';
 
 export let socket;
 Hooks.once('init', async function() {
+	
 });
 
 Hooks.once('socketlib.ready', async function() {
@@ -20,6 +23,7 @@ Hooks.once('socketlib.ready', async function() {
 });
 Hooks.once('ready', async function() {
 	sdndSettings.registerSettings();
+	macros.initFolders();
 	console.log("Loaded Stroud's DnD Helpers");
 });
 globalThis['stroudDnD'] = {
@@ -27,6 +31,7 @@ globalThis['stroudDnD'] = {
 	combat,
 	identification,
 	journal,
+	lighting,
 	money,
 	music,
 	spells,

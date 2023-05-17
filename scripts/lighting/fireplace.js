@@ -32,8 +32,64 @@ export let fireplace = {
             return;
         }
         createFireplace(guid.uuidv4(), fireplaceTile, lights[0], sound[0], toggleFireplaceMacro);
+    },
+    "toggleFireplace": async function _toggleFireplace(fireplaceID) {
+        let light = canvas.scene.lights.find(l => l.getFlag("world", "fireplace") == fireplaceID);
+        let sound = canvas.scene.sounds.find(l => l.getFlag("world", "fireplace") == fireplaceID);
+        if (light && sound) {
+            let newState = !light.hidden;
+            await light.update({ hidden: newState });
+            await sound.update({ hidden: newState });
+            var message = "";
+            if (newState) {
+                message = "The fire goes out.";
+            }
+            else {
+                message = "The fire bursts to life.";
+            }
+            ChatMessage.create({ content: message });
+        }
+        else {
+            ui.notifications.notify(`Fireplace ${fireplaceID} does not exist in this scene.`);
+        }
+    },
+    "rewireFireplaces": async function _rewireFireplaces(){
+        let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions.find(a => a.data.entity.name == "toggleFireplace"));
+        let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
+        if (!toggleFireplaceMacro) {
+            return;
+        }
+        for (let fireplace of fireplaces) {
+            debugger;
+            let actions = fireplace.getFlag("monks-active-tiles", "actions");
+            let scriptAction = actions.find(a => a.data.entity.name == "toggleFireplace");
+            if (!scriptAction){
+                continue;
+            }
+            scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
+            fireplace.setFlag("monks-active-tiles", "actions", actions);
+        }
     }
 };
+
+async function ensureMacro(macroName, packId, parentFolderName){
+    let macro = await game.macros.getName(macroName);
+    if (!macro) {
+        let pack = game.packs.get(packId);
+        if (!pack) {
+            ui.notifications.error(`Cannot find compendium ${packId}!`);
+            return null;
+        }
+        let packMacro = pack.index.getName(macroName);
+        if (!packMacro){
+            ui.notifications.error(`Cannot find macro ${macroName} compendium ${packId}!`);
+            return null;
+        }
+        let parentFolder = game.folders.getName(parentFolderName);
+        macro = await game.macros.importFromCompendium(pack, packMacro._id, { "folder": parentFolder?.id });
+    }
+    return macro;
+}
 
 function getTileBounds(targetTile) {
     return {
