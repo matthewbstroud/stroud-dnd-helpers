@@ -57,7 +57,7 @@ export let gmFunctions = {
         }
         run(
             async () => actor.createEmbeddedDocuments("ActiveEffect", effectData),
-            async () => socket.executeAsGM("createEffects", actorUuid, effectData) 
+            async () => await socket.executeAsGM("createEffects", actorUuid, effectData) 
         );
     },
     "dismissTokens": async function _removeTokens(arrayOfTokenIds /* [tokenUuid] */) {
@@ -77,7 +77,7 @@ export let gmFunctions = {
                     }
                 });
             },
-            async () => socket.executeAsGM("dismissTokens", arrayOfTokenIds) 
+            async () => await socket.executeAsGM("dismissTokens", arrayOfTokenIds) 
         );
     },
     "deleteTokens": async function _deleteTokens(arrayOfTokenIds /* [tokenUuid] */) {
@@ -86,13 +86,13 @@ export let gmFunctions = {
         }
         run(
             async () => canvas.scene.deleteEmbeddedDocuments("Token", arrayOfTokenIds),
-            async () => socket.executeAsGM("deleteTokens", arrayOfTokenIds) 
+            async () => await socket.executeAsGM("deleteTokens", arrayOfTokenIds) 
         ); 
     },
     "identifyItem": async function _identifyItem(alias, token, itemID){
         run(
             async () => identifyItem(alias, token, itemID),
-            async () => socket.executeAsGM("identifyItem", alias, token, itemID)
+            async () => await socket.executeAsGM("identifyItem", alias, token, itemID)
         );
     },
     "pushKeybindsToPlayers": async function _pushKeybindsToPlayers(){
@@ -109,13 +109,13 @@ export let gmFunctions = {
                     effect.delete();
                 }
             },
-            async () => socket.executeAsGM("removeEffects", effectIDs)
+            async () => await socket.executeAsGM("removeEffects", effectIDs)
         );
     },
     "spawnSpiritualWeapon": async function _spawnSpiritualWeapon(userID, actorID, tokenID, level, x, y){
         run(
             async () => spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y),
-            async () => socket.executeAsGM("spawnSpiritualWeapon", userID, actorID, tokenID, level, x, y) 
+            async () => await socket.executeAsGM("spawnSpiritualWeapon", userID, actorID, tokenID, level, x, y) 
         ); 
     }
 };

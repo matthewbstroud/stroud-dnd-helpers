@@ -70,7 +70,7 @@ export let keybinds = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        socket.executeForEveryone("pushKeybindsToPlayers");
+        await socket.executeForEveryone("pushKeybindsToPlayers");
     },
     "setCommonKeybinds": setCommonKeybinds
 };
