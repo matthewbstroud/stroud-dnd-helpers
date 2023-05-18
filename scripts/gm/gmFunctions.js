@@ -1,6 +1,8 @@
 import { socket } from "../module.js";
 import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
+import { spawnSpirtualWeapon } from "../spells/spiritualWeapon/spiritualWeapon.js";
+
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
     RUN_REMOTE: "RUN_REMOTE",
@@ -93,6 +95,9 @@ export let gmFunctions = {
             async () => socket.executeAsGM("identifyItem", alias, token, itemID)
         );
     },
+    "pushKeybindsToPlayers": async function _pushKeybindsToPlayers(){
+        keybinds.setCommonKeybinds();
+    },
     "removeEffects": async function _removeEffects(effectIDs) {
         if (!effectIDs || effectIDs.length == 0) {
             return;
@@ -107,8 +112,11 @@ export let gmFunctions = {
             async () => socket.executeAsGM("removeEffects", effectIDs)
         );
     },
-    "pushKeybindsToPlayers": async function _pushKeybindsToPlayers(){
-        keybinds.setCommonKeybinds();
+    "spawnSpiritualWeapon": async function _spawnSpiritualWeapon(userID, actorID, tokenID, level, x, y){
+        run(
+            async () => spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y),
+            async () => socket.executeAsGM("spawnSpiritualWeapon", userID, actorID, tokenID, level, x, y) 
+        ); 
     }
 };
 

@@ -1,4 +1,5 @@
 import { huntersMark } from "./huntersmark/huntersMark.js";
+import { spiritualWeapon } from "./spiritualWeapon/spiritualWeapon.js";
 
 export async function getSpellData(abilityName){
     if (canvas.tokens.controlled.length != 1) {
@@ -27,5 +28,6 @@ export async function getSpellData(abilityName){
 }
 
 export let spells = {
-    "HuntersMark": huntersMark
+    "HuntersMark": huntersMark,
+    "SpiritualWeapon": spiritualWeapon
 }
