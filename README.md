@@ -40,7 +40,7 @@ My collection of automation for DND 5e
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|
 |Hunter's Mark|True|True|None|Allows multiple players to mark the same target simultaneously.|
-|Spiritual Weapn|True|True|Spiritual Weapon||
+|Spiritual Weapon|True|True|Spiritual Weapon||
   
 # Required Modules  
 | Module | Verified Version |  
