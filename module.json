@@ -172,6 +172,14 @@
 		"module": "stroud-dnd-helpers"
 	  },
 	  {
+		"name": "SDND-Summons",
+		"label": "SDND Summons",
+		"path": "packs/sdnd-summons.db",
+		"type": "Actor",
+		"private": true,
+		"module": "stroud-dnd-helpers"
+	  },
+	  {
 		"name": "SDND-Shared-Macros",
 		"label": "SDND Shared Macros",
 		"path": "packs/sdnd-shared-macros.db",
