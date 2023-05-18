@@ -37,9 +37,10 @@ My collection of automation for DND 5e
     - **Show Token Art**: Show the character art associated with the selected token as an image popout.
 
 # Supported Spells
-|Spell|Compendium Spell|Cast or Use Macro|Comments
-|---|---|---|---|
-|Hunter's Mark|True|True|Allows multiple players to mark the same target simultaneously.
+|Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
+|---|---|---|---|---|
+|Hunter's Mark|True|True|None|Allows multiple players to mark the same target simultaneously.|
+|Spiritual Weapn|True|True|Spiritual Weapon||
   
 # Required Modules  
 | Module | Verified Version |  
