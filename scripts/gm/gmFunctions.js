@@ -106,7 +106,9 @@ export let gmFunctions = {
             async () => {
                 for (const effectID of effectIDs) {
                     const effect = await fromUuid(effectID);
-                    effect.delete();
+                    if (effect) {
+                        await effect.delete();
+                    }
                 }
             },
             async () => await socket.executeAsGM("removeEffects", effectIDs)
