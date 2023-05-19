@@ -1,5 +1,6 @@
 import { dialog } from "./dialog/dialog.js";
 import { playlists } from "./playlists.js";
+import { ranged } from "./weapons/ranged.js";
 import { sdndConstants } from "./constants.js";
 import { sdndSettings } from "./settings.js";
 import { tokens } from "./tokens.js";
@@ -20,6 +21,9 @@ export let combat = {
             return;
         }
         playlists.start(compatPlaylistId, true);
+    },
+    "weapons": {
+        "ranged": ranged
     }
 };
 

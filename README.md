@@ -35,6 +35,8 @@ My collection of automation for DND 5e
   - **Manage Tokens**
     - **Toggle NPC Name**: Works in conjunction with Hide Name from Combat Utility Belt.  Toggles an NPC token between display name hover owner and display name hover all.  Also toggles the hide npc name in CUB.
     - **Show Token Art**: Show the character art associated with the selected token as an image popout.
+- **Weapons**
+  - **Reload Ranged Weapon**: Allows you to select an equipped ranged weapon and reload it with any available ammo from your inventory.
 
 # Supported Spells
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
