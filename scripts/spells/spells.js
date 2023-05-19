@@ -1,4 +1,5 @@
 import { huntersMark } from "./huntersmark/huntersMark.js";
+import { magicMissile } from "./magicMissile/magicMissile.js";
 import { spiritualWeapon } from "./spiritualWeapon/spiritualWeapon.js";
 
 export async function getSpellData(abilityName){
@@ -29,5 +30,6 @@ export async function getSpellData(abilityName){
 
 export let spells = {
     "HuntersMark": huntersMark,
+    "MagicMissile": magicMissile,
     "SpiritualWeapon": spiritualWeapon
 }
