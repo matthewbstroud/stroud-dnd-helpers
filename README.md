@@ -38,6 +38,11 @@ My collection of automation for DND 5e
 - **Weapons**
   - **Reload Ranged Weapon**: Allows you to select an equipped ranged weapon and reload it with any available ammo from your inventory.
 
+# Supported Class Features
+|Class|Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
+|---|---|---|---|---|
+|Cleric|Twilight Domain|True|False|None|Handles checking for range to caster for each player at end of turn.  Prompts player to clear a condition or apply temp hp. Automatically rolls a final heal on removal, if out of combat.|
+
 # Supported Spells
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|

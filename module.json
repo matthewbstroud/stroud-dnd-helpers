@@ -1,203 +1,216 @@
 {
-  "id": "stroud-dnd-helpers",
-  "title": "Stroud's DnD Helpers",
-  "description": "Automation helpers for the DM and Player.",
-  "version": "#{VERSION}#",
-  "library": "false",
-  "socket": true,
-  "manifestPlusVersion": "1.2.0",
-  "compatibility": {
-    "minimum": 10,
-    "verified": 10,
-    "maximum": 11
-  },
-  "authors": [
-    {
-      "name": "Stroud",
-      "url": "https://github.com/matthewbstroud/stroud-dnd-helpers",
-      "discord": "CaiusMartius@1144"
-    }
-  ],
-  "relationships": {
-    "systems": [{
-		"id": "dnd5e",
-		"type": "system",
-		"manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
-		"compatibility": {
-			"verified": "2.1.4"
-		}
-	}],
-    "requires": [{
-		"id": "midi-qol",
-		"type": "module",
-		"manifest": "https://gitlab.com/tposney/midi-qol/raw/v10/package/module.json",
-		"compatibility": {
-			"verified": "10.0.36",
-			"minimum": "10.0.36"
-		}
+	"id": "stroud-dnd-helpers",
+	"title": "Stroud's DnD Helpers",
+	"description": "Automation helpers for the DM and Player.",
+	"version": "#{VERSION}#",
+	"library": "false",
+	"socket": true,
+	"manifestPlusVersion": "1.2.0",
+	"compatibility": {
+		"minimum": 10,
+		"verified": 10,
+		"maximum": 11
 	},
-	{
-		"id": "dfreds-convenient-effects",
-		"type": "module",
-		"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "4.1.1"
+	"authors": [
+		{
+			"name": "Stroud",
+			"url": "https://github.com/matthewbstroud/stroud-dnd-helpers",
+			"discord": "CaiusMartius@1144"
 		}
+	],
+	"relationships": {
+		"systems": [
+			{
+				"id": "dnd5e",
+				"type": "system",
+				"manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
+				"compatibility": {
+					"verified": "2.1.4"
+				}
+			}
+		],
+		"requires": [
+			{
+				"id": "midi-qol",
+				"type": "module",
+				"manifest": "https://gitlab.com/tposney/midi-qol/raw/v10/package/module.json",
+				"compatibility": {
+					"verified": "10.0.36",
+					"minimum": "10.0.36"
+				}
+			},
+			{
+				"id": "dfreds-convenient-effects",
+				"type": "module",
+				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "4.1.1"
+				}
+			},
+			{
+				"id": "warpgate",
+				"type": "module",
+				"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "1.16.0"
+				}
+			},
+			{
+				"id": "effectmacro",
+				"type": "module",
+				"manifest": "https://github.com/krbz999/effectmacro/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "10.0.15"
+				}
+			},
+			{
+				"id": "sequencer",
+				"type": "module",
+				"manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/manifest.json",
+				"compatibility": {
+					"verified": "10.0.0"
+				}
+			},
+			{
+				"id": "itemacro",
+				"type": "module",
+				"manifest": "https://github.com/Kekilla0/Item-Macro/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "1.8.0"
+				}
+			},
+			{
+				"id": "compendium-folders",
+				"type": "module",
+				"manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/10x-update/module.json",
+				"compatibility": {
+					"verified": "2.5.7"
+				}
+			},
+			{
+				"id": "socketlib",
+				"type": "module",
+				"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
+				"compatibility": {
+					"verified": "1.0.12"
+				}
+			},
+			{
+				"id": "dae",
+				"type": "module",
+				"manifest": "https://gitlab.com/tposney/dae/raw/v10/package/module.json",
+				"compatibility": {
+					"verified": "10.0.23"
+				}
+			},
+			{
+				"id": "autoanimations",
+				"type": "module",
+				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "4.2.32"
+				}
+			},
+			{
+				"id": "monks-active-tiles",
+				"type": "module",
+				"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "10.15"
+				}
+			}
+		],
+		"optional": [
+			{
+				"id": "tidy5e-sheet",
+				"type": "module",
+				"manifest": "https://github.com/sdenec/tidy5e-sheet/releases/download/0.8.25/module.json",
+				"compatibility": {
+					"verified": "0.8.25"
+				}
+			},
+			{
+				"id": "tokenmagic",
+				"type": "module",
+				"manifest": "https://raw.githubusercontent.com/Feu-Secret/Tokenmagic/master/tokenmagic/module.json",
+				"compatibility": {
+					"verified": "0.6.1.2"
+				}
+			},
+			{
+				"id": "ddb-importer",
+				"type": "module",
+				"manifest": "https://github.com/mrprimate/ddb-importer/releases/download/latest/module.json",
+				"compatibility": {
+					"verified": "3.4.5"
+				}
+			},
+			{
+				"id": "visual-active-effects",
+				"type": "module",
+				"manifest": "https://github.com/krbz999/visual-active-effects/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "10.0.14"
+				}
+			}
+		]
 	},
-	{
-		"id": "warpgate",
-		"type": "module",
-		"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "1.16.0"
+	"esmodules": [
+		"scripts/module.js"
+	],
+	"styles": [
+		"styles/module.css"
+	],
+	"packs": [
+		{
+			"name": "SDND-Features",
+			"label": "SDND Features",
+			"path": "packs/sdnd-features.db",
+			"type": "Item",
+			"module": "stroud-dnd-helpers"
+		},
+		{
+			"name": "SDND-Spells",
+			"label": "SDND Spells",
+			"path": "packs/sdnd-spells.db",
+			"type": "Item",
+			"module": "stroud-dnd-helpers"
+		},
+		{
+			"name": "SDND-GM-Macros",
+			"label": "SDND GM Macros",
+			"path": "packs/sdnd-gm-macros.db",
+			"type": "Macro",
+			"private": true,
+			"module": "stroud-dnd-helpers"
+		},
+		{
+			"name": "SDND-Summons",
+			"label": "SDND Summons",
+			"path": "packs/sdnd-summons.db",
+			"type": "Actor",
+			"private": true,
+			"module": "stroud-dnd-helpers"
+		},
+		{
+			"name": "SDND-Shared-Macros",
+			"label": "SDND Shared Macros",
+			"path": "packs/sdnd-shared-macros.db",
+			"type": "Macro",
+			"private": false,
+			"module": "stroud-dnd-helpers"
 		}
-	},
-	{
-		"id": "effectmacro",
-		"type": "module",
-		"manifest": "https://github.com/krbz999/effectmacro/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "10.0.15"
+	],
+	"changelog": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/master/CHANGELOG.md",
+	"url": "#{URL}#",
+	"manifest": "#{MANIFEST}#",
+	"download": "#{DOWNLOAD}#",
+	"license": "LICENSE",
+	"readme": "README.md",
+	"media": [
+		{
+			"type": "icon",
+			"url": ""
 		}
-	},
-	{
-		"id": "sequencer",
-		"type": "module",
-		"manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/manifest.json",
-		"compatibility": {
-			"verified": "10.0.0"
-		}
-	},
-	{
-		"id": "itemacro",
-		"type": "module",
-		"manifest": "https://github.com/Kekilla0/Item-Macro/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "1.8.0"
-		}
-	},
-	{
-		"id": "compendium-folders",
-		"type": "module",
-		"manifest": "https://raw.githubusercontent.com/earlSt1/vtt-compendium-folders/10x-update/module.json",
-		"compatibility": {
-			"verified": "2.5.7"
-		}
-	},
-	{
-		"id": "socketlib",
-		"type": "module",
-		"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
-		"compatibility": {
-			"verified": "1.0.12"
-		}
-	},
-	{
-		"id": "dae",
-		"type": "module",
-		"manifest": "https://gitlab.com/tposney/dae/raw/v10/package/module.json",
-		"compatibility": {
-			"verified": "10.0.23"
-		}
-	},
-	{
-		"id": "autoanimations",
-		"type": "module",
-		"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "4.2.32"
-		}
-	},
-	{
-		"id": "monks-active-tiles",
-		"type": "module",
-		"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "10.15"
-		}
-	}],
-	"optional": [{
-		"id": "tidy5e-sheet",
-		"type": "module",
-		"manifest": "https://github.com/sdenec/tidy5e-sheet/releases/download/0.8.25/module.json",
-		"compatibility": {
-			"verified": "0.8.25"
-		}
-	},
-	{
-		"id": "tokenmagic",
-		"type": "module",
-		"manifest": "https://raw.githubusercontent.com/Feu-Secret/Tokenmagic/master/tokenmagic/module.json",
-		"compatibility": {
-			"verified": "0.6.1.2"
-		}
-	},
-	{
-		"id": "ddb-importer",
-		"type": "module",
-		"manifest": "https://github.com/mrprimate/ddb-importer/releases/download/latest/module.json",
-		"compatibility": {
-			"verified": "3.4.5"
-		}
-	},
-	{
-		"id": "visual-active-effects",
-		"type": "module",
-		"manifest": "https://github.com/krbz999/visual-active-effects/releases/latest/download/module.json",
-		"compatibility": {
-			"verified": "10.0.14"
-		}
-	}]
-  },
-  "esmodules": [
-    "scripts/module.js"
-  ],
-  "styles": [
-    "styles/module.css"
-  ],
-  "packs": [
-	  {
-		"name": "SDND-Spells",
-		"label": "SDND Spells",
-		"path": "packs/sdnd-spells.db",
-		"type": "Item",
-		"module": "stroud-dnd-helpers"
-	  },
-	  {
-		"name": "SDND-GM-Macros",
-		"label": "SDND GM Macros",
-		"path": "packs/sdnd-gm-macros.db",
-		"type": "Macro",
-		"private": true,
-		"module": "stroud-dnd-helpers"
-	  },
-	  {
-		"name": "SDND-Summons",
-		"label": "SDND Summons",
-		"path": "packs/sdnd-summons.db",
-		"type": "Actor",
-		"private": true,
-		"module": "stroud-dnd-helpers"
-	  },
-	  {
-		"name": "SDND-Shared-Macros",
-		"label": "SDND Shared Macros",
-		"path": "packs/sdnd-shared-macros.db",
-		"type": "Macro",
-		"private": false,
-		"module": "stroud-dnd-helpers"
-	  }
-  ],
-  "changelog": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/master/CHANGELOG.md",
-  "url": "#{URL}#",
-  "manifest": "#{MANIFEST}#",
-  "download": "#{DOWNLOAD}#",
-  "license": "LICENSE",
-  "readme": "README.md",
-  "media": [
-    {
-      "type": "icon",
-      "url": ""
-    }
-  ]
+	]
 }

@@ -66,6 +66,9 @@ export const sdndConstants = {
             }
         ]
     },
+    "FEATURES": {
+        "TWILIGHT_SANCTUARY": "Twilight Sanctuary"
+    },
     "FOLDERS": {
         "PLAYER_MACROS": "Player Macros"
     },

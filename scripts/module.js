@@ -1,6 +1,7 @@
 import { chat } from './chat/chat.js';
 import { combat } from './combat.js';
 import { gmFunctions } from './gm/gmFunctions.js';
+import { features } from './spells/features.js';
 import { identification } from './identification/identification.js';
 import { journal } from './journal/journal.js';
 import { keybinds } from './keyboard/keybinds.js';
@@ -30,6 +31,7 @@ Hooks.once('ready', async function() {
 globalThis['stroudDnD'] = {
 	chat,
 	combat,
+	features,
 	identification,
 	journal,
 	keybinds,

@@ -75,7 +75,6 @@ async function organizeMacros() {
 
     let actorMacros = game.macros.filter(m => !m.folder);
     for (var i = 0; i < actorMacros.length; i++) {
-        debugger;
         if (actorMacros[i].ownership > 0) {
             continue;
         }
