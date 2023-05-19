@@ -21,7 +21,6 @@ export let tokens = {
             if (!allowInCombat && token.inCombat) {
                 return true;
             }
-            debugger;
             var folderName = token?.actor?.folder?.name ?? "root";
             if (excludedFolders.includes(folderName)) {
                 return true;
