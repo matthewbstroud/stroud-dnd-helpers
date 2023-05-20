@@ -1,4 +1,4 @@
-import { numbers } from "../Utility/numbers.js";
+import { numbers } from "../utility/numbers.js";
 import { dialog } from "../dialog/dialog.js";
 const MONEY_MODE = {
     "GIVE": "Give",
