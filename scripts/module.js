@@ -13,6 +13,7 @@ import { sdndSettings } from './settings.js';
 import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
 import { macros } from './macros/macros.js';
+import { utility } from './utility/utility.js';
 
 export let socket;
 Hooks.once('init', async function() {
@@ -40,5 +41,6 @@ globalThis['stroudDnD'] = {
 	money,
 	music,
 	spells,
-	tokens
+	tokens,
+	utility
 }
