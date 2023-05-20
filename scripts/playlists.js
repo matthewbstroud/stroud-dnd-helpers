@@ -1,4 +1,4 @@
-import { numbers } from './Utility/numbers.js';
+import { numbers } from './utility/numbers.js';
 import { sdndSettings } from './settings.js';
 export let playlists = {
     "start": function _start(playListId, random) {

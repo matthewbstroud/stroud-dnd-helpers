@@ -1,4 +1,4 @@
-import { numbers } from "../Utility/numbers.js";
+import { numbers } from "../utility/numbers.js";
 
 
 const SUMMARY_FOLDER_NAME = "Session Summaries";

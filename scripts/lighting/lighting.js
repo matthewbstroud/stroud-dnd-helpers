@@ -1,5 +1,5 @@
 import { fireplace } from "./fireplace.js";
-import { numbers } from "../Utility/numbers.js";
+import { numbers } from "../utility/numbers.js";
 export let lighting = {
     "fireplace": fireplace,
     "lights": {

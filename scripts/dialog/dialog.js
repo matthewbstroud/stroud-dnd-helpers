@@ -1,4 +1,4 @@
-import { numbers } from "../Utility/numbers.js";
+import { numbers } from "../utility/numbers.js";
 
 export let dialog = {
     "createButtonDialog": async function _createButtonDialog(title, buttons, direction) {

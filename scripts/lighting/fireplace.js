@@ -1,4 +1,4 @@
-import { guid } from "../Utility/guid.js";
+import { guid } from "../utility/guid.js";
 import { sdndConstants } from "../constants.js";
 
 export let fireplace = {
