@@ -31,6 +31,8 @@ My collection of automation for DND 5e
   - **Combat**: Combat playlist can be set in the module settings.
     - **Start**: Start combat music if it isn't already playing.
     - **Toggle**: Toggle the current state of combat music.
+- **Scene**: Scene macros
+  - **Rewire Monk's Active Tiles**: When you duplicate a scene, the links to other scene tiles still point to the original scene.  This macro will rewire them to the current scene.
 - **Tokens**
   - **Manage Tokens**
     - **Toggle NPC Name**: Works in conjunction with Hide Name from Combat Utility Belt.  Toggles an NPC token between display name hover owner and display name hover all.  Also toggles the hide npc name in CUB.
