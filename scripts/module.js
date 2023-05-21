@@ -3,6 +3,7 @@ import { combat } from './combat.js';
 import { gmFunctions } from './gm/gmFunctions.js';
 import { features } from './spells/features.js';
 import { identification } from './identification/identification.js';
+import { items } from './items/items.js';
 import { journal } from './journal/journal.js';
 import { keybinds } from './keyboard/keybinds.js';
 import { lighting } from './lighting/lighting.js';
@@ -34,6 +35,7 @@ globalThis['stroudDnD'] = {
 	combat,
 	features,
 	identification,
+	items,
 	journal,
 	keybinds,
 	lighting,

@@ -170,6 +170,14 @@
 			"module": "stroud-dnd-helpers"
 		},
 		{
+			"name": "SDND-Items",
+			"label": "SDND Items",
+			"path": "packs/sdnd-items.db",
+			"type": "Item",
+			"private": true,
+			"module": "stroud-dnd-helpers"
+		},
+		{
 			"name": "SDND-Spells",
 			"label": "SDND Spells",
 			"path": "packs/sdnd-spells.db",
