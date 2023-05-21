@@ -51,6 +51,11 @@ My collection of automation for DND 5e
 |Hunter's Mark|True|True|None|Allows multiple players to mark the same target simultaneously.|
 |Magic Missile|True|True|None|Allows casting each missile individually without spell prompts.|
 |Spiritual Weapon|True|True|Spiritual Weapon||
+
+# Magic Items
+|Type|Name|Notes|
+|---|---|---|
+|Melee Weapon|Lightbringer|Gives a passive effect that can be enabled/disabled by the user.  When enabled the weapon will hit for an extra 1d6 damage against undead targets.|
   
 # Required Modules  
 | Module | Verified Version |  
