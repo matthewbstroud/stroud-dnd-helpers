@@ -96,7 +96,18 @@ export let gmFunctions = {
         );
     },
     "pushKeybindsToPlayers": async function _pushKeybindsToPlayers(){
-        keybinds.setCommonKeybinds();
+        if (!game?.user?.isGM)
+        {
+            Dialog.confirm({
+                title: `Update Key Mappings`,
+                content: `The Gamemaster would like to push default keybinds to your machine.  This will ensure all players are using the same keys for advantage/disadvantage modifiers.<br/><br/>Do you consent?<br/>`,
+                yes: () => { keybinds.setCommonKeybinds() },
+                defaultYes: true
+            });
+        }
+        else {
+            keybinds.setCommonKeybinds();
+        }
     },
     "removeEffects": async function _removeEffects(effectIDs) {
         if (!effectIDs || effectIDs.length == 0) {

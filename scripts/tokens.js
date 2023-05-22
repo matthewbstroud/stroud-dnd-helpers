@@ -1,6 +1,6 @@
 import { dialog } from "./dialog/dialog.js";
 
-const EXCLUDE_FROM_OPTIONS = new Set(["manageTokens"]);
+const EXCLUDE_FROM_OPTIONS = new Set(["manageTokens", "releaseInvalidTokens"]);
 export let tokens = {
     "manageTokens": async function _manageTokens() {
         if (!game.user.isGM) {
