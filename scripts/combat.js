@@ -16,11 +16,14 @@ export let combat = {
         await canvas.tokens.toggleCombat();
         await game.combat.rollNPC();
 
-        var compatPlaylistId = sdndSettings.CombatPlayList.getValue();
-        if (!compatPlaylistId || compatPlaylistId == "none") {
+        var combatPlaylistId = sdndSettings.CombatPlayList.getValue();
+        if (!combatPlaylistId || combatPlaylistId == "none") {
             return;
         }
-        playlists.start(compatPlaylistId, true);
+        Hooks.once("deleteCombat", async function () {
+            playlists.stop(combatPlaylistId)
+        });
+        playlists.start(combatPlaylistId, true);
     },
     "weapons": {
         "ranged": ranged

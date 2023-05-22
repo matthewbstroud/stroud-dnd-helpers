@@ -1,7 +1,7 @@
 import { numbers } from './utility/numbers.js';
 import { sdndSettings } from './settings.js';
 export let playlists = {
-    "start": function _start(playListId, random) {
+    "start": async function _start(playListId, random) {
         let combatPlaylist = game.playlists.get(playListId);
         if (combatPlaylist) {
             if (combatPlaylist.playing) {
@@ -15,7 +15,7 @@ export let playlists = {
             combatPlaylist.playAll();
         }
     },
-    "toggle": function _toggle(playlistId, random) {
+    "toggle": async function _toggle(playlistId, random) {
         let combatPlaylist = game.playlists.get(playlistId);
         if (combatPlaylist) {
             if (combatPlaylist.playing) {
@@ -29,11 +29,15 @@ export let playlists = {
             }
             combatPlaylist.playAll();
         }
+    },
+    "stop": async function _stop(playlistId){
+        let combatPlaylist = game.playlists.get(playlistId);
+        combatPlaylist.stopAll();
     }
 };
 export let music = {
     "combat": {
-        "start": function _start(random){
+        "start": async function _start(random){
             random = random ?? true;
             let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
             if (!combatPlaylistId || combatPlaylistId == "none"){
@@ -42,7 +46,7 @@ export let music = {
             }
             playlists.start(combatPlaylistId, random);
         },
-        "toggle": function _toggle(random){
+        "toggle": async function _toggle(random){
             random = random ?? true;
             let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
             if (!combatPlaylistId || combatPlaylistId == "none"){
@@ -50,6 +54,14 @@ export let music = {
                 return;
             }
             playlists.toggle(combatPlaylistId, random);
+        },
+        "stop": async function _stop(){
+            let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
+            if (!combatPlaylistId || combatPlaylistId == "none"){
+                ui.notifications.notify('You must first select a combat playlist under settings.');
+                return;
+            }
+            playlists.stop(combatPlaylistId);
         }
     }
 }
