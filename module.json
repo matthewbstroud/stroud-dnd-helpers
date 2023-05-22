@@ -104,6 +104,14 @@
 				}
 			},
 			{
+				"id": "JB2A_DnD5e",
+				"type": "module",
+				"manifest": "https://github.com/Jules-Bens-Aa/JB2A_DnD5e/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "0.5.6"
+				}
+			},
+			{
 				"id": "autoanimations",
 				"type": "module",
 				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",

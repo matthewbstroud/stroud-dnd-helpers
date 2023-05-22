@@ -66,7 +66,7 @@ My collection of automation for DND 5e
 | DFreds Convenient Effects | 4.1.1 |  
 | Effect Macro | 10.0.15 |  
 | Item Macro | 1.8.0 |  
-| Jules & Ben's Animated Assets | 0.5.2 |  
+| Jules & Ben's Animated Assets | 0.5.6 |  
 | Monk's Active Tile Triggers | 10.15 |  
 | Sequencer | 10.0.0 |  
 | Socket Lib | 1.0.12 |  
