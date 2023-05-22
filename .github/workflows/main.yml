@@ -120,6 +120,7 @@ jobs:
             README.md                            \
             LICENSE                              \
             templates                            \
+            images/                              \
             scripts/                             \
             styles/                              \
             packs/                               \
