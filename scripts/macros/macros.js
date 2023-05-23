@@ -1,4 +1,5 @@
 import { sdndConstants } from "../constants.js";
+import { folders } from "../folders/folders.js";
 
 const macroFolders = [
     {
@@ -38,7 +39,7 @@ export let macros = {
             return;
         }
         for (let folder of macroFolders) {
-            await ensureFolder(folder, "Macro", null);
+            await folders.ensureFolder(folder, "Macro", null);
         }
     },
     "loadFromCompendium": async function _loadFromCompendiums(compendiumName, macroName, tofolder) {
@@ -122,17 +123,4 @@ async function organizeMacros() {
     }
 }
 
-async function ensureFolder(folderDef, folderType, parentID) {
-    let folder = await game.folders.find(f => f.name == folderDef.label && f.folder?.id == parentID);
 
-    if (!folder) {
-        folder = await Folder.create({ "name": folderDef.label, "type": folderType, "parent": parentID });
-    }
-    if (!folderDef.folders) {
-        return folder;
-    }
-    for (let subFolder of folderDef.folders) {
-        await ensureFolder(subFolder, folderType, folder.id);
-    }
-    return folder;
-}

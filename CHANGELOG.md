@@ -1,3 +1,7 @@
+# v1.0.6: Bug Fixes
+- Spiritual Weapon should automatically load the summon actor when used the first time.
+  - Will create an actor folder called SDND Temp Actors
+- Spells no longer have dependency on ItemMacro.
 # v1.0.5: Bug Fixes
 - Change event for Hunter's Mark.
 - Session Summary: handle case where token folder is null.
