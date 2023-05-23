@@ -8,6 +8,8 @@ export let fireplace = {
             return;
         }
 
+        await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
+
         let toggleFireplaceMacro = game.macros.getName("toggleFireplace");
         if (!toggleFireplaceMacro) {
             ui.notifications.error(`toggleFireplace macro not loaded`);
@@ -21,12 +23,12 @@ export let fireplace = {
             return;
         }
         let tileBounds = getTileBounds(fireplaceTile);
-        let lights = canvas.scene.lights.filter(l => l.data.x >= tileBounds.x.min && l.data.x <= tileBounds.x.max && l.data.y >= tileBounds.y.min && l.data.y <= tileBounds.y.max);
+        let lights = canvas.scene.lights.filter(l => l.x >= tileBounds.x.min && l.x <= tileBounds.x.max && l.y >= tileBounds.y.min && l.y <= tileBounds.y.max);
         if (lights.length != 1) {
             ui.notifications.notify(`Only a single light should exist in the space of this tile!`);
             return;
         }
-        let sounds = canvas.scene.sounds.filter(l => l.data.x >= tileBounds.x.min && l.data.x <= tileBounds.x.max && l.data.y >= tileBounds.y.min && l.data.y <= tileBounds.y.max);
+        let sounds = canvas.scene.sounds.filter(l => l.x >= tileBounds.x.min && l.x <= tileBounds.x.max && l.y >= tileBounds.y.min && l.y <= tileBounds.y.max);
         if (sounds.length != 1) {
             ui.notifications.notify(`Only a single sound should exist in the space this tile!`);
             return;
