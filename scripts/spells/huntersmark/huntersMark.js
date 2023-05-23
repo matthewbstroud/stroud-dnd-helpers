@@ -22,7 +22,7 @@ async function _removeMarks(caster) {
     gmFunctions.removeEffects(uuids);
 }
 
-async function _itemMacro(speaker, actor, token, character, item, args) {
+async function _itemMacro({speaker, actor, token, character, item, args}) {
     // onUse macro
     if (args[0].hitTargets.length === 0) return;
     if (args[0].tag === "OnUse") {
@@ -48,7 +48,7 @@ async function _itemMacro(speaker, actor, token, character, item, args) {
                 {
                     "key": "flags.dnd5e.DamageBonusMacro",
                     "mode": CONST.ACTIVE_EFFECT_MODES.CUSTOM,
-                    "value": `ItemMacro.${args[0].item.name}`,
+                    "value": `function.stroudDnD.spells.HuntersMark.itemMacro`,
                     "priority": 20
                 }
             ],

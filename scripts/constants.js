@@ -70,10 +70,16 @@ export const sdndConstants = {
         "TWILIGHT_SANCTUARY": "Twilight Sanctuary"
     },
     "FOLDERS": {
+        "ACTOR": {
+            "TEMP": "SDND Temp Actors"
+        },
         "PLAYER_MACROS": "Player Macros"
     },
     "PACKS": {
         "COMPENDIUMS": {
+            "ACTOR": {
+                "TEMP": `${MODULE_ID}.SDND-Summons`
+            },
             "MACRO": {
                 "GM": `${MODULE_ID}.SDND-GM-Macros`,
                 "SHARED": `${MODULE_ID}.SDND-Shared-Macros`,

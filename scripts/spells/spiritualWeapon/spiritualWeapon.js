@@ -1,5 +1,7 @@
+import { actors } from "../../actors/actors.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { sdndConstants } from "../../constants.js";
+import { folders } from "../../folders/folders.js";
 
 export let spiritualWeapon = {
     "castOrUse": _castOrUse,
@@ -57,22 +59,23 @@ async function _castOrUse() {
 }
 
 
-async function _itemMacro(speaker, actor, token, character, item, args) {
+async function _itemMacro({speaker, actor, token, character, item, args}) {
     let crosshairConfig = {
         icon: `${sdndConstants.ANIMATIONS.SPELLS.SPRITUAL_WEAPON}`,
         label: "Place Weapon"
     };
-
+    await actors.ensureActor("Spiritual Weapon (SDND)", sdndConstants.PACKS.COMPENDIUMS.ACTOR.TEMP, sdndConstants.FOLDERS.ACTOR.TEMP);
     let crosshairData = await warpgate.crosshairs.show(crosshairConfig);
     gmFunctions.spawnSpiritualWeapon(game.user.id, args[0].actor._id, args[0].tokenId, args[0].spellLevel, crosshairData.x, crosshairData.y);
 }
+
 
 export async function spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y) {
     let gameMaster = game.users.getName("Gamemaster");
     let user = game.users.get(userID);
     const actorD = game.actors.get(actorID);
     const tokenD = canvas.tokens.get(tokenID);
-    let summonType = "Spiritual Weapon";
+    let summonType = "Spiritual Weapon (SDND)";
     const summonerDc = actorD.system.attributes.spelldc;
     const summonerAttack = summonerDc - 8;
     const summonerMod = getProperty(tokenD.actor, `system.abilities.${getProperty(tokenD.actor, 'system.attributes.spellcasting')}.mod`);
@@ -85,12 +88,12 @@ export async function spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y)
     let updates = {
         token: {
             'alpha': 0,
-            'name': `${summonType} of ${actorD.name}`,
+            'name': `Spiritual Weapon of ${actorD.name}`,
             'img': `${sdndConstants.ANIMATIONS.SPELLS.SPRITUAL_WEAPON}`,
             'lightColor': '#0000FF'
         },
         actor: {
-            'name': `${summonType} of ${actorD.name}`,
+            'name': `Spiritual Weapon of ${actorD.name}`,
             'permissions': {
                 default: 0,
                 [`${gameMaster.id}`]: 3,

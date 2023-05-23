@@ -57,7 +57,7 @@ async function _castOrUse() {
     await message.render();
 }
 
-async function _itemMacro(speaker, actor, token, character, item, args) {
+async function _itemMacro({speaker, actor, token, character, item, args}) {
     if (!actor) {
         ui.notifications.notify('No current actor.');
         return;

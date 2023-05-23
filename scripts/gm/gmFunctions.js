@@ -1,4 +1,5 @@
 import { socket } from "../module.js";
+import { folders } from "../folders/folders.js";
 import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
 import { spawnSpirtualWeapon } from "../spells/spiritualWeapon/spiritualWeapon.js";
@@ -13,19 +14,19 @@ function areActiveGms() {
 }
 
 async function getRunMode() {
-    if (!areActiveGms()){
+    if (!areActiveGms()) {
         ui.notifications.error("No Active GMs!");
         return RUN_MODES.NO_RUN;
     }
-    if (!game.user.isGM){
+    if (!game.user.isGM) {
         return RUN_MODES.RUN_REMOTE;
     }
     return RUN_MODES.RUN_LOCAL;
 }
 
-async function run(local, remote){
+async function run(local, remote) {
     let runMode = await getRunMode();
-    switch(runMode) {
+    switch (runMode) {
         case RUN_MODES.RUN_LOCAL:
             return await local();
         case RUN_MODES.RUN_REMOTE:
@@ -33,7 +34,7 @@ async function run(local, remote){
     }
 }
 
-async function getTokenOrActor(uuid){
+async function getTokenOrActor(uuid) {
     let tokenOrActor = await fromUuid(uuid);
     return tokenOrActor.actor ? tokenOrActor.actor : tokenOrActor;
 }
@@ -57,7 +58,7 @@ export let gmFunctions = {
         }
         run(
             async () => actor.createEmbeddedDocuments("ActiveEffect", effectData),
-            async () => await socket.executeAsGM("createEffects", actorUuid, effectData) 
+            async () => await socket.executeAsGM("createEffects", actorUuid, effectData)
         );
     },
     "dismissTokens": async function _removeTokens(arrayOfTokenIds /* [tokenUuid] */) {
@@ -77,7 +78,7 @@ export let gmFunctions = {
                     }
                 });
             },
-            async () => await socket.executeAsGM("dismissTokens", arrayOfTokenIds) 
+            async () => await socket.executeAsGM("dismissTokens", arrayOfTokenIds)
         );
     },
     "deleteTokens": async function _deleteTokens(arrayOfTokenIds /* [tokenUuid] */) {
@@ -86,18 +87,23 @@ export let gmFunctions = {
         }
         run(
             async () => canvas.scene.deleteEmbeddedDocuments("Token", arrayOfTokenIds),
-            async () => await socket.executeAsGM("deleteTokens", arrayOfTokenIds) 
-        ); 
+            async () => await socket.executeAsGM("deleteTokens", arrayOfTokenIds)
+        );
     },
-    "identifyItem": async function _identifyItem(alias, token, itemID){
+    "createFolder": async function _createFolder(folderName, folderType, parentID) {
+        run(
+            async () => await createFolder(folderName, folderType, parentID),
+            async () => await socket.executeAsGM("createFolder", folderName, folderType, parentID)
+        );
+    },
+    "identifyItem": async function _identifyItem(alias, token, itemID) {
         run(
             async () => identifyItem(alias, token, itemID),
             async () => await socket.executeAsGM("identifyItem", alias, token, itemID)
         );
     },
-    "pushKeybindsToPlayers": async function _pushKeybindsToPlayers(){
-        if (!game?.user?.isGM)
-        {
+    "pushKeybindsToPlayers": async function _pushKeybindsToPlayers() {
+        if (!game?.user?.isGM) {
             Dialog.confirm({
                 title: `Update Key Mappings`,
                 content: `The Gamemaster would like to push default keybinds to your machine.  This will ensure all players are using the same keys for advantage/disadvantage modifiers.<br/><br/>Do you consent?<br/>`,
@@ -125,11 +131,32 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("removeEffects", effectIDs)
         );
     },
-    "spawnSpiritualWeapon": async function _spawnSpiritualWeapon(userID, actorID, tokenID, level, x, y){
+    "spawnSpiritualWeapon": async function _spawnSpiritualWeapon(userID, actorID, tokenID, level, x, y) {
         run(
             async () => spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y),
-            async () => await socket.executeAsGM("spawnSpiritualWeapon", userID, actorID, tokenID, level, x, y) 
-        ); 
+            async () => await socket.executeAsGM("spawnSpiritualWeapon", userID, actorID, tokenID, level, x, y)
+        );
+    },
+    "importFromCompendium": async function _importFromCompedium(type, packId, packItemId, parentFolderId){
+        run(
+            async () => await importFromCompedium(type, packId, packItemId, parentFolderId),
+            async ()  => await socket.executeAsGM("importFromCompendium", type, packId, packItemId, parentFolderId)
+        );
     }
 };
 
+async function importFromCompedium(type, packId, packItemId, parentFolderName) {
+    let pack = game.packs.get(packId);
+    if (!pack) {
+        ui.notifications.error(`Cannot find compendium ${packId}!`);
+        return null;
+    }
+    let parentFolder = await folders.ensureFolder(parentFolderName, type);
+    switch (type) {
+        case "Actor":
+            return await game.actors.importFromCompendium(pack, packItemId, { "folder": parentFolder?._id });
+        case "Macro":
+            return await game.macros.importFromCompendium(pack, packItemId, { "folder": parentFolder?._id });
+    }
+    return null;
+}

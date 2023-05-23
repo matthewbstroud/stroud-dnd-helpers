@@ -86,7 +86,7 @@ const twilightUtil = {
         }
         await gmFunctions.removeEffects(twilightEffects.map(e => e.uuid));
     },
-    itemMacro: async function _itemMacro(speaker, actor, token, character, item, args) {
+    itemMacro: async function _itemMacro({speaker, actor, token, character, item, args}) {
         if (args[0]?.macroPass == "preItemRoll") {
             await twilightUtil.ensureResourceLink(actor, item);
         }

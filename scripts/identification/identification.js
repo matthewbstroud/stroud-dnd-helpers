@@ -6,7 +6,7 @@ export let identification = {
     "ItemMacro": _itemMacro
 };
 
-async function _itemMacro(speaker, actor, token, character, item, args){
+async function _itemMacro({speaker, actor, token, character, item, args}){
     if (!args || args.length == 0) {
         console.log("identifyTargetItem: no arguments. cannot proceed.");
         return;
