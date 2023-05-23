@@ -10,7 +10,11 @@ export let journal = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let players = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor).sort(sortByName);
+        let playersFolder = game.folders.getName("Players");
+        if (!players) {
+            ui.notifications.warn(`Make sure your players are in an actors folder named Players...`);
+        }
+        let players = canvas.scene.tokens.filter((token) => token.actor && token.actor?.folder?.name == "Players").map(t => t.actor).sort(sortByName);
         if (players.length == 0) {
             ui.notifications.notify('There are no player tokens in this scene.');
             return;

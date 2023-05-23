@@ -1,3 +1,9 @@
+# v1.0.5: Bug Fixes
+- Change event for Hunter's Mark.
+- Session Summary: handle case where token folder is null.
+- Change the way that twilight sanctuary works on caster.
+- Fix the manage tokens options.
+- Fix create fireplace to automatically load the associated macro.
 # v1.0.4: Bug Fixes
 - Prompt users to accept keybinding updates.
 - Automatically trigger combat music to stop when combat ends.

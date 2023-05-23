@@ -111,7 +111,7 @@ async function _castOrUse() {
     }
     var selfEffect = spellData.actor.effects.find(e => e.label == HUNTERS_MARK && e.origin == spellData.item.uuid);
     if (!selfEffect) {
-        spellData.item.roll();
+        spellData.item.use();
         return;
     }
 
