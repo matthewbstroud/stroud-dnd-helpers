@@ -94,7 +94,7 @@ export async function spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y)
         },
         actor: {
             'name': `Spiritual Weapon of ${actorD.name}`,
-            'permissions': {
+            'ownership': {
                 default: 0,
                 [`${gameMaster.id}`]: 3,
                 [`${userID}`]: 3
