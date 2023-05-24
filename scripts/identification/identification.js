@@ -2,8 +2,8 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 
 export let identification = {
     "createUnidentifiedItem": _createUnidentifiedItem,
-    "IdentifyItem": _idenfityItemGM,
-    "ItemMacro": _itemMacro
+    "identifyItem": _idenfityItemGM,
+    "itemMacro": _itemMacro
 };
 
 async function _itemMacro({speaker, actor, token, character, item, args}){

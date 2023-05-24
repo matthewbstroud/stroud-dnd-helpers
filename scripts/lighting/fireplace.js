@@ -8,7 +8,7 @@ export let fireplace = {
             return;
         }
 
-        await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
+        await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, sdndConstants.FOLDERS.MACROS.BTS);
 
         let toggleFireplaceMacro = game.macros.getName("toggleFireplace");
         if (!toggleFireplaceMacro) {

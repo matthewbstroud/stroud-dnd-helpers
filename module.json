@@ -40,6 +40,14 @@
 				}
 			},
 			{
+				"id": "lib-wrapper",
+				"type": "module",
+				"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "1.12.12.0"
+				}
+			},
+			{
 				"id": "dfreds-convenient-effects",
 				"type": "module",
 				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
@@ -69,14 +77,6 @@
 				"manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/manifest.json",
 				"compatibility": {
 					"verified": "10.0.0"
-				}
-			},
-			{
-				"id": "itemacro",
-				"type": "module",
-				"manifest": "https://github.com/Kekilla0/Item-Macro/releases/latest/download/module.json",
-				"compatibility": {
-					"verified": "1.8.0"
 				}
 			},
 			{
@@ -120,11 +120,27 @@
 				}
 			},
 			{
+				"id": "ActiveAuras",
+				"type": "module",
+				"manifest": "https://github.com/kandashi/Active-Auras/releases/latest/download/module.json",
+				"compatibility": {
+					"verified": "v0.5.7"
+				}
+			},
+			{
 				"id": "monks-active-tiles",
 				"type": "module",
 				"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
 				"compatibility": {
 					"verified": "10.15"
+				}
+			},
+			{
+				"id": "times-up",
+				"type": "module",
+				"manifest": "https://gitlab.com/tposney/times-up/raw/v10/package/module.json",
+				"compatibility": {
+					"verified": "10.0.4"
 				}
 			}
 		],

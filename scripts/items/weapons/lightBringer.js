@@ -3,7 +3,7 @@ export let lightBringer = {
     "itemMacro": _itemMacro
 };
 
-async function _itemMacro(speaker, actor, token, character, item, args) {
+async function _itemMacro({speaker, actor, token, character, item, args}) {
     if (args[0]?.macroPass != "DamageBonus") {
         return;
     }

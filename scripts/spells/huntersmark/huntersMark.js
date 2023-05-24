@@ -145,7 +145,7 @@ async function _castOrUse() {
             {
                 "key": "flags.dnd5e.DamageBonusMacro",
                 "mode": 0,
-                "value": `ItemMacro.${HUNTERS_MARK}`,
+                "value": `function.stroudDnD.spells.HuntersMark.itemMacro`,
                 "priority": 20
             }
         ]
