@@ -1,46 +1,13 @@
 import { sdndConstants } from "../constants.js";
 import { folders } from "../folders/folders.js";
 
-const macroFolders = [
-    {
-        "label": "SDND GM Macros",
-        "folders": [
-            {
-                "label": "Behind the Scenes",
-                "macros": [
-                    {
-                        "name": "",
-                        "pack": sdndConstants.PACKS.COMPENDIUMS.MACRO.GM
-                    }
-                ]
-            },
-            {
-                "label": "Identification"
-            },
-            {
-                "label": "Lights"
-            },
-            {
-                "label": "Money"
-            },
-            {
-                "label": "Tokens"
-            },
-            {
-                "label": "Utility"
-            }
-        ]
-    }
-];
-
 export let macros = {
     "initFolders": async function _initFolders() {
         if (!game.user.isGM) {
             return;
         }
-        for (let folder of macroFolders) {
-            await folders.ensureFolder(folder, "Macro", null);
-        }
+        let gmMacros = await folders.ensureFolder(sdndConstants.FOLDERS.MACROS.GM_MACROS, "Macro", null);
+        await folders.ensureFolder(sdndConstants.FOLDERS.MACROS.BTS, "Macro", gmMacros?._id);
     },
     "loadFromCompendium": async function _loadFromCompendiums(compendiumName, macroName, tofolder) {
         if (!game.user.isGM) {

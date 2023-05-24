@@ -71,7 +71,13 @@ export const sdndConstants = {
     },
     "FOLDERS": {
         "ACTOR": {
-            "TEMP": "SDND Temp Actors"
+            "LOOT": "Loot",
+            "TEMP": "SDND Temp Actors",
+            "TRAPS": "Traps"
+        },
+        "MACROS": {
+            "GM_MACROS": "SDND GM Macros",
+            "BTS": "Behind the Scenes"
         },
         "PLAYER_MACROS": "Player Macros"
     },
