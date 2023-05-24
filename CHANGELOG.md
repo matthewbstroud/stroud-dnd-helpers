@@ -1,5 +1,6 @@
 # v1.0.7: Bug fixes
 - Fix permissions with spawned spiritual weapon.
+- Fix summons folder from tokens.releaseInvalid.
 # v1.0.6: Bug Fixes
 - Spiritual Weapon should automatically load the summon actor when used the first time.
   - Will create an actor folder called SDND Temp Actors

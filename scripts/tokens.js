@@ -1,3 +1,4 @@
+import { sdndConstants } from "./constants.js";
 import { dialog } from "./dialog/dialog.js";
 
 export let tokens = {
@@ -19,7 +20,7 @@ export let tokens = {
     },
     "releaseInvalidTokens": function _releaseInvalidTokens(allowInCombat) {
         function shouldRelease(token, allowInCombat) {
-            const excludedFolders = ["Traps", "Loot", "Summons"];
+            const excludedFolders = [sdndConstants.FOLDERS.ACTOR.LOOT, sdndConstants.FOLDERS.ACTOR.TEMP, sdndConstants.FOLDERS.ACTOR.TRAPS];
             if (!allowInCombat && token.inCombat) {
                 return true;
             }
