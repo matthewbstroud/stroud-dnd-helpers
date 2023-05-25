@@ -54,7 +54,7 @@ const twilightUtil = {
 
         healRoll.toMessage({
             user: game.user._id,
-            speaker: ChatMessage.getSpeaker(),
+            speaker: ChatMessage._getSpeakerFromActor({actor: target}),
             flavor: "Twilight Sanctuary - Temp HP"
         });
         // Check if new roll is higher than old temp HP
@@ -78,7 +78,7 @@ const twilightUtil = {
         let twilightEffects = [];
         canvas.scene.tokens
             .filter(t => t.actor && t.actor.type == 'character').forEach(t => {
-                let removeEffects = t.actor.effects.contents.filter(e => e.origin?.startsWith(`Actor.${caster.id}`) && e.label.match(/(twilight sanctuary \(sdnd\)|tsaura)/gi));
+                let removeEffects = t.actor.effects.contents.filter(e => e.origin?.startsWith(`Actor.${caster.id}`) && e.label.match(/(twilight sanctuary|tsaura)/gi));
                 twilightEffects = twilightEffects.concat(removeEffects);
             });
         if (!twilightEffects || twilightEffects.length == 0) {
@@ -99,6 +99,9 @@ const twilightUtil = {
 export let twilightDomain = {
     "itemMacro": twilightUtil.itemMacro,
     "turnEnd": async function _onTurnEnd(casterUuid, actorUuid) {
+        if (!game.combats.active) {
+            return;
+        }
         let caster = await gmFunctions.getTokenOrActor(casterUuid);
         let actor = await gmFunctions.getTokenOrActor(actorUuid);
         if (!caster || !actor) {
@@ -122,9 +125,13 @@ export let twilightDomain = {
                 await twilightUtil.removeEffect(actor, choice);
         }
     },
-    "finalTurn": async function _finalTurn(casterUuid, actorUuid) {
+    "finalTurn": async function _finalTurn(casterUuid, actorUuid, effectName) {
         if (game.combats.active) {
             // if the effect fell off in combat, no final heal
+            return;
+        }
+
+        if (casterUuid == actorUuid && effectName != "TSAura"){
             return;
         }
 

@@ -67,7 +67,7 @@ export const sdndConstants = {
         ]
     },
     "FEATURES": {
-        "TWILIGHT_SANCTUARY": "Twilight Sanctuary"
+        "TWILIGHT_SANCTUARY": "Channel Divinity: Twilight Sanctuary"
     },
     "FOLDERS": {
         "ACTOR": {
@@ -86,6 +86,11 @@ export const sdndConstants = {
             "ACTOR": {
                 "TEMP": `${MODULE_ID}.SDND-Summons`
             },
+            "ITEM": {
+                "FEATURES": `${MODULE_ID}.SDND-Features`,
+                "ITEMS": `${MODULE_ID}.SDND-Items`,
+                "SPELLS": `${MODULE_ID}.SDND-Spells`
+            },
             "MACRO": {
                 "GM": `${MODULE_ID}.SDND-GM-Macros`,
                 "SHARED": `${MODULE_ID}.SDND-Shared-Macros`,
@@ -94,6 +99,7 @@ export const sdndConstants = {
         }
     },
     "SPELLS": {
+        "HUNTERS_MARK": "Hunter's Mark",
         "MAGIC_MISSILE": "Magic Missile",
         "SPIRITUAL_WEAPON": "Spiritual Weapon"
     },

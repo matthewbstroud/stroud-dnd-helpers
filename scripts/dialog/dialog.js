@@ -41,7 +41,7 @@ export let dialog = {
                 },
             },
             default: "yes"
-        }, { width: 500 }).render(true)
+        }, { width: 500 }).render(true);
     }
 };
 

@@ -1,3 +1,4 @@
+import { createActorHeaderButton } from './actors/actors.js';
 import { chat } from './chat/chat.js';
 import { combat } from './combat.js';
 import { gmFunctions } from './gm/gmFunctions.js';
@@ -28,7 +29,11 @@ Hooks.once('socketlib.ready', async function() {
 Hooks.once('ready', async function() {
 	sdndSettings.registerSettings();
 	macros.initFolders();
+	if (game.user?.isGM) {
+		Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
+	}
 	console.log("Loaded Stroud's DnD Helpers");
+	
 });
 globalThis['stroudDnD'] = {
 	chat,
