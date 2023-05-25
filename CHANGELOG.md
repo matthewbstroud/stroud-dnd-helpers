@@ -1,3 +1,11 @@
+# v1.0.8: 
+# Bug fixes
+- Ending combats started with filtered combat should now auto restart the clock.
+- Magic Missile fixes
+  - Store Magic Dart in compendium and load from there...  (Allows migration path)
+  - Replace Roll() with Use()
+# New Features
+- Spell installation wizard.  You can now click SDND from your character sheet to replace any applicable spells/features with those from SDND.
 # v1.0.7: Bug fixes
 - Fix permissions with spawned spiritual weapon.
 - Fix summons folder from tokens.releaseInvalid.

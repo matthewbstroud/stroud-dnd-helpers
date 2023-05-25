@@ -21,7 +21,8 @@ export let combat = {
             return;
         }
         Hooks.once("deleteCombat", async function () {
-            playlists.stop(combatPlaylistId)
+            playlists.stop(combatPlaylistId);
+            SimpleCalendar?.api.startClock();
         });
         playlists.start(combatPlaylistId, true);
     },
