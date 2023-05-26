@@ -9,7 +9,7 @@ async function _rewireMonksActiveTiles() {
         return;
     }
     let tileCount = 0;
-    await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"].actions.length > 0).forEach(tile => {
+    await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions.length > 0).forEach(tile => {
         var tileData = JSON.stringify(tile.flags['monks-active-tiles']);
         tileData = tileData.replace(/Scene\.\w+/g, canvas.scene.uuid);
         tileCount++;
