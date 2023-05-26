@@ -11,8 +11,9 @@ export let journal = {
             return;
         }
         let playersFolder = game.folders.getName("Players");
-        if (!players) {
+        if (!playersFolder) {
             ui.notifications.warn(`Make sure your players are in an actors folder named Players...`);
+            return;
         }
         let players = canvas.scene.tokens.filter((token) => token.actor && token.actor?.folder?.name == "Players").map(t => t.actor).sort(sortByName);
         if (players.length == 0) {

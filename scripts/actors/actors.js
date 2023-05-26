@@ -23,6 +23,7 @@ async function actorConfig(actorDocument) {
     let sdndItems = [
         sdndConstants.FEATURES.TWILIGHT_SANCTUARY,
         sdndConstants.SPELLS.HUNTERS_MARK,
+        sdndConstants.SPELLS.IDENTIFY,
         sdndConstants.SPELLS.MAGIC_MISSILE,
         sdndConstants.SPELLS.SPIRITUAL_WEAPON
     ];

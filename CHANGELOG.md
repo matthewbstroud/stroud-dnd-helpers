@@ -1,5 +1,11 @@
 # v1.0.10: 
 # Bug Fixes
+- Fix bug with create session summary.
+- Add Identify to auto replace list.
+- Handle null check in rewire monk's active tiles.
+- Do not default Lightbringer to be equipped.
+# v1.0.10: 
+# Bug Fixes
 - Change parameters for Twilight Sanctuary
 - Add midi-QOL settings
 # v1.0.9: 
