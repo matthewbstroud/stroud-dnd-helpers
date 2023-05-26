@@ -191,6 +191,7 @@
 			"label": "SDND Features",
 			"path": "packs/sdnd-features.db",
 			"type": "Item",
+			"private": true,
 			"module": "stroud-dnd-helpers"
 		},
 		{
@@ -206,6 +207,7 @@
 			"label": "SDND Spells",
 			"path": "packs/sdnd-spells.db",
 			"type": "Item",
+			"private": true,
 			"module": "stroud-dnd-helpers"
 		},
 		{

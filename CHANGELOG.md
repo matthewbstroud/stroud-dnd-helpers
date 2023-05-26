@@ -1,4 +1,8 @@
-# v1.0.8: 
+# v1.0.10: 
+# Bug Fixes
+- Change parameters for Twilight Sanctuary
+- Add midi-QOL settings
+# v1.0.9: 
 # Bug fixes
 - Ending combats started with filtered combat should now auto restart the clock.
 - Magic Missile fixes
