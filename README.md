@@ -1,6 +1,16 @@
 # Readme
 My collection of automation for DND 5e
 
+Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings.json).  
+Feel free to download them and install them as a starting point.
+
+You can install these settings as follows: 
+- Configure Settings
+- midi-QOL Settings
+- Click Workflow Settings
+- Select Misc tab
+- Click the Import midi-qol settings from JSON file. 
+
 # Utility Macros
 - **Chat**
   - **Delete Chat Messages**: Delete messages that were created less than a specified number of minutes ago.  (Defaults to 30)
