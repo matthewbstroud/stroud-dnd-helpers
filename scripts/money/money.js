@@ -1,5 +1,7 @@
 import { numbers } from "../utility/numbers.js";
 import { dialog } from "../dialog/dialog.js";
+import { items } from "../items/items.js";
+
 const MONEY_MODE = {
     "GIVE": "Give",
     "TAKE": "Take",
@@ -70,13 +72,13 @@ export let moneyInternal = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor);
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor).sort(items.sortByName);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;
         }
 
-        let controlledActors = canvas.tokens.controlled.filter((token) => token.actor && token.actor.type == 'character').map(t => t.actor);
+        let controlledActors = canvas.tokens.controlled.filter((token) => token.actor && token.actor.type == 'character').map(t => t.actor).sort(items.sortByName);
         if (controlledActors.length > 0) {
             sharees = controlledActors;
         }
@@ -148,7 +150,7 @@ export let moneyInternal = {
         return (targetCurrency.pp * 1000) + (targetCurrency.gp * 100) + (targetCurrency.ep * 50) + (targetCurrency.sp * 10) + targetCurrency.cp;
     },
     "giveCurrency": async function _giveCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP) {
-        let sharees = actorUuids.map(uuid => fromUuidSync(uuid));
+        let sharees = await actorUuids.map(uuid => fromUuidSync(uuid)).sort(items.sortByName);
         let actorCount = sharees.length;
         let totalToShare = (totalPP * 1000) + (totalGP * 100) + (totalEP * 50) + (totalSP * 10) + totalCP
         let splitCP = Math.floor(totalToShare / actorCount);
@@ -181,7 +183,7 @@ export let moneyInternal = {
         return ({ pp: newPP, gp: newGP, ep: newEP, sp: newSP, cp: copper });
     },
     "takeCurrency": async function _takeCurrency(actorUuids, totalPP, totalGP, totalEP, totalSP, totalCP) {
-        let targetActors = actorUuids.map(uuid => fromUuidSync(uuid));
+        let targetActors = actorUuids.map(uuid => fromUuidSync(uuid)).sort(items.sortByName);
         if (!targetActors || targetActors.length == 0) {
             return;
         }
