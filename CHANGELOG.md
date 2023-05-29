@@ -1,3 +1,7 @@
+# v1.0.14: 
+# New Features
+- Portent Dice
+  - Add a new shared macro that will allow a character with portent dice to create them as single use items in their inventory.
 # v1.0.13: 
 # New Features
 - Token Management

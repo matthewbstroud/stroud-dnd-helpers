@@ -105,6 +105,7 @@ export const sdndConstants = {
         "SPIRITUAL_WEAPON": "Spiritual Weapon"
     },
     "TEMP_ITEMS":{
-        "MAGIC_DART": "Magic Dart"
+        "MAGIC_DART": "Magic Dart",
+        "PORTENT_DIE": "Portent Die"
     }
 }

@@ -47,13 +47,15 @@ You can install these settings as follows:
   - **Manage Tokens**
     - **Toggle NPC Name**: Works in conjunction with Hide Name from Combat Utility Belt.  Toggles an NPC token between display name hover owner and display name hover all.  Also toggles the hide npc name in CUB.
     - **Show Token Art**: Show the character art associated with the selected token as an image popout.
+    - **Push Prototype Changes**: This will allow you to push prototype changes to the current scene.  Simply select a token and run the macro.
 - **Weapons**
   - **Reload Ranged Weapon**: Allows you to select an equipped ranged weapon and reload it with any available ammo from your inventory.
 
 # Supported Class Features
 |Class|Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|---|
-|Cleric|Twilight Domain|True|False|None|Handles checking for range to caster for each player at end of turn.  Prompts player to clear a condition or apply temp hp. Automatically rolls a final heal on removal, if out of combat.|
+|Cleric|Twilight Sanctuary|True|False|None|Handles checking for range to caster for each player at end of turn.  Prompts player to clear a condition or apply temp hp. Automatically rolls a final heal on removal, if out of combat.|
+|Wizard|Portent Dice|False|False|None|Macro under Stroud DnD Shared Macros that will create the players portent dice.  Each die is a single use item and this feature is sync with their Portent daily uses.|
 
 # Supported Spells
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
