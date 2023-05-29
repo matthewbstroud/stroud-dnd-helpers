@@ -9,7 +9,8 @@ export let tokens = {
         }
         let options = [
             { label: "Show Token Art", value: "showTokenArt" },
-            { label: "Toggle Npc Name", value: "toggleNpcName" }
+            { label: "Toggle Npc Name", value: "toggleNpcName" },
+            { label: "Push Prototype Changes", value: "pushTokenPrototype" }
         ];
         let option = await dialog.createButtonDialog("Manage Tokens", options);
         if (!option) {
@@ -96,6 +97,29 @@ export let tokens = {
                 whisper: ChatMessage.getWhisperRecipients('GM'),
             });
         }
-    }
+    },
+    "pushTokenPrototype": pushTokenPrototype
 };
 
+async function pushTokenPrototype(actor) {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    if (!actor) {
+        ui.notifications.notify('No token selected!');
+        return;
+    }
+    let tokens = actor.getActiveTokens();
+
+    let updates = tokens.map(t => {
+        let token = duplicate(t.document);
+        return mergeObject(token, actor.token ?? actor.prototypeToken);
+    });
+
+    if (!updates || updates.length == 0){
+        return;
+    }
+
+    canvas.scene.updateEmbeddedDocuments("Token", updates);
+}
