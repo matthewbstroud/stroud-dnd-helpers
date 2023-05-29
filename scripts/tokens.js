@@ -101,11 +101,12 @@ export let tokens = {
     "pushTokenPrototype": pushTokenPrototype
 };
 
-async function pushTokenPrototype(actor) {
+async function pushTokenPrototype() {
     if (!game.user.isGM) {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
     }
+    let actor = canvas.tokens.controlled[0]?.actor;
     if (!actor) {
         ui.notifications.notify('No token selected!');
         return;

@@ -1,3 +1,7 @@
+# v1.0.13: 
+# New Features
+- Token Management
+  - Added a function to push prototype changes to all tokens for an actor in the current scene.
 # v1.0.12: 
 # Bug Fixes
 - Sort names in money functions, give, take, and equalize.
