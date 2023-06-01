@@ -106,7 +106,6 @@ async function pushTokenPrototype() {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
     }
-    debugger;
     let actor = canvas.tokens.controlled[0]?.actor;
     if (!actor) {
         ui.notifications.notify('No token selected!');
