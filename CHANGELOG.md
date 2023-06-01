@@ -1,4 +1,4 @@
-# v1.0.12: 
+# v1.0.15: 
 # Bug Fixes
 - Fix bug with update token from prototype.
 # v1.0.14: 
