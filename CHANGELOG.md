@@ -1,3 +1,6 @@
+# v1.0.12: 
+# Bug Fixes
+- Fix bug with update token from prototype.
 # v1.0.14: 
 # New Features
 - Portent Dice
