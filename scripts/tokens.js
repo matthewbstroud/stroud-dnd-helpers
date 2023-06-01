@@ -115,7 +115,7 @@ async function pushTokenPrototype() {
 
     let updates = tokens.map(t => {
         let token = duplicate(t.document);
-        return mergeObject(token, actor.token ?? actor.prototypeToken);
+        return mergeObject(token, actor.prototypeToken);
     });
 
     if (!updates || updates.length == 0){
