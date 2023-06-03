@@ -10,7 +10,7 @@ export let lighting = {
 
 async function getUniqueConfigsFromScene() {
     let configs = canvas.scene.lights.map(l => JSON.stringify({
-        "type": l.config.animation.type,
+        "type": l.config.animation.type ?? "none",
         "color": l.config.color ?? "#000000",
         "bright": l.config.bright,
         "dim": l.config.dim,
@@ -36,7 +36,7 @@ function generateConfigOptionsTable(uniqueConfigs) {
     let configOptions = uniqueConfigs.map(c => `
     <tr>
         <td style="text-align:left"><input type="radio" id="${c.key}" name="configOption" value="${c.key}"></td>
-        <td style="text-align:left">${game.i18n.localize(CONFIG.Canvas.lightAnimations[c.value.type].label)}</td>
+        <td style="text-align:left">${c.value.type == "none" ? "None" : game.i18n.localize(CONFIG.Canvas.lightAnimations[c.value.type].label)}</td>
         <td style='text-align:right'>${c.value.bright}</td>
         <td style='text-align:right'>${c.value.dim}</td>
         <td style="text-align:left;padding-left:10px">${c.value.color}&nbsp;<img width="15" height="15" style="background-color:${c.value.color}"></td>
@@ -49,7 +49,7 @@ function generateConfigOptionsTable(uniqueConfigs) {
         <table style="border-spacing:10px">
           <tr>
             <th style="text-align:left">Selection</th>
-            <th style="text-align:left">Type</th>
+            <th style="text-align:left">Animation Type</th>
             <th style="text-align:right">Bright</th>
             <th style="text-align:right">Dim</th>
             <th style="text-align:left;padding-left:10px">Color</th>
@@ -68,8 +68,14 @@ async function updateLights() {
         if (search_options?.color == "#000000") {
             search_options.color = null;
         }
+        if (search_options.type == "none") {
+            search_options.type = null;
+        }
         if (new_color == "#000000") {
             new_color = null;
+        }
+        if (new_animation == "none") {
+            new_animation = null;
         }
         let targetLights = canvas.scene.lights
             .filter(l =>
@@ -95,7 +101,7 @@ async function updateLights() {
         ui.notifications.notify(`Updated ${targetLights.length} lights.`);
     }
 
-    let animationOptions = '<option value="">None</option>';
+    let animationOptions = '<option value="none">None</option>';
     for (let [k, v] of Object.entries(CONFIG.Canvas.lightAnimations)) {
         animationOptions += `<option value=${k}>${game.i18n.localize(v.label)}</option>`;
     }

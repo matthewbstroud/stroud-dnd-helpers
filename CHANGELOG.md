@@ -1,3 +1,6 @@
+# v1.0.17: 
+# Bug Fixes
+- Handle no animation.
 # v1.0.16: 
 # New Features
 - Enhance Change Lights
