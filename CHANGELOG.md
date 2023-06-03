@@ -1,3 +1,14 @@
+# v1.0.16: 
+# New Features
+- Enchance Change Lights
+  - Now shows all unique configurations in the scene and allows them to be updated.
+  - Can now adjust the following:
+    - Animation Type
+    - Color
+    - Intensity
+    - Bright Distance
+    - Dim Distance
+    - Darkness Activation (min/max)
 # v1.0.15: 
 # Bug Fixes
 - Fix bug with update token from prototype.
