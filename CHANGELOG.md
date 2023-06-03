@@ -1,6 +1,6 @@
 # v1.0.16: 
 # New Features
-- Enchance Change Lights
+- Enhance Change Lights
   - Now shows all unique configurations in the scene and allows them to be updated.
   - Can now adjust the following:
     - Animation Type
