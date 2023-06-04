@@ -1,3 +1,8 @@
+# v1.0.18: 
+# New Features
+- Refactored Toggle NPC Name to use the module Anonymous.
+# Bug Fixes:
+- Remove getUniqueConfigsFromScene from public API.
 # v1.0.17: 
 # Bug Fixes
 - Handle no animation.

@@ -72,20 +72,20 @@ You can install these settings as follows:
 # Required Modules  
 | Module | Verified Version |  
 | --- | --- |  
-| Midi-Qol | 10.0.36 |  
+| Anonymous | 1.3.0 |  
 | Automated Animations | 4.2.32 |  
 | Compendium Folders | 2.5.7 |  
 | DFreds Convenient Effects | 4.1.1 |  
 | Effect Macro | 10.0.15 |  
 | Item Macro | 1.8.0 |  
 | Jules & Ben's Animated Assets | 0.5.6 |  
+| Midi-Qol | 10.0.36 |  
 | Monk's Active Tile Triggers | 10.15 |  
 | Sequencer | 10.0.0 |  
 | Socket Lib | 1.0.12 |  
 | Warpgate | 1.16.0 |  
   
 # Optional supported modules:  
-- Custom Character Sheet Sections  
 - D&D Beyond Importer  
 - Tidy5e Sheet  
 - Token Magic FX  
