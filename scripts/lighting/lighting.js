@@ -3,8 +3,7 @@ import { numbers } from "../utility/numbers.js";
 export let lighting = {
     "fireplace": fireplace,
     "lights": {
-        "update": updateLights,
-        "getUniqueConfigsFromScene": getUniqueConfigsFromScene
+        "update": updateLights
     }
 };
 
