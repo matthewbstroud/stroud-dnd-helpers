@@ -1,3 +1,6 @@
+# v1.0.19: 
+# Bug Fixes
+- Error on toggle npc name.
 # v1.0.18: 
 # New Features
 - Refactored Toggle NPC Name to use the module Anonymous.
