@@ -74,7 +74,7 @@ async function _toggleNpcName() {
     if (api) {
         strVal = await _toggleNpcNameAnon(api, currentToken);
     }
-    if (game.modules.get("combat-utility-belt")?.active ?? false) {
+    else if (game.modules.get("combat-utility-belt")?.active ?? false) {
         strVal = await _toggleNpcNameCub(currentToken);
     }
     else {
