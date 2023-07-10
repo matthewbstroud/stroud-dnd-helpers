@@ -142,6 +142,16 @@ export let gmFunctions = {
             async () => await importFromCompedium(type, packId, packItemId, parentFolderId),
             async ()  => await socket.executeAsGM("importFromCompendium", type, packId, packItemId, parentFolderId)
         );
+    },
+    "startClock": async function _startClock(){
+        if (!SimpleCalendar) {
+            return;
+        }
+        if (!SimpleCalendar?.api?.isPrimaryGM() ?? false) {
+            socket.executeForOtherGMs("startClock");
+            return;
+        }
+        SimpleCalendar.api.startClock();
     }
 };
 

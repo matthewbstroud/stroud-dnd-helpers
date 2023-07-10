@@ -1,3 +1,6 @@
+# v1.0.20: 
+# New Features
+- Add ability for secondary GMs to start the clock on Simple Calendar.
 # v1.0.19: 
 # Bug Fixes
 - Error on toggle npc name.
