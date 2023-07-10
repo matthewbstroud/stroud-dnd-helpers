@@ -1,3 +1,4 @@
+import { calendar } from './calendar/calendar.js';
 import { createActorHeaderButton } from './actors/actors.js';
 import { chat } from './chat/chat.js';
 import { combat } from './combat.js';
@@ -36,6 +37,7 @@ Hooks.once('ready', async function() {
 	
 });
 globalThis['stroudDnD'] = {
+	calendar,
 	chat,
 	combat,
 	features,
