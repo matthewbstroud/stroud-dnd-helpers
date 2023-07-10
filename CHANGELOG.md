@@ -1,3 +1,6 @@
+# v1.0.21: 
+# Bug Fixes
+- Fix system version on calendar gm scripts.
 # v1.0.20: 
 # New Features
 - Add ability for secondary GMs to start the clock on Simple Calendar.
