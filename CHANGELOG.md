@@ -1,3 +1,6 @@
+# v1.0.22: 
+# New Features
+- Added new GM Macro to simulate combat damage to a group of selected tokens.
 # v1.0.21: 
 # Bug Fixes
 - Fix system version on calendar gm scripts.
