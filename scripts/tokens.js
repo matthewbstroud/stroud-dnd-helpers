@@ -50,6 +50,12 @@ export let tokens = {
             ui.notifications.notify('No token selected!');
             return;
         }
+        // search for existing popout
+        var popout = Object.values(ui.windows)?.find(v => v instanceof ImagePopout && v?.options.uuid == actor.uuid);
+        if (popout) {
+            // already shown
+            return;
+        }
         let ip = new ImagePopout(actor.img, { uuid: actor.uuid });
         ip.render(true); // Display for self
         ip.shareImage(); // Display to all other players
