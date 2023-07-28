@@ -1,3 +1,6 @@
+# v1.0.23: 
+# Bug Fixes
+- Do not show token art if is already loaded...  (Stop double-click issue.)
 # v1.0.22: 
 # New Features
 - Added new GM Macro to simulate combat damage to a group of selected tokens.
