@@ -251,8 +251,13 @@
 	"readme": "README.md",
 	"media": [
 		{
+			"type": "cover",
+			"url": "https://raw.githubusercontent.com/matthewbstroud/stroud-dnd-helpers/main/images/sdnd_coverart.webp",
+			"caption": "Stroud's DnD Helpers"
+		},
+		{
 			"type": "icon",
-			"url": ""
+			"url": "https://raw.githubusercontent.com/matthewbstroud/stroud-dnd-helpers/main/images/icons/sdnd_icon.webp"
 		}
 	]
 }

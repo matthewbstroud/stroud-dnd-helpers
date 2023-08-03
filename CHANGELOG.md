@@ -1,3 +1,6 @@
+# v1.0.25
+# Bug Fixes
+- Fix broken cover image.
 # v1.0.24: 
 # Bug Fixes
 - Simulated combat will only be applied to tokens that are not in the current combat tracker.
