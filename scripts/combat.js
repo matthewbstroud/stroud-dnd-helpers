@@ -101,7 +101,7 @@ async function applyAttackers(attackerCount, rollFormula, hitModifier, autoApply
     game.user.setFlag('world', 'sdnd.simulateAttackers', { count: attackerCount, formula: rollFormula, hit: hitModifier, auto: autoApplyDamage });
 
     // release tokens that shouldn't take damage
-    tokens.releaseInvalidTokens(true);
+    tokens.releaseInvalidTokens(false);
     // get the tokens remaining
     let targets = canvas.tokens.controlled;
     if (!targets || targets.length == 0) {

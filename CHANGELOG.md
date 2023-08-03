@@ -1,3 +1,6 @@
+# v1.0.24: 
+# Bug Fixes
+- Simulated combat will only be applied to tokens that are not in the current combat tracker.
 # v1.0.23: 
 # Bug Fixes
 - Do not show token art if is already loaded...  (Stop double-click issue.)
