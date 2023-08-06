@@ -1,3 +1,6 @@
+# v1.0.26
+# New Features
+- Add a tracker to combat music to ensure no songs repeat until all have been played.
 # v1.0.25
 # Bug Fixes
 - Fix broken cover image.
