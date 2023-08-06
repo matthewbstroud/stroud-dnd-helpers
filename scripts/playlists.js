@@ -3,45 +3,55 @@ import { sdndSettings } from './settings.js';
 import { sdndConstants } from './constants.js';
 
 
-function playNext(event) {
-    let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
-    let combatPlaylist = game.playlists.get(combatPlaylistId);
-    if (combatPlaylist) {
-        playlists.playNextSong(combatPlaylist);
+async function reset(playListId) {
+    let playList = game.playlists.get(playListId);
+    if (!playList){
+        return;
+    }
+    for (let sound of playList.sounds.contents) {
+        await sound.setFlag(sdndConstants.MODULE_ID, "played", false);
+    }
+    console.log(`Playlist '${playList.name}' has been reset.`);
+}
+
+function playNext(sound) {
+    let playlistId = sound['playListId'];
+    if (!playlistId){
+        return;
+    }
+    let playlist = game.playlists.get(playlistId);
+    if (playlist) {
+        playlists.playNextSong(playlist);
     }
 }
 
-function stopNext(event) {
-    for (let e in event.events.end) {
-        let ce = event.events.end[e];
+function stopNext(sound) {
+    for (let e in sound.events.end) {
+        let ce = sound.events.end[e];
         if (ce.fn.name == "playNext") {
-            delete event.events.end[e];
+            delete sound.events.end[e];
         }
     }
 }
 
 export let playlists = {
     "start": async function _start(playListId, random) {
-        let combatPlaylist = game.playlists.get(playListId);
-        if (combatPlaylist) {
-            if (combatPlaylist.playing) {
+        let playList = game.playlists.get(playListId);
+        if (playList) {
+            if (playList.playing) {
                 return;
             }
-            if (random){
-                let songs = combatPlaylist.playbackOrder;
-                let songIndex = numbers.getRandomInt(0, songs.length);
-                combatPlaylist.playNext(songs[songIndex]);
-            }
-            combatPlaylist.playAll();
+            this.playNextSong(playList);
         }
     },
     "playNextSong": async function _playNextSong(playList){
+        if ((playList.sounds?.contents.length ?? 0) == 0) {
+            ui.notifications.warn(`Playlist ${playList.name} is empty.`);
+            return;
+        }
         let unplayedSongs = playList.sounds.filter(s => !(s.getFlag(sdndConstants.MODULE_ID, "played") ?? false));
         if (!unplayedSongs || unplayedSongs.length == 0) {
-            // clear the flag
-            for (let sound of playList.sounds.contents) {
-                await sound.setFlag("stroud-dnd-helpers", "played", false);
-            }
+            await reset(playList.id);
             unplayedSongs = playList.sounds.filter(s => !(s.getFlag(sdndConstants.MODULE_ID, "played") ?? false));
             if (!unplayedSongs) {
                 ui.notifications.error(`Playlist ${playList.name} is either empty or cannot be reset.`);
@@ -49,11 +59,12 @@ export let playlists = {
             }
         }
 
-        let songIndex = unplayedSongs.length == 1 ? 0 : numbers.getRandomInt(0, unplayedSongs.length - 1);
+        let songIndex = unplayedSongs.length == 1 ? 0 : numbers.getRandomInt(0, unplayedSongs.length);
         let nextSong = unplayedSongs[songIndex];
         await nextSong.setFlag(sdndConstants.MODULE_ID, "played", true);
         await playList.playSound(nextSong);
         if (nextSong.sound) {
+            nextSong.sound["playListId"] = playList.id; 
             nextSong.sound.on("end", playNext, { once: true});
             nextSong.sound.on("stop", stopNext, { once: true});
         }
@@ -100,6 +111,14 @@ export let music = {
                 return;
             }
             playlists.stop(combatPlaylistId);
+        },
+        "reset": async function _reset(){
+            let combatPlaylistId = sdndSettings.CombatPlayList.getValue();
+            if (!combatPlaylistId || combatPlaylistId == "none"){
+                ui.notifications.notify('You must first select a combat playlist under settings.');
+                return;
+            }
+            reset(combatPlaylistId);
         }
     }
 }

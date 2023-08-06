@@ -1,3 +1,6 @@
+# v1.0.27
+# New Features
+- Add a manual reset for combat sound tracking.
 # v1.0.26
 # New Features
 - Add a tracker to combat music to ensure no songs repeat until all have been played.
