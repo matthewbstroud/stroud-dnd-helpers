@@ -102,7 +102,14 @@ jobs:
           MANIFEST: ${{ env.latest_manifest_url }}
           DOWNLOAD: ${{ env.release_module_url }}
 
-      - run: npm install -g @foundryvtt/foundryvtt-cli
+      - name: Setup Node and Foundry CLI
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Make Sure Foundry is installed
+        run: npm install -g @foundryvtt/foundryvtt-cli
+      - run: fvtt configure set "dataPath" ${GITHUB_WORKSPACE}
       - name: Build Packs
         run: npm run pullYMLtoLDB
 
