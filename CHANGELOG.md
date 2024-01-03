@@ -1,3 +1,6 @@
+# v1.11.0
+# New Features
+- Version 11 Support.
 # v1.0.27
 # New Features
 - Add a manual reset for combat sound tracking.
