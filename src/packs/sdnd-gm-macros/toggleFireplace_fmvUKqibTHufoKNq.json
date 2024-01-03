@@ -1,0 +1,39 @@
+{
+  "name": "toggleFireplace",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp",
+  "scope": "global",
+  "command": "stroudDnD.lighting.fireplace.toggleFireplace(args[0]);",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.PbWlw7KHZ5eiXusq"
+    },
+    "cf": {
+      "id": "temp_o1at37ip3uc"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1684328053768,
+    "modifiedTime": 1704230475879,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "E6ypcLy4qZAFu3pE",
+  "sort": 0,
+  "_id": "fmvUKqibTHufoKNq",
+  "_key": "!macros!fmvUKqibTHufoKNq"
+}

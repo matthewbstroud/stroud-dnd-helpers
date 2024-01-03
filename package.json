@@ -1,0 +1,23 @@
+{
+  "name": "stroud-dnd-helpers",
+  "version": "1.11.1",
+  "description": "Stroud DnD Helpers",
+  "main": "module.json",
+  "scripts": {
+    "pushLDBtoYML": "node ./tools/pushLDBtoYML.mjs",
+    "pullYMLtoLDB": "node ./tools/pullYMLtoLDB.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewbstroud/stroud-dnd-helpers.git"
+  },
+  "author": "Matthew Stroud",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/matthewbstroud/stroud-dnd-helpers/issues"
+  },
+  "homepage": "https://github.com/matthewbstroud/stroud-dnd-helpers#readme",
+  "dependencies": {
+    "@foundryvtt/foundryvtt-cli": "^1.0.2"
+  }
+}

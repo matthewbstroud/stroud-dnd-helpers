@@ -1,0 +1,39 @@
+{
+  "name": "Combat Music",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/combat_music.webp",
+  "scope": "global",
+  "command": "stroudDnD.music.combat.toggle()",
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.9dMUjx4EQowvxazr"
+    },
+    "cf": {
+      "id": "temp_gbszdydmoqh"
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683057647543,
+    "modifiedTime": 1704230475873,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "XOzQrDIZhyNZAS4a",
+  "sort": 0,
+  "_id": "JgKTwBOGa7FbU1p2",
+  "_key": "!macros!JgKTwBOGa7FbU1p2"
+}

@@ -1,0 +1,37 @@
+{
+  "name": "Reload Ranged Weapon",
+  "type": "script",
+  "author": "3DtWXMkIAYPAMybb",
+  "img": "modules/stroud-dnd-helpers/images/icons/reload.webp",
+  "scope": "global",
+  "command": "await stroudDnD.combat.weapons.ranged.reload();",
+  "ownership": {
+    "default": 2,
+    "3DtWXMkIAYPAMybb": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {},
+    "cf": {
+      "id": "temp_o9l7sx1qrl"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1684503524233,
+    "modifiedTime": 1704307577762,
+    "lastModifiedBy": "3DtWXMkIAYPAMybb"
+  },
+  "folder": "gxMtvkHrFypC1CFP",
+  "_id": "x3rHpMHXZyuq53fZ",
+  "sort": 0,
+  "_key": "!macros!x3rHpMHXZyuq53fZ"
+}

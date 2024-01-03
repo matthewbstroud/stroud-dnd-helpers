@@ -1,8 +1,0 @@
-2024/01/03-15:51:41.740 4ee4 Recovering log #71
-2024/01/03-15:51:41.746 4ee4 Delete type=0 #71
-2024/01/03-15:51:41.746 4ee4 Delete type=3 #69
-2024/01/03-15:52:34.468 4ebc Level-0 table #76: started
-2024/01/03-15:52:34.468 4ebc Level-0 table #76: 0 bytes OK
-2024/01/03-15:52:34.471 4ebc Delete type=0 #74
-2024/01/03-15:52:34.474 4ebc Manual compaction at level-0 from '!folders!DsdPQNXZ1KytoyaT' @ 72057594037927935 : 1 .. '!macros!x3rHpMHXZyuq53fZ' @ 0 : 0; will stop at (end)
-2024/01/03-15:52:34.474 4ebc Manual compaction at level-1 from '!folders!DsdPQNXZ1KytoyaT' @ 72057594037927935 : 1 .. '!macros!x3rHpMHXZyuq53fZ' @ 0 : 0; will stop at (end)

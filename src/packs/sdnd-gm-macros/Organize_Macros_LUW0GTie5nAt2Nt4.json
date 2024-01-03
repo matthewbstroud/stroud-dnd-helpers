@@ -1,0 +1,39 @@
+{
+  "name": "Organize Macros",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/Folders_Icon.webp",
+  "scope": "global",
+  "command": "stroudDnD.macros.organize();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": true,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.vCRurwSrGeMxY2rv"
+    },
+    "cf": {
+      "id": "temp_kpndug8gqpi"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1682293522193,
+    "modifiedTime": 1704230475920,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "7En6WIeQFMH9rI4e",
+  "sort": 0,
+  "_id": "LUW0GTie5nAt2Nt4",
+  "_key": "!macros!LUW0GTie5nAt2Nt4"
+}

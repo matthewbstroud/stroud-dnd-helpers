@@ -1,0 +1,36 @@
+{
+  "name": "Start Clock",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "icons/svg/clockwork.svg",
+  "command": "stroudDnD.calendar.startClock();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.MGY7Xf7EAU30MOgt"
+    },
+    "cf": {
+      "id": "temp_kc9syis59j"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1688997251195,
+    "modifiedTime": 1704230475941,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "UbeizW5wDasaCYtx",
+  "sort": 0,
+  "_id": "LzuW2tTJOOAOz9zR",
+  "_key": "!macros!LzuW2tTJOOAOz9zR"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Create Session Summary",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "icons/tools/navigation/hourglass-grey.webp",
+  "command": "stroudDnD.journal.generateSessionSummary()",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.nzcW2fjw1SYXoD7Z"
+    },
+    "cf": {
+      "id": "temp_x5t516bv5ab"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683502840820,
+    "modifiedTime": 1704230475935,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "L5DXvpq68jY0FJvU",
+  "sort": 0,
+  "_id": "2yj5GuzQSFdu4mXZ",
+  "_key": "!macros!2yj5GuzQSFdu4mXZ"
+}

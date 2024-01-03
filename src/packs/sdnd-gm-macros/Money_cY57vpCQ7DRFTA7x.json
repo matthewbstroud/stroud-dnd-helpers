@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Money",
+  "sorting": "a",
+  "type": "Macro",
+  "folder": null,
+  "_id": "cY57vpCQ7DRFTA7x",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1704230475909,
+    "modifiedTime": 1704230475909,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!cY57vpCQ7DRFTA7x"
+}

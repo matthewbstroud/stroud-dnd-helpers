@@ -1,0 +1,39 @@
+{
+  "name": "Identify Item",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "icons/magic/perception/orb-eye-scrying.webp",
+  "command": "stroudDnD.identification.identifyItem()",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.0L9bQP7jhMYOrYSC"
+    },
+    "cf": {
+      "id": "temp_unq6iotj7k"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683503366202,
+    "modifiedTime": 1704230475856,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "wamutHeQkMbC2wSu",
+  "sort": 0,
+  "_id": "kY6s0b5ohLfFOaMS",
+  "_key": "!macros!kY6s0b5ohLfFOaMS"
+}

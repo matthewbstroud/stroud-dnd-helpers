@@ -1,0 +1,39 @@
+{
+  "name": "Manage Money",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "icons/skills/social/theft-pickpocket-bribery-brown.webp",
+  "scope": "global",
+  "command": "stroudDnD.money.manageMoney();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.6kAqvPoZiDWmCXZa"
+    },
+    "cf": {
+      "id": "temp_ik45zhujra"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1682372738102,
+    "modifiedTime": 1704230475912,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "cY57vpCQ7DRFTA7x",
+  "sort": 0,
+  "_id": "saPb6oJoZpm1ZnC9",
+  "_key": "!macros!saPb6oJoZpm1ZnC9"
+}

@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Features",
+  "sorting": "m",
+  "type": "Macro",
+  "folder": null,
+  "_id": "rK02wMsFOYDCWqRu",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1704230606945,
+    "modifiedTime": 1704230606945,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!rK02wMsFOYDCWqRu"
+}

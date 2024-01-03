@@ -1,0 +1,39 @@
+{
+  "name": "Rewire Monk's Active Tiles",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/rewire.webp",
+  "scope": "global",
+  "command": "await stroudDnD.utility.scene.rewireMonksActiveTiles();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.UIbwYezg7MaLFhv4"
+    },
+    "cf": {
+      "id": "temp_yvk8g66149"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1684590171235,
+    "modifiedTime": 1704230475907,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "7QpPRdigbBnFblUq",
+  "sort": 0,
+  "_id": "NgcjwDfxbFe1ZnLW",
+  "_key": "!macros!NgcjwDfxbFe1ZnLW"
+}
