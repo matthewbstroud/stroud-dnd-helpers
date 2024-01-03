@@ -101,6 +101,9 @@ jobs:
           URL: ${{ env.project_url }}
           MANIFEST: ${{ env.latest_manifest_url }}
           DOWNLOAD: ${{ env.release_module_url }}
+      
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Setup Node and Foundry CLI
         uses: actions/setup-node@v4
