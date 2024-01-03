@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Temp",
+  "sorting": "m",
+  "type": "Item",
+  "folder": null,
+  "_id": "cwfO7DCwPmnA7K6r",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1704230556642,
+    "modifiedTime": 1704230556642,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!cwfO7DCwPmnA7K6r"
+}

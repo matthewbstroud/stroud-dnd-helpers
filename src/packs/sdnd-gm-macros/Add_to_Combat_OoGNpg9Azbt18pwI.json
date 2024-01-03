@@ -1,0 +1,39 @@
+{
+  "name": "Add to Combat",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/addToCombat.webp",
+  "command": "stroudDnD.combat.startFilteredCombat();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": true,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.jmJJ0Aye5e7RnGOE"
+    },
+    "cf": {
+      "id": "temp_q8h9u28x1d"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683056273405,
+    "modifiedTime": 1704230475927,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "gI24D8dwAmCgrhfH",
+  "sort": 0,
+  "_id": "OoGNpg9Azbt18pwI",
+  "_key": "!macros!OoGNpg9Azbt18pwI"
+}

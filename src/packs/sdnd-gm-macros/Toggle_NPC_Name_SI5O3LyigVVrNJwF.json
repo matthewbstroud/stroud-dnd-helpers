@@ -1,0 +1,39 @@
+{
+  "name": "Toggle NPC Name",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "icons/skills/social/diplomacy-handshake.webp",
+  "command": "stroudDnD.tokens.toggleNpcName();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.whE00zDlOdiovypw"
+    },
+    "cf": {
+      "id": "temp_j2c5ny958ws"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683503858206,
+    "modifiedTime": 1704230475864,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "OEfkITVWvZ83IdKI",
+  "sort": 0,
+  "_id": "SI5O3LyigVVrNJwF",
+  "_key": "!macros!SI5O3LyigVVrNJwF"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "Spiritual Weapon",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/JB2A_DnD5e/Library/2nd_Level/Spiritual_Weapon/SpiritualWeapon_Mace01_01_Spectral_Blue_Thumb.webp",
+  "scope": "global",
+  "command": "stroudDnD.spells.SpiritualWeapon.castOrUse();",
+  "ownership": {
+    "default": 2,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.mUABw6NPGCL3h69V"
+    },
+    "cf": {
+      "id": "temp_2wckzt37zsn"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1682168583910,
+    "modifiedTime": 1704230606942,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "DsdPQNXZ1KytoyaT",
+  "sort": 0,
+  "_id": "WlRUr5qIvp2b1Caz",
+  "_key": "!macros!WlRUr5qIvp2b1Caz"
+}

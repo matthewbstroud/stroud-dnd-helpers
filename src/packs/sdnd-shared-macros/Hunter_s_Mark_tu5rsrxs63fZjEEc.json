@@ -1,0 +1,39 @@
+{
+  "name": "Hunter's Mark",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/ChangeHuntersMark.webp",
+  "scope": "global",
+  "command": "stroudDnD.spells.HuntersMark.castOrUse();",
+  "ownership": {
+    "default": 2,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.QNUz8bj9e3lffMWF"
+    },
+    "cf": {
+      "id": "temp_2wckzt37zsn"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683293300601,
+    "modifiedTime": 1704230606942,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "DsdPQNXZ1KytoyaT",
+  "sort": 0,
+  "_id": "tu5rsrxs63fZjEEc",
+  "_key": "!macros!tu5rsrxs63fZjEEc"
+}

@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Cleric",
+  "sorting": "m",
+  "type": "Item",
+  "folder": null,
+  "_id": "YcCwvZw8ou9MVGEF",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1704230551816,
+    "modifiedTime": 1704230551816,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!YcCwvZw8ou9MVGEF"
+}

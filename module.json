@@ -125,10 +125,10 @@
 				"type": "module",
 				"manifest": "https://github.com/kandashi/Active-Auras/releases/latest/download/module.json",
 				"compatibility": {
-					"minimum": "v0.5.7",
-					"verified": "v0.5.7"
+				  "minimum": "0.9.2",
+				  "verified": "0.9.2"
 				}
-			},
+			  },
 			{
 				"id": "monks-active-tiles",
 				"type": "module",

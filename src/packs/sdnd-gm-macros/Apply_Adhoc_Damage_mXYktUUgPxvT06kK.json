@@ -1,0 +1,39 @@
+{
+  "name": "Apply Adhoc Damage",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/Adhoc_Damage.webp",
+  "command": "stroudDnD.combat.applyAdhocDamage();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": true,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.7b1d76mVpRpyzPht"
+    },
+    "cf": {
+      "id": "temp_q8h9u28x1d"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1684341103873,
+    "modifiedTime": 1704230475927,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "gI24D8dwAmCgrhfH",
+  "sort": 0,
+  "_id": "mXYktUUgPxvT06kK",
+  "_key": "!macros!mXYktUUgPxvT06kK"
+}

@@ -1,0 +1,19 @@
+{
+  "color": "#000000",
+  "name": "Lighting",
+  "sorting": "m",
+  "type": "Macro",
+  "folder": null,
+  "_id": "r9KHDl3UrdYhry9j",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1704230475881,
+    "modifiedTime": 1704230475881,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!r9KHDl3UrdYhry9j"
+}

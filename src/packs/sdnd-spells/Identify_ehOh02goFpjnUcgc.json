@@ -1,0 +1,203 @@
+{
+  "type": "spell",
+  "system": {
+    "description": {
+      "value": "<p>You choose one object that you must touch throughout the casting of the spell. If it is a magic item or some other magic-imbued object, you learn its properties and how to use them, whether it requires attunement to use, and how many charges it has, if any. You learn whether any spells are affecting the item and what they are. If the item was created by a spell, you learn which spell created it.</p>\n<p>If you instead touch a creature throughout the casting, you learn what spells, if any, are currently affecting it.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": "Basic Rules, Player's Handbook pg 252",
+    "activation": {
+      "type": "minute",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": "inst"
+    },
+    "cover": null,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": ""
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": "touch"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": "",
+      "recovery": ""
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null
+    },
+    "ability": "",
+    "actionType": "other",
+    "attackBonus": "",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "level": 1,
+    "school": "div",
+    "components": {
+      "vocal": true,
+      "somatic": true,
+      "material": true,
+      "ritual": true,
+      "concentration": false
+    },
+    "materials": {
+      "value": "a pearl worth at least 100 gp and an owl feather",
+      "consumed": false,
+      "cost": 100,
+      "supply": 0
+    },
+    "preparation": {
+      "mode": "prepared",
+      "prepared": false
+    },
+    "scaling": {
+      "mode": "none",
+      "formula": ""
+    }
+  },
+  "name": "Identify",
+  "flags": {
+    "ddbimporter": {
+      "id": 138343,
+      "definitionId": 2152,
+      "entityTypeId": 435869154,
+      "dndbeyond": {
+        "lookup": "classSpell",
+        "class": "Wizard",
+        "level": 4,
+        "characterClassId": 111356712,
+        "spellLevel": 1,
+        "ability": "int",
+        "mod": 5,
+        "dc": 15,
+        "cantripBoost": false,
+        "overrideDC": false,
+        "id": 138343,
+        "entityTypeId": 435869154,
+        "healingBoost": 0,
+        "usesSpellSlot": true
+      },
+      "originalName": "Identify",
+      "sources": [
+        {
+          "sourceId": 1,
+          "pageNumber": null,
+          "sourceType": 2
+        },
+        {
+          "sourceId": 2,
+          "pageNumber": 252,
+          "sourceType": 1
+        }
+      ],
+      "tags": [
+        "Detection"
+      ],
+      "version": "3.4.17",
+      "effectsApplied": true,
+      "importId": "JiUFCIs9qNKyajpp",
+      "overrideId": "NONE",
+      "ignoreIcon": false,
+      "ignoreItemImport": true,
+      "ignoreItemForChrisPremades": true,
+      "retainResourceConsumption": false
+    },
+    "midiProperties": {
+      "magicdam": true,
+      "magiceffect": true,
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "rollOther": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "concentration": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "spell-class-filter-for-5e": {
+      "parentClass": "wizard"
+    },
+    "itemacro": {
+      "macro": {
+        "name": "Identify",
+        "type": "script",
+        "scope": "global",
+        "command": "",
+        "author": "6yhz13iFYYklKtgA",
+        "_id": null,
+        "img": "icons/svg/dice-target.svg",
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0
+        },
+        "flags": {},
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": null,
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null
+        }
+      }
+    },
+    "midi-qol": {
+      "effectActivation": false,
+      "onUseMacroName": "[preambleComplete]function.stroudDnD.identification.itemMacro"
+    },
+    "stroud-dnd-helpers": {
+      "importedItem": true
+    },
+    "core": {
+      "sourceId": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x"
+    }
+  },
+  "effects": [],
+  "img": "icons/tools/scribal/magnifying-glass.webp",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.1.5",
+    "coreVersion": "10.291",
+    "createdTime": 1682374019324,
+    "modifiedTime": 1685024753333,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": null,
+  "sort": 0,
+  "_id": "ehOh02goFpjnUcgc",
+  "_key": "!items!ehOh02goFpjnUcgc"
+}

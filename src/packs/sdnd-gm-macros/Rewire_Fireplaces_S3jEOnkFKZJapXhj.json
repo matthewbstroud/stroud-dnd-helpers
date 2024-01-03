@@ -1,0 +1,39 @@
+{
+  "name": "Rewire Fireplaces",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp",
+  "scope": "global",
+  "command": "stroudDnD.lighting.fireplace.rewireFireplaces();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": true,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.T7zwwH0BmAXHvYBW"
+    },
+    "cf": {
+      "id": "temp_cv6lc7m3f8h"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1684332614031,
+    "modifiedTime": 1704230475894,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "70T8uDvAIa6574KD",
+  "sort": 0,
+  "_id": "S3jEOnkFKZJapXhj",
+  "_key": "!macros!S3jEOnkFKZJapXhj"
+}

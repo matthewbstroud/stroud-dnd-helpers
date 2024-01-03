@@ -1,0 +1,39 @@
+{
+  "name": "Prune Chatlog",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/PruneChatLogWhite.webp",
+  "command": "await stroudDnD.chat.prune();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "combat-utility-belt": {
+      "macroTrigger": ""
+    },
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.pxMLEOypHftGsg4M"
+    },
+    "cf": {
+      "id": "temp_x5t516bv5ab"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1683500334467,
+    "modifiedTime": 1704230475935,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "L5DXvpq68jY0FJvU",
+  "sort": 0,
+  "_id": "cLYG8YplMKNeZBSX",
+  "_key": "!macros!cLYG8YplMKNeZBSX"
+}

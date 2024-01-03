@@ -1,0 +1,36 @@
+{
+  "name": "Simulated Damage",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/simulatedDamage.webp",
+  "scope": "global",
+  "command": "stroudDnD.combat.simulatedAttackers();",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "advanced-macros": {
+      "runAsGM": false,
+      "runForSpecificUser": ""
+    },
+    "core": {
+      "sourceId": "Macro.vg8RrTT6na4PzssH"
+    },
+    "cf": {
+      "id": "temp_q8h9u28x1d"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1689181187164,
+    "modifiedTime": 1704230475927,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": "gI24D8dwAmCgrhfH",
+  "sort": 0,
+  "_id": "LVze83ESKGoIjbsR",
+  "_key": "!macros!LVze83ESKGoIjbsR"
+}
