@@ -1,5 +1,9 @@
 # v1.11.0
 # New Features
+- utility.scene.packAdventureThumbnails
+- utility.dumpDependencies
+# v1.11.0
+# New Features
 - Version 11 Support.
 # v1.0.27
 # New Features

@@ -70,7 +70,7 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
 
       # Extract version embedded in the tag.
@@ -82,7 +82,7 @@ jobs:
       # "version" key required for a valid module manifest.
       - name: Extract Version From Tag
         id: get_version
-        uses: battila7/get-version-action@v2
+        uses: dhkatz/get-version-action@v3
 
 
       # Modify "module.json" with values specific to the release.
@@ -102,16 +102,15 @@ jobs:
           MANIFEST: ${{ env.latest_manifest_url }}
           DOWNLOAD: ${{ env.release_module_url }}
       
-      - name: Install Dependencies
-        run: npm ci
 
       - name: Setup Node and Foundry CLI
         uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - name: Make Sure Foundry is installed
-        run: npm install -g @foundryvtt/foundryvtt-cli
+      - name: Install Dependencies
+        run: npm ci
+
       - run: fvtt configure set "dataPath" ${GITHUB_WORKSPACE}
       - name: Build Packs
         run: npm run pullYMLtoLDB
