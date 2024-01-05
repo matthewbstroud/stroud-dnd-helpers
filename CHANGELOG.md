@@ -1,4 +1,4 @@
-# v1.11.6
+# v1.11.7
 # New Features
 - utility.scene.packAdventureThumbnails
 - utility.dumpDependencies
