@@ -1,3 +1,6 @@
+# v1.11.8
+# Bug fixes
+- Fix image link for Lightbringer
 # v1.11.7
 # New Features
 - utility.scene.packAdventureThumbnails
