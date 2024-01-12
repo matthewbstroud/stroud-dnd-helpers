@@ -1,0 +1,270 @@
+{
+  "name": "Custom Convenient Effects",
+  "type": "consumable",
+  "img": "modules/dfreds-convenient-effects/images/magic-palm.svg",
+  "effects": [
+    {
+      "_id": "evBrozSIt6oKJDPD",
+      "changes": [],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/commodities/currency/coin-embossed-star-gold.webp",
+      "origin": "Item.jj7DRSLdZbphURkV",
+      "transfer": false,
+      "flags": {
+        "isCustomConvenient": true,
+        "convenientDescription": "This person buys and sells.",
+        "dae": {
+          "selfTarget": false,
+          "stackable": "none",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": false
+        },
+        "core": {
+          "statusId": "Convenient Effect: Vendor"
+        },
+        "dnd5e-helpers": {
+          "rest-effect": "Ignore"
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "radius": null,
+          "alignment": "",
+          "type": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false
+        }
+      },
+      "tint": null,
+      "name": "Vendor",
+      "description": "",
+      "statuses": []
+    },
+    {
+      "_id": "Bd9n6GwrPS17sE9F",
+      "changes": [],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": 3600,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/consumables/drinks/alcohol-spirits-bottle-blue.webp",
+      "origin": "Item.jj7DRSLdZbphURkV",
+      "transfer": false,
+      "flags": {
+        "isCustomConvenient": true,
+        "convenientDescription": "You feel intoxicated and maybe a little nauseous.",
+        "dae": {
+          "selfTarget": false,
+          "stackable": "none",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": false
+        },
+        "core": {
+          "statusId": "Convenient Effect: Buzzed"
+        },
+        "dnd5e-helpers": {
+          "rest-effect": "Ignore"
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "radius": null,
+          "alignment": "",
+          "type": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false
+        }
+      },
+      "tint": null,
+      "name": "Buzzed",
+      "description": "",
+      "statuses": []
+    },
+    {
+      "_id": "A5kuNPAY0qDgWLnD",
+      "changes": [
+        {
+          "key": "flags.midi-qol.disadvantage.attack.all",
+          "mode": 0,
+          "value": "1",
+          "priority": 0
+        },
+        {
+          "key": "flags.midi-qol.disadvantage.ability.check.all",
+          "mode": 0,
+          "value": "1",
+          "priority": 0
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": 3600,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "modules/dfreds-convenient-effects/images/poisoned.svg",
+      "origin": "Item.jj7DRSLdZbphURkV",
+      "tint": null,
+      "transfer": false,
+      "flags": {
+        "isCustomConvenient": true,
+        "convenientDescription": "Someone had a little too much to drink...",
+        "dae": {
+          "selfTarget": false,
+          "stackable": "none",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "transfer": false
+        },
+        "core": {
+          "statusId": "Convenient Effect: Alcohol Poisoning"
+        },
+        "dnd5e-helpers": {
+          "rest-effect": "Ignore"
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "radius": null,
+          "alignment": "",
+          "type": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false
+        }
+      },
+      "name": "Alcohol Poisoning",
+      "description": "",
+      "statuses": []
+    }
+  ],
+  "folder": null,
+  "flags": {
+    "exportSource": {
+      "world": "lost-mines-phandelver",
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "2.4.1"
+    }
+  },
+  "system": {
+    "description": {
+      "value": "",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": {
+      "custom": ""
+    },
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "attunement": 0,
+    "equipped": false,
+    "rarity": "",
+    "identified": true,
+    "activation": {
+      "type": "",
+      "cost": 0,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "autoDestroy": false,
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": null,
+    "actionType": null,
+    "attackBonus": "",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "consumableType": "potion",
+    "properties": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.1.5",
+    "coreVersion": "10.291",
+    "createdTime": null,
+    "modifiedTime": 1685282115717,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  }
+}

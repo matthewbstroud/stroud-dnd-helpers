@@ -1,7 +1,8 @@
 
 export let scene = {
     "rewireMonksActiveTiles": _rewireMonksActiveTiles,
-    "packAdventureThumbnails": _packAdventureThumbnails
+    "packAdventureThumbnails": _packAdventureThumbnails,
+    "regenerateThumbnails": _regenerateThumbnails
 };
 
 async function _rewireMonksActiveTiles() {
@@ -47,4 +48,30 @@ async function _packAdventureThumbnails(moduleId){
             }
         }
     }
+}
+
+async function _regenerateThumbnails(folderID) {
+    debugger;
+    const folder = game.folders.get(folderID);
+    if (!folder) {
+        ui.notifications.error(`Cannot load folder: ${folderID}!`);
+        return;
+    }
+    console.log(`Regenerating Thumbnails for Folder: ${folder.name}`);
+    let folderScenes = game.scenes.filter(s => s.folder.id == folder.id);
+    if (!folderScenes || folderScenes.length == 0){
+        ui.notifications.error(`${folder.name} has no scenes!`);
+        return;
+    }
+    let thumbCount = 0;
+    for (const scene of folderScenes) {
+        console.log(scene.background.src);
+        const t = await scene.createThumbnail( { img: (scene.background.src || undefined) })
+        if (t?.thumb) {
+            thumbCount++;
+            console.log(`Regenerated thumbnail for ${scene.name}`);
+            await scene.update({ thumb: t.thumb });
+        }
+    }
+    ui.notifications.notify(`Regenerated ${thumbCount} thumbnail image${(thumbCount > 0 ? 's' : '')}.`);
 }

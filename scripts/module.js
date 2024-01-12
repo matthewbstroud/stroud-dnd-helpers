@@ -17,6 +17,8 @@ import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
 import { macros } from './macros/macros.js';
 import { utility } from './utility/utility.js';
+import { scene } from './utility/scene.js';
+//CONFIG.debug.hooks = true;
 
 export let socket;
 Hooks.once('init', async function() {
@@ -36,6 +38,33 @@ Hooks.once('ready', async function() {
 	console.log("Loaded Stroud's DnD Helpers");
 	
 });
+
+Hooks.on("getSceneDirectoryFolderContext", (html, options) => {
+	options.push({
+	  name: game.i18n.localize("sdnd.scenes.folder.context.regenerateThumbs"),
+	  icon: '<i class="fas fa-sync"></i>',
+	  callback: async function(li) {
+		let folderID = $(li).closest("li").data("folderId");
+		if (!folderID){
+			return;
+		}
+		scene.regenerateThumbnails(folderID);
+	  },
+	  condition: li => {
+		let folderID = $(li).closest("li").data("folderId");
+		if (!folderID) {
+			return false;
+		}
+		// get scene count
+		let sceneCount = game.scenes.filter(s => s.folder?.id == folderID)?.length ?? 0;
+		if (sceneCount > 0){
+			return true;
+		}
+		return false;
+	  },
+	});
+  });
+
 globalThis['stroudDnD'] = {
 	calendar,
 	chat,

@@ -1,3 +1,4 @@
 {
-    "MODULE.hello": "hello"
+    "MODULE.hello": "hello",
+    "sdnd.scenes.folder.context.regenerateThumbs":  "Regenerate Thumbnails"
 }
