@@ -1,6 +1,7 @@
 # v1.11.8
 # New Features
 - Added a regenerate thumbnails context item to the Scene Folder.
+- Added an export module thumbnails context item to the Compendium Item.
 - Rewire fireplaces should now also remap the tile image.
 # Bug fixes
 - Fix image link for Lightbringer
