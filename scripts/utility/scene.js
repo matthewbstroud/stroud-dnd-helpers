@@ -47,25 +47,6 @@ async function _packModuleThumbnails(moduleId){
                 console.log(`Compendiums of type ${pack.metadata.type} are not supported. Skipping.`);
         }
         ui.notifications.notify(`Thumbnails Exported: ${exportCounters.exported}  Skipped: ${exportCounters.skipped}`);
-        // for (const adventureIdx of pack.index.values()){
-        //     let adventure = await pack.getDocument(adventureIdx._id);
-        //     let scenes = Array.from(adventure.scenes);
-        //     for (var scene of scenes) {
-        //         let fileName = scene.thumb.split('/').pop();
-        //         let moduleThumbPath = `modules/${moduleId}/${thumbs_folder}/${fileName}`;
-        //         if (await srcExists(moduleThumbPath)){
-        //             continue;
-        //         }
-        //         let blob = await fetch(scene.thumb).then(r => r.blob())
-        //         let {path} = await FilePicker.upload(
-        //             "data", 
-        //             `modules/${moduleId}/${thumbs_folder}/`, 
-        //             new File([blob], fileName, {type: blob.type}), 
-        //             {}, 
-        //             {notify:false}
-        //         );
-        //     }
-        // }
     }
 }
 
@@ -74,44 +55,12 @@ async function packAdventureCompendiumThumbnails(adventurePack, moduleId, thumbs
         let adventure = await adventurePack.getDocument(adventureIdx._id);
         let scenes = Array.from(adventure.scenes);
         await packSceneThumbnails(scenes, moduleId, thumbs_folder);
-        // for (var scene of scenes) {
-        //     let fileName = scene.thumb.split('/').pop();
-        //     let moduleThumbPath = `modules/${moduleId}/${thumbs_folder}/${fileName}`;
-        //     if (await srcExists(moduleThumbPath)) {
-        //         continue;
-        //     }
-        //     let blob = await fetch(scene.thumb).then(r => r.blob())
-        //     let { path } = await FilePicker.upload(
-        //         "data",
-        //         `modules/${moduleId}/${thumbs_folder}/`,
-        //         new File([blob], fileName, { type: blob.type }),
-        //         {},
-        //         { notify: false }
-        //     );
-        // }
     }
 }
 
 async function packSceneCompendiumThumbnails(scenePack, moduleId, thumbs_folder){
     let scenes = scenePack.index.values();
     await packSceneThumbnails(scenes, moduleId, thumbs_folder);
-    // for (const pack of game.packs.filter(p => p.metadata.packageName === moduleId && p.metadata.type === 'Scene')) {
-    //     for (const scene of pack.index.values()){
-    //         let fileName = scene.thumb.split('/').pop();
-    //         let moduleThumbPath = `modules/${moduleId}/${thumbs_folder}/${fileName}`;
-    //         if (await srcExists(moduleThumbPath)){
-    //             continue;
-    //         }
-    //         let blob = await fetch(scene.thumb).then(r => r.blob())
-    //         let {path} = await FilePicker.upload(
-    //             "data", 
-    //             `modules/${moduleId}/${thumbs_folder}/`, 
-    //             new File([blob], fileName, {type: blob.type}), 
-    //             {}, 
-    //             {notify:false}
-    //         );
-    //     }
-    // }
 }
 
 async function packSceneThumbnails(scenes, moduleId, thumbs_folder){
@@ -145,7 +94,7 @@ async function _regenerateThumbnails(folder) {
             thumbCount += await _regenerateThumbnails(subFolder);
         }
     }
-    let folderScenes = game.scenes.filter(s => s.folder.id == folder.id);
+    let folderScenes = game.scenes.filter(s => s.folder?.id == folder.id);
     if (folderScenes && folderScenes.length > 0) {
         console.log(`Regenerating Thumbnails for Folder: ${folder.name}`);
         for (const scene of folderScenes) {
