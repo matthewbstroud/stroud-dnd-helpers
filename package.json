@@ -5,6 +5,7 @@
   "main": "module.json",
   "scripts": {
     "updateYML": "node ./tools/pushLDBtoYML.mjs",
+    "postupdateYML": "node ./tools/fixThumbPaths.mjs",
     "updateLDB": "node ./tools/pullYMLtoLDB.mjs"
   },
   "repository": {

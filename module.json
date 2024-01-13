@@ -282,7 +282,20 @@
 				"GAMEMASTER": "OWNER"
 			},
 			"module": "stroud-dnd-helpers"
+		},
+		{
+			"name": "SDND-Scenes",
+			"label": "SDND Scenes",
+			"path": "packs/sdnd-common-scenes.db",
+			"type": "Scene",
+			"ownership": {
+				"PLAYER": "LIMITED",
+				"ASSISTANT": "OWNER",
+				"GAMEMASTER": "OWNER"
+			},
+			"module": "stroud-dnd-helpers"
 		}
+		
 	],
 	"packFolders": [
 		{
@@ -294,6 +307,7 @@
 				"SDND-Items",
 				"SDND-Spells",
 				"SDND-GM-Macros",
+				"SDND-Scenes",
 				"SDND-Shared-Macros",
 				"SDND-Summons"
 			],
