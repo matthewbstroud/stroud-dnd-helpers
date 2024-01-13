@@ -1,3 +1,6 @@
+# v1.11.9
+# Bug fixes
+- Fix build error
 # v1.11.8
 # New Features
 - Added a regenerate thumbnails context item to the Scene Folder.
