@@ -69,6 +69,10 @@ export let fireplace = {
             }
             scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
             fireplace.setFlag("monks-active-tiles", "actions", actions);
+
+            if (fireplace.texture.src.endsWith('custom_icons/Fireplace_Icon.webp')) {
+                await fireplace.update({ "texture.src": 'modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp'});
+            }
         }
     }
 };

@@ -125,10 +125,10 @@
 				"type": "module",
 				"manifest": "https://github.com/kandashi/Active-Auras/releases/latest/download/module.json",
 				"compatibility": {
-				  "minimum": "0.9.2",
-				  "verified": "0.9.2"
+					"minimum": "0.9.2",
+					"verified": "0.9.2"
 				}
-			  },
+			},
 			{
 				"id": "monks-active-tiles",
 				"type": "module",
@@ -201,6 +201,14 @@
 	],
 	"styles": [
 		"styles/module.css"
+	],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "languages/en.json",
+			"flags": {}
+		}
 	],
 	"packs": [
 		{
@@ -278,21 +286,20 @@
 	],
 	"packFolders": [
 		{
-		  "name": "Stroud's DnD Helpers",
-		  "sorting": "a",
-		  "color": "#2891fa",
-		  "packs": [
-			"SDND-Features",
-			"SDND-Items",
-			"SDND-Spells",
-			"SDND-GM-Macros",
-			"SDND-Shared-Macros",
-			"SDND-Summons"
-		  ],
-		  "folders": [
-		  ]
+			"name": "Stroud's DnD Helpers",
+			"sorting": "a",
+			"color": "#2891fa",
+			"packs": [
+				"SDND-Features",
+				"SDND-Items",
+				"SDND-Spells",
+				"SDND-GM-Macros",
+				"SDND-Shared-Macros",
+				"SDND-Summons"
+			],
+			"folders": []
 		}
-	  ],
+	],
 	"changelog": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/master/CHANGELOG.md",
 	"url": "#{URL}#",
 	"manifest": "#{MANIFEST}#",

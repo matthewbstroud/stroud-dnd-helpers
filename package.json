@@ -1,11 +1,11 @@
 {
   "name": "stroud-dnd-helpers",
-  "version": "1.11.7",
+  "version": "1.11.8",
   "description": "Stroud DnD Helpers",
   "main": "module.json",
   "scripts": {
-    "pushLDBtoYML": "node ./tools/pushLDBtoYML.mjs",
-    "pullYMLtoLDB": "node ./tools/pullYMLtoLDB.mjs"
+    "updateYML": "node ./tools/pushLDBtoYML.mjs",
+    "updateLDB": "node ./tools/pullYMLtoLDB.mjs"
   },
   "repository": {
     "type": "git",

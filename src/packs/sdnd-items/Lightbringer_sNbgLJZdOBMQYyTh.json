@@ -1,7 +1,7 @@
 {
   "name": "Lightbringer",
   "type": "weapon",
-  "img": "https://assets.forge-vtt.com/634b24b96df3a5a10e8ccd71/custom_icons/LightBringer2.webp",
+  "img": "modules/stroud-dnd-helpers/images/icons/LightBringer2.webp",
   "effects": [
     {
       "_id": "b5n914l9jsk9ylhv",
