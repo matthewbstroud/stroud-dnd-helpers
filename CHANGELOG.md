@@ -1,3 +1,6 @@
+# v1.11.12
+# New Features
+- Add Cabin Limbo to this module.
 # v1.11.11
 # Bug fixes
 - Fix language error

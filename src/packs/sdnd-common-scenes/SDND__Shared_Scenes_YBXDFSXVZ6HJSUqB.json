@@ -1,0 +1,20 @@
+{
+  "_id": "YBXDFSXVZ6HJSUqB",
+  "name": "SDND: Shared Scenes",
+  "type": "Scene",
+  "sorting": "a",
+  "sort": 100000,
+  "color": "#008a02",
+  "flags": {},
+  "folder": null,
+  "description": "",
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1705121770505,
+    "modifiedTime": 1705121770666,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!YBXDFSXVZ6HJSUqB"
+}

@@ -129,6 +129,7 @@ jobs:
             templates                            \
             images/                              \
             scripts/                             \
+            sfx/                                 \
             styles/                              \
             packs/                               \
             languages/                           \
