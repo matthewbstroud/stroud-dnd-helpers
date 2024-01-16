@@ -1,3 +1,9 @@
+# v11.1.0
+# New Features
+- Added a setting to hide the text beside the SDND icon in the Actor sheet.
+  - Only show the SDND icon if there is a supported item on the actor.
+# Bug Fixes
+- Change versioning to match major FoundryVTT version.
 # v1.11.13
 # Bug Fixes
 - Null ref on folder.

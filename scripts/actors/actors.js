@@ -1,24 +1,30 @@
 import { sdndConstants } from "../constants.js";
 import { items } from "../items/items.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { sdndSettings } from "../settings.js";
 export let actors = {
     "ensureActor": ensureActor
 }
 
 export function createActorHeaderButton(config, buttons) {
     if (config.object instanceof Actor) {
+        var overrideableItems = getOverrideableItemsFromActor(config.object);
+        if (!overrideableItems || overrideableItems.length == 0) {
+            return;
+        }
+        var label = sdndSettings.HideTextOnActorSheet.getValue() ? '' : 'SDND'; 
         buttons.unshift({
             class: 'stroudDnD',
             icon: 'fa-solid fa-dungeon',
-            label: 'SDND',
+            label: label,
             onclick: () => actorConfig(config.object)
         });
     }
 }
-async function actorConfig(actorDocument) {
+
+function getOverrideableItemsFromActor(actorDocument) {
     if (!(actorDocument.type === 'character' || actorDocument.type === 'npc')) {
-        ui.notifications.info('This feature must be used on a character or npc!');
-        return;
+        return [];
     }
     let sdndItems = [
         sdndConstants.FEATURES.TWILIGHT_SANCTUARY,
@@ -30,6 +36,17 @@ async function actorConfig(actorDocument) {
     let overrideableItems = actorDocument.items.filter(i =>
         !i.flags['stroud-dnd-helpers']?.["importedItem"] && sdndItems.includes(i.name)
     ).sort(items.sortByName);
+    if (!overrideableItems || overrideableItems.length === 0) {
+        return [];
+    }
+    return overrideableItems;
+}
+async function actorConfig(actorDocument) {
+    if (!(actorDocument.type === 'character' || actorDocument.type === 'npc')) {
+        ui.notifications.info('This feature must be used on a character or npc!');
+        return;
+    }
+    var overrideableItems = getOverrideableItemsFromActor(actorDocument);
     if (!overrideableItems || overrideableItems.length === 0) {
         ui.notifications.info(`${actorDocument.name} has no spells or features that can be modified by Stroud DND Helpers.`);
         return;

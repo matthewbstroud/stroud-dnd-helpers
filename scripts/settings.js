@@ -20,6 +20,17 @@ export let sdndSettings = {
 		},
 		'getValue': () =>  getModuleSettingValue('FunnyTestSetting')
 	},
+	'HideTextOnActorSheet': {
+		'config': {
+			'name': 'Hide the SND Text on the actor sheet.',
+			'hint': 'This is to save space.',
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false
+		},
+		'getValue': () =>  getModuleSettingValue('HideTextOnActorSheet')
+	},
 	'CombatPlayList': {
 		'config': {
 			'name': 'Select Your Combat Music Playlist',
