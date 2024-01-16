@@ -56,7 +56,7 @@ export let fireplace = {
         }
     },
     "rewireFireplaces": async function _rewireFireplaces() {
-        let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions.find(a => a.data.entity.name == "toggleFireplace"));
+        let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions.find(a => a.data?.entity?.name == "toggleFireplace"));
         let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
         if (!toggleFireplaceMacro) {
             return;

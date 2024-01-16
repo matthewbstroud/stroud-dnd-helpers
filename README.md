@@ -1,8 +1,11 @@
 # Readme
 My collection of automation for DND 5e
 
-Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings.json).  
+Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings_v11.json "download").  
 Feel free to download them and install them as a starting point.
+
+There are also some convenient effects that I use in the adventures
+Grab them [HERE](/misc/fred_custom_effects.json "download").  
 
 You can install these settings as follows: 
 - Configure Settings

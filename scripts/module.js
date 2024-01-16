@@ -45,7 +45,6 @@ Hooks.on("getCompendiumDirectoryEntryContext", (html, options) => {
 	  name: game.i18n.localize("sdnd.compendium.entry.context.exportThumbnails"),
 	  icon: '<i class="fa-solid fa-camera-retro"></i>',
 	  callback: async function(li) {
-		debugger;
 		const fullyQualifiedPack = $(li).data("pack");
 		if (!fullyQualifiedPack){
 			return;
@@ -54,7 +53,6 @@ Hooks.on("getCompendiumDirectoryEntryContext", (html, options) => {
 		await scene.packModuleThumbnails(moduleId);
 	  },
 	  condition: li => {
-		debugger;
 		const fullyQualifiedPack = $(li).data("pack");
 		if (!fullyQualifiedPack){
 			return false;
