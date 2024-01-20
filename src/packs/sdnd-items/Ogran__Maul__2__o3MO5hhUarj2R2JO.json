@@ -1,0 +1,225 @@
+{
+  "name": "Ogran (Maul +2)",
+  "type": "weapon",
+  "img": "modules/stroud-dnd-helpers/images/icons/Ogran.webp",
+  "system": {
+    "description": {
+      "value": "<p><em>This menacing weapon bears the name of the Ogre that originally wielded it one-handed. It is rumored that the Black Spider himself defeated Ogram.</em></p><p>The sheer heft and size of this weapon makes it easier to block incoming attacks.</p><p>You have a bonus to attack and damage rolls made with this magic weapon.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": {
+      "custom": "SRD 5.1"
+    },
+    "quantity": 1,
+    "weight": 10,
+    "price": {
+      "value": 5000,
+      "denomination": "gp"
+    },
+    "attunement": 1,
+    "equipped": false,
+    "rarity": "legendary",
+    "identified": true,
+    "activation": {
+      "type": "action",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": 5,
+      "long": null,
+      "units": "ft"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "mwak",
+    "attackBonus": "2",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "2d6 + @mod +2",
+          "bludgeoning"
+        ]
+      ],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "armor": {
+      "value": 10
+    },
+    "hp": {
+      "value": 0,
+      "max": 0,
+      "dt": null,
+      "conditions": ""
+    },
+    "weaponType": "martialM",
+    "baseItem": "maul",
+    "properties": {
+      "hvy": true,
+      "two": true,
+      "amm": false,
+      "fin": false,
+      "fir": false,
+      "foc": false,
+      "lgt": false,
+      "lod": false,
+      "rch": false,
+      "rel": false,
+      "ret": false,
+      "spc": false,
+      "thr": false,
+      "ver": false,
+      "mgc": true,
+      "ada": false,
+      "sil": false
+    },
+    "proficient": 0
+  },
+  "effects": [
+    {
+      "icon": "modules/stroud-dnd-helpers/images/icons/Ogran.webp",
+      "changes": [
+        {
+          "key": "system.attributes.ac.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": 20
+        }
+      ],
+      "transfer": true,
+      "_id": "UBTtwqsiifFYqioI",
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "origin": null,
+      "tint": null,
+      "flags": {
+        "dfreds-convenient-effects": {
+          "description": ""
+        },
+        "dae": {
+          "selfTarget": false,
+          "selfTargetAlways": false,
+          "stackable": "noneName",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [],
+          "disableIncapacitated": false,
+          "dontApply": false,
+          "showIcon": false
+        },
+        "core": {
+          "statusId": ""
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "nameOverride": "",
+          "radius": "",
+          "alignment": "",
+          "type": "",
+          "customCheck": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false,
+          "wallsBlock": "system"
+        }
+      },
+      "name": "Ogran (Maul +2)",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!o3MO5hhUarj2R2JO.UBTtwqsiifFYqioI"
+    }
+  ],
+  "folder": "PP9XFtc3SwmqPjr3",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "core": {},
+    "midi-qol": {
+      "fumbleThreshold": null,
+      "effectActivation": false,
+      "removeAttackDamageButtons": "default"
+    },
+    "midiProperties": {
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "rollOther": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false,
+      "confirmTargets": "never",
+      "noConcentrationCheck": false
+    },
+    "exportSource": {
+      "world": "lost_mines_v10",
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "2.4.1"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1661787233442,
+    "modifiedTime": 1705777862987,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "o3MO5hhUarj2R2JO",
+  "sort": 0,
+  "_key": "!items!o3MO5hhUarj2R2JO"
+}

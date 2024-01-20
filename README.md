@@ -4,15 +4,15 @@ My collection of automation for DND 5e
 Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings_v11.json "download").  
 Feel free to download them and install them as a starting point.
 
-There are also some convenient effects that I use in the adventures
-Grab them [HERE](/misc/fred_custom_effects.json "download").  
-
 You can install these settings as follows: 
 - Configure Settings
 - midi-QOL Settings
 - Click Workflow Settings
 - Select Misc tab
 - Click the Import midi-qol settings from JSON file. 
+
+There are also some convenient effects that I use in the adventures
+Grab them [HERE](/misc/fred_custom_effects.json "download").  
 
 # Utility Macros
 - **Chat**
@@ -71,22 +71,27 @@ You can install these settings as follows:
 |Type|Name|Notes|
 |---|---|---|
 |Melee Weapon|Lightbringer|Gives a passive effect that can be enabled/disabled by the user.  When enabled the weapon will hit for an extra 1d6 damage against undead targets.|
+|Melee Weapon|Ogran|+2 Maul that also adds +1 AC.|
   
 # Required Modules  
 | Module | Verified Version |  
 | --- | --- |  
-| Anonymous | 1.3.0 |  
-| Automated Animations | 4.2.32 |  
-| Compendium Folders | 2.5.7 |  
-| DFreds Convenient Effects | 4.1.1 |  
-| Effect Macro | 10.0.15 |  
-| Item Macro | 1.8.0 |  
-| Jules & Ben's Animated Assets | 0.5.6 |  
-| Midi-Qol | 10.0.36 |  
-| Monk's Active Tile Triggers | 10.15 |  
-| Sequencer | 10.0.0 |  
-| Socket Lib | 1.0.12 |  
-| Warpgate | 1.16.0 |  
+| Active Auras | 0.9.2 |
+| Active Token Effects | 0.7.0 |
+| Anonymous | 1.4.4 |
+| Automated Animations | 4.2.70 |
+| DFreds Convenient Effects | 6.0.0 |
+| Dynamic effects using Active Effects (DAE) | 11.1.7 |
+| Effect Macro | 11.0.3 |
+| Simple Calendar | 2.4.3 |
+| Item Macro | 1.10.5 |
+| JB2A - Jules and Ben's Animated Assets - Free Content | 0.6.4 |
+| libWrapper | 1.12.13.0 |
+| Midi QOL | 11.3.11 |
+| Monk's Active Tile Triggers | 11.19 |
+| socketlib | 1.0.13 |
+| Template Macro | 11.0.1 |
+| Warp Gate | 1.19.2 |
   
 # Optional supported modules:  
 - D&D Beyond Importer  

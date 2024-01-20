@@ -210,7 +210,6 @@ async function simulateAttackers() {
                         return;
                     }
                     let hitModifier = numbers.toNumber(html.find('#hitModifier').val());
-                    debugger;
                     let autoApply = html.find('#autoapply')?.is(":checked") ?? false;
                     applyAttackers(numberOfAttackers, rollFormula, hitModifier, autoApply);
                 }
