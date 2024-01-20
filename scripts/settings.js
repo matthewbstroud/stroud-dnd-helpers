@@ -9,27 +9,33 @@ export let sdndSettings = {
 			game.settings.register(sdndConstants.MODULE_ID, key, this[key].config);
 		}
 	},
-	'FunnyTestSetting': {
-		'config': {
-			'name': 'Stroud is Awesome',
-			'hint': 'You should probably answer yes.',
+	'ActivePlayersFolder': {
+		'config' : {
+			'name': 'Active Players Folder',
+			'hint': 'This is used by the money macros to determine players that should receive a split.  Only players in this directory will be considered.  (Prevents NPCs or GM controlled player characters from receiving money.)',
 			'scope': 'world',
 			'config': true,
-			'type': Boolean,
-			'default': true
+			'type': String,
+			'default': 'Players'
 		},
-		'getValue': () =>  getModuleSettingValue('FunnyTestSetting')
+		'getValue': () => {
+			let folder = getModuleSettingValue('ActivePlayersFolder');
+			if (!folder || folder.length == 0) {
+				folder = 'Players';
+			}	
+			return folder;
+		} 
 	},
-	'HideTextOnActorSheet': {
+	'AutoApplyAdhocDamage': {
 		'config': {
-			'name': 'Hide the SND Text on the actor sheet.',
-			'hint': 'This is to save space.',
+			'name': 'Auto Apply Adhoc Damage',
+			'hint': 'When true the damage card will automatically be applied.',
 			'scope': 'world',
 			'config': true,
 			'type': Boolean,
 			'default': false
 		},
-		'getValue': () =>  getModuleSettingValue('HideTextOnActorSheet')
+		'getValue': () =>  getModuleSettingValue('AutoApplyAdhocDamage')
 	},
 	'CombatPlayList': {
 		'config': {
@@ -50,16 +56,27 @@ export let sdndSettings = {
 		},
 		'getValue': () =>  getModuleSettingValue('CombatPlayList')
 	},
-	'AutoApplyAdhocDamage': {
+	'ExcludedFolders': {
+		'config' : {
+			'name': 'Excluded Folders',
+			'hint': `Used in conjunction with the add to combat macro, this determines which tokens will be excluded.  If the token is in a folder with an excluded name, it will not be added to combat.`,
+			'scope': 'world',
+			'config': true,
+			'type': String,
+			'default': [sdndConstants.FOLDERS.ACTOR.LOOT, sdndConstants.FOLDERS.ACTOR.TRAPS].join(',')
+		},
+		'getValue': () => getModuleSettingValue('ExcludedFolders')
+	},
+	'HideTextOnActorSheet': {
 		'config': {
-			'name': 'Auto Apply Adhoc Damage',
-			'hint': 'When true the damage card will automatically be applied.',
+			'name': 'Hide the SND Text on the actor sheet.',
+			'hint': 'This is to save space.',
 			'scope': 'world',
 			'config': true,
 			'type': Boolean,
 			'default': false
 		},
-		'getValue': () =>  getModuleSettingValue('AutoApplyAdhocDamage')
+		'getValue': () =>  getModuleSettingValue('HideTextOnActorSheet')
 	}
 };
 

@@ -1,5 +1,6 @@
 import { sdndConstants } from "./constants.js";
 import { dialog } from "./dialog/dialog.js";
+import { sdndSettings } from "./settings.js";
 
 export let tokens = {
     "manageTokens": async function _manageTokens() {
@@ -21,7 +22,8 @@ export let tokens = {
     },
     "releaseInvalidTokens": function _releaseInvalidTokens(allowInCombat) {
         function shouldRelease(token, allowInCombat) {
-            const excludedFolders = [sdndConstants.FOLDERS.ACTOR.LOOT, sdndConstants.FOLDERS.ACTOR.TEMP, sdndConstants.FOLDERS.ACTOR.TRAPS];
+            let excludedFolders = [ sdndConstants.FOLDERS.ACTOR.TEMP ];
+            excludedFolders = excludedFolders.concat(sdndSettings.ExcludedFolders.getValue()?.split(','));
             if (!allowInCombat && token.inCombat) {
                 return true;
             }

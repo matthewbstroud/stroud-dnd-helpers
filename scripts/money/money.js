@@ -1,6 +1,7 @@
 import { numbers } from "../utility/numbers.js";
 import { dialog } from "../dialog/dialog.js";
 import { items } from "../items/items.js";
+import { sdndSettings } from "../settings.js";
 
 const MONEY_MODE = {
     "GIVE": "Give",
@@ -34,7 +35,8 @@ export let money = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor);
+        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == playersFolderName).map(t => t.actor);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;
@@ -52,7 +54,8 @@ export let money = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor);
+        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == playersFolderName).map(t => t.actor);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;
@@ -72,7 +75,8 @@ export let moneyInternal = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == "Players").map(t => t.actor).sort(items.sortByName);
+        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == playersFolderName).map(t => t.actor).sort(items.sortByName);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;

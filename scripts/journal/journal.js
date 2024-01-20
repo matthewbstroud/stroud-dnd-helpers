@@ -1,5 +1,5 @@
 import { numbers } from "../utility/numbers.js";
-
+import { sdndSettings } from "../settings.js";
 
 const SUMMARY_FOLDER_NAME = "Session Summaries";
 const SUMMARY_JOURNAL_NAME = "Session End Summary";
@@ -10,12 +10,13 @@ export let journal = {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
         }
-        let playersFolder = game.folders.getName("Players");
+        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+        let playersFolder = game.folders.getName(playersFolderName);
         if (!playersFolder) {
-            ui.notifications.warn(`Make sure your players are in an actors folder named Players...`);
+            ui.notifications.warn(`Make sure your players are in an actors folder named ${playersFolderName}...`);
             return;
         }
-        let players = canvas.scene.tokens.filter((token) => token.actor && token.actor?.folder?.name == "Players").map(t => t.actor).sort(sortByName);
+        let players = canvas.scene.tokens.filter((token) => token.actor && token.actor?.folder?.name == playersFolderName).map(t => t.actor).sort(sortByName);
         if (players.length == 0) {
             ui.notifications.notify('There are no player tokens in this scene.');
             return;

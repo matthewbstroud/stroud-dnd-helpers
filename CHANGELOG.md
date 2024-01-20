@@ -1,3 +1,7 @@
+# v11.1.1
+# New Features
+- Moving hard coded-values into settings.
+# Bug Fixes
 # v11.1.0
 # New Features
 - Added a setting to hide the text beside the SDND icon in the Actor sheet.
