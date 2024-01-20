@@ -31,129 +31,156 @@
 		],
 		"requires": [
 			{
-				"id": "midi-qol",
-				"type": "module",
-				"manifest": "https://gitlab.com/tposney/midi-qol/raw/v11/package/module.json",
-				"compatibility": {
-					"minimum": "11.3.11",
-					"verified": "11.3.11"
-				}
-			},
-			{
-				"id": "lib-wrapper",
-				"type": "module",
-				"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "1.12.13.0",
-					"verified": "1.12.13.0"
-				}
-			},
-			{
-				"id": "dfreds-convenient-effects",
-				"type": "module",
-				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "6.0.0",
-					"verified": "6.0.0"
-				}
-			},
-			{
-				"id": "warpgate",
-				"type": "module",
-				"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "1.19.2",
-					"verified": "1.19.2"
-				}
-			},
-			{
-				"id": "effectmacro",
-				"type": "module",
-				"manifest": "https://github.com/krbz999/effectmacro/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "11.0.3",
-					"verified": "11.0.3"
-				}
-			},
-			{
-				"id": "sequencer",
-				"type": "module",
-				"manifest": "https://github.com/fantasycalendar/FoundryVTT-Sequencer/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "3.1.4",
-					"verified": "3.1.4"
-				}
-			},
-			{
-				"id": "socketlib",
-				"type": "module",
-				"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
-				"compatibility": {
-					"minimum": "1.0.13",
-					"verified": "1.0.13"
-				}
-			},
-			{
-				"id": "dae",
-				"type": "module",
-				"manifest": "https://gitlab.com/tposney/dae/raw/v11/package/module.json",
-				"compatibility": {
-					"minimum": "11.1.7",
-					"verified": "11.1.7"
-				}
-			},
-			{
-				"id": "JB2A_DnD5e",
-				"type": "module",
-				"manifest": "https://github.com/Jules-Bens-Aa/JB2A_DnD5e/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "0.6.4",
-					"verified": "0.6.4"
-				}
-			},
-			{
-				"id": "autoanimations",
-				"type": "module",
-				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "4.2.70",
-					"verified": "4.2.70"
-				}
-			},
-			{
 				"id": "ActiveAuras",
 				"type": "module",
 				"manifest": "https://github.com/kandashi/Active-Auras/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "0.9.2",
+				"comaptibility": {
+					"mininum": "0.9.2",
 					"verified": "0.9.2"
 				}
 			},
 			{
-				"id": "monks-active-tiles",
+				"id": "advanced-macros",
 				"type": "module",
-				"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "11.19",
-					"verified": "11.19"
-				}
-			},
-			{
-				"id": "times-up",
-				"type": "module",
-				"manifest": "https://gitlab.com/tposney/times-up/raw/v11/package/module.json",
-				"compatibility": {
-					"minimum": "11.1.1",
-					"verified": "11.1.1"
+				"manifest": "https://github.com/mclemente/fvtt-advanced-macros/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "2.0.5",
+					"verified": "2.0.5"
 				}
 			},
 			{
 				"id": "anonymous",
 				"type": "module",
 				"manifest": "https://raw.githubusercontent.com/reonZ/anonymous/master/module.json",
-				"compatibility": {
-					"minimum": "1.4.4",
+				"comaptibility": {
+					"mininum": "1.4.4",
 					"verified": "1.4.4"
+				}
+			},
+			{
+				"id": "ATL",
+				"type": "module",
+				"manifest": "https://github.com/kandashi/Active-Token-Lighting/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "0.7.0",
+					"verified": "0.7.0"
+				}
+			},
+			{
+				"id": "autoanimations",
+				"type": "module",
+				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "4.2.70",
+					"verified": "4.2.70"
+				}
+			},
+			{
+				"id": "dae",
+				"type": "module",
+				"manifest": "https://gitlab.com/tposney/dae/raw/v11/package/module.json",
+				"comaptibility": {
+					"mininum": "11.1.7",
+					"verified": "11.1.7"
+				}
+			},
+			{
+				"id": "dfreds-convenient-effects",
+				"type": "module",
+				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "6.0.0",
+					"verified": "6.0.0"
+				}
+			},
+			{
+				"id": "effectmacro",
+				"type": "module",
+				"manifest": "https://github.com/krbz999/effectmacro/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "11.0.3",
+					"verified": "11.0.3"
+				}
+			},
+			{
+				"id": "foundryvtt-simple-calendar",
+				"type": "module",
+				"manifest": "https://github.com/vigoren/foundryvtt-simple-calendar/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "2.4.3",
+					"verified": "2.4.3"
+				}
+			},
+			{
+				"id": "itemacro",
+				"type": "module",
+				"manifest": "https://github.com/Foundry-Workshop/Item-Macro/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "1.10.5",
+					"verified": "1.10.5"
+				}
+			},
+			{
+				"id": "JB2A_DnD5e",
+				"type": "module",
+				"manifest": "https://github.com/Jules-Bens-Aa/JB2A_DnD5e/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "0.6.4",
+					"verified": "0.6.4"
+				}
+			},
+			{
+				"id": "lib-wrapper",
+				"type": "module",
+				"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "1.12.13.0",
+					"verified": "1.12.13.0"
+				}
+			},
+			{
+				"id": "midi-qol",
+				"type": "module",
+				"manifest": "https://gitlab.com/tposney/midi-qol/raw/v11/package/module.json",
+				"comaptibility": {
+					"mininum": "11.3.11",
+					"verified": "11.3.11"
+				}
+			},
+			{
+				"id": "monks-active-tiles",
+				"type": "module",
+				"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "11.19",
+					"verified": "11.19"
+				}
+			},
+			{
+				"id": "socketlib",
+				"type": "module",
+				"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
+				"comaptibility": {
+					"mininum": "1.0.13",
+					"verified": "1.0.13"
+				}
+			},
+			{
+				"id": "templatemacro",
+				"type": "module",
+				"manifest": "https://github.com/krbz999/templatemacro/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "11.0.1",
+					"verified": "11.0.1"
+				}
+			},
+			{
+				"id": "warpgate",
+				"type": "module",
+				"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "1.19.2",
+					"verified": "1.19.2"
 				}
 			}
 		],
@@ -295,23 +322,50 @@
 			},
 			"module": "stroud-dnd-helpers"
 		}
-		
 	],
 	"packFolders": [
 		{
 			"name": "Stroud's DnD Helpers",
 			"sorting": "a",
 			"color": "#2891fa",
-			"packs": [
-				"SDND-Features",
-				"SDND-Items",
-				"SDND-Spells",
-				"SDND-GM-Macros",
-				"SDND-Scenes",
-				"SDND-Shared-Macros",
-				"SDND-Summons"
-			],
-			"folders": []
+			"packs": [],
+			"folders": [
+				{
+					"name": "Actors",
+					"sorting": "a",
+					"color": "#2891fa",
+					"packs": [
+						"SDND-Summons"
+					]
+				},
+				{
+					"name": "Items",
+					"sorting": "a",
+					"color": "#2891fa",
+					"packs": [
+						"SDND-Features",
+						"SDND-Items",
+						"SDND-Spells"
+					]
+				},
+				{
+					"name": "Macros",
+					"sorting": "a",
+					"color": "#2891fa",
+					"packs": [
+						"SDND-GM-Macros",
+						"SDND-Shared-Macros"
+					]
+				},
+				{
+					"name": "Scenes",
+					"sorting": "a",
+					"color": "#2891fa",
+					"packs": [
+						"SDND-Scenes"
+					]
+				}
+			]
 		}
 	],
 	"changelog": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/master/CHANGELOG.md",
