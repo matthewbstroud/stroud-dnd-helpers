@@ -40,15 +40,6 @@
 				}
 			},
 			{
-				"id": "advanced-macros",
-				"type": "module",
-				"manifest": "https://github.com/mclemente/fvtt-advanced-macros/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "2.0.5",
-					"verified": "2.0.5"
-				}
-			},
-			{
 				"id": "anonymous",
 				"type": "module",
 				"manifest": "https://raw.githubusercontent.com/reonZ/anonymous/master/module.json",
@@ -118,15 +109,6 @@
 				"comaptibility": {
 					"mininum": "1.10.5",
 					"verified": "1.10.5"
-				}
-			},
-			{
-				"id": "JB2A_DnD5e",
-				"type": "module",
-				"manifest": "https://github.com/Jules-Bens-Aa/JB2A_DnD5e/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "0.6.4",
-					"verified": "0.6.4"
 				}
 			},
 			{
