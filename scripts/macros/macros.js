@@ -2,10 +2,7 @@ import { sdndConstants } from "../constants.js";
 import { folders } from "../folders/folders.js";
 
 export let macros = {
-    "initFolders": async function _initFolders() {
-        if (!game.user.isGM) {
-            return;
-        }
+    "ensureBTS": async function _ensureBTS() {
         let gmMacros = await folders.ensureFolder(sdndConstants.FOLDERS.MACROS.GM_MACROS, "Macro", null);
         await folders.ensureFolder(sdndConstants.FOLDERS.MACROS.BTS, "Macro", gmMacros?._id);
     },

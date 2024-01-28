@@ -1,3 +1,8 @@
+# v11.1.3
+# Bug Fixes
+- Delay auto creation of macro folder.
+- Fix readme file.
+- Setup auto-publish for FoundryVTT
 # v11.1.2
 # Bug Fixes
 - Remove requirement for Free JBA

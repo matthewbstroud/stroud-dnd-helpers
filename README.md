@@ -16,8 +16,9 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 
 # Utility Macros
 - **Chat**
-  - **Delete Chat Messages**: Delete messages that were created less than a specified number of minutes ago.  (Defaults to 30)
-  - **Prune Chat Log**: Delete messages older than a specified number of days.  (Defaults to 7)
+  - **Prune Chat Log**: Click to gain access to two options
+    - **Remove Recent Messages**:  Delete messages that were created less than a specified number of minutes ago.  (Defaults to 30)
+    - **Remove Old Messages**: Delete messages older than a specified number of days. (Defaults to 7)
 - **Combat**
   - **Apply Adhoc Damage**: A macro that allows you select 1 to many tokens and then apply any type of damage to them. Creates both a chat message and midi-QOL damage card.  You can specify in settings whether or not to automatically apply the damage card.
   - **Start Filtered Combat**: Allows you to select everything on the battlefield, but exclude tokens that belong to specific folders or are already dead.
@@ -85,7 +86,6 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 | Effect Macro | 11.0.3 |
 | Simple Calendar | 2.4.3 |
 | Item Macro | 1.10.5 |
-| JB2A - Jules and Ben's Animated Assets - Free Content | 0.6.4 |
 | libWrapper | 1.12.13.0 |
 | Midi QOL | 11.3.11 |
 | Monk's Active Tile Triggers | 11.19 |
@@ -98,4 +98,6 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 - Tidy5e Sheet  
 - Token Magic FX  
 - Visual Active Effects  
+- JBA Free or Patreon
+
 

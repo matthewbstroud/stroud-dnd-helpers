@@ -33,7 +33,6 @@ Hooks.once('socketlib.ready', async function() {
 });
 Hooks.once('ready', async function() {
 	sdndSettings.registerSettings();
-	macros.initFolders();
 	if (game.user?.isGM) {
 		Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
 	}

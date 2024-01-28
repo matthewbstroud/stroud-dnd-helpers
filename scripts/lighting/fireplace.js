@@ -1,5 +1,6 @@
 import { guid } from "../utility/guid.js";
 import { sdndConstants } from "../constants.js";
+import { macros } from "../macros/macros.js";
 
 export let fireplace = {
     "createFireplace": async function _createFireplace() {
@@ -7,7 +8,7 @@ export let fireplace = {
             ui.notifications.error(`Can only be run by the gamemaster!`);
             return;
         }
-
+        await macros.ensureBTS();
         await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, sdndConstants.FOLDERS.MACROS.BTS);
 
         let toggleFireplaceMacro = game.macros.getName("toggleFireplace");
@@ -57,6 +58,7 @@ export let fireplace = {
     },
     "rewireFireplaces": async function _rewireFireplaces() {
         let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions.find(a => a.data?.entity?.name == "toggleFireplace"));
+        await macros.ensureBTS();
         let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
         if (!toggleFireplaceMacro) {
             return;
