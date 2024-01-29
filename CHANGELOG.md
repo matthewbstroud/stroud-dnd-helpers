@@ -1,3 +1,10 @@
+# v11.1.5
+# New Features
+- Add help journal.
+# Bug Fixes
+# v11.1.4
+# Bug Fixes
+- Fix build issue
 # v11.1.3
 # Bug Fixes
 - Delay auto creation of macro folder.

@@ -1,0 +1,130 @@
+{
+  "name": "SDND Helpers Documentation",
+  "pages": [
+    {
+      "sort": 100000,
+      "name": "Fireplaces",
+      "type": "text",
+      "_id": "95cJ848CVHszz17H",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>Description</h2><p>A fireplace combines both lighting and sound effects. Since light and sound control are on separate control layers, I found myself wanting a fast way to light or extinguish fires.</p><p>I was using Monk's Active Tiles to handle this, but it is a <em><strong>lot</strong></em> of clicks to setup a single instance.</p><p>The result is that I automated the ability to link an active tile to an overlapped light and sound. When you double-click the active tile, the fire will either light or extinguish and a message will be written to the chat log.</p><img src=\"modules/stroud-dnd-helpers/images/demos/fireplace_demo.gif\" alt=\"fireplace demo\" /><h2>Steps to create:</h2><ol><li><p>Place a light source with desired settings.</p></li><li><p>Place a sound in the same location.</p></li><li><p>Place a ground tile that covers your light and sound effect and just save it with default settings.</p></li><li><p>While that ground tile is selected in the UI, click the Create Fireplace macro.</p></li></ol><p>You will end up with an active tile that is visible only to the GM and is activated with a double-click.</p><h2>Considerations</h2><p>If you duplicate a scene with fireplaces or export/import to a different world, the fireplaces may not function. You can fix them by running the Rewire Fireplaces macro.</p>",
+        "markdown": ""
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1,
+        "oxBsChzkQU8PgTjm": 3
+      },
+      "flags": {},
+      "_stats": {
+        "systemId": "dnd5e",
+        "systemVersion": "2.4.1",
+        "coreVersion": "11.315",
+        "createdTime": 1706538288169,
+        "modifiedTime": 1706540582962,
+        "lastModifiedBy": "oxBsChzkQU8PgTjm"
+      },
+      "_key": "!journal.pages!MhrYh2XWhgfBnUOt.95cJ848CVHszz17H"
+    },
+    {
+      "sort": 0,
+      "name": "Introduction",
+      "type": "text",
+      "_id": "T7dHG5DmLvmynf2O",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<p>This module was born from a collection of macros that I wrote to make running games more efficient.  It wasn't written with the intention of publishing, but I have decided that maybe it could be of use to others…</p><p></p><p>If you have questions you can either log an issue on github or message <strong>caiusmartius</strong> on Discord.</p><p></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1,
+        "oxBsChzkQU8PgTjm": 3
+      },
+      "flags": {},
+      "_stats": {
+        "systemId": "dnd5e",
+        "systemVersion": "2.4.1",
+        "coreVersion": "11.315",
+        "createdTime": 1706538541351,
+        "modifiedTime": 1706538544658,
+        "lastModifiedBy": "oxBsChzkQU8PgTjm"
+      },
+      "_key": "!journal.pages!MhrYh2XWhgfBnUOt.T7dHG5DmLvmynf2O"
+    },
+    {
+      "sort": 50000,
+      "name": "Change Lights",
+      "type": "text",
+      "_id": "0SUoFmihY8gplPwG",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>Description</h2><p>I found myself placing a bunch of lights in a scene and then later wanting to change the look.  Since there was no mass-edit for lights, this became an exceedingly tedious process.</p><p>Created a macro that lists lights in the scene by their unique attributes.  You can select a light group and then alter their most common attributes.</p><img src=\"modules/stroud-dnd-helpers/images/demos/update_lights.webp\" alt=\"change lights demo\" /><h2>Instructions</h2><ol><li><p>Run the Change Lights macro.</p></li><li><p>Select the light group you want to modify.</p></li><li><p>Edit the fields you want to alter.</p></li><li><p>Click Update.</p></li></ol>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1,
+        "oxBsChzkQU8PgTjm": 3
+      },
+      "flags": {},
+      "_stats": {
+        "systemId": "dnd5e",
+        "systemVersion": "2.4.1",
+        "coreVersion": "11.315",
+        "createdTime": 1706540131691,
+        "modifiedTime": 1706540506300,
+        "lastModifiedBy": "oxBsChzkQU8PgTjm"
+      },
+      "_key": "!journal.pages!MhrYh2XWhgfBnUOt.0SUoFmihY8gplPwG"
+    }
+  ],
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "oxBsChzkQU8PgTjm": 3
+  },
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1706538266394,
+    "modifiedTime": 1706542772821,
+    "lastModifiedBy": "oxBsChzkQU8PgTjm"
+  },
+  "_id": "MhrYh2XWhgfBnUOt",
+  "sort": 0,
+  "_key": "!journal!MhrYh2XWhgfBnUOt"
+}

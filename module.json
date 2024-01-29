@@ -245,6 +245,18 @@
 			"module": "stroud-dnd-helpers"
 		},
 		{
+			"name": "SDND-Documentation",
+			"label": "SDND Documentation",
+			"path": "packs/sdnd-documentation.db",
+			"type": "JournalEntry",
+			"ownership": {
+				"PLAYER": "LIMITED",
+				"ASSISTANT": "OWNER",
+				"GAMEMASTER": "OWNER"
+			},
+			"module": "stroud-dnd-helpers"
+		},
+		{
 			"name": "SDND-Spells",
 			"label": "SDND Spells",
 			"path": "packs/sdnd-spells.db",
@@ -318,6 +330,14 @@
 					"color": "#2891fa",
 					"packs": [
 						"SDND-Summons"
+					]
+				},
+				{
+					"name": "Documentation",
+					"sorting": "a",
+					"color": "#2891fa",
+					"packs": [
+						"SDND-Documentation"
 					]
 				},
 				{
