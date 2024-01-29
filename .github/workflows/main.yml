@@ -32,7 +32,6 @@
 #
 name: Create Module Files For GitHub Release
 
-
 env:
   # The URL used for the module's "Project URL" link on FoundryVTT's website.
   project_url: "https://github.com/${{github.repository}}"
@@ -47,7 +46,6 @@ env:
   # processed by this workflow.
   release_module_url: "https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip"
 
-
 on:
   # Only run this workflow when a release is published.
   # To modify this workflow when other events occur, see:
@@ -60,7 +58,6 @@ on:
   # alter other parts of this workflow.
   release:
     types: [published]
-
 
 jobs:
   build:
@@ -87,13 +84,12 @@ jobs:
         id: sub_manifest_link_version
         uses: cschleiden/replace-tokens@v1
         with:
-          files: 'module.json'
+          files: "module.json"
         env:
           VERSION: ${{ env.VERSION }}
           URL: ${{ env.project_url }}
           MANIFEST: ${{ env.latest_manifest_url }}
           DOWNLOAD: ${{ env.release_module_url }}
-      
 
       - name: Setup Node and Foundry CLI
         uses: actions/setup-node@v4
@@ -102,7 +98,7 @@ jobs:
 
       - name: Install Dependencies
         run: npm ci
-      
+
       - name: Make Sure Foundry is installed
         run: npm install -g @foundryvtt/foundryvtt-cli
 
@@ -137,7 +133,6 @@ jobs:
           # Don't forget to add a backslash at the end of the line for any
           # additional files or directories!
 
-
       # Update the GitHub release with the manifest and module archive files.
       - name: Update Release With Files
         id: create_version_release
@@ -148,7 +143,7 @@ jobs:
           draft: ${{ github.event.release.unpublished }}
           prerelease: ${{ github.event.release.prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './module.json, ./module.zip'
+          artifacts: "./module.json, ./module.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
 
@@ -157,10 +152,7 @@ jobs:
         uses: fjogeleit/http-request-action@v1.15.2
         continue-on-error: true
         with:
-          url: 'https://api.foundryvtt.com/_api/packages/release_version'
-          method: 'POST'
+          url: "https://api.foundryvtt.com/_api/packages/release_version"
+          method: "POST"
           customHeaders: '{"Content-Type": "application/json", "Authorization": "${{ secrets.FOUNDRY_PUBLISH_KEY }}"}'
           data: '{"dry_run": false, "id": "stroud-dnd-helpers", "release": {"version":  "${{env.VERSION}}", "manifest": "https://github.com/matthewbstroud/stroud-dnd-helpers/releases/latest/download/module.json", "notes": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/main/CHANGELOG.md", "compatibility": {"minimum": "11", "verified": "11", "maximum": "11"} } }'
-              
-
-     
