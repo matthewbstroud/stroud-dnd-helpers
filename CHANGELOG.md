@@ -1,7 +1,10 @@
 # v11.1.5
 # New Features
-- Add help journal.
+- Documentation
+  - Added help for Change Lights
+  - Added help for Fireplaces
 # Bug Fixes
+- Trying auto deploy
 # v11.1.4
 # Bug Fixes
 - Fix build issue
