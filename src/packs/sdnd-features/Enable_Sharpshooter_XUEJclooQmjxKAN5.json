@@ -1,0 +1,194 @@
+{
+  "name": "Enable Sharpshooter",
+  "type": "feat",
+  "img": "icons/weapons/bows/longbow-recurve-skull-brown.webp",
+  "effects": [
+    {
+      "_id": "dbid4gk91pwfbd2m",
+      "changes": [
+        {
+          "key": "system.bonuses.rwak.damage",
+          "mode": 2,
+          "value": "+10",
+          "priority": 20
+        },
+        {
+          "key": "system.bonuses.rwak.attack",
+          "mode": 2,
+          "value": "-5",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/weapons/bows/longbow-recurve-skull-brown.webp",
+      "transfer": false,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "noneName",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [
+            "1Attack:rwak"
+          ],
+          "transfer": false,
+          "selfTargetAlways": false
+        },
+        "core": {
+          "statusId": "Sharpshooter"
+        },
+        "dnd5e-helpers": {
+          "rest-effect": "Ignore"
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "radius": "",
+          "alignment": "",
+          "type": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false
+        },
+        "dfreds-convenient-effects": {
+          "description": ""
+        }
+      },
+      "tint": null,
+      "origin": null,
+      "name": "Sharpshooter",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!XUEJclooQmjxKAN5.dbid4gk91pwfbd2m"
+    }
+  ],
+  "folder": "CKhHorTPMiFPKvt4",
+  "flags": {
+    "midi-qol": {
+      "effectActivation": false,
+      "forceCEOff": false,
+      "onUseMacroName": ""
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "rollOther": false,
+      "critOther": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false,
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "offHandWeapon": false,
+      "ignoreTotalCover": false
+    },
+    "core": {},
+    "ddbimporter": {
+      "ignoreIcon": true,
+      "ignoreItemImport": true,
+      "retainResourceConsumption": false
+    }
+  },
+  "system": {
+    "description": {
+      "value": "<p>You pull harder on the bowstring than can be reasonably controlled.  Your aim is sacrificed for more damage.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": {
+      "custom": ""
+    },
+    "activation": {
+      "type": "action",
+      "cost": 0,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "self",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": "self"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "util",
+    "attackBonus": "",
+    "chatFlavor": "Overextending the bow string",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "requirements": "",
+    "recharge": {
+      "value": null,
+      "charged": false
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1706802930478,
+    "modifiedTime": 1706802930478,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "XUEJclooQmjxKAN5",
+  "sort": 0,
+  "_key": "!items!XUEJclooQmjxKAN5"
+}

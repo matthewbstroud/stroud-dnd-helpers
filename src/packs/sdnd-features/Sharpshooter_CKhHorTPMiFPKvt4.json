@@ -1,0 +1,19 @@
+{
+  "name": "Sharpshooter",
+  "sorting": "a",
+  "folder": "GbstRt7jtYqa22vU",
+  "type": "Item",
+  "_id": "CKhHorTPMiFPKvt4",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1706802917479,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!CKhHorTPMiFPKvt4"
+}

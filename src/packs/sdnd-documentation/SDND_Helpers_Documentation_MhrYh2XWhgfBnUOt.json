@@ -106,6 +106,41 @@
         "lastModifiedBy": "oxBsChzkQU8PgTjm"
       },
       "_key": "!journal.pages!MhrYh2XWhgfBnUOt.0SUoFmihY8gplPwG"
+    },
+    {
+      "sort": 200000,
+      "name": "Manage Money",
+      "type": "text",
+      "_id": "qtieQHGvirSF9ZsV",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>Description</h2><p>These are helper methods created to give or take money to your players.  A chat message will be created to indicate what has transpired.</p><h2>Give</h2><p>This allows you to give money to your players.  Click Manage Money and then click Give.</p><p><strong>Notes</strong></p><ul><li><p>If no player tokens are selected, the money will be evenly distributed to all players in your configured players folder.  (As long as they are in the scene).</p></li><li><p>You can select 1 or more tokens to explicitly define who should receive money.</p></li><li><p><strong>This function is always going to split the amount between chosen token actors.</strong></p></li></ul><p></p><h2>Take</h2><p>This allows you to take money from your players.  Click Manage Money and then click Take.</p><h4><strong>Example</strong></h4><p>Say you are at an inn and your 4 players decide to buy a room for the night.  You can say a room is 4gp per night and if they agree, you would c</p><ul><li><p>Click Manage Money</p></li><li><p>Click Take</p></li><li><p>Enter 16gp</p></li><li><p>Click Take.</p></li></ul><p>The result is that 4gp would be taken from each player. </p><p><strong>Notes</strong></p><ul><li><p>If no player tokens are selected, the money will be evenly collected from all players in your configured players folder.  (As long as they are in the scene).</p></li><li><p>You can select 1 or more tokens to explicitly define who should be giving money.</p></li><li><p>If not everyone can afford the amount you have selected, nothing will happen and you will receive a private message in chat indicating which players do not have enough money.</p></li><li><p><strong>This function is always going to split the amount taken between chosen token actors.</strong></p></li></ul><p></p><h2>Equalize</h2><p>This will simply take all money from the players and redistribute it evenly.</p><p><strong>Notes</strong></p><ul><li><p>If no player tokens are selected, the money will be evenly distributed across all players in your configured players folder.  (As long as they are in the scene).</p></li><li><p>You can select 1 or more tokens to explicitly define who should be evenly distributing money. </p></li></ul>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1,
+        "6yhz13iFYYklKtgA": 3
+      },
+      "flags": {},
+      "_stats": {
+        "systemId": "dnd5e",
+        "systemVersion": "2.4.1",
+        "coreVersion": "11.315",
+        "createdTime": 1706803364400,
+        "modifiedTime": 1706804394440,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
+      },
+      "_key": "!journal.pages!MhrYh2XWhgfBnUOt.qtieQHGvirSF9ZsV"
     }
   ],
   "folder": null,
@@ -121,8 +156,8 @@
     "systemVersion": "2.4.1",
     "coreVersion": "11.315",
     "createdTime": 1706538266394,
-    "modifiedTime": 1706542772821,
-    "lastModifiedBy": "oxBsChzkQU8PgTjm"
+    "modifiedTime": 1706804394440,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "MhrYh2XWhgfBnUOt",
   "sort": 0,

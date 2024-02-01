@@ -1,0 +1,19 @@
+{
+  "name": "Great Weapon Master",
+  "sorting": "a",
+  "folder": "GbstRt7jtYqa22vU",
+  "type": "Item",
+  "_id": "ugK8pzLQCjqDXXxy",
+  "sort": 200000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1706802910133,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!ugK8pzLQCjqDXXxy"
+}
