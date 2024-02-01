@@ -1,0 +1,19 @@
+{
+  "name": "Feats",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "GbstRt7jtYqa22vU",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1706802805889,
+    "modifiedTime": 1706802805889,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!GbstRt7jtYqa22vU"
+}

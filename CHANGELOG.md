@@ -2,6 +2,8 @@
 # New Features
 - Documentation
   - Added documentation for Manage Money
+- Features Compendium
+  - Added toggles for Great Weapon Master and Sharpshooter.  Player can click this feature and their next attack will apply the feature modifiers.
 # v11.1.5
 # New Features
 - Documentation

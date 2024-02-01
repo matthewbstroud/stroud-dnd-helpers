@@ -61,6 +61,12 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 |Cleric|Twilight Sanctuary|True|False|None|Handles checking for range to caster for each player at end of turn.  Prompts player to clear a condition or apply temp hp. Automatically rolls a final heal on removal, if out of combat.|
 |Wizard|Portent Dice|False|False|None|Macro under Stroud DnD Shared Macros that will create the players portent dice.  Each die is a single use item and this feature is sync with their Portent daily uses.|
 
+# Feature Helpers
+Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
+|---|---|---|---|---|
+|Enable Great Weapon Master|True|False|None|When used, your next attack will be at -5 attack roll and +10 damage roll.|
+|Enable Sharpshooter|True|False|None|When used, your next ranged attack will be at -5 attack roll and +10 damage roll.|
+
 # Supported Spells
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|

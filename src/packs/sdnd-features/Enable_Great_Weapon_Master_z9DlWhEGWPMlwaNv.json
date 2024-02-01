@@ -1,0 +1,197 @@
+{
+  "name": "Enable Great Weapon Master",
+  "type": "feat",
+  "img": "icons/weapons/swords/greatsword-crossguard-barbed.webp",
+  "effects": [
+    {
+      "_id": "dbid4gk91pwfbd2m",
+      "changes": [
+        {
+          "key": "system.bonuses.mwak.damage",
+          "mode": 2,
+          "value": "+10",
+          "priority": 20
+        },
+        {
+          "key": "system.bonuses.weapon.attack",
+          "mode": 2,
+          "value": "-5",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "icon": "icons/weapons/swords/greatsword-crossguard-barbed.webp",
+      "transfer": false,
+      "flags": {
+        "dae": {
+          "selfTarget": false,
+          "stackable": "none",
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": [
+            "1Attack:mwak"
+          ],
+          "transfer": false
+        },
+        "core": {
+          "statusId": "Great Weapon Master"
+        },
+        "dnd5e-helpers": {
+          "rest-effect": "Ignore"
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "radius": null,
+          "alignment": "",
+          "type": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false
+        }
+      },
+      "tint": null,
+      "origin": null,
+      "name": "Great Weapon Master",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!z9DlWhEGWPMlwaNv.dbid4gk91pwfbd2m"
+    }
+  ],
+  "folder": "ugK8pzLQCjqDXXxy",
+  "flags": {
+    "midi-qol": {
+      "effectActivation": false,
+      "forceCEOff": false,
+      "onUseMacroName": "",
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "effectCondition": ""
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "rollOther": false,
+      "critOther": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false,
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "offHandWeapon": false,
+      "ignoreTotalCover": false,
+      "confirmTargets": "default",
+      "noConcentrationCheck": false
+    },
+    "core": {},
+    "ddbimporter": {
+      "ignoreIcon": true,
+      "ignoreItemImport": true,
+      "retainResourceConsumption": false
+    }
+  },
+  "system": {
+    "description": {
+      "value": "<p>You wildly swing a two handed weapon.  Your aim is reduced, but your damage is increased.</p>",
+      "chat": "",
+      "unidentified": ""
+    },
+    "source": {
+      "custom": ""
+    },
+    "activation": {
+      "type": "action",
+      "cost": 0,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "self",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": "self"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "util",
+    "attackBonus": "",
+    "chatFlavor": "Prepares to swing widly.",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "type": {
+      "value": "",
+      "subtype": ""
+    },
+    "requirements": "",
+    "recharge": {
+      "value": null,
+      "charged": false
+    }
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1706802839208,
+    "modifiedTime": 1706802887802,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "z9DlWhEGWPMlwaNv",
+  "sort": 100000,
+  "_key": "!items!z9DlWhEGWPMlwaNv"
+}
