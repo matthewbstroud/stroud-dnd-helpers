@@ -1,3 +1,7 @@
+# v11.1.6
+# New Features
+- Documentation
+  - Added documentation for Manage Money
 # v11.1.5
 # New Features
 - Documentation
