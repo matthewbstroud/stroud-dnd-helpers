@@ -1,3 +1,9 @@
+# v11.1.7
+# New Features
+- Backpack Helpers (Requires Zhell's Backpack Manager)
+  - Added a one-click mechanism for creating a backpack actor and setting the permissions.
+  - Added a Transfer Backpack mechanism to give a backpack with all its contents to another player.
+  - Added automatic permission synchronization between a player and their backpacks.  
 # v11.1.6
 # New Features
 - Documentation

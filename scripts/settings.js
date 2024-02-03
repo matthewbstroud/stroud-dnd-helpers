@@ -1,4 +1,5 @@
 import { sdndConstants } from "./constants.js";
+import { folders } from "./folders/folders.js";
 
 export let sdndSettings = {
 	'registerSettings': function _registerSettings() {
@@ -77,7 +78,24 @@ export let sdndSettings = {
 			'default': false
 		},
 		'getValue': () =>  getModuleSettingValue('HideTextOnActorSheet')
-	}
+	},
+	'BackpacksFolder': {
+		'config' : {
+			'name': 'Backpacks Folder',
+			'hint': 'Used in conjunction with Backpacks Manager, this is where your backpacks should be created.',
+			'scope': 'world',
+			'config': true,
+			'type': String,
+			'default': 'Managed Backpacks'
+		},
+		'getValue': () => {
+			let folder = getModuleSettingValue('BackpacksFolder');
+			if (!folder || folder.length == 0) {
+				folder = 'Managed Backpacks';
+			}				
+			return folder;
+		} 
+	},
 };
 
 function getModuleSettingValue(settingName) {

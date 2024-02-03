@@ -1,5 +1,5 @@
 import { calendar } from './calendar/calendar.js';
-import { createActorHeaderButton } from './actors/actors.js';
+import { createActorHeaderButton, createItemHeaderButton, syncBackpackPermissions } from './actors/actors.js';
 import { chat } from './chat/chat.js';
 import { combat } from './combat.js';
 import { gmFunctions } from './gm/gmFunctions.js';
@@ -19,7 +19,7 @@ import { macros } from './macros/macros.js';
 import { utility } from './utility/utility.js';
 
 import { hooks } from './hooks.js';
-//CONFIG.debug.hooks = true;
+// CONFIG.debug.hooks = true;
 
 export let socket;
 
@@ -35,6 +35,10 @@ Hooks.once('ready', async function() {
 	sdndSettings.registerSettings();
 	if (game.user?.isGM) {
 		Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
+		if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
+			Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
+			Hooks.on('updateActor', syncBackpackPermissions);
+		}
 	}
 	console.log("Loaded Stroud's DnD Helpers");
 });
