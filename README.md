@@ -55,6 +55,14 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 - **Weapons**
   - **Reload Ranged Weapon**: Allows you to select an equipped ranged weapon and reload it with any available ammo from your inventory.
 
+# Integrations
+- **Zhell's Backpack Manager**
+  - When viewing a backpack item sheet, you will see the SDND icon. Clicking it will either:
+    - Automatically create a backpack actor if none exists and assign it the permissions of the actor.
+    - Launch a dialog to transfer the backpack and all its contents to another player. 
+  - Automatic synchronization of Actor permissions to their backpack.
+    - When you update the permissions of an actor, it will automatically push the changes to their backpack actors.  (This is useful when assigning ownership to a player for botting purposes.)
+
 # Supported Class Features
 |Class|Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|---|

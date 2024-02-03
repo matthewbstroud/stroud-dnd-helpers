@@ -141,6 +141,41 @@
         "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_key": "!journal.pages!MhrYh2XWhgfBnUOt.qtieQHGvirSF9ZsV"
+    },
+    {
+      "sort": 25000,
+      "name": "Backpack Helpers",
+      "type": "text",
+      "_id": "nK2bj8d4WYNeJKXt",
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<h2>Description</h2><p>This works in conjunction with <a href=\"https://foundryvtt.com/packages/backpack-manager\" title=\"Zhell's Backpack Manager\">Zhell's Backpack Manager</a>.  When you open an item of type backpack, the SDND icon will be displayed.  When clicked, the icon will create a managed backpack if none exists or it will render a dialog allowing the backpack to be transferred to another character.</p><h2>Create Backpack</h2><ul><li><p>A backpack actor of type NPC will be created under a folder called Managed Backpacks.</p></li><li><p>The backpack will inherit the permissions of the owner.</p></li></ul><h2>Transfer Backpack</h2><ul><li><p>You will be asked to select from a list of player characters in the scene.</p></li><li><p>The backpack will be transferred to the chosen player.</p></li><li><p>The permissions of the backpack will now be in sync with the new owner.</p></li></ul><h2>Backpack Synchronization</h2><p>When you edit the ownership permissions of an actor, SDND will automatically sync the changes to the player's backpacks. </p><p>(This is useful in the case where you want to assign temporary ownership to an additional player for the purposes of botting.)</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "system": {},
+      "ownership": {
+        "default": -1,
+        "6yhz13iFYYklKtgA": 3
+      },
+      "flags": {},
+      "_stats": {
+        "systemId": "dnd5e",
+        "systemVersion": "2.4.1",
+        "coreVersion": "11.315",
+        "createdTime": 1707002601775,
+        "modifiedTime": 1707003116547,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
+      },
+      "_key": "!journal.pages!MhrYh2XWhgfBnUOt.nK2bj8d4WYNeJKXt"
     }
   ],
   "folder": null,
@@ -156,7 +191,7 @@
     "systemVersion": "2.4.1",
     "coreVersion": "11.315",
     "createdTime": 1706538266394,
-    "modifiedTime": 1706804394440,
+    "modifiedTime": 1707003116547,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "MhrYh2XWhgfBnUOt",
