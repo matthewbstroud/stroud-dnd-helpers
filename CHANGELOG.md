@@ -1,3 +1,7 @@
+# v11.1.8
+# New Features
+- Items
+  - Added Devotee's Censer.
 # v11.1.7
 # New Features
 - Backpack Helpers (Requires Zhell's Backpack Manager)

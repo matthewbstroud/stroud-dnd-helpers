@@ -1,0 +1,210 @@
+{
+  "name": "Devotee's Censer",
+  "type": "weapon",
+  "system": {
+    "description": {
+      "value": "<p>The rounded head of this flail is perforated with tiny holes, arranged in symbols and patterns. The flail counts as a holy symbol for you. When you hit with an attack using this magic flail, the target takes an extra 1d8 radiant damage.</p>\n<p>As a bonus action, you can speak the command word to cause the flail to emanate a thin cloud of incense out to 10 feet for 1 minute. At the start of each of your turns, you and any other creatures in the incense each regain 1d4 hit points. This property can’t be used again until the next dawn.</p><div class=\"item-attunement\"><i>Requires attunement by a cleric or paladin</i></div>",
+      "chat": "",
+      "unidentified": "Flail"
+    },
+    "source": {
+      "book": "Tasha’s Cauldron of Everything",
+      "page": "126",
+      "license": "",
+      "custom": ""
+    },
+    "quantity": 1,
+    "weight": 2,
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "attunement": 2,
+    "equipped": true,
+    "rarity": "rare",
+    "identified": true,
+    "activation": {
+      "type": "action",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": 5,
+      "long": null,
+      "units": "ft"
+    },
+    "uses": {
+      "value": 1,
+      "max": "1",
+      "per": "day",
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "mwak",
+    "attackBonus": "",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "1d8[bludgeoning] + @mod",
+          "bludgeoning"
+        ],
+        [
+          "1d8[radiant]",
+          "radiant"
+        ]
+      ],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "armor": {
+      "value": null
+    },
+    "hp": {
+      "value": null,
+      "max": null,
+      "dt": null,
+      "conditions": ""
+    },
+    "weaponType": "martialM",
+    "baseItem": "flail",
+    "properties": {
+      "ada": false,
+      "fir": false,
+      "amm": false,
+      "fin": false,
+      "foc": false,
+      "hvy": false,
+      "lgt": false,
+      "lod": false,
+      "mgc": true,
+      "rch": false,
+      "rel": false,
+      "ret": false,
+      "sil": false,
+      "spc": false,
+      "thr": false,
+      "two": false,
+      "ver": false
+    },
+    "proficient": 0
+  },
+  "flags": {
+    "ddbimporter": {
+      "dndbeyond": {
+        "type": "Flail",
+        "damage": {
+          "parts": []
+        },
+        "classFeatures": [],
+        "restrictions": [],
+        "avatarUrl": "https://www.dndbeyond.com/avatars/13904/418/637411377152947200.png",
+        "largeAvatarUrl": "https://www.dndbeyond.com/avatars/13904/419/637411377154499865.png",
+        "filterType": "Weapon",
+        "isConsumable": false,
+        "isContainer": false,
+        "isCustomItem": false,
+        "isHomebrew": false,
+        "isMonkWeapon": false,
+        "isPack": false,
+        "levelInfusionGranted": null,
+        "tags": [],
+        "sources": [
+          {
+            "sourceId": 67,
+            "pageNumber": 126,
+            "sourceType": 1
+          }
+        ],
+        "pictureUrl": "ddb-images/other/item-Devotee-s-Censer.png"
+      },
+      "id": 1354684994,
+      "entityTypeId": 1439493548,
+      "containerEntityId": 83882913,
+      "containerEntityTypeId": 1581111423,
+      "definitionEntityTypeId": 112130694,
+      "definitionId": 2407478,
+      "originalName": "Devotee's Censer",
+      "version": "3.7.16",
+      "importId": "9nR9DJwQoSxqVwGG",
+      "keepIcon": true
+    },
+    "midi-qol": {
+      "removeAttackDamageButtons": "default",
+      "fumbleThreshold": null,
+      "rollAttackPerTarget": "default",
+      "effectActivation": false,
+      "itemCondition": "",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "effectCondition": "",
+      "onUseMacroName": ""
+    },
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "infusions": {
+      "maps": [],
+      "applied": [],
+      "infused": false
+    },
+    "core": {}
+  },
+  "effects": [],
+  "img": "modules/stroud-dnd-helpers/images/icons/devotees_censer.jpg",
+  "folder": "4vaNHx9jdikMakYk",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "2.4.1",
+    "coreVersion": "11.315",
+    "createdTime": 1708881923741,
+    "modifiedTime": 1708886047956,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "PBFcHyTQEvAWX1Em",
+  "sort": 0,
+  "_key": "!items!PBFcHyTQEvAWX1Em"
+}

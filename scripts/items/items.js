@@ -1,4 +1,5 @@
 import { lightBringer } from "./weapons/lightBringer.js"
+import { devoteesCenser } from "./weapons/devoteesCenser.js";
 
 export let items = {
     'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -18,7 +19,8 @@ export let items = {
 		}
 	},
     "weapons": {
-        "lightBringer": lightBringer
+        "lightBringer": lightBringer,
+		"devoteesCenser": devoteesCenser
     },
     "sortByName": function _sortByName(item1, item2) {
         if (item1.name < item2.name){
