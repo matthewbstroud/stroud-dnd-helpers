@@ -1,3 +1,6 @@
+# v11.2.0
+# Bug Fixes
+- Fix button where SDND icon displayed on non-backpack items.
 # v11.1.8
 # New Features
 - Items
