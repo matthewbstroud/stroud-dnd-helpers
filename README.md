@@ -87,6 +87,7 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|
 |Melee Weapon|Lightbringer|Gives a passive effect that can be enabled/disabled by the user.  When enabled the weapon will hit for an extra 1d6 damage against undead targets.|
 |Melee Weapon|Ogran|+2 Maul that also adds +1 AC.|
+|Melee Weapon|Devotee's Censer|Does radiant damage and can heal allies.|
   
 # Required Modules  
 | Module | Verified Version |  

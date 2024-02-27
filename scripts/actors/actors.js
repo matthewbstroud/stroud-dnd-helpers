@@ -13,9 +13,10 @@ export function createItemHeaderButton(config, buttons) {
     if (!game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
         return;
     }
+    debugger;
     if (config.object instanceof Item) {
         var item = config.object;
-        if (!item.type == "backpack") {
+        if (item.type != "backpack") {
             return;
         }
         var containerActorUuid = item.getFlag("backpack-manager", "containerActorUuid");
