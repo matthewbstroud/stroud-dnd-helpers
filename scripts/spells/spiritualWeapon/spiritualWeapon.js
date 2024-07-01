@@ -7,6 +7,10 @@ export let spiritualWeapon = {
     "castOrUse": _castOrUse,
     "itemMacro": _itemMacro,
     "removeWeapon": async function _removeWeapon(actorUuid) {
+        if (!(game.modules.get("warpgate")?.active ?? false)) {
+            ui.notifications.error("Spiritual Weapon requires warpgate!");
+            return;
+        }
         let actor = await gmFunctions.getTokenOrActor(actorUuid);
         let weaponToken = canvas.scene.tokens.getName(`Spiritual Weapon of ${actor.name}`);
         if (!weaponToken){
@@ -17,6 +21,10 @@ export let spiritualWeapon = {
 };
 
 async function _castOrUse() {
+    if (!(game.modules.get("warpgate")?.active ?? false)) {
+        ui.notifications.error("Spiritual Weapon requires warpgate!");
+        return;
+    }
     if (canvas.tokens.controlled.length != 1) {
         ui.notifications.notify(`Please select a single actor!`);
         return;
@@ -60,6 +68,10 @@ async function _castOrUse() {
 
 
 async function _itemMacro({speaker, actor, token, character, item, args}) {
+    if (!(game.modules.get("warpgate")?.active ?? false)) {
+        ui.notifications.error("Spiritual Weapon requires warpgate!");
+        return;
+    }
     let crosshairConfig = {
         icon: `${sdndConstants.ANIMATIONS.SPELLS.SPRITUAL_WEAPON}`,
         label: "Place Weapon"
