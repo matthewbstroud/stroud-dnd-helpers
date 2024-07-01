@@ -5,7 +5,7 @@ export let dialog = {
         if (!direction) {
             direction = "column";
         }
-        let selected = await warpgate.buttonDialog(
+        let selected = await buttonDialog(
             {
                 buttons,
                 title
@@ -14,7 +14,7 @@ export let dialog = {
         );
         return selected;
     },
-    "createNumberDialog": async function _createNumberDialog(title, description, label, buttonText, unit, defaultValue, callback){
+    "createNumberDialog": async function _createNumberDialog(title, description, label, buttonText, unit, defaultValue, callback) {
         let selectedNumber = numbers.toNumber(defaultValue);
         let propertyName = `${unit.toLowerCase()}_value`;
         new Dialog({
@@ -30,7 +30,7 @@ export let dialog = {
                     label: `${buttonText}`,
                     callback: (html) => {
                         selectedNumber = numbers.toNumber(html.find(`#${propertyName}`).val());
-                        if (callback instanceof Function){
+                        if (callback instanceof Function) {
                             callback(selectedNumber);
                         }
                     }
@@ -46,7 +46,7 @@ export let dialog = {
 };
 
 
-function getNumberFormHtml(description, propertyName, label, defaultValue){
+function getNumberFormHtml(description, propertyName, label, defaultValue) {
     return `
     <b>${description}</b><br />
     <div style="display: flex; width: 100%; margin: 10px 0px 10px 0px">
@@ -54,4 +54,39 @@ function getNumberFormHtml(description, propertyName, label, defaultValue){
         <input type="number" value="${defaultValue}" id="${propertyName}" name="${propertyName}" />
     </div>
     `;
-} 
+}
+
+// this originally came from warpgate
+async function buttonDialog(data, direction) {
+    return await new Promise(async (resolve) => {
+        /** @type Object<string, object> */
+        let buttons = {},
+            dialog;
+
+        data.buttons.forEach((button) => {
+            buttons[button.label] = {
+                label: button.label,
+                callback: () => resolve(button.value),
+            };
+        });
+
+        dialog = new Dialog(
+            {
+                title: data.title ?? "",
+                content: data.content ?? "",
+                buttons,
+                close: () => resolve(false),
+            },
+            {
+                /*width: '100%',*/
+                height: "100%",
+                ...data.options,
+            }
+        );
+
+        await dialog._render(true);
+        dialog.element.find(".dialog-buttons").css({
+            "flex-direction": direction,
+        });
+    });
+}

@@ -61,26 +61,26 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("createEffects", actorUuid, effectData)
         );
     },
-    "dismissTokens": async function _removeTokens(arrayOfTokenIds /* [tokenUuid] */) {
-        if (!arrayOfTokenIds) {
-            return;
-        }
-        if (!areActiveGms()) {
-            ui.notifications.error("No Active GMs!");
-            return;
-        }
-        run(
-            async () => {
-                arrayOfTokenIds.forEach(tokenId => {
-                    let token = canvas.tokens.get(tokenId);
-                    if (token) {
-                        warpgate.dismiss(token)
-                    }
-                });
-            },
-            async () => await socket.executeAsGM("dismissTokens", arrayOfTokenIds)
-        );
-    },
+    // "dismissTokens": async function _removeTokens(arrayOfTokenIds /* [tokenUuid] */) {
+    //     if (!arrayOfTokenIds) {
+    //         return;
+    //     }
+    //     if (!areActiveGms()) {
+    //         ui.notifications.error("No Active GMs!");
+    //         return;
+    //     }
+    //     run(
+    //         async () => {
+    //             arrayOfTokenIds.forEach(tokenId => {
+    //                 let token = canvas.tokens.get(tokenId);
+    //                 if (token) {
+    //                     warpgate.dismiss(token)
+    //                 }
+    //             });
+    //         },
+    //         async () => await socket.executeAsGM("dismissTokens", arrayOfTokenIds)
+    //     );
+    // },
     "deleteTokens": async function _deleteTokens(arrayOfTokenIds /* [tokenUuid] */) {
         if (!arrayOfTokenIds || arrayOfTokenIds.length == 0) {
             return;

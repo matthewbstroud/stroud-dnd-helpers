@@ -96,9 +96,11 @@ function getOverrideableItemsFromActor(actorDocument) {
         sdndConstants.FEATURES.TWILIGHT_SANCTUARY,
         sdndConstants.SPELLS.HUNTERS_MARK,
         sdndConstants.SPELLS.IDENTIFY,
-        sdndConstants.SPELLS.MAGIC_MISSILE,
-        sdndConstants.SPELLS.SPIRITUAL_WEAPON
+        sdndConstants.SPELLS.MAGIC_MISSILE
     ];
+    if (game.modules.get("warpgate")?.active ?? false) {
+        sdndItems.push(sdndConstants.SPELLS.SPIRITUAL_WEAPON);
+    }
     let overrideableItems = actorDocument.items.filter(i =>
         !i.flags['stroud-dnd-helpers']?.["importedItem"] && sdndItems.includes(i.name)
     ).sort(items.sortByName);

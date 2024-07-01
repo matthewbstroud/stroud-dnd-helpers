@@ -156,15 +156,6 @@
 					"mininum": "11.0.1",
 					"verified": "11.0.1"
 				}
-			},
-			{
-				"id": "warpgate",
-				"type": "module",
-				"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "1.19.2",
-					"verified": "1.19.2"
-				}
 			}
 		],
 		"optional": [
@@ -202,6 +193,15 @@
 				"compatibility": {
 					"minimum": "11.0.6",
 					"verified": "11.0.6"
+				}
+			},
+			{
+				"id": "warpgate",
+				"type": "module",
+				"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "1.19.2",
+					"verified": "1.19.2"
 				}
 			}
 		]
