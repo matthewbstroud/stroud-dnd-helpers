@@ -1,3 +1,6 @@
+# v11.2.2
+# Bug Fixes
+- Upgrade compendiums to DND5e v3.1.2
 # v11.2.1
 # Bug Fixes
 - Fix Ogran icon.

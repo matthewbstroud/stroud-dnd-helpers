@@ -24,7 +24,6 @@
         "startTurn": null
       },
       "icon": "icons/weapons/hammers/hammer-war-spiked.webp",
-      "label": "Lightbringer",
       "transfer": true,
       "flags": {
         "dae": {
@@ -57,6 +56,9 @@
       },
       "tint": null,
       "origin": null,
+      "name": "Lightbringer",
+      "description": "",
+      "statuses": [],
       "_key": "!items.effects!sNbgLJZdOBMQYyTh.b5n914l9jsk9ylhv"
     }
   ],
@@ -304,11 +306,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.4.1",
+    "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1684674601716,
-    "modifiedTime": 1704230556639,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1719932120007,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
   },
   "folder": "PP9XFtc3SwmqPjr3",
   "sort": 0,
