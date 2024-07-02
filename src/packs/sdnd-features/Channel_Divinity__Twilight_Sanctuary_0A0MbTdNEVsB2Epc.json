@@ -160,7 +160,6 @@
   },
   "effects": [
     {
-      "label": "Twilight Sanctuary",
       "icon": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "changes": [],
       "transfer": false,
@@ -214,10 +213,12 @@
           }
         }
       },
+      "name": "Twilight Sanctuary",
+      "description": "",
+      "statuses": [],
       "_key": "!items.effects!0A0MbTdNEVsB2Epc.yrXsRONV1kdSlkuW"
     },
     {
-      "label": "TSAura",
       "icon": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "changes": [],
       "transfer": false,
@@ -420,6 +421,9 @@
           "version": 5
         }
       },
+      "name": "TSAura",
+      "description": "",
+      "statuses": [],
       "_key": "!items.effects!0A0MbTdNEVsB2Epc.HaKCcsmweDXk6ayn"
     }
   ],
@@ -431,11 +435,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.4.1",
+    "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1682167256793,
-    "modifiedTime": 1704230551823,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1719932055737,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
   },
   "folder": "YcCwvZw8ou9MVGEF",
   "sort": 0,

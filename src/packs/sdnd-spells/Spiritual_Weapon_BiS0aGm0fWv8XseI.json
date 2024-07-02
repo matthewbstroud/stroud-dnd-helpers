@@ -6,7 +6,9 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "Basic Rules, Player's Handbook pg 278",
+    "source": {
+      "custom": "Basic Rules, Player's Handbook pg 278"
+    },
     "activation": {
       "type": "bonus",
       "cost": 1,
@@ -20,8 +22,9 @@
     "target": {
       "value": null,
       "width": null,
-      "units": "",
-      "type": ""
+      "units": null,
+      "type": "",
+      "prompt": true
     },
     "range": {
       "value": 60,
@@ -31,13 +34,15 @@
     "uses": {
       "value": null,
       "max": "",
-      "per": "",
-      "recovery": ""
+      "per": null,
+      "recovery": "",
+      "prompt": true
     },
     "consume": {
       "type": "",
       "target": "",
-      "amount": null
+      "amount": null,
+      "scale": false
     },
     "ability": "",
     "actionType": "other",
@@ -79,7 +84,17 @@
     "scaling": {
       "mode": "level",
       "formula": "floor((@item.level - 1)/2)d8"
-    }
+    },
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "crewed": false,
+    "summons": null,
+    "properties": [
+      "vocal",
+      "somatic"
+    ]
   },
   "name": "Spiritual Weapon",
   "flags": {
@@ -190,11 +205,45 @@
     },
     "stroud-dnd-helpers": {
       "importedItem": true
+    },
+    "dnd5e": {},
+    "dae": {
+      "macro": {
+        "data": {
+          "name": "Spiritual Weapon",
+          "type": "script",
+          "scope": "global",
+          "command": "const lastArg = args[args.length - 1];\nconst castItemName = \"Summoned Spiritual Weapon\";\nconst tokenOrActor = await fromUuid(lastArg.actorUuid);\nconst targetActor = tokenOrActor.actor ? tokenOrActor.actor : tokenOrActor;\n\n\nasync function deleteTemplates(actorId) {\n  let removeTemplates = canvas.templates.placeables.filter(\n    (i) => i.data.flags?.SpiritualWeaponRange?.ActorId === actorId\n  );\n  await canvas.scene.deleteEmbeddedDocuments(\"MeasuredTemplate\", removeTemplates.map((t) => t.id));\n}\n\n/**\n * Create Spiritual Weapon item in inventory\n */\nif (args[0] === \"on\") {\n  const tokenFromUuid = await fromUuid(lastArg.tokenUuid);\n  const targetToken = tokenFromUuid.data || token;\n  const DAEItem = lastArg.efData.flags.dae.itemData;\n  const damage = Math.floor(Math.floor(args[1] / 2));\n  // draw range template\n  await canvas.scene.createEmbeddedDocuments(\"MeasuredTemplate\", [\n    {\n      t: \"circle\",\n      user: game.userId,\n      x: targetToken.x + (canvas.grid.size / 2),\n      y: targetToken.y + (canvas.grid.size / 2),\n      direction: 0,\n      distance: 60,\n      borderColor: \"#FF0000\",\n      flags: {\n        SpiritualWeaponRange: {\n          ActorId: targetActor.id,\n        },\n      },\n    },\n  ]);\n\n  const templateData = {\n    t: \"rect\",\n    user: game.user.id,\n    distance: 7,\n    direction: 45,\n    x: 0,\n    y: 0,\n    flags: {\n      SpiritualWeapon: {\n        ActorId: targetActor.id,\n      },\n    },\n    fillColor: game.user.color,\n    texture: DAEItem.img,\n  };\n  Hooks.once(\"createMeasuredTemplate\", () => deleteTemplates(targetActor.id));\n  const doc = new CONFIG.MeasuredTemplate.documentClass(templateData, { parent: canvas.scene });\n  let template = new game.dnd5e.canvas.AbilityTemplate(doc);\n  template.actorSheet = targetActor.sheet;\n  template.drawPreview();\n\n  const castItem = targetActor.items.find((i) => i.name === castItemName && i.type === \"weapon\");\n  if (!castItem) {\n    const weaponData = {\n      name: castItemName,\n      type: \"weapon\",\n      system: {\n        quantity: 1,\n        activation: { type: \"bonus\", cost: 1, condition: \"\", },\n        target: { value: 1, type: \"creature\", },\n        // we choose 60ft here in case the midi-check range is on\n        range: { value: 60, long: null, units: \"ft\", },\n        ability: DAEItem.system.ability,\n        attackBonus: DAEItem.system.attackBonus,\n        actionType: \"msak\",\n        chatFlavor: \"\",\n        critical: null,\n        damage: { parts: [[`${damage}d8+@mod`, \"force\"]], versatile: \"\" },\n        weaponType: \"simpleM\",\n        proficient: true,\n        equipped: true,\n      },\n      flags: { SpiritualWeapon: targetActor.id },\n      img: DAEItem.img,\n    };\n\n    await targetActor.createEmbeddedDocuments(\"Item\", [weaponData]);\n    ui.notifications.notify(\"Weapon created in your inventory\");\n  }\n}\n\n// Delete Spiritual Weapon\nif (args[0] === \"off\") {\n  let swords = targetActor.items.filter((i) => i.flags?.SpiritualWeapon === targetActor.id);\n  if (swords.length > 0) await targetActor.deleteEmbeddedDocuments(\"Item\", swords.map((s) => s.id));\n  const templates = canvas.templates.placeables.filter((i) => i.data.flags?.SpiritualWeapon?.ActorId === targetActor.id);\n  if (templates.length > 0) await canvas.scene.deleteEmbeddedDocuments(\"MeasuredTemplate\", templates.map((t) => t.id));\n}\n"
+        },
+        "options": {},
+        "apps": {},
+        "compendium": null,
+        "name": "Spiritual Weapon",
+        "type": "script",
+        "scope": "global",
+        "command": "",
+        "author": "6yhz13iFYYklKtgA",
+        "_id": null,
+        "img": "icons/svg/dice-target.svg",
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0
+        },
+        "flags": {},
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": null,
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null
+        }
+      }
     }
   },
   "effects": [
     {
-      "label": "Spiritual Weapon",
       "changes": [],
       "duration": {
         "startTime": null,
@@ -252,6 +301,9 @@
       "icon": "modules/JB2A_DnD5e/Library/2nd_Level/Spiritual_Weapon/SpiritualWeapon_Mace01_01_Spectral_Blue_Thumb.webp",
       "_id": "PW6SQKTsTSLsnnQX",
       "origin": null,
+      "name": "Spiritual Weapon",
+      "description": "",
+      "statuses": [],
       "_key": "!items.effects!BiS0aGm0fWv8XseI.PW6SQKTsTSLsnnQX"
     }
   ],
@@ -262,11 +314,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.1.5",
-    "coreVersion": "10.291",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
     "createdTime": 1682167256810,
-    "modifiedTime": 1685024860246,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1719932142484,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
   },
   "folder": null,
   "sort": 0,

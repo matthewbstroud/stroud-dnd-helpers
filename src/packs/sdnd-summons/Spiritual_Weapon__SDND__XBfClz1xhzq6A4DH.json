@@ -423,7 +423,7 @@
     },
     "sight": {
       "enabled": false,
-      "range": null,
+      "range": 0,
       "angle": 360,
       "visionMode": "basic",
       "color": null,
@@ -442,7 +442,9 @@
         "offset": null
       }
     },
-    "randomImg": false
+    "randomImg": false,
+    "appendNumber": false,
+    "prependAdjective": false
   },
   "items": [
     {
@@ -462,7 +464,7 @@
           "denomination": "gp"
         },
         "attunement": 0,
-        "equipped": false,
+        "equipped": true,
         "rarity": "",
         "identified": true,
         "activation": {
@@ -631,11 +633,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.1.5",
-    "coreVersion": "10.291",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
     "createdTime": 1684417632792,
-    "modifiedTime": 1684878125713,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1719932190129,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
   },
   "folder": null,
   "sort": 0,

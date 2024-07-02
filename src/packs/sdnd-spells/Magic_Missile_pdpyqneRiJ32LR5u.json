@@ -6,7 +6,9 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "Basic Rules, Player's Handbook pg 257",
+    "source": {
+      "custom": "Basic Rules, Player's Handbook pg 257"
+    },
     "activation": {
       "type": "action",
       "cost": 1,
@@ -21,7 +23,8 @@
       "value": 1,
       "width": null,
       "units": "",
-      "type": "creature"
+      "type": "creature",
+      "prompt": true
     },
     "range": {
       "value": 120,
@@ -31,13 +34,15 @@
     "uses": {
       "value": null,
       "max": "",
-      "per": "",
-      "recovery": ""
+      "per": null,
+      "recovery": "",
+      "prompt": true
     },
     "consume": {
       "type": "",
       "target": "",
-      "amount": null
+      "amount": null,
+      "scale": false
     },
     "ability": "",
     "actionType": "other",
@@ -84,7 +89,17 @@
     "scaling": {
       "mode": "none",
       "formula": ""
-    }
+    },
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "crewed": false,
+    "summons": null,
+    "properties": [
+      "vocal",
+      "somatic"
+    ]
   },
   "name": "Magic Missile",
   "flags": {
@@ -185,6 +200,32 @@
     },
     "core": {
       "sourceId": "Actor.AicivR4M5MkpW9d7.Item.qB0lXWQaH1wsBEAB"
+    },
+    "dnd5e": {},
+    "dae": {
+      "macro": {
+        "name": "Magic Missile",
+        "type": "script",
+        "scope": "global",
+        "command": "",
+        "author": "6yhz13iFYYklKtgA",
+        "_id": null,
+        "img": "icons/svg/dice-target.svg",
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0
+        },
+        "flags": {},
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": null,
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null
+        }
+      }
     }
   },
   "effects": [],
@@ -195,11 +236,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "2.1.5",
-    "coreVersion": "10.291",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
     "createdTime": 1682374019325,
-    "modifiedTime": 1685024798538,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1719932142507,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
   },
   "folder": null,
   "sort": 0,
