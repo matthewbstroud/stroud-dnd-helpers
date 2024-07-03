@@ -1,3 +1,12 @@
+# v11.2.3
+# New Features
+- Remove dependencies for the following
+  - Ative Template Lighting
+  - Item Macro
+  - Simple Calendar
+  - Template Macros
+# Bug Fixes
+- Updated Hunter's Mark to remove deprecated fields.
 # v11.2.2
 # Bug Fixes
 - Upgrade compendiums to DND5e v3.1.2

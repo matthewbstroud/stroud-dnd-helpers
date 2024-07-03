@@ -49,15 +49,6 @@
 				}
 			},
 			{
-				"id": "ATL",
-				"type": "module",
-				"manifest": "https://github.com/kandashi/Active-Token-Lighting/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "0.7.0",
-					"verified": "0.7.0"
-				}
-			},
-			{
 				"id": "autoanimations",
 				"type": "module",
 				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
@@ -91,24 +82,6 @@
 				"comaptibility": {
 					"mininum": "11.0.3",
 					"verified": "11.0.3"
-				}
-			},
-			{
-				"id": "foundryvtt-simple-calendar",
-				"type": "module",
-				"manifest": "https://github.com/vigoren/foundryvtt-simple-calendar/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "2.4.3",
-					"verified": "2.4.3"
-				}
-			},
-			{
-				"id": "itemacro",
-				"type": "module",
-				"manifest": "https://github.com/Foundry-Workshop/Item-Macro/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "1.10.5",
-					"verified": "1.10.5"
 				}
 			},
 			{
@@ -146,18 +119,27 @@
 					"mininum": "1.0.13",
 					"verified": "1.0.13"
 				}
-			},
-			{
-				"id": "templatemacro",
-				"type": "module",
-				"manifest": "https://github.com/krbz999/templatemacro/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "11.0.1",
-					"verified": "11.0.1"
-				}
 			}
 		],
 		"optional": [
+			{
+				"id": "ATL",
+				"type": "module",
+				"manifest": "https://github.com/kandashi/Active-Token-Lighting/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "0.7.0",
+					"verified": "0.7.0"
+				}
+			},
+			{
+				"id": "foundryvtt-simple-calendar",
+				"type": "module",
+				"manifest": "https://github.com/vigoren/foundryvtt-simple-calendar/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "2.4.3",
+					"verified": "2.4.3"
+				}
+			},
 			{
 				"id": "tidy5e-sheet",
 				"type": "module",
@@ -183,6 +165,24 @@
 				"compatibility": {
 					"minimum": "3.7.4",
 					"verified": "3.7.4"
+				}
+			},
+			{
+				"id": "itemacro",
+				"type": "module",
+				"manifest": "https://github.com/Foundry-Workshop/Item-Macro/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "1.10.5",
+					"verified": "1.10.5"
+				}
+			},
+			{
+				"id": "templatemacro",
+				"type": "module",
+				"manifest": "https://github.com/krbz999/templatemacro/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "11.0.1",
+					"verified": "11.0.1"
 				}
 			},
 			{

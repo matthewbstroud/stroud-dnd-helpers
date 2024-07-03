@@ -64,11 +64,16 @@ async function packSceneCompendiumThumbnails(scenePack, moduleId, thumbs_folder)
 }
 
 async function packSceneThumbnails(scenes, moduleId, thumbs_folder){
-    for (const scene of scenes){
+    for (const scene of scenes) {
         let fileName = scene.thumb.split('/').pop();
         let moduleThumbPath = `modules/${moduleId}/${thumbs_folder}/${fileName}`;
         if (await srcExists(moduleThumbPath)) {
             exportCounters.skipped++
+            continue;
+        }
+        let thumbExists = await srcExists(scene.thumb);
+        if (!thumbExists) {
+            console.log(`${scene.thumb} no longer exists! ${scene.name} will need to be updated!`);
             continue;
         }
         let blob = await fetch(scene.thumb).then(r => r.blob())
