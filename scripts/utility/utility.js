@@ -1,4 +1,12 @@
 import { scene } from "./scene.js";
+import { sdndConstants } from "../constants.js";
+const migrationPacks = [
+    `${sdndConstants.MODULE_ID}.SDND-Features`,
+    `${sdndConstants.MODULE_ID}.SDND-Items`,
+    `${sdndConstants.MODULE_ID}.SDND-Spells`,
+    `${sdndConstants.MODULE_ID}.SDND-Summons`,
+    `${sdndConstants.MODULE_ID}.SDND-Scenes`
+];
 
 export let utility = {
     "scene": scene,
@@ -16,9 +24,15 @@ export let utility = {
             console.log(readMeRequiredModules);
         }
         else {
-            let activemodules = await game.modules.map(m => ({ "id": m.id, "type": "module", "manifest": m.manifest, "comaptibility": { "mininum": m.version, "verified": m.version}}));
+            let activemodules = await game.modules.map(m => ({ "id": m.id, "type": "module", "manifest": m.manifest, "comaptibility": { "mininum": m.version, "verified": m.version } }));
             console.log(JSON.stringify(activemodules, null, 2));
         }
         return true;
+    },
+    "forceDnd5eMigration": async function _forceDnd5eMigration() {
+        for (const packID of migrationPacks) {
+            let pack = await game.packs.get(packID);
+            await dnd5e.migrations.migrateCompendium(pack);
+        }
     }
 };

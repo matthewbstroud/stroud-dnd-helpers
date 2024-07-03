@@ -17,7 +17,7 @@ async function _removeMarks(caster) {
     let uuids = canvas.scene.tokens
         .filter(t => t.id != caster.id)
         .map(t => t.actor.effects.contents)
-        .reduce((l, r) => l.concat(r)).filter(e => e.origin == huntersMarkItem.uuid && e.label == "Marked")
+        .reduce((l, r) => l.concat(r)).filter(e => e.origin == huntersMarkItem.uuid && e.name == "Marked")
         .map(e => e.uuid);
     gmFunctions.removeEffects(uuids);
 }
@@ -36,7 +36,7 @@ async function _itemMacro({speaker, actor, token, character, item, args}) {
         }
 
         const effectData = {
-            "label": args[0].item.name,
+            "name": args[0].item.name,
             "icon": args[0].item.img,
             "changes": [
                 {
@@ -74,9 +74,6 @@ async function _itemMacro({speaker, actor, token, character, item, args}) {
                     "macroRepeat": "none",
                     "specialDuration": []
                 },
-                "core": {
-                    "statusId": ""
-                },
                 "effectmacro": {
                     "onDelete": {
                         "script": "stroudDnD.spells.HuntersMark.removeMarks(origin.parent);"
@@ -109,7 +106,7 @@ async function _castOrUse() {
         ui.notifications.notify(`You must target a single creature!`);
         return;
     }
-    var selfEffect = spellData.actor.effects.find(e => e.label == HUNTERS_MARK && e.origin == spellData.item.uuid);
+    var selfEffect = spellData.actor.effects.find(e => e.name == HUNTERS_MARK && e.origin == spellData.item.uuid);
     if (!selfEffect) {
         spellData.item.use();
         return;
@@ -156,7 +153,7 @@ async function _castOrUse() {
 
 async function _moveMark(originID, oldTargetUuid, newTargetUuid) {
     let markedTarget = await gmFunctions.getTokenOrActor(oldTargetUuid);
-    let priorEffect = markedTarget?.effects?.find(e => e.label == "Marked" && e.origin == originID);
+    let priorEffect = markedTarget?.effects?.find(e => e.name == "Marked" && e.origin == originID);
     if (priorEffect) {
         await gmFunctions.removeEffects([priorEffect.uuid]);
     }
@@ -171,7 +168,7 @@ async function _moveMark(originID, oldTargetUuid, newTargetUuid) {
 
 function createMarkedEffect(originID) {
     return {
-        "label": "Marked",
+        "name": "Marked",
         "changes": [
             {
                 "key": "StatusEffectLabel",
@@ -215,9 +212,6 @@ function createMarkedEffect(originID) {
             },
             "dfreds-convenient-effects": {
                 "description": "Marked by a skilled Hunter"
-            },
-            "core": {
-                "statusId": ""
             },
             "ActiveAuras": {
                 "isAura": false,
