@@ -17,8 +17,9 @@ import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
 import { macros } from './macros/macros.js';
 import { utility } from './utility/utility.js';
-
+import { createBackpackHeaderButton } from './backpacks/backpacks.js';
 import { hooks } from './hooks.js';
+import { backpacks } from './backpacks/backpacks.js';
 // CONFIG.debug.hooks = true;
 
 export let socket;
@@ -39,12 +40,16 @@ Hooks.once('ready', async function() {
 			Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
 			Hooks.on('updateActor', syncBackpackPermissions);
 		}
+		else {
+			Hooks.on('getItemSheet5eHeaderButtons', createBackpackHeaderButton);
+		}
 	}
 	console.log("Loaded Stroud's DnD Helpers");
 });
 
 
 globalThis['stroudDnD'] = {
+	backpacks,
 	calendar,
 	chat,
 	combat,

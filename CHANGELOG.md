@@ -1,3 +1,11 @@
+# v11.2.4
+# New Features
+- Drop Backpack
+  - Designate your primary pack.
+  - Drop pack with all items at your feet.
+  - Double-click the item on the ground to retrieve it.
+# Bug Fixes
+- Updated Twilight Domain to remove deprecated fields.
 # v11.2.3
 # New Features
 - Remove dependencies for the following
