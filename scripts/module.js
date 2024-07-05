@@ -34,28 +34,7 @@ Hooks.once('socketlib.ready', async function() {
 });
 Hooks.once('ready', async function() {
 	sdndSettings.registerSettings();
-	if (game.user?.isGM) {
-		Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
-		if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
-			Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
-			Hooks.on('updateActor', syncBackpackPermissions);
-		}
-		else {
-			Hooks.on('getItemSheet5eHeaderButtons', createBackpackHeaderButton);
-		}
-		Hooks.on('item-piles-preTransferItems', backpacks.transferHandler);
-		Hooks.on('item-piles-transferItems', (source, target, itemDeltas, userId, interactionId) => {
-			let sourceActor = (source?.actor) ?? source;
-			let targetActor = (target?.actor) ?? target;
-			if (!sourceActor.getFlag("item-piles", "data.type")) {
-				backpacks.checkWeight(sourceActor);
-			}
-			if (!targetActor.getFlag("item-piles", "data.type")) {
-				backpacks.checkWeight(targetActor);
-			}
-		});
-		Hooks.on('item-piles-preDropItemDetermined', backpacks.dropHandler);
-	}
+	await hooks.ready()
 	console.log("Loaded Stroud's DnD Helpers");
 });
 

@@ -3,29 +3,92 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
 import { activeEffects } from "../../active_effects/activeEffects.js";
+import { utility } from "../utility/utility.js";
 
 export let backpacks = {
-    "checkWeight": checkWeight,
-    "dropBackpack": dropBackpack,
-    "dropHandler": dropHandler,
+    "dropBackpack": async function _dropBackpack() {
+        let controlledToken = utility.getControlledToken();
+        if (!controlledToken?.actor?.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
+            ui.notifications.warn("You can only drop backpacks for characters you own!");
+            return;
+        }
+        gmFunctions.dropBackpack(controlledToken.id, game.user.uuid);
+    },
     "interact": interact,
-    "pickupBackpack": pickupBackpack,
-    "transferHandler": transferHandler
+    "pickupBackpack": async function _pickupBackpack(pileUuid) {
+        gmFunctions.pickupBackpack(pileUuid);
+    },
+    "hooks": {
+        "ready": async function _ready() {
+            if (!(game.modules.find(m => m.id === "item-piles")?.active ?? false)) {
+                return;
+            }
+            Hooks.on('getItemSheet5eHeaderButtons', createBackpackHeaderButton);
+            Hooks.on('item-piles-preTransferItems', ipPreTransferItemsHandler);
+            Hooks.on('item-piles-preRightClickItem', ipPreRightClickHandler);
+            Hooks.on('item-piles-preDropItemDetermined', ipPreDropItemDeterminedHandler);
+            Hooks.on('item-piles-deleteItemPile', ipPreDeleteItemPileHandler);
+            if (sdndSettings.UseSDnDEncumbrance.getValue()) {
+                Hooks.on('item-piles-transferItems', ipTransferItemsHandler);
+                Hooks.on('createItem', createItemHandler);
+                Hooks.on('deleteItem', createItemHandler);
+                Hooks.on('updateItem', updateItemHandler);
+            }
+        }
+    }
 }
+
+function ipPreDeleteItemPileHandler(pileToken) {
+    if ((!game.user?.isGM) && source.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'))) {
+        ui.notifications.warn("It would be a very bad idea to delete your primary pack!");
+        return false;
+    }
+    return true;
+}
+
+async function createItemHandler(item, options, id) {
+    await checkItemParentWeight(item);
+}
+
+async function deleteItemHandler(item, options, id) {
+    await checkItemParentWeight(item);
+}
+
+async function updateItemHandler(item, changes, options, id) {
+    await checkItemParentWeight(item);
+}
+
+async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
+    if (item.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
+        menu.length = 0;
+    }
+}
+
+async function ipTransferItemsHandler(source, target, itemDeltas, userId, interactionId) {
+    let sourceActor = (source?.actor) ?? source;
+    let targetActor = (target?.actor) ?? target;
+    if (!sourceActor.getFlag("item-piles", "data.type")) {
+        gmFunctions.checkActorWeight(sourceActor.uuid);
+    }
+    if (!targetActor.getFlag("item-piles", "data.type")) {
+        gmFunctions.checkActorWeight(targetActor.uuid);
+    }
+}
+
 // track createItem, deleteItem
-function transferHandler(source, sourceUpdates, target, targetUpdates, interactionId) {
+async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUpdates, interactionId) {
     if ((!sourceUpdates) || (!source.getFlag("item-piles", "data.type") || source.getFlag(sdndConstants.MODULE_ID, "PickingUp"))) {
         return true;
     }
     let primaryBackpack = source.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'));
-    if (sourceUpdates.itemsToDelete.includes(primaryBackpack.id)){
+    if (sourceUpdates.itemsToDelete.includes(primaryBackpack.id)) {
         ui.notifications.warn("You cannot remove the primary backpack from the pile!");
         return false;
     }
     return true;
 }
 
-function dropHandler(source, target, itemData, position) {
+function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
     if (!source.getFlag("item-piles", "data.type")) {
         return true;
     }
@@ -36,39 +99,82 @@ function dropHandler(source, target, itemData, position) {
     return true;
 }
 
-async function checkWeight(actor) {
+async function checkItemParentWeight(item) {
+    let actor = item.parent;
+    if (!actor instanceof dnd5e.documents.Actor5e) {
+        return;
+    }
+    if (actor.getFlag("item-piles", "data.type") || actor.type != "character") {
+        return;
+    }
+    await gmFunctions.checkActorWeight(actor.uuid);
+}
+
+async function suppressWeightChecks(actor, newVal) {
+    await actor?.setFlag(sdndConstants.MODULE_ID, "SuppressWeightChecks", newVal);
+}
+
+async function isWeightCheckSuppressed(actor) {
+    return await actor?.getFlag(sdndConstants.MODULE_ID, "SuppressWeightChecks");
+}
+
+export async function gmCheckActorWeight(actorUuid) {
+    let actor = actorUuid;
+    if (!(actor instanceof dnd5e.documents.Actor5e)) {
+        actor = await fromUuid(actorUuid);
+    }
     if (!actor) {
         return;
     }
-    let encumbrance = actor.system?.attributes?.encumbrance;
-    if (!encumbrance) {
+    let suppressed = await isWeightCheckSuppressed(actor);
+    if (suppressed) {
         return;
     }
-    let effect = null;
-    if (encumbrance.pct >= 75) {
-        effect = activeEffects.HeavilyEncumbered;
-    }
-    else if (encumbrance.pct >= 50) {
-        console.log("encumbered");
-        effect = activeEffects.Encumbered;
-    }
-    let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
-    if (!effect) {
+    suppressWeightChecks(actor, true);
+    console.log("checking actor weight");
+    try {
+        let encumbrance = actor.system?.attributes?.encumbrance;
+        if (!encumbrance) {
+            return;
+        }
+        let effect = null;
+        if (encumbrance.pct >= 75) {
+            effect = activeEffects.HeavilyEncumbered;
+        }
+        else if (encumbrance.pct >= 50) {
+            console.log("encumbered");
+            effect = activeEffects.Encumbered;
+        }
+        let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
+        if (!effect) {
+            if (currentEffects && currentEffects.length > 0) {
+                gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+            }
+            return;
+        }
+        if (currentEffects?.find(e => e.name == effect.name)) {
+            return; // already applied
+        }
         if (currentEffects && currentEffects.length > 0) {
             gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
         }
-        return;
+        gmFunctions.createEffects(actor.uuid, [effect]);
     }
-    if (currentEffects?.find(e => e.name == effect.name)) {
-        return; // already applied
+    catch (ex) {
+        ui.notifications.error(ex.message);
     }
-    if (currentEffects && currentEffects.length > 0) {
-        gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+    finally {
+        suppressWeightChecks(actor, false);
     }
-    gmFunctions.createEffects(actor.uuid, [effect]);
+
 }
 
 async function interact(pileUuid) {
+    let pile = await fromUuid(pileUuid);
+    if (!(pile.actor.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
+        ui.notifications.warn("This is not your pack!");
+        return false;
+    }
     let choice = await dialog.createButtonDialog("Backpack",
         [
             {
@@ -85,32 +191,33 @@ async function interact(pileUuid) {
         return true;
     }
     else if (choice == "pickup") {
-        pickupBackpack(pileUuid);
+        gmFunctions.pickupBackpack(pileUuid);
     }
     return false;
 }
 
-async function dropBackpack() {
-    let controlledTokens = canvas.tokens.controlled;
-    if (!controlledTokens || controlledTokens.length != 1) {
-        ui.notifications.error("You must select a single token!");
-        return;
-    }
-    let controlledToken = controlledTokens[0];
+export async function gmDropBackpack(tokenId, userUuid) {
+    let controlledToken = canvas.tokens.get(tokenId);
     let actor = controlledToken.actor;
     if (!actor) {
         ui.notifications.warn("Selected token has no associated actor!");
         return;
     }
-    let backpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+    await suppressWeightChecks(actor, true);
+    let backpackId = await actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
     if (!backpackId) {
-        ui.notifications.warn("You have no primary backpack selected!");
-        return;
+        let containers = actor.items.filter(i => i.type == "container");
+        if ((!containers) || containers.length != 1) {
+            ui.notifications.warn("You have no primary backpack selected!");
+            return;
+        }
+        backpackId = containers[0].id;
+        await actor.setFlag(sdndConstants.MODULE_ID, backpackId);
     }
     let backpack = actor.items.get(backpackId);
     if (!backpack) {
         ui.notifications.error("The backpack marked as primary no longer exists on this actor!");
-        actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", null);
+        await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", null);
         return;
     }
     let backpackName = `${backpack.name} (${actor.name})`;
@@ -118,8 +225,8 @@ async function dropBackpack() {
         "sceneId": `${canvas.scene.id}`,
         "tokenOverrides": {
             "name": backpackName,
-            "displayName":foundry.CONST.TOKEN_DISPLAY_MODES.HOVER,
-            "lockRotation": true, 
+            "displayName": foundry.CONST.TOKEN_DISPLAY_MODES.HOVER,
+            "lockRotation": true,
             "height": 0.5,
             "width": 0.5,
             "texture": {
@@ -127,7 +234,10 @@ async function dropBackpack() {
             }
         },
         "actorOverrides": {
-            "name": backpackName
+            "name": backpackName,
+            "ownership": {
+                [userUuid.split(".").pop()]: foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
+            }
         },
         "position": {
             "x": controlledToken.x,
@@ -137,7 +247,7 @@ async function dropBackpack() {
         "itemPileFlags": {
             "enabled": true,
             "type": "vault",
-            "distance": 1,
+            "distance": 5,
             "macro": `Compendium.${sdndConstants.PACKS.COMPENDIUMS.MACRO.GM}.GMPickupBackpack`,
             "deleteWhenEmpty": true,
             "canStackItems": "yes",
@@ -155,7 +265,7 @@ async function dropBackpack() {
             "restrictVaultAccess": true,
             "vaultAccess": [
                 {
-                    "uuid": game.user.uuid,
+                    "uuid": userUuid,
                     "view": true,
                     "organize": false,
                     "items": {
@@ -180,15 +290,16 @@ async function dropBackpack() {
         let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
         newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
     }
+    await suppressWeightChecks(actor, false);
+    await gmCheckActorWeight(actor);
     ChatMessage.create({
         speaker: { alias: actor.name },
         content: `Has dropped ${backpack.name} on the ground.`,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
     });
-    checkWeight(actor);
 }
 
-async function pickupBackpack(pileUuid) {
+export async function gmPickupBackpack(pileUuid) {
     let pile = await fromUuid(pileUuid);
     if (!pile) {
         ui.notifications.error(`Couldn't find container with id ${pileUuid}`);
@@ -202,9 +313,12 @@ async function pickupBackpack(pileUuid) {
     backpack = backpack[0];
     let actorUuId = backpack.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
     let actor = await fromUuid(actorUuId);
+    await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
+    await suppressWeightChecks(actor, true);
     let items = backpack.actor.items;
     await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
     let transferred = await game.itempiles.API.transferItems(backpack.actor, actor, items);
+    await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", false);
     let transferredBackpack = transferred.find(i => i.item.flags[sdndConstants.MODULE_ID]?.DroppedBy)
     let backpackId = transferredBackpack.item._id;
     await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
@@ -224,12 +338,13 @@ async function pickupBackpack(pileUuid) {
     }
     await pileActor.delete();
     let newBackpack = actor.items.get(backpackId);
+    await suppressWeightChecks(actor, false);
+    await gmCheckActorWeight(actor);
     ChatMessage.create({
         speaker: { alias: actor.name },
         content: `Has picked up their ${newBackpack.name}.`,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
     });
-    checkWeight(actor);
 }
 
 export function createBackpackHeaderButton(config, buttons) {

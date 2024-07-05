@@ -1,4 +1,6 @@
+import { backpacks } from './backpacks/backpacks.js';
 import { scene } from './utility/scene.js';
+import { createActorHeaderButton } from './actors/actors.js';
 
 export let hooks = {
     "init": function _init() {
@@ -100,5 +102,15 @@ export let hooks = {
                 },
             });
         });
+    },
+    "ready": async function _ready() {
+		if (game.user?.isGM) {
+            Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
+            if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
+                Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
+                Hooks.on('updateActor', syncBackpackPermissions);
+            }
+        }
+        await backpacks.hooks.ready();
     }
 };

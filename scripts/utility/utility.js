@@ -13,6 +13,14 @@ export let utility = {
     "getControlledActor": function _getControlledActor() {
         return canvas?.tokens?.controlled[0]?.actor
     },
+    "getControlledToken": function _getControlledToken() {
+        let controlledTokens = canvas.tokens.controlled;
+        if ((!controlledTokens) || controlledTokens.length != 1) {
+            ui.notifications.error("You must select a single token!");
+            return;
+        }
+        return controlledTokens[0];
+    },
     "dumpDependencies": async function _dumpDependencies(readMeFormat = false) {
         if (readMeFormat) {
             let readMeRequiredModules = `
