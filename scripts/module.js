@@ -43,6 +43,9 @@ Hooks.once('ready', async function() {
 		else {
 			Hooks.on('getItemSheet5eHeaderButtons', createBackpackHeaderButton);
 		}
+		Hooks.on('item-piles-preTransferItems', backpacks.transferHandler);
+		Hooks.on('item-piles-preDropItemDetermined', backpacks.dropHandler);
+		Hooks.on('refreshToken', backpacks.checkWeight);
 	}
 	console.log("Loaded Stroud's DnD Helpers");
 });

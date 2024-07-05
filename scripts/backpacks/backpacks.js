@@ -1,16 +1,83 @@
 import { sdndConstants } from "../constants.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
+import { dialog } from "../dialog/dialog.js";
 
 export let backpacks = {
+    "checkWeight": checkWeight,
     "dropBackpack": dropBackpack,
-    "pickupBackpack": pickupBackpack
+    "dropHandler": dropHandler,
+    "interact": interact,
+    "pickupBackpack": pickupBackpack,
+    "transferHandler": transferHandler
+}
+// track createItem, deleteItem
+function transferHandler(source, sourceUpdates, target, targetUpdates, interactionId) {
+    if ((!sourceUpdates) || (!source.getFlag("item-piles", "data.type") || source.getFlag(sdndConstants.MODULE_ID, "PickingUp"))) {
+        return true;
+    }
+    let primaryBackpack = source.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'));
+    if (sourceUpdates.itemsToDelete.includes(primaryBackpack.id)){
+        ui.notifications.warn("You cannot remove the primary backpack from the pile!");
+        return false;
+    }
+    return true;
+}
+
+function dropHandler(source, target, itemData, position) {
+    if (!source.getFlag("item-piles", "data.type")) {
+        return true;
+    }
+    if (itemData.item.flags["stroud-dnd-helpers"]?.DroppedBy) {
+        ui.notifications.warn("You cannot remove the primary backpack from the pile!");
+        return false;
+    }
+    return true;
+}
+
+function checkWeight(token, options) {
+    if (!token.actor) {
+        return;
+    }
+    let encumbrance = token.actor.system.attributes.encumbrance;
+    if (!encumbrance) {
+        return;
+    }
+    if (encumbrance.pct >= 75) {
+        console.log("heavily encumbered");
+    }
+    else if (encumbrance.pct >= 50) {
+        console.log("encumbered");
+    }
+    else {
+        console.log("not encumbered");
+    }
+}
+
+async function interact(pileUuid) {
+    let choice = await dialog.createButtonDialog("Backpack",
+        [
+            {
+                "label": "Open",
+                "value": "open"
+            },
+            {
+                "label": "Pick up",
+                "value": "pickup"
+            }
+        ]
+        , 'column');
+    if (choice == "open") {
+        return true;
+    }
+    pickupBackpack(pileUuid);
+    return false;
 }
 
 async function dropBackpack() {
     let controlledTokens = canvas.tokens.controlled;
     if (!controlledTokens || controlledTokens.length != 1) {
-        ui.error("You must select a single token!");
+        ui.notifications.error("You must select a single token!");
         return;
     }
     let controlledToken = controlledTokens[0];
@@ -35,6 +102,10 @@ async function dropBackpack() {
         "sceneId": `${canvas.scene.id}`,
         "tokenOverrides": {
             "name": backpackName,
+            "displayName":foundry.CONST.TOKEN_DISPLAY_MODES.HOVER,
+            "lockRotation": true, 
+            "height": 0.5,
+            "width": 0.5,
             "texture": {
                 "src": backpack.img
             }
@@ -101,7 +172,6 @@ async function dropBackpack() {
 }
 
 async function pickupBackpack(pileUuid) {
-    debugger;
     let pile = await fromUuid(pileUuid);
     if (!pile) {
         ui.notifications.error(`Couldn't find container with id ${pileUuid}`);
@@ -116,15 +186,18 @@ async function pickupBackpack(pileUuid) {
     let actorUuId = backpack.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
     let actor = await fromUuid(actorUuId);
     let items = backpack.actor.items;
+    await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
     let transferred = await game.itempiles.API.transferItems(backpack.actor, actor, items);
-    let backpackId = transferred[0].item._id;
-    actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
-    for (let i=1; i < transferred.length; i++) {
-        let item = actor.items.get(transferred[i].item._id);
+    let transferredBackpack = transferred.find(i => i.item.flags[sdndConstants.MODULE_ID]?.DroppedBy)
+    let backpackId = transferredBackpack.item._id;
+    await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
+    transferred = transferred.filter(t => t.item._id != backpackId).map(t => t.item._id);
+    for (const id of transferred) {
+        let item = actor.items.get(id);
         if (!item) {
             continue;
         }
-        await item.update({"system.container": backpackId });
+        await item.update({ "system.container": backpackId });
     }
     let pileActorId = pile.actor.id;
     await pile.delete();
@@ -136,7 +209,7 @@ async function pickupBackpack(pileUuid) {
     let newBackpack = actor.items.get(backpackId);
     ChatMessage.create({
         speaker: { alias: actor.name },
-        content: `Has picked up their ${ newBackpack.name }.`,
+        content: `Has picked up their ${newBackpack.name}.`,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
     });
 }
@@ -174,65 +247,4 @@ export function createBackpackHeaderButton(config, buttons) {
             }
         });
     }
-}
-
-/*
-let options = {
-    "sceneId": `${canvas.scene.id}`,
-    "tokenOverrides": {
-        "name": "Stone's Rucksack",
-            "texture": {
-                "src": "modules/stroud-dnd-helpers/images/icons/ruck_sack.webp"
-            }
-    },
-    "actorOverrides": {
-        "name": "Stone's Rucksack"
-    },
-    "position": {
-        "x": canvas.tokens.controlled[0].x,
-        "y": canvas.tokens.controlled[0].y,
-        "rotation": canvas.tokens.controlled[0].rotation
-    },
-    "createActor": false,
-    "itemPileFlags": defaults
-}
-let result = await game.itempiles.API.createItemPile(options)
-let targetToken = await fromUuid(result.tokenUuid)
-
-*/
-
-var defaults = {
-    "enabled": true,
-    "type": "vault",
-    "distance": 1,
-    "macro": "ReturnFalse",
-    "deleteWhenEmpty": true,
-    "canStackItems": "yes",
-    "canInspectItems": true,
-    "displayItemTypes": false,
-    "description": "",
-    "overrideItemFilters": false,
-    "overrideCurrencies": false,
-    "overrideSecondaryCurrencies": false,
-    "requiredItemProperties": [],
-    "displayOne": false,
-    "showItemName": false,
-    "cols": 10,
-    "rows": 5,
-    "restrictVaultAccess": true,
-    "vaultAccess": [
-        {
-            "uuid": "User.2o6fMFw0qQuhf5nV",
-            "view": true,
-            "organize": false,
-            "items": {
-                "withdraw": true,
-                "deposit": true
-            },
-            "currencies": {
-                "withdraw": true,
-                "deposit": true
-            }
-        }
-    ]
 }
