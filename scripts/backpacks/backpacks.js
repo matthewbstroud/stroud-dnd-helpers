@@ -2,6 +2,7 @@ import { sdndConstants } from "../constants.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
+import { activeEffects } from "../../active_effects/activeEffects.js";
 
 export let backpacks = {
     "checkWeight": checkWeight,
@@ -35,23 +36,36 @@ function dropHandler(source, target, itemData, position) {
     return true;
 }
 
-function checkWeight(token, options) {
-    if (!token.actor) {
+async function checkWeight(actor) {
+    if (!actor) {
         return;
     }
-    let encumbrance = token.actor.system.attributes.encumbrance;
+    let encumbrance = actor.system?.attributes?.encumbrance;
     if (!encumbrance) {
         return;
     }
+    let effect = null;
     if (encumbrance.pct >= 75) {
-        console.log("heavily encumbered");
+        effect = activeEffects.HeavilyEncumbered;
     }
     else if (encumbrance.pct >= 50) {
         console.log("encumbered");
+        effect = activeEffects.Encumbered;
     }
-    else {
-        console.log("not encumbered");
+    let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
+    if (!effect) {
+        if (currentEffects && currentEffects.length > 0) {
+            gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+        }
+        return;
     }
+    if (currentEffects?.find(e => e.name == effect.name)) {
+        return; // already applied
+    }
+    if (currentEffects && currentEffects.length > 0) {
+        gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+    }
+    gmFunctions.createEffects(actor.uuid, [effect]);
 }
 
 async function interact(pileUuid) {
@@ -70,7 +84,9 @@ async function interact(pileUuid) {
     if (choice == "open") {
         return true;
     }
-    pickupBackpack(pileUuid);
+    else if (choice == "pickup") {
+        pickupBackpack(pileUuid);
+    }
     return false;
 }
 
@@ -169,6 +185,7 @@ async function dropBackpack() {
         content: `Has dropped ${backpack.name} on the ground.`,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
     });
+    checkWeight(actor);
 }
 
 async function pickupBackpack(pileUuid) {
@@ -212,6 +229,7 @@ async function pickupBackpack(pileUuid) {
         content: `Has picked up their ${newBackpack.name}.`,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
     });
+    checkWeight(actor);
 }
 
 export function createBackpackHeaderButton(config, buttons) {

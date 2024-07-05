@@ -44,8 +44,17 @@ Hooks.once('ready', async function() {
 			Hooks.on('getItemSheet5eHeaderButtons', createBackpackHeaderButton);
 		}
 		Hooks.on('item-piles-preTransferItems', backpacks.transferHandler);
+		Hooks.on('item-piles-transferItems', (source, target, itemDeltas, userId, interactionId) => {
+			let sourceActor = (source?.actor) ?? source;
+			let targetActor = (target?.actor) ?? target;
+			if (!sourceActor.getFlag("item-piles", "data.type")) {
+				backpacks.checkWeight(sourceActor);
+			}
+			if (!targetActor.getFlag("item-piles", "data.type")) {
+				backpacks.checkWeight(targetActor);
+			}
+		});
 		Hooks.on('item-piles-preDropItemDetermined', backpacks.dropHandler);
-		Hooks.on('refreshToken', backpacks.checkWeight);
 	}
 	console.log("Loaded Stroud's DnD Helpers");
 });
