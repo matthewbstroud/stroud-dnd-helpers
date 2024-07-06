@@ -38,6 +38,12 @@ export let activeEffects = {
                 "mode": 2,
                 "value": "-2",
                 "priority": 20
+            },
+            {
+                "key": "system.attributes.init.bonus",
+                "mode": 2,
+                "value": "-2",
+                "priority": 20
             }
         ],
         "transfer": false,
@@ -118,6 +124,12 @@ export let activeEffects = {
             },
             {
                 "key": "flags.midi-qol.disadvantage.attack.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 20
+            },
+            {
+                "key": "flags.dnd5e.initiativeDisadv",
                 "mode": 0,
                 "value": "1",
                 "priority": 20

@@ -4,6 +4,13 @@ import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
 import { activeEffects } from "../../active_effects/activeEffects.js";
 import { utility } from "../utility/utility.js";
+import { socket } from "../module.js";
+
+const nonItems = [
+    "race","background","class","subclass","spell","feat"
+];
+
+let inProgress = {};
 
 export let backpacks = {
     "dropBackpack": async function _dropBackpack() {
@@ -89,7 +96,7 @@ async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUp
 }
 
 function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
-    if (!source.getFlag("item-piles", "data.type")) {
+    if (!source?.getFlag("item-piles", "data.type")) {
         return true;
     }
     if (itemData.item.flags["stroud-dnd-helpers"]?.DroppedBy) {
@@ -100,11 +107,17 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
 }
 
 async function checkItemParentWeight(item) {
+    if (!sdndSettings.UseSDnDEncumbrance.getValue()){
+        return;
+    }
     let actor = item.parent;
     if (!actor instanceof dnd5e.documents.Actor5e) {
         return;
     }
     if (actor.getFlag("item-piles", "data.type") || actor.type != "character") {
+        return;
+    }
+    if ((item?.system?.weight ?? 0) == 0) {
         return;
     }
     await gmFunctions.checkActorWeight(actor.uuid);
@@ -119,7 +132,15 @@ async function isWeightCheckSuppressed(actor) {
 }
 
 export async function gmCheckActorWeight(actorUuid) {
+    if (!sdndSettings.UseSDnDEncumbrance.getValue()){
+        return;
+    }
+    if (inProgress[actorUuid]) {
+        return;
+    }
+    inProgress[actorUuid] = true;
     let actor = actorUuid;
+
     if (!(actor instanceof dnd5e.documents.Actor5e)) {
         actor = await fromUuid(actorUuid);
     }
@@ -165,6 +186,7 @@ export async function gmCheckActorWeight(actorUuid) {
     }
     finally {
         suppressWeightChecks(actor, false);
+        inProgress[actorUuid] = false;
     }
 
 }
@@ -213,6 +235,11 @@ export async function gmDropBackpack(tokenId, userUuid) {
         }
         backpackId = containers[0].id;
         await actor.setFlag(sdndConstants.MODULE_ID, backpackId);
+    }
+    if (actor.getFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack") == backpackId) {
+        console.log("The primary backpack is already on the ground...");
+        socket.executeForEveryone("notify", "info", `${actor.name} has tried to drop his pack, but it is already on the ground...`);
+        return;
     }
     let backpack = actor.items.get(backpackId);
     if (!backpack) {
@@ -289,7 +316,9 @@ export async function gmDropBackpack(tokenId, userUuid) {
         let newBackpackID = transferred[0].item._id;
         let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
         newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
+        
     }
+    await actor.setFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack", backpack.id);
     await suppressWeightChecks(actor, false);
     await gmCheckActorWeight(actor);
     ChatMessage.create({

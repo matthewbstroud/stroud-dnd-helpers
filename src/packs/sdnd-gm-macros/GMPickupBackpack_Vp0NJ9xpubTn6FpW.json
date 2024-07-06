@@ -4,7 +4,7 @@
   "scope": "global",
   "author": "6yhz13iFYYklKtgA",
   "img": "icons/svg/dice-target.svg",
-  "command": "if (scope.action !== 'renderInterface') {\n  return;\n}\n\nstroudDnD.backpacks.pickupBackpack(target.uuid);\nreturn false;",
+  "command": "if (scope.action !== 'renderInterface') {\n  return true;\n}\n\nreturn await stroudDnD.backpacks.interact(target.uuid);",
   "folder": null,
   "ownership": {
     "default": 0,
@@ -21,7 +21,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1720063874842,
-    "modifiedTime": 1720071879202,
+    "modifiedTime": 1720101368367,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "Vp0NJ9xpubTn6FpW",

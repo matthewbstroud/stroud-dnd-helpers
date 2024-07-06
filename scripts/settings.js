@@ -105,9 +105,10 @@ At 75% max carried weight you will have: (-4 to AC and Disadvantage on Attack ro
 			'scope': 'world',
 			'config': true,
 			'type': Boolean,
-			'default': false
+			'default': false,
+			'requiresReload': true
 		},
-		'getValue': () =>  getModuleSettingValue('HideTextOnActorSheet')
+		'getValue': () =>  getModuleSettingValue('UseSDnDEncumbrance')
 	}
 };
 

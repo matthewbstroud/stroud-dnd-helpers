@@ -58,7 +58,12 @@ export let gmFunctions = {
             return;
         }
         run(
-            async () => actor.createEmbeddedDocuments("ActiveEffect", effectData),
+            async () => {
+                if (effectData.name && actor.effects.find(e => e.name == effectData.name)) {
+                    return;
+                }
+                actor.createEmbeddedDocuments("ActiveEffect", effectData);
+            },
             async () => await socket.executeAsGM("createEffects", actorUuid, effectData)
         );
     },
@@ -171,6 +176,9 @@ export let gmFunctions = {
             return;
         }
         SimpleCalendar.api.startClock();
+    },
+    "notify": async function _notify(type, message) {
+        ui.notifications.notify(message, type);
     }
 };
 
