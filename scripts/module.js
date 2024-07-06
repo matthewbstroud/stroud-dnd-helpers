@@ -17,8 +17,9 @@ import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
 import { macros } from './macros/macros.js';
 import { utility } from './utility/utility.js';
-
+import { createBackpackHeaderButton } from './backpacks/backpacks.js';
 import { hooks } from './hooks.js';
+import { backpacks } from './backpacks/backpacks.js';
 // CONFIG.debug.hooks = true;
 
 export let socket;
@@ -33,18 +34,13 @@ Hooks.once('socketlib.ready', async function() {
 });
 Hooks.once('ready', async function() {
 	sdndSettings.registerSettings();
-	if (game.user?.isGM) {
-		Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
-		if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
-			Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
-			Hooks.on('updateActor', syncBackpackPermissions);
-		}
-	}
+	await hooks.ready()
 	console.log("Loaded Stroud's DnD Helpers");
 });
 
 
 globalThis['stroudDnD'] = {
+	backpacks,
 	calendar,
 	chat,
 	combat,

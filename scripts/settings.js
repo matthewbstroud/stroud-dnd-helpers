@@ -96,6 +96,20 @@ export let sdndSettings = {
 			return folder;
 		} 
 	},
+	'UseSDnDEncumbrance': {
+		'config': {
+			'name': 'Use Stroud DnD Helpers encumbrance rules.',
+			'hint': `At 50% max carried weight you will have: (
+-2 to AC, Attacks, Initiative, and Strength/Dexterity checks and saves.)  
+At 75% max carried weight you will have: (-4 to AC and Disadvantage on Attack rolls, initiative, strength and dexterity check/saves.)`,
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false,
+			'requiresReload': true
+		},
+		'getValue': () =>  getModuleSettingValue('UseSDnDEncumbrance')
+	}
 };
 
 function getModuleSettingValue(settingName) {

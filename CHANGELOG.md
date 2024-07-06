@@ -1,3 +1,24 @@
+# v11.2.4
+# New Features
+- Drop Backpack
+  - Designate your primary pack.
+  - Drop pack with all items at your feet.
+  - Double-click the item on the ground to retrieve it.
+- SDND Encubrance Rules
+  - At 50% max carry weight
+    - -2 AC
+    - -2 Attack Rolls
+    - -2 Strength and Dexterity Saves/Checks
+    - -2 Initiative Rolls
+  - At 75% max carry weight
+    - -4 AC
+    - Disadvantage on the following
+      - Attack Rolls
+      - Initiative
+      - Strength Checks/Saves
+      - Dexterity Checks/Saves
+# Bug Fixes
+- Updated Twilight Domain to remove deprecated fields.
 # v11.2.3
 # New Features
 - Remove dependencies for the following

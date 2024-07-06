@@ -3,6 +3,7 @@ import { folders } from "../folders/folders.js";
 import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
 import { spawnSpirtualWeapon } from "../spells/spiritualWeapon/spiritualWeapon.js";
+import { gmCheckActorWeight, gmDropBackpack, gmPickupBackpack } from "../backpacks/backpacks.js";
 
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
@@ -57,8 +58,31 @@ export let gmFunctions = {
             return;
         }
         run(
-            async () => actor.createEmbeddedDocuments("ActiveEffect", effectData),
+            async () => {
+                if (effectData.name && actor.effects.find(e => e.name == effectData.name)) {
+                    return;
+                }
+                actor.createEmbeddedDocuments("ActiveEffect", effectData);
+            },
             async () => await socket.executeAsGM("createEffects", actorUuid, effectData)
+        );
+    },
+    "checkActorWeight": async function _checkActorWeight(actorUuid) {
+        run(
+            async () => await gmCheckActorWeight(actorUuid),
+            async () => await socket.executeAsGM("checkActorWeight", actorUuid)
+        );
+    },
+    "dropBackpack": async function _dropBackpack(tokenId, userUuid) {
+        run(
+            async () => await gmDropBackpack(tokenId, userUuid),
+            async () => await socket.executeAsGM("dropBackpack", tokenId, userUuid)
+        );
+    },
+    "pickupBackpack": async function _pickupBackpack(pileUuid) {
+        run(
+            async () => await gmPickupBackpack(pileUuid),
+            async () => await socket.executeAsGM("pickupBackpack", pileUuid)
         );
     },
     // "dismissTokens": async function _removeTokens(arrayOfTokenIds /* [tokenUuid] */) {
@@ -152,6 +176,9 @@ export let gmFunctions = {
             return;
         }
         SimpleCalendar.api.startClock();
+    },
+    "notify": async function _notify(type, message) {
+        ui.notifications.notify(message, type);
     }
 };
 

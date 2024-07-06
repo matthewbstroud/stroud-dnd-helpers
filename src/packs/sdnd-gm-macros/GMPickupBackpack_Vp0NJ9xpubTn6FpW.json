@@ -1,0 +1,30 @@
+{
+  "name": "GMPickupBackpack",
+  "type": "script",
+  "scope": "global",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "icons/svg/dice-target.svg",
+  "command": "if (scope.action !== 'renderInterface') {\n  return true;\n}\n\nreturn await stroudDnD.backpacks.interact(target.uuid);",
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": ""
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1720063874842,
+    "modifiedTime": 1720101368367,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "Vp0NJ9xpubTn6FpW",
+  "sort": 0,
+  "_key": "!macros!Vp0NJ9xpubTn6FpW"
+}
