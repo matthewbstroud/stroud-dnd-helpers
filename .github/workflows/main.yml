@@ -123,6 +123,7 @@ jobs:
             README.md                            \
             LICENSE                              \
             templates                            \
+            active_effects/                      \            
             images/                              \
             scripts/                             \
             sfx/                                 \

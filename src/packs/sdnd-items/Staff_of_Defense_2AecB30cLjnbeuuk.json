@@ -1,0 +1,291 @@
+{
+  "folder": "i1HpiSBEz11PEaT6",
+  "name": "Staff of Defense",
+  "type": "weapon",
+  "img": "icons/weapons/staves/staff-ornate-teal.webp",
+  "system": {
+    "description": {
+      "value": "<p>This slender, hollow staff is made of glass yet is as strong as oak. It weighs 3 pounds. You must be attuned to the staff to gain its benefits and cast its spells.</p>\n<p>While holding the staff, you have a +1 bonus to your Armor Class.</p>\n<p>The staff has 10 charges, which are used to fuel the spells within it. With the staff in hand, you can use your action to cast one of the following spells from the staff if the spell is on your class’s spell list: mage armor (1 charge) or shield (2 charges). No components are required.</p>\n<p>The staff regains 1d6 + 4 expended charges each day at dawn. If you expend the staff’s last charge, roll a d20. On a 1, the staff shatters and is destroyed.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "Lost Mine of Phandelver pg 53"
+    },
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "attunement": 1,
+    "equipped": false,
+    "rarity": "rare",
+    "identified": true,
+    "activation": {
+      "type": "action",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": 5,
+      "long": 5,
+      "units": ""
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": "",
+      "amount": null,
+      "scale": false
+    },
+    "ability": "str",
+    "actionType": "mwak",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "1d6",
+          "bludgeoning"
+        ]
+      ],
+      "versatile": "1d8"
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "armor": {
+      "value": 10
+    },
+    "hp": {
+      "value": 0,
+      "max": 0,
+      "dt": null,
+      "conditions": ""
+    },
+    "properties": [
+      "mgc",
+      "ver"
+    ],
+    "proficient": 0,
+    "type": {
+      "value": "simpleM",
+      "baseItem": ""
+    },
+    "unidentified": {
+      "description": "Staff"
+    },
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "container": null,
+    "summons": null,
+    "magicalBonus": null
+  },
+  "effects": [
+    {
+      "icon": "icons/weapons/staves/staff-ornate-teal.webp",
+      "changes": [
+        {
+          "key": "system.attributes.ac.value",
+          "value": "+1",
+          "mode": 2,
+          "priority": 18
+        }
+      ],
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "tint": null,
+      "transfer": true,
+      "disabled": false,
+      "flags": {
+        "dae": {
+          "transfer": true,
+          "stackable": "none"
+        },
+        "ddbimporter": {
+          "disabled": false,
+          "itemId": 0,
+          "itemEntityTypeId": 0
+        },
+        "midi-qol": {
+          "forceCEOff": true
+        }
+      },
+      "_id": "xvh917bo2fpz1rq2",
+      "origin": null,
+      "name": "AC: Staff of Defense",
+      "description": "",
+      "statuses": [],
+      "_key": "!items.effects!2AecB30cLjnbeuuk.xvh917bo2fpz1rq2"
+    }
+  ],
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "ddbimporter": {
+      "dndbeyond": {
+        "type": "Staff",
+        "filterType": "Staff",
+        "isConsumable": false,
+        "isContainer": false,
+        "isCustomItem": false,
+        "isHomebrew": false,
+        "isMonkWeapon": false,
+        "isPack": false,
+        "levelInfusionGranted": null,
+        "tags": [
+          "Buff",
+          "Warding"
+        ],
+        "sources": [
+          {
+            "sourceId": 8,
+            "pageNumber": 53,
+            "sourceType": 1
+          }
+        ]
+      },
+      "id": 0,
+      "entityTypeId": 0,
+      "containerEntityId": 83435711,
+      "containerEntityTypeId": 1581111423,
+      "definitionEntityTypeId": 112130694,
+      "definitionId": 9090,
+      "originalName": "Staff of Defense",
+      "version": "2.9.67",
+      "importId": "al4rl8uhf1g1dypr"
+    },
+    "magicitems": {
+      "enabled": true,
+      "charges": 0,
+      "chargeType": "c1",
+      "rechargeable": false,
+      "recharge": 0,
+      "rechargeType": "t2",
+      "rechargeUnit": "",
+      "destroy": false,
+      "destroyCheck": "d1",
+      "spells": {
+        "0": {
+          "id": "",
+          "name": "Mage Armor",
+          "img": "",
+          "pack": "",
+          "baseLevel": 1,
+          "level": 1,
+          "consumption": 1,
+          "upcast": 1,
+          "upcastCost": 1
+        },
+        "1": {
+          "id": "",
+          "name": "Shield",
+          "img": "",
+          "pack": "",
+          "baseLevel": 1,
+          "level": 1,
+          "consumption": 1,
+          "upcast": 1,
+          "upcastCost": 1
+        }
+      },
+      "feats": {},
+      "tables": {},
+      "equipped": true,
+      "attuned": false,
+      "destroyFlavorText": "reaches 0 charges: it crumbles into ashes and is destroyed.",
+      "sorting": "l"
+    },
+    "dae": {
+      "alwaysActive": false,
+      "activeEquipped": true
+    },
+    "infusions": {
+      "maps": [],
+      "applied": [],
+      "infused": false
+    },
+    "core": {},
+    "midi-qol": {
+      "onUseMacroName": "",
+      "fumbleThreshold": null,
+      "effectActivation": false,
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "effectCondition": ""
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "rollOther": false,
+      "critOther": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false,
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "offHandWeapon": false,
+      "noConcentrationCheck": false,
+      "ignoreTotalCover": false
+    },
+    "exportSource": {
+      "world": "lost_mines_v10",
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1720384789643,
+    "modifiedTime": 1720384789681,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "2AecB30cLjnbeuuk",
+  "sort": 100000,
+  "_key": "!items!2AecB30cLjnbeuuk"
+}
