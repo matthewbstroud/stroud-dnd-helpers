@@ -1,3 +1,10 @@
+# v11.2.5
+# New Features
+- Items
+  - Staff of Defense
+# Bug Fixes
+- Music in Cabin Limbo
+- Make sure active_effects are included in release zip.
 # v11.2.4
 # New Features
 - Drop Backpack

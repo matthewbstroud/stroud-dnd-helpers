@@ -1,0 +1,19 @@
+{
+  "name": "Staff of Defense",
+  "sorting": "a",
+  "folder": "PP9XFtc3SwmqPjr3",
+  "type": "Item",
+  "_id": "i1HpiSBEz11PEaT6",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": null,
+    "systemVersion": null,
+    "coreVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!i1HpiSBEz11PEaT6"
+}
