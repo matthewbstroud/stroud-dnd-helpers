@@ -1,3 +1,7 @@
+# v11.2.6
+# Bug Fixes
+- Fix bug with encumbrance tracking.
+- Fix default pemission on drop backpack macro.
 # v11.2.5
 # New Features
 - Items
