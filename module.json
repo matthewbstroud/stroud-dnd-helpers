@@ -65,7 +65,7 @@
 					"mininum": "11.1.7",
 					"verified": "11.1.7"
 				}
-			}
+			},
 			{
 				"id": "effectmacro",
 				"type": "module",
