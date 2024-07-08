@@ -65,16 +65,7 @@
 					"mininum": "11.1.7",
 					"verified": "11.1.7"
 				}
-			},
-			{
-				"id": "dfreds-convenient-effects",
-				"type": "module",
-				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
-				"comaptibility": {
-					"mininum": "6.0.0",
-					"verified": "6.0.0"
-				}
-			},
+			}
 			{
 				"id": "effectmacro",
 				"type": "module",
@@ -129,6 +120,15 @@
 				"comaptibility": {
 					"mininum": "0.7.0",
 					"verified": "0.7.0"
+				}
+			},
+			{
+				"id": "dfreds-convenient-effects",
+				"type": "module",
+				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "6.0.0",
+					"verified": "6.0.0"
 				}
 			},
 			{
