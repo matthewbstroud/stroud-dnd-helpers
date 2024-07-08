@@ -7,10 +7,8 @@ import { utility } from "../utility/utility.js";
 import { socket } from "../module.js";
 
 const nonItems = [
-    "race","background","class","subclass","spell","feat"
+    "race", "background", "class", "subclass", "spell", "feat"
 ];
-
-let inProgress = {};
 
 export let backpacks = {
     "dropBackpack": async function _dropBackpack() {
@@ -82,7 +80,6 @@ async function ipTransferItemsHandler(source, target, itemDeltas, userId, intera
     }
 }
 
-// track createItem, deleteItem
 async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUpdates, interactionId) {
     if ((!sourceUpdates) || (!source.getFlag("item-piles", "data.type") || source.getFlag(sdndConstants.MODULE_ID, "PickingUp"))) {
         return true;
@@ -96,6 +93,16 @@ async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUp
 }
 
 function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
+    if (source instanceof dnd5e.documents.Actor5e) {
+        let backpackId = source.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+        if (itemData.item._id == backpackId) {
+            let sceneTokens = source.getDependentTokens();
+            if (sceneTokens && sceneTokens.length == 1) {
+                gmFunctions.dropBackpack(sceneTokens[0]._id, game.user.uuid);
+                return false;
+            }
+        }
+    }
     if (!source?.getFlag("item-piles", "data.type")) {
         return true;
     }
@@ -107,7 +114,7 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
 }
 
 async function checkItemParentWeight(item) {
-    if (!sdndSettings.UseSDnDEncumbrance.getValue()){
+    if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
     }
     let actor = item.parent;
@@ -131,14 +138,10 @@ async function isWeightCheckSuppressed(actor) {
     return await actor?.getFlag(sdndConstants.MODULE_ID, "SuppressWeightChecks");
 }
 
-export async function gmCheckActorWeight(actorUuid) {
-    if (!sdndSettings.UseSDnDEncumbrance.getValue()){
+export async function gmCheckActorWeight(actorUuid, force) {
+    if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
     }
-    if (inProgress[actorUuid]) {
-        return;
-    }
-    inProgress[actorUuid] = true;
     let actor = actorUuid;
 
     if (!(actor instanceof dnd5e.documents.Actor5e)) {
@@ -148,10 +151,12 @@ export async function gmCheckActorWeight(actorUuid) {
         return;
     }
     let suppressed = await isWeightCheckSuppressed(actor);
-    if (suppressed) {
+    if (suppressed && !force) {
         return;
     }
-    suppressWeightChecks(actor, true);
+    else {
+        suppressWeightChecks(actor, true);
+    }
     console.log("checking actor weight");
     try {
         let encumbrance = actor.system?.attributes?.encumbrance;
@@ -173,6 +178,7 @@ export async function gmCheckActorWeight(actorUuid) {
             }
             return;
         }
+        effect.origin = actor.uuid;
         if (currentEffects?.find(e => e.name == effect.name)) {
             return; // already applied
         }
@@ -185,8 +191,9 @@ export async function gmCheckActorWeight(actorUuid) {
         ui.notifications.error(ex.message);
     }
     finally {
-        suppressWeightChecks(actor, false);
-        inProgress[actorUuid] = false;
+        if (!force) {
+            await suppressWeightChecks(actor, false);
+        }
     }
 
 }
@@ -234,7 +241,7 @@ export async function gmDropBackpack(tokenId, userUuid) {
             return;
         }
         backpackId = containers[0].id;
-        await actor.setFlag(sdndConstants.MODULE_ID, backpackId);
+        await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
     }
     if (actor.getFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack") == backpackId) {
         console.log("The primary backpack is already on the ground...");
@@ -316,11 +323,11 @@ export async function gmDropBackpack(tokenId, userUuid) {
         let newBackpackID = transferred[0].item._id;
         let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
         newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
-        
+
     }
     await actor.setFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack", backpack.id);
     await suppressWeightChecks(actor, false);
-    await gmCheckActorWeight(actor);
+    await gmCheckActorWeight(actor, true);
     ChatMessage.create({
         speaker: { alias: actor.name },
         content: `Has dropped ${backpack.name} on the ground.`,
@@ -368,7 +375,7 @@ export async function gmPickupBackpack(pileUuid) {
     await pileActor.delete();
     let newBackpack = actor.items.get(backpackId);
     await suppressWeightChecks(actor, false);
-    await gmCheckActorWeight(actor);
+    await gmCheckActorWeight(actor, true);
     ChatMessage.create({
         speaker: { alias: actor.name },
         content: `Has picked up their ${newBackpack.name}.`,
@@ -378,16 +385,17 @@ export async function gmPickupBackpack(pileUuid) {
 
 export function createBackpackHeaderButton(config, buttons) {
     if (config.object instanceof Item) {
-        var item = config.object;
+        let item = config.object;
         if (item.type != "container") {
             return;
         }
-        var actor = item.parent;
+        let actor = item.parent;
         if (!actor instanceof dnd5e.documents.Actor5e) {
             return;
         }
-        var primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
-        if (primaryBackpackId && actor.items.get(primaryBackpackId)) {
+        let label = sdndSettings.HideTextOnActorSheet.getValue() ? '' : 'SDND';
+        let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+        if (primaryBackpackId && item.id == primaryBackpackId) {
             buttons.unshift({
                 class: 'stroudDnD',
                 icon: 'fa-solid fa-star',
@@ -398,7 +406,6 @@ export function createBackpackHeaderButton(config, buttons) {
             });
             return;
         }
-        var label = sdndSettings.HideTextOnActorSheet.getValue() ? '' : 'SDND';
         buttons.unshift({
             class: 'stroudDnD',
             icon: 'fa-solid fa-dungeon',
