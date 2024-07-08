@@ -73,10 +73,10 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("checkActorWeight", actorUuid)
         );
     },
-    "dropBackpack": async function _dropBackpack(tokenId, userUuid) {
+    "dropBackpack": async function _dropBackpack(tokenId, backpackId, userUuid) {
         run(
-            async () => await gmDropBackpack(tokenId, userUuid),
-            async () => await socket.executeAsGM("dropBackpack", tokenId, userUuid)
+            async () => await gmDropBackpack(tokenId, backpackId, userUuid),
+            async () => await socket.executeAsGM("dropBackpack", tokenId, backpackId, userUuid)
         );
     },
     "pickupBackpack": async function _pickupBackpack(pileUuid) {
