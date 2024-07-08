@@ -1,3 +1,6 @@
+# v11.2.9
+# Bug Fixes
+- Manifest Fix
 # v11.2.8
 # Bug Fixes
 - Make DF Fred Optional
