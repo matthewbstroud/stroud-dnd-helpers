@@ -1,3 +1,6 @@
+# v11.2.8
+# Bug Fixes
+- Make DF Fred Optional
 # v11.2.7
 # Bug Fixes
 - Fix setting primary backpack toggle.

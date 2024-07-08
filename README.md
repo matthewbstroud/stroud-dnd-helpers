@@ -1,5 +1,5 @@
 # Readme
-My collection of automation for DND 5e
+My collection of automation for foundy v11 and DND 5e (v3.1.2)
 
 Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings_v11.json "download").  
 Feel free to download them and install them as a starting point.
@@ -22,6 +22,8 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 - **Combat**
   - **Apply Adhoc Damage**: A macro that allows you select 1 to many tokens and then apply any type of damage to them. Creates both a chat message and midi-QOL damage card.  You can specify in settings whether or not to automatically apply the damage card.
   - **Start Filtered Combat**: Allows you to select everything on the battlefield, but exclude tokens that belong to specific folders or are already dead.
+- **Item Piles Integration**
+  - **Drop Containers**: You can drop a backpack filled with items.  You can open and interact with the backpack on the ground as well as moving its position.  You can pick up the backpack to return it to your inventory with all items still inside.
 - **Identification**: Helper methods for creating unidentified items and allowing them to be identified either by the Gamemaster or through the identify spell.
   - **Create Unidentified Item**:Create an unidentified item from the currently viewed magic item.  Item will be placed in the same folder as the original.
   - **Identify Item**: Macro for Gamemaster to identify an item in the player's inventory.  (Useful for NPC based identification.)
@@ -55,14 +57,6 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
 - **Weapons**
   - **Reload Ranged Weapon**: Allows you to select an equipped ranged weapon and reload it with any available ammo from your inventory.
 
-# Integrations
-- **Zhell's Backpack Manager**
-  - When viewing a backpack item sheet, you will see the SDND icon. Clicking it will either:
-    - Automatically create a backpack actor if none exists and assign it the permissions of the actor.
-    - Launch a dialog to transfer the backpack and all its contents to another player. 
-  - Automatic synchronization of Actor permissions to their backpack.
-    - When you update the permissions of an actor, it will automatically push the changes to their backpack actors.  (This is useful when assigning ownership to a player for botting purposes.)
-
 # Supported Class Features
 |Class|Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|---|
@@ -90,29 +84,27 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |Melee Weapon|Devotee's Censer|Does radiant damage and can heal allies.|
   
 # Required Modules  
-| Module | Verified Version |  
-| --- | --- |  
-| Active Auras | 0.9.2 |
-| Active Token Effects | 0.7.0 |
-| Anonymous | 1.4.4 |
-| Automated Animations | 4.2.70 |
-| DFreds Convenient Effects | 6.0.0 |
-| Dynamic effects using Active Effects (DAE) | 11.1.7 |
-| Effect Macro | 11.0.3 |
-| Simple Calendar | 2.4.3 |
-| Item Macro | 1.10.5 |
-| libWrapper | 1.12.13.0 |
-| Midi QOL | 11.3.11 |
-| Monk's Active Tile Triggers | 11.19 |
-| socketlib | 1.0.13 |
-| Template Macro | 11.0.1 |
-| Warp Gate | 1.19.2 |
+| Module | Verified Version | manifest location 
+| --- | --- | --- | 
+| Active Auras | 0.9.13 | https://github.com/kandashi/Active-Auras/releases/latest/download/module.json |
+| Active Token Effects | 0.8.1 | https://github.com/kandashi/Active-Token-Lighting/releases/download/v0.8.1/module.json |
+| Anonymous | 1.5.1 | https://github.com/reonZ/anonymous/releases/download/1.5.1/module.json |
+| Automated Animations | 4.2.74 | https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json |
+| Dynamic effects using Active Effects (DAE) | 11.3.36 | https://gitlab.com/tposney/dae |
+| Effect Macro | 11.2.2 | https://github.com/krbz999/effectmacro/releases/download/v11.2.2/module.json |
+| libWrapper | 1.12.14.0 | https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json |
+| Midi QOL | 11.3.11 | https://gitlab.com/tposney/midi-qol/raw/dnd3/package/module.json |
+| Monk's Active Tile Triggers | 11.27 | https://github.com/ironmonk88/monks-active-tiles/releases/download/11.27/module.json |
+| socketlib | 1.1.0 | https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/v1.1.0/module.json |
+| Template Macro | 11.0.1 | https://github.com/krbz999/templatemacro/releases/latest/download/module.json |
   
 # Optional supported modules:  
+- DF Fred's Convenient Effects
 - D&D Beyond Importer  
 - Tidy5e Sheet  
 - Token Magic FX  
 - Visual Active Effects  
 - JBA Free or Patreon
+- Simple Calendar
 
 
