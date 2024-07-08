@@ -17,7 +17,11 @@ export let backpacks = {
             ui.notifications.warn("You can only drop backpacks for characters you own!");
             return;
         }
-        gmFunctions.dropBackpack(controlledToken.id, game.user.uuid);
+        let backpackId = await getPrimaryPackId(controlledToken.id);
+        if (!backpackId) {
+            return;
+        }
+        gmFunctions.dropBackpack(controlledToken.id, backpackId, game.user.uuid);
     },
     "interact": interact,
     "pickupBackpack": async function _pickupBackpack(pileUuid) {
@@ -64,7 +68,8 @@ async function updateItemHandler(item, changes, options, id) {
 }
 
 async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
-    if (item.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
+    let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    if (item._id == lockedItemID) {
         menu.length = 0;
     }
 }
@@ -84,21 +89,32 @@ async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUp
     if ((!sourceUpdates) || (!source.getFlag("item-piles", "data.type") || source.getFlag(sdndConstants.MODULE_ID, "PickingUp"))) {
         return true;
     }
-    let primaryBackpack = source.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'));
-    if (sourceUpdates.itemsToDelete.includes(primaryBackpack.id)) {
-        ui.notifications.warn("You cannot remove the primary backpack from the pile!");
+    let lockedItemID = await source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    if (sourceUpdates.itemsToDelete.includes(lockedItemID)) {
+        ui.notifications.warn("You cannot remove the primary container from the pile!");
         return false;
     }
     return true;
 }
 
 function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
+    let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    if (itemData?.item._id == lockedItemID) {
+        ui.notifications.warn("You cannot remove the primary container from the pile!");
+        return false;
+    }
     if (source instanceof dnd5e.documents.Actor5e) {
+        let sceneTokens = source.getDependentTokens();
         let backpackId = source.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
         if (itemData.item._id == backpackId) {
-            let sceneTokens = source.getDependentTokens();
             if (sceneTokens && sceneTokens.length == 1) {
-                gmFunctions.dropBackpack(sceneTokens[0]._id, game.user.uuid);
+                gmFunctions.dropBackpack(sceneTokens[0]._id, itemData.item._id, game.user.uuid);
+                return false;
+            }
+        }
+        if (itemData.item.type == "container") {
+            if (sceneTokens && sceneTokens.length == 1) {
+                gmFunctions.dropBackpack(sceneTokens[0]._id, itemData.item._id, game.user.uuid);
                 return false;
             }
         }
@@ -106,6 +122,7 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
     if (!source?.getFlag("item-piles", "data.type")) {
         return true;
     }
+
     if (itemData.item.flags["stroud-dnd-helpers"]?.DroppedBy) {
         ui.notifications.warn("You cannot remove the primary backpack from the pile!");
         return false;
@@ -225,33 +242,43 @@ async function interact(pileUuid) {
     return false;
 }
 
-export async function gmDropBackpack(tokenId, userUuid) {
+async function getPrimaryPackId(tokenId) {
     let controlledToken = canvas.tokens.get(tokenId);
     let actor = controlledToken.actor;
     if (!actor) {
         ui.notifications.warn("Selected token has no associated actor!");
         return;
     }
-    await suppressWeightChecks(actor, true);
     let backpackId = await actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
     if (!backpackId) {
         let containers = actor.items.filter(i => i.type == "container");
         if ((!containers) || containers.length != 1) {
-            ui.notifications.warn("You have no primary backpack selected!");
+            ui.notifications.warn("You must first designate a primary backpack!");
             return;
         }
         backpackId = containers[0].id;
         await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
     }
-    if (actor.getFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack") == backpackId) {
-        console.log("The primary backpack is already on the ground...");
-        socket.executeForEveryone("notify", "info", `${actor.name} has tried to drop his pack, but it is already on the ground...`);
+    return backpackId;
+}
+
+export async function gmDropBackpack(tokenId, backpackId, userUuid) {
+    let controlledToken = canvas.tokens.get(tokenId);
+    let actor = controlledToken.actor;
+    if (!actor) {
+        ui.notifications.warn("Selected token has no associated actor!");
         return;
     }
+
+    // if (actor.getFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack") == backpackId) {
+    //     console.log("The primary backpack is already on the ground...");
+    //     socket.executeForEveryone("notify", "info", `${actor.name} has tried to drop his pack, but it is already on the ground...`);
+    //     return;
+    // }
     let backpack = actor.items.get(backpackId);
     if (!backpack) {
-        ui.notifications.error("The backpack marked as primary no longer exists on this actor!");
-        await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", null);
+        // ui.notifications.error("The backpack marked as primary no longer exists on this actor!");
+        // await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", null);
         return;
     }
     let backpackName = `${backpack.name} (${actor.name})`;
@@ -314,19 +341,33 @@ export async function gmDropBackpack(tokenId, userUuid) {
             ]
         }
     }
-    let result = await game.itempiles.API.createItemPile(pileOptions);
-    let backpackToken = await fromUuid(result.tokenUuid);
-    let items = actor.items.filter(i => i?.system?.container == backpack.id);
-    items.unshift(backpack);
-    let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, items);
-    if (transferred && transferred.length > 0) {
-        let newBackpackID = transferred[0].item._id;
-        let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
-        newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
-
+    try {
+        await suppressWeightChecks(actor, true);
+        let result = await game.itempiles.API.createItemPile(pileOptions);
+        let backpackToken = await fromUuid(result.tokenUuid);
+        let items = actor.items.filter(i => i?.system?.container == backpack.id);
+        items.unshift(backpack);
+        let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, items);
+        if (transferred && transferred.length > 0) {
+            let newBackpackID = transferred[0].item._id;
+            let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
+            newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
+            backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "lockedItem", newBackpackID);
+            backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
+            let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+            if (backpack.id == primaryBackpackId) {
+                backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "IsPrimary", true);
+            }
+        }
+        // await actor.setFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack", backpack.id);
     }
-    await actor.setFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack", backpack.id);
-    await suppressWeightChecks(actor, false);
+    catch (exception) {
+        ui.notifications.error(exception.message);
+    }
+    finally {
+        await suppressWeightChecks(actor, false);
+    }
+
     await gmCheckActorWeight(actor, true);
     ChatMessage.create({
         speaker: { alias: actor.name },
@@ -341,46 +382,62 @@ export async function gmPickupBackpack(pileUuid) {
         ui.notifications.error(`Couldn't find container with id ${pileUuid}`);
         return;
     }
-    let backpack = pile.actor.items.filter(i => i.getFlag("stroud-dnd-helpers", "DroppedBy"));
-    if (!backpack || backpack.length != 1) {
+
+    let lockedItemID = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    let backpack = pile.actor.items.get(lockedItemID);
+    if (!backpack) {
         ui.notifications.error("unexpected error resolving backpack!");
         return;
     }
-    backpack = backpack[0];
-    let actorUuId = backpack.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
-    let actor = await fromUuid(actorUuId);
-    await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
-    await suppressWeightChecks(actor, true);
-    let items = backpack.actor.items;
-    await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
-    let transferred = await game.itempiles.API.transferItems(backpack.actor, actor, items);
-    await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", false);
-    let transferredBackpack = transferred.find(i => i.item.flags[sdndConstants.MODULE_ID]?.DroppedBy)
-    let backpackId = transferredBackpack.item._id;
-    await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
-    transferred = transferred.filter(t => t.item._id != backpackId).map(t => t.item._id);
-    for (const id of transferred) {
-        let item = actor.items.get(id);
-        if (!item) {
-            continue;
-        }
-        await item.update({ "system.container": backpackId });
-    }
-    let pileActorId = pile.actor.id;
-    await pile.delete();
-    let pileActor = await game.actors.get(pileActorId);
-    if (!pileActor) {
+    let actorUuId = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+    if (!actorUuId) {
+        ui.notifications.error("Cannot determine who dropped this container!");
         return;
     }
-    await pileActor.delete();
-    let newBackpack = actor.items.get(backpackId);
-    await suppressWeightChecks(actor, false);
-    await gmCheckActorWeight(actor, true);
-    ChatMessage.create({
-        speaker: { alias: actor.name },
-        content: `Has picked up their ${newBackpack.name}.`,
-        type: CONST.CHAT_MESSAGE_TYPES.EMOTE
-    });
+    let actor = await fromUuid(actorUuId);
+    await suppressWeightChecks(actor, true);
+    try {
+        let items = backpack.actor.items;
+        let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
+        await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
+        let transferred = await game.itempiles.API.transferItems(backpack.actor, actor, items);
+        await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", false);
+        let transferredBackpack = transferred.find(i => i.item.flags[sdndConstants.MODULE_ID]?.DroppedBy)
+        let backpackId = transferredBackpack.item._id;
+        if (isPrimary) {
+            await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
+        }
+        transferred = transferred.filter(t => t.item._id != backpackId).map(t => t.item._id);
+        for (const id of transferred) {
+            let item = actor.items.get(id);
+            if (!item) {
+                continue;
+            }
+            await item.update({ "system.container": backpackId });
+        }
+        let pileActorId = pile.actor.id;
+        await pile.delete();
+        let pileActor = await game.actors.get(pileActorId);
+        if (!pileActor) {
+            return;
+        }
+        await pileActor.delete();
+        let newBackpack = actor.items.get(backpackId);
+        await gmCheckActorWeight(actor, true);
+        ChatMessage.create({
+            speaker: { alias: actor.name },
+            content: `Has picked up their ${newBackpack.name}.`,
+            type: CONST.CHAT_MESSAGE_TYPES.EMOTE
+        });
+    }
+    catch (exception) {
+        ui.notifications.error(exception.message);
+    }
+    finally {
+        await suppressWeightChecks(actor, false);
+        await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", false);
+    }
+
 }
 
 export function createBackpackHeaderButton(config, buttons) {
@@ -393,26 +450,28 @@ export function createBackpackHeaderButton(config, buttons) {
         if (!actor instanceof dnd5e.documents.Actor5e) {
             return;
         }
-        let label = sdndSettings.HideTextOnActorSheet.getValue() ? '' : 'SDND';
+        let label = game.i18n.localize("sdnd.primary");
         let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+        let icon = 'fa-light fa-star';
         if (primaryBackpackId && item.id == primaryBackpackId) {
-            buttons.unshift({
-                class: 'stroudDnD',
-                icon: 'fa-solid fa-star',
-                label: label,
-                onclick: () => {
-                    ui.notifications.notify(`${item.name} is your primary container.`);
-                }
-            });
-            return;
+            icon = 'fa-solid fa-star';
         }
         buttons.unshift({
             class: 'stroudDnD',
-            icon: 'fa-solid fa-dungeon',
+            icon: icon,
             label: label,
             onclick: () => {
-                actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", item.id);
-                ui.notifications.notify(`${item.name} is your primary container.`);
+                let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+                if (primaryBackpackId && item.id == primaryBackpackId) {
+                    actor.unsetFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+                    ui.notifications.notify(`${item.name} is no longer your primary container.`);
+                    $('a.header-button.control.stroudDnD').find('i.fa-solid.fa-star').removeClass("fa-solid").addClass("fa-light");
+                }
+                else {
+                    actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", item.id);
+                    ui.notifications.notify(`${item.name} is your primary container.`);
+                    $('a.header-button.control.stroudDnD').find('i.fa-light.fa-star').removeClass("fa-light").addClass("fa-solid");
+                }
             }
         });
     }

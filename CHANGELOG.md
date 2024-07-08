@@ -1,3 +1,7 @@
+# v11.2.7
+# Bug Fixes
+- Fix setting primary backpack toggle.
+- Allow any container to be dropped.
 # v11.2.6
 # Bug Fixes
 - Fix bug with encumbrance tracking.
