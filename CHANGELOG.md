@@ -1,3 +1,6 @@
+# v11.3.0
+# Bug Fixes
+- Fix chat card damage display in adhoc damage for v12.
 # v11.2.9
 # Bug Fixes
 - Manifest Fix
