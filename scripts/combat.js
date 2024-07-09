@@ -89,7 +89,12 @@ async function applyAdhocDamage() {
         return;
     }
     const damageRoll = await new Roll(`${diceCount}${damageDice}[${damageType}]`).evaluate({ async: true })
-    damageRoll.toMessage({ flavor: `${adHocDamage.getSortedNames(targets)} been struck with ${CONFIG.DND5E.damageTypes[damageType]} damage!` });
+    const dnd5eDamageType = CONFIG.DND5E.damageTypes[damageType];
+    let color = dnd5eDamageType.color;
+    if (color) {
+        color = `color:${color}`;
+    }
+    damageRoll.toMessage({ flavor: `${adHocDamage.getSortedNames(targets)} been struck with <span style='${color}'>${dnd5eDamageType.label}</span> damage!` });
     let autoApplyAdhocDamage = sdndSettings.AutoApplyAdhocDamage.getValue();
     await MidiQOL.applyTokenDamage([{ type: `${damageType}`, damage: damageRoll.total }], damageRoll.total, new Set(targets), null, new Set(), { forceApply: autoApplyAdhocDamage });
 }
