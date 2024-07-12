@@ -4,11 +4,12 @@ import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
 import { activeEffects } from "../../active_effects/activeEffects.js";
 import { utility } from "../utility/utility.js";
-import { socket } from "../module.js";
 
 const nonItems = [
     "race", "background", "class", "subclass", "spell", "feat"
 ];
+
+let processEvents = true;
 
 export let backpacks = {
     "dropBackpack": async function _dropBackpack() {
@@ -26,6 +27,13 @@ export let backpacks = {
     "interact": interact,
     "pickupBackpack": async function _pickupBackpack(pileUuid) {
         gmFunctions.pickupBackpack(pileUuid);
+    },
+    "eventsEnabled": () => processEvents,
+    "pauseEvents": async function _pauseEvents() {
+        processEvents = false;
+    },
+    "resumeEvents": async function _resumeEvents() {
+        processEvents = true;
     },
     "hooks": {
         "ready": async function _ready() {
@@ -47,6 +55,18 @@ export let backpacks = {
     }
 }
 
+let locks = {}
+
+function lockActor(actorId) {
+    locks[actorId] = true;
+}
+function releaseActor(actorId) {
+    locks[actorId] = false;
+}
+function isLocked(actorId) {
+    return locks[actorId];
+}
+
 function ipPreDeleteItemPileHandler(pileToken) {
     if ((!game.user?.isGM) && source.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'))) {
         ui.notifications.warn("It would be a very bad idea to delete your primary pack!");
@@ -55,16 +75,40 @@ function ipPreDeleteItemPileHandler(pileToken) {
     return true;
 }
 
+async function itemHandler(item, action) {
+    if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
+        return;
+    }
+    if (!processEvents) {
+        return;
+    }
+    let actor = item.parent;
+    if (!actor instanceof dnd5e.documents.Actor5e) {
+        return;
+    }
+    let dt = await actor.getFlag("item-piles", "data.type");
+    if (dt || actor.type != "character") {
+        return;
+    }
+    if ((item?.system?.weight ?? 0) == 0) {
+        return;
+    }
+    if (isLocked(actor.id)) {
+        return;
+    }
+    await action(item);
+}
+
 async function createItemHandler(item, options, id) {
-    await checkItemParentWeight(item);
+    await itemHandler(item, checkItemParentWeight);
 }
 
 async function deleteItemHandler(item, options, id) {
-    await checkItemParentWeight(item);
+    await itemHandler(item, checkItemParentWeight);
 }
 
 async function updateItemHandler(item, changes, options, id) {
-    await checkItemParentWeight(item);
+    await itemHandler(item, checkItemParentWeight);
 }
 
 async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
@@ -75,6 +119,9 @@ async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
 }
 
 async function ipTransferItemsHandler(source, target, itemDeltas, userId, interactionId) {
+    if (!processEvents) {
+        return;
+    }
     let sourceActor = (source?.actor) ?? source;
     let targetActor = (target?.actor) ?? target;
     if (!sourceActor.getFlag("item-piles", "data.type")) {
@@ -104,7 +151,7 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
         return false;
     }
     if (source instanceof dnd5e.documents.Actor5e) {
-        let sceneTokens = source.getDependentTokens();
+        let sceneTokens = canvas.scene.tokens.filter(t => t.actor.id == source.id);
         let backpackId = source.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
         if (itemData.item._id == backpackId) {
             if (sceneTokens && sceneTokens.length == 1) {
@@ -147,14 +194,6 @@ async function checkItemParentWeight(item) {
     await gmFunctions.checkActorWeight(actor.uuid);
 }
 
-async function suppressWeightChecks(actor, newVal) {
-    await actor?.setFlag(sdndConstants.MODULE_ID, "SuppressWeightChecks", newVal);
-}
-
-async function isWeightCheckSuppressed(actor) {
-    return await actor?.getFlag(sdndConstants.MODULE_ID, "SuppressWeightChecks");
-}
-
 export async function gmCheckActorWeight(actorUuid, force) {
     if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
@@ -167,13 +206,10 @@ export async function gmCheckActorWeight(actorUuid, force) {
     if (!actor) {
         return;
     }
-    let suppressed = await isWeightCheckSuppressed(actor);
-    if (suppressed && !force) {
+    if (isLocked(actor.id)) {
         return;
     }
-    else {
-        suppressWeightChecks(actor, true);
-    }
+    lockActor(actor.id);
     console.log("checking actor weight");
     try {
         let encumbrance = actor.system?.attributes?.encumbrance;
@@ -191,7 +227,7 @@ export async function gmCheckActorWeight(actorUuid, force) {
         let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
         if (!effect) {
             if (currentEffects && currentEffects.length > 0) {
-                gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+                await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
             }
             return;
         }
@@ -200,19 +236,19 @@ export async function gmCheckActorWeight(actorUuid, force) {
             return; // already applied
         }
         if (currentEffects && currentEffects.length > 0) {
-            gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+            await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
         }
-        gmFunctions.createEffects(actor.uuid, [effect]);
+        await gmFunctions.createEffects(actor.uuid, [effect]);
     }
     catch (ex) {
         ui.notifications.error(ex.message);
     }
     finally {
-        if (!force) {
-            await suppressWeightChecks(actor, false);
-        }
+        await new Promise(r => setTimeout(r, 2000)).then(
+            function () { releaseActor(actor.id);},
+            function (err) { console.log(err.message); }
+        );
     }
-
 }
 
 async function interact(pileUuid) {
@@ -270,15 +306,8 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
         return;
     }
 
-    // if (actor.getFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack") == backpackId) {
-    //     console.log("The primary backpack is already on the ground...");
-    //     socket.executeForEveryone("notify", "info", `${actor.name} has tried to drop his pack, but it is already on the ground...`);
-    //     return;
-    // }
     let backpack = actor.items.get(backpackId);
     if (!backpack) {
-        // ui.notifications.error("The backpack marked as primary no longer exists on this actor!");
-        // await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", null);
         return;
     }
     let backpackName = `${backpack.name} (${actor.name})`;
@@ -359,7 +388,6 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
                 backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "IsPrimary", true);
             }
         }
-        // await actor.setFlag(sdndConstants.MODULE_ID, "LastDroppedBackpack", backpack.id);
     }
     catch (exception) {
         ui.notifications.error(exception.message);

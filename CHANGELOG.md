@@ -1,3 +1,6 @@
+# v11.3.1
+# Bug Fixes
+- More bug fixes with checking weight.
 # v11.3.0
 # Bug Fixes
 - Fix chat card damage display in adhoc damage for v12.
@@ -28,7 +31,7 @@
   - Designate your primary pack.
   - Drop pack with all items at your feet.
   - Double-click the item on the ground to retrieve it.
-- SDND Encubrance Rules
+- SDND Encumbrance Rules
   - At 50% max carry weight
     - -2 AC
     - -2 Attack Rolls
