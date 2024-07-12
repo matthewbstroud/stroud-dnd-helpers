@@ -1,6 +1,6 @@
 # v11.3.1
 # Bug Fixes
-
+- More bug fixes with checking weight.
 # v11.3.0
 # Bug Fixes
 - Fix chat card damage display in adhoc damage for v12.
