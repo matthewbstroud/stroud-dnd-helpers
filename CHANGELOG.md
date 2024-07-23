@@ -1,6 +1,10 @@
+# v11.3.2
+# Bug Fixes
+- Fix bug with re-wire fireplaces.
 # v11.3.1
 # Bug Fixes
 - More bug fixes with checking weight.
+- Fix bug with re-wire fireplaces.
 # v11.3.0
 # Bug Fixes
 - Fix chat card damage display in adhoc damage for v12.
