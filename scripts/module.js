@@ -20,6 +20,8 @@ import { utility } from './utility/utility.js';
 import { createBackpackHeaderButton } from './backpacks/backpacks.js';
 import { hooks } from './hooks.js';
 import { backpacks } from './backpacks/backpacks.js';
+import { tagging } from './utility/tagging.js';
+
 // CONFIG.debug.hooks = true;
 
 export let socket;
@@ -54,6 +56,7 @@ globalThis['stroudDnD'] = {
 	money,
 	music,
 	spells,
+	tagging,
 	tokens,
 	utility
 }
