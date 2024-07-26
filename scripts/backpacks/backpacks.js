@@ -371,7 +371,6 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
         }
     }
     try {
-        await suppressWeightChecks(actor, true);
         let result = await game.itempiles.API.createItemPile(pileOptions);
         let backpackToken = await fromUuid(result.tokenUuid);
         let items = actor.items.filter(i => i?.system?.container == backpack.id);
@@ -391,9 +390,6 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
     }
     catch (exception) {
         ui.notifications.error(exception.message);
-    }
-    finally {
-        await suppressWeightChecks(actor, false);
     }
 
     await gmCheckActorWeight(actor, true);
@@ -423,7 +419,6 @@ export async function gmPickupBackpack(pileUuid) {
         return;
     }
     let actor = await fromUuid(actorUuId);
-    await suppressWeightChecks(actor, true);
     try {
         let items = backpack.actor.items;
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
@@ -461,11 +456,6 @@ export async function gmPickupBackpack(pileUuid) {
     catch (exception) {
         ui.notifications.error(exception.message);
     }
-    finally {
-        await suppressWeightChecks(actor, false);
-        await actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", false);
-    }
-
 }
 
 export function createBackpackHeaderButton(config, buttons) {

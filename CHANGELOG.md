@@ -1,3 +1,6 @@
+# v11.3.3
+# Bug Fixes
+- Fix bug drop backpack
 # v11.3.2
 # Bug Fixes
 - Fix bug with re-wire fireplaces.
