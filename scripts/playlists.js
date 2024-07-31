@@ -59,7 +59,7 @@ export let playlists = {
             }
         }
 
-        let songIndex = unplayedSongs.length == 1 ? 0 : numbers.getRandomInt(0, unplayedSongs.length);
+        let songIndex = unplayedSongs.length == 1 ? 0 : numbers.getRandomInt(0, unplayedSongs.length - 1);
         let nextSong = unplayedSongs[songIndex];
         await nextSong.setFlag(sdndConstants.MODULE_ID, "played", true);
         await playList.playSound(nextSong);

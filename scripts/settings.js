@@ -66,7 +66,13 @@ export let sdndSettings = {
 			'type': String,
 			'default': [sdndConstants.FOLDERS.ACTOR.LOOT, sdndConstants.FOLDERS.ACTOR.TRAPS].join(',')
 		},
-		'getValue': () => getModuleSettingValue('ExcludedFolders')
+		'getValue': function _getValue() {
+			let folders = getModuleSettingValue('ExcludedFolders');	
+			if (folders && folders.length > 0) {
+				folders += ",";
+			}
+			return folders + sdndSettings.BackpacksFolder.getValue();
+		} 
 	},
 	'HideTextOnActorSheet': {
 		'config': {

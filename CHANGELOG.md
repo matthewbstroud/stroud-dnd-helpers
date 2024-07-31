@@ -1,3 +1,10 @@
+# v11.3.4
+# Bug Fixes
+- Backpack fixes.
+  - Need to be in an excluded folder.
+  - Should not be able to execute the drop backpack macro with a backpack token selected.
+  - Should not be considered friendly for buffs.
+- Fix issue with play next song being out of range. 
 # v11.3.3
 # Bug Fixes
 - Fix bug drop backpack
