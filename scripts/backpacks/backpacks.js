@@ -1,4 +1,5 @@
 import { sdndConstants } from "../constants.js";
+import { folders } from "../folders/folders.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
@@ -14,6 +15,12 @@ let processEvents = true;
 export let backpacks = {
     "dropBackpack": async function _dropBackpack() {
         let controlledToken = utility.getControlledToken();
+        if (!controlledToken?.actor) {
+            return;
+        }
+        else if (controlledToken.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
+            return;
+        }
         if (!controlledToken?.actor?.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
             ui.notifications.warn("You can only drop backpacks for characters you own!");
             return;
@@ -310,12 +317,14 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
     if (!backpack) {
         return;
     }
+    var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
     let backpackName = `${backpack.name} (${actor.name})`;
     let pileOptions = {
         "sceneId": `${canvas.scene.id}`,
         "tokenOverrides": {
             "name": backpackName,
             "displayName": foundry.CONST.TOKEN_DISPLAY_MODES.HOVER,
+            "disposition": foundry.CONST.TOKEN_DISPOSITIONS.NEUTRAL,
             "lockRotation": true,
             "height": 0.5,
             "width": 0.5,
@@ -325,6 +334,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
         },
         "actorOverrides": {
             "name": backpackName,
+            'folder': backpacksFolder.id,
             "ownership": {
                 [userUuid.split(".").pop()]: foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
             }
@@ -418,6 +428,7 @@ export async function gmPickupBackpack(pileUuid) {
         ui.notifications.error("Cannot determine who dropped this container!");
         return;
     }
+    
     let actor = await fromUuid(actorUuId);
     try {
         let items = backpack.actor.items;

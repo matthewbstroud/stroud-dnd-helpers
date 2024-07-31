@@ -42,8 +42,8 @@ const twilightUtil = {
 
         buttons = buttons.concat(
             actor.effects.contents
-                .filter(e => e.label.match(/(charmed|feared|frightened)/gi))
-                .map(e => ({ label: `Remove: ${e.label}`, value: e.uuid })));
+                .filter(e => e.name.match(/(charmed|feared|frightened)/gi))
+                .map(e => ({ label: `Remove: ${e.name}`, value: e.uuid })));
         return await dialog.createButtonDialog(sdndConstants.FEATURES.TWILIGHT_SANCTUARY, buttons, "column");
     },
     applyTempHP: async function _applyTempHP(caster, target) {
@@ -72,13 +72,13 @@ const twilightUtil = {
     },
     shouldTerminate: function _shouldTerminate(caster) {
         return caster.system.attributes.hp.value <= 0 || caster.effects.contents
-            .filter(e => e.label.match(/(unconscious|incapacitated)/gi)).length > 0;
+            .filter(e => e.name.match(/(unconscious|incapacitated)/gi)).length > 0;
     },
     removeTwilightEffects: async function _removeTwilightEffects(caster) {
         let twilightEffects = [];
         canvas.scene.tokens
             .filter(t => t.actor && t.actor.type == 'character').forEach(t => {
-                let removeEffects = t.actor.effects.contents.filter(e => e.origin?.startsWith(`Actor.${caster.id}`) && e.label.match(/(twilight sanctuary|tsaura)/gi));
+                let removeEffects = t.actor.effects.contents.filter(e => e.origin?.startsWith(`Actor.${caster.id}`) && e.name.match(/(twilight sanctuary|tsaura)/gi));
                 twilightEffects = twilightEffects.concat(removeEffects);
             });
         if (!twilightEffects || twilightEffects.length == 0) {

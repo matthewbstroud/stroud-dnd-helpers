@@ -31,7 +31,7 @@ export let tokens = {
             if (excludedFolders.includes(folderName)) {
                 return true;
             }
-            if (token.actor.effects.filter(e => e.label == "Dead").length > 0) {
+            if (token.actor.effects.filter(e => e.name == "Dead").length > 0) {
                 return true;
             }
 
