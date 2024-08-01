@@ -206,7 +206,7 @@
         },
         "effectmacro": {
           "onDelete": {
-            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.name);"
+            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.label);"
           },
           "onTurnEnd": {
             "script": "await stroudDnD.features.TwilightDomain.turnEnd(origin.parent.uuid, actor.uuid);"
@@ -265,7 +265,7 @@
         },
         "effectmacro": {
           "onDelete": {
-            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.name);\nawait stroudDnD.features.TwilightDomain.removeTwilightEffects(origin.parent.uuid);"
+            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.label);\nawait stroudDnD.features.TwilightDomain.removeTwilightEffects(origin.parent.uuid);"
           },
           "onTurnEnd": {
             "script": "await stroudDnD.features.TwilightDomain.turnEnd(origin.parent.uuid, actor.uuid);"
