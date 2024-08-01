@@ -1,3 +1,7 @@
+# v11.3.5
+# New Features
+- Secret Message Macro
+- Dropped support of Magic Missle
 # v11.3.4
 # Bug Fixes
 - Backpack fixes.

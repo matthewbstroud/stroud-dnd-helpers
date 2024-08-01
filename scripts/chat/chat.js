@@ -1,4 +1,6 @@
 import { dialog } from "../dialog/dialog.js";
+import { guid } from "../utility/guid.js";
+
 export let chat = {
     "prune": async function _prune() {
         if (!game.user.isGM) {
@@ -41,8 +43,49 @@ export let chat = {
         messagesToDelete.forEach(m => {
             m.delete();
         });
+    },
+    "secretMessage": async function _secretMessage() {
+        await promptForMessage(async function(message) {
+            const secretId = guid.uuidv4();
+            let htmlContent = `
+            <input id="secret_${secretId}" type="hidden" value="${message}" />
+            <div id="message_${secretId}">This message is yet to be revealed...</div>
+            <button type="button" id="button_${secretId}">Reveal</button>
+            `;
+            await ChatMessage.create({content: htmlContent});
+            $(`#button_${secretId}`).one("click", function(e) { 
+                $(`#message_${secretId}`).text($(`#secret_${secretId}`).val()); 
+            });
+        });
     }
 };
+
+async function promptForMessage(callback) {
+    let title = `Secret Message`;
+
+    new Dialog({
+        title: title,
+        content: `
+        <form>
+            <input id="secretMessage" type="text" />
+        </form>
+    `,
+        buttons: {
+            yes: {
+                icon: "<i class='fas fa-check'></i>",
+                label: "Send Message",
+                callback: (html) => {
+                    callback(html.find("#secretMessage").val());
+                }
+            },
+            no: {
+                icon: "<i class='fas fa-times'></i>",
+                label: `Cancel`
+            },
+        },
+        default: "yes"
+    }).render(true)
+}
 
 let chatInternal = {
     "removeRecent": async function _removeRecent() {

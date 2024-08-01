@@ -289,7 +289,7 @@
           "forceCEOff": true
         },
         "dfreds-convenient-effects": {
-          "description": ""
+          "description": "Marked by a skilled Hunter"
         },
         "core": {
           "statusId": ""
@@ -312,7 +312,7 @@
       "_id": "s3164XqHfp3cnfvi",
       "origin": null,
       "name": "Marked",
-      "description": "Marked by a skilled Hunter",
+      "description": "",
       "statuses": [],
       "_key": "!items.effects!RH0GkKyxbvzOoAui.s3164XqHfp3cnfvi"
     }

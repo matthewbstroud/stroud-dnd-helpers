@@ -94,8 +94,7 @@ function getOverrideableItemsFromActor(actorDocument) {
     let sdndItems = [
         sdndConstants.FEATURES.TWILIGHT_SANCTUARY,
         sdndConstants.SPELLS.HUNTERS_MARK,
-        sdndConstants.SPELLS.IDENTIFY,
-        sdndConstants.SPELLS.MAGIC_MISSILE
+        sdndConstants.SPELLS.IDENTIFY
     ];
     if (game.modules.get("warpgate")?.active ?? false) {
         sdndItems.push(sdndConstants.SPELLS.SPIRITUAL_WEAPON);
