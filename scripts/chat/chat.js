@@ -1,5 +1,6 @@
 import { dialog } from "../dialog/dialog.js";
 import { guid } from "../utility/guid.js";
+import { socket } from "../module.js";
 
 export let chat = {
     "prune": async function _prune() {
@@ -54,7 +55,7 @@ export let chat = {
             `;
             await ChatMessage.create({content: htmlContent});
             $(`#button_${secretId}`).one("click", function(e) { 
-                $(`#message_${secretId}`).text($(`#secret_${secretId}`).val()); 
+                socket.executeForEveryone("revealSecret", secretId);
             });
         });
     }

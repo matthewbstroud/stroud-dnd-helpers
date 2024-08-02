@@ -139,6 +139,9 @@ export let gmFunctions = {
             keybinds.setCommonKeybinds();
         }
     },
+    "revealSecret": async function _revealSecret(secretId) {
+        $(`#message_${secretId}`).text($(`#secret_${secretId}`).val()); 
+    },
     "removeEffects": async function _removeEffects(effectIDs) {
         if (!effectIDs || effectIDs.length == 0) {
             return;
