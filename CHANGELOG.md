@@ -1,3 +1,7 @@
+# v11.3.6
+# Bug Fixes
+- Fix Reveal Secret
+- Remove unsupported key from module.json
 # v11.3.5
 # New Features
 - Secret Message Macro
