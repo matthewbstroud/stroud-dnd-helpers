@@ -115,6 +115,18 @@ At 75% max carried weight you will have: (-4 to AC and Disadvantage on Attack ro
 			'requiresReload': true
 		},
 		'getValue': () =>  getModuleSettingValue('UseSDnDEncumbrance')
+	},
+	'OnDamageEvents': {
+		'config': {
+			'name': 'Active on character damage support.',
+			'hint': `Allows certain automations to work.  (Example the berserker axe.)`,
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false,
+			'requiresReload': true
+		},
+		'getValue': () =>  getModuleSettingValue('OnDamageEvents')
 	}
 };
 

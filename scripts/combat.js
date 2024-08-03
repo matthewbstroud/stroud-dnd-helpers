@@ -5,6 +5,7 @@ import { ranged } from "./weapons/ranged.js";
 import { sdndConstants } from "./constants.js";
 import { sdndSettings } from "./settings.js";
 import { tokens } from "./tokens.js";
+import { bloodyAxe } from "./items/weapons/bloodyAxe.js";
 
 export let combat = {
     "applyAdhocDamage": applyAdhocDamage,
@@ -30,8 +31,22 @@ export let combat = {
     },
     "weapons": {
         "ranged": ranged
+    },
+    "eventHandlers": {
+        "onDamageTaken": onDamageTaken
+    },
+    "hooks": {
+        "ready": async function _ready() {
+            if (sdndSettings.OnDamageEvents.getValue()) {
+                Hooks.on("dnd5e.damageActor", onDamageTaken);
+            }
+        }
     }
 };
+
+async function onDamageTaken(actor, changes, update, userId) {
+    bloodyAxe.onDamageTaken(actor, changes, update, userId);
+}
 
 // apply adhoc damage to selected tokens
 async function applyAdhocDamage() {
