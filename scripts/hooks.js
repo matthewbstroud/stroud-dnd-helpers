@@ -1,6 +1,7 @@
 import { backpacks } from './backpacks/backpacks.js';
 import { scene } from './utility/scene.js';
 import { createActorHeaderButton } from './actors/actors.js';
+import { combat } from './combat.js';
 
 export let hooks = {
     "init": function _init() {
@@ -112,5 +113,6 @@ export let hooks = {
             }
         }
         await backpacks.hooks.ready();
+        await combat.hooks.ready();
     }
 };

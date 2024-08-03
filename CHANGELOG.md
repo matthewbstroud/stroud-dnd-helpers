@@ -1,3 +1,8 @@
+# v11.3.7
+# New Features 
+- Add Bloody Axe
+# Bug Fixes
+- Handle Simple Calendar not being installed.
 # v11.3.6
 # Bug Fixes
 - Fix Reveal Secret

@@ -89,8 +89,8 @@ async function itemHandler(item, action) {
     if (!processEvents) {
         return;
     }
-    let actor = item.parent;
-    if (!actor instanceof dnd5e.documents.Actor5e) {
+    let actor = item?.parent;
+    if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
         return;
     }
     let dt = await actor.getFlag("item-piles", "data.type");
@@ -188,8 +188,8 @@ async function checkItemParentWeight(item) {
     if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
     }
-    let actor = item.parent;
-    if (!actor instanceof dnd5e.documents.Actor5e) {
+    let actor = item?.parent;
+    if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
         return;
     }
     if (actor.getFlag("item-piles", "data.type") || actor.type != "character") {
@@ -475,8 +475,8 @@ export function createBackpackHeaderButton(config, buttons) {
         if (item.type != "container") {
             return;
         }
-        let actor = item.parent;
-        if (!actor instanceof dnd5e.documents.Actor5e) {
+        let actor = item?.parent;
+        if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
             return;
         }
         let label = game.i18n.localize("sdnd.primary");
