@@ -1,3 +1,7 @@
+# v11.4.0
+# Bug Fixes 
+- Update Readme
+- Update manifest
 # v11.3.9
 # New Features 
 - Make Anonymous an optional feature.
