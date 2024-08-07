@@ -1,7 +1,7 @@
 # Readme
 My collection of automation for foundy v11 and DND 5e (v3.1.2)
 
-Support me on [Ko-Fi](https://ko-fi.com/sdnddonations).
+If you appreciate the module support me [HERE](https://ko-fi.com/sdnddonations)
 
 Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings_v11.json "download").  
 Feel free to download them and install them as a starting point.
