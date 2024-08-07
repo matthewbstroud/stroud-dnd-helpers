@@ -431,7 +431,7 @@ export async function gmPickupBackpack(pileUuid) {
     
     let actor = await fromUuid(actorUuId);
     try {
-        let items = backpack.actor.items;
+        let items = game.itempiles.API.getActorItems(backpack.actor);
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
         await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
         let transferred = await game.itempiles.API.transferItems(backpack.actor, actor, items);

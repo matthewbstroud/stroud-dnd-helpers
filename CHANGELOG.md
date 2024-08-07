@@ -1,3 +1,7 @@
+# v11.3.8
+# Bug Fixes
+- Fix Bloody Axe
+- Fix dropping items with CPR adding feats automatically.
 # v11.3.7
 # New Features 
 - Add Bloody Axe

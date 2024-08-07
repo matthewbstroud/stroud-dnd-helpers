@@ -3,7 +3,7 @@
   "type": "weapon",
   "system": {
     "description": {
-      "value": "<p>You gain a +1 bonus to attack and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your hit point maximum increases by 1 for each level you have attained.</p><p></p>",
+      "value": "<p>You gain a +1 bonus to attack and damage rolls made with this magic weapon. In addition, while you are attuned to this weapon, your hit point maximum increases by 1 for each level you have attained.</p><p>This weapon does additional psychic damage.</p>",
       "chat": ""
     },
     "source": {
@@ -15,7 +15,7 @@
       "value": 0,
       "denomination": "gp"
     },
-    "attunement": 1,
+    "attunement": 2,
     "rarity": "rare",
     "identified": true,
     "activation": {
@@ -70,7 +70,7 @@
       ],
       "versatile": ""
     },
-    "formula": "2d6[psychic]",
+    "formula": "1d6[psychic]",
     "save": {
       "ability": "int",
       "dc": 12,
@@ -104,7 +104,7 @@
     "container": null,
     "summons": null,
     "magicalBonus": null,
-    "equipped": false,
+    "equipped": true,
     "proficient": null
   },
   "flags": {
@@ -147,7 +147,13 @@
       "definitionId": 5121,
       "originalName": "Berserker Greataxe",
       "version": "2.9.67",
-      "effectsApplied": true
+      "effectsApplied": true,
+      "overrideId": "NONE",
+      "ignoreIcon": false,
+      "ignoreItemImport": true,
+      "ignoreItemForChrisPremades": false,
+      "retainResourceConsumption": false,
+      "ignoreItemUpdate": true
     },
     "betterRolls5e": {},
     "magicitems": {
@@ -180,7 +186,8 @@
       "reactionCondition": "",
       "otherCondition": "",
       "effectCondition": "",
-      "rollAttackPerTarget": "default"
+      "rollAttackPerTarget": "default",
+      "onUseMacroName": ""
     },
     "midiProperties": {
       "confirmTargets": "never",
@@ -215,9 +222,9 @@
       "icon": "modules/stroud-dnd-helpers/images/icons/bloody_axe.webp",
       "changes": [
         {
-          "key": "system.attributes.hp.max",
-          "value": "+1 * @details.level",
+          "key": "system.attributes.hp.bonuses.level",
           "mode": 2,
+          "value": "1",
           "priority": 14
         }
       ],
@@ -269,11 +276,11 @@
         }
       },
       "_id": "yevb4xue9saonmw2",
-      "origin": "Compendium.stroud-dnd-helpers.SDND-Items.Item.2FJ4Zw1YYoJ71qTJ",
+      "origin": "Actor.yvlRsNlUb5HyACAY.Item.czfGoFWfVv6gnr8w",
       "name": "Bloody Axe - Constant Effects",
       "description": "",
       "statuses": [],
-      "_key": "!items.effects!2FJ4Zw1YYoJ71qTJ.yevb4xue9saonmw2"
+      "_key": "!items.effects!DpaDzTNCE4URX3Vf.yevb4xue9saonmw2"
     }
   ],
   "img": "modules/stroud-dnd-helpers/images/icons/bloody_axe.webp",
@@ -287,10 +294,10 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1685289785930,
-    "modifiedTime": 1722721873341,
+    "modifiedTime": 1723002411993,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
-  "_id": "2FJ4Zw1YYoJ71qTJ",
-  "sort": 0,
-  "_key": "!items!2FJ4Zw1YYoJ71qTJ"
+  "_id": "DpaDzTNCE4URX3Vf",
+  "sort": 100000,
+  "_key": "!items!DpaDzTNCE4URX3Vf"
 }
