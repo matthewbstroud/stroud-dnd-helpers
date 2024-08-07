@@ -88,7 +88,6 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 | --- | --- | --- | 
 | Active Auras | 0.9.13 | https://github.com/kandashi/Active-Auras/releases/latest/download/module.json |
 | Active Token Effects | 0.8.1 | https://github.com/kandashi/Active-Token-Lighting/releases/download/v0.8.1/module.json |
-| Anonymous | 1.5.1 | https://github.com/reonZ/anonymous/releases/download/1.5.1/module.json |
 | Automated Animations | 4.2.74 | https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json |
 | Dynamic effects using Active Effects (DAE) | 11.3.36 | https://gitlab.com/tposney/dae |
 | Effect Macro | 11.2.2 | https://github.com/krbz999/effectmacro/releases/download/v11.2.2/module.json |
@@ -99,6 +98,7 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 | Template Macro | 11.0.1 | https://github.com/krbz999/templatemacro/releases/latest/download/module.json |
   
 # Optional supported modules:  
+- Anonymous
 - DF Fred's Convenient Effects
 - D&D Beyond Importer  
 - Tidy5e Sheet  

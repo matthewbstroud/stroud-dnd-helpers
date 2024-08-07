@@ -39,15 +39,6 @@
 				}
 			},
 			{
-				"id": "anonymous",
-				"type": "module",
-				"manifest": "https://raw.githubusercontent.com/reonZ/anonymous/master/module.json",
-				"comaptibility": {
-					"mininum": "1.4.4",
-					"verified": "1.4.4"
-				}
-			},
-			{
 				"id": "autoanimations",
 				"type": "module",
 				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
@@ -119,6 +110,15 @@
 				"comaptibility": {
 					"mininum": "0.7.0",
 					"verified": "0.7.0"
+				}
+			},
+			{
+				"id": "anonymous",
+				"type": "module",
+				"manifest": "https://raw.githubusercontent.com/reonZ/anonymous/master/module.json",
+				"comaptibility": {
+					"mininum": "1.4.4",
+					"verified": "1.4.4"
 				}
 			},
 			{
