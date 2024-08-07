@@ -1,3 +1,6 @@
+# v11.4.1
+# Bug Fixes 
+- Fix tiles in training room
 # v11.4.0
 # Bug Fixes 
 - Update Readme
