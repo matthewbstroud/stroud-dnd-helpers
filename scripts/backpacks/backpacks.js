@@ -42,6 +42,12 @@ export let backpacks = {
     "resumeEvents": async function _resumeEvents() {
         processEvents = true;
     },
+    "forceCheck": async function _forceCheck() {
+        let actorUuids = canvas.scene.tokens?.filter(t => t.actor?.folder?.name == sdndSettings.ActivePlayersFolder.getValue()).map(t => t.actor.uuid);
+        for (const actorUuid of actorUuids) {
+            gmCheckActorWeight(actorUuid, true);
+        }
+    },
     "hooks": {
         "ready": async function _ready() {
             if (!(game.modules.find(m => m.id === "item-piles")?.active ?? false)) {

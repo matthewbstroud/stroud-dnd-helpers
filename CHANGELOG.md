@@ -1,3 +1,7 @@
+# v11.3.9
+# New Features 
+- Make Anonymous an optional feature.
+- Add force weight check for all players in scene.
 # v11.3.8
 # Bug Fixes
 - Fix Bloody Axe
