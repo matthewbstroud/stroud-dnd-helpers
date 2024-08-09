@@ -21,6 +21,7 @@ import { createBackpackHeaderButton } from './backpacks/backpacks.js';
 import { hooks } from './hooks.js';
 import { backpacks } from './backpacks/backpacks.js';
 import { tagging } from './utility/tagging.js';
+import { actors } from './actors/actors.js';
 
 // CONFIG.debug.hooks = true;
 
@@ -42,6 +43,7 @@ Hooks.once('ready', async function() {
 
 
 globalThis['stroudDnD'] = {
+	actors,
 	backpacks,
 	calendar,
 	chat,
