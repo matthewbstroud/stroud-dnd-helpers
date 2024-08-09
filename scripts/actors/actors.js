@@ -48,7 +48,7 @@ async function buffActors(actorType, useMax, multiplier) {
     if (!mod) {
         mod = 1;
     }
-    let npcs = game.actors.filter(a => a.type === actorType && a.name == "Zygfrek Belview");
+    let npcs = game.actors.filter(a => a.type === actorType);
     if (!npcs){
         return;
     }

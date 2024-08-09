@@ -1,3 +1,6 @@
+# v11.4.2
+# Bug Fixes 
+- buffNpc function
 # v11.4.1
 # New Features
 - Added new command line functions
