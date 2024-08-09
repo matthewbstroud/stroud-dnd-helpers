@@ -1,3 +1,11 @@
+# v11.4.1
+# New Features
+- Added new command line functions
+  - **BuffNpc**:  Allows for changing the HP of a set of NPC actors in bulk.
+  - **setPrototypeTokenBarsVisibility**: Allows for change the bar visibility for all tokens.
+  - **setTokenBarsVisibility**: Allows changing token bar visibility across a collection of scenes.
+# Bug Fixes 
+- Fix tiles in training room
 # v11.4.0
 # Bug Fixes 
 - Update Readme

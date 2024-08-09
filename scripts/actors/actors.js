@@ -5,8 +5,88 @@ import { sdndSettings } from "../settings.js";
 import { folders } from "../folders/folders.js";
 import { dialog } from "../dialog/dialog.js";
 
+const DIE_MATCH = /(\d+)d(\d+)/g;
+
 export let actors = {
-    "ensureActor": ensureActor
+    "ensureActor": ensureActor,
+    "buffNpcs": async function _buffNpcs(useMax, multiplier){
+        return buffActors("npc", useMax, multiplier)
+    },
+    "setPrototypeTokenBarsVisibility": setPrototypeTokenBarsVisibility,
+    "setTokenBarsVisibility": setTokenBarsVisibility
+}
+async function setPrototypeTokenBarsVisibility(actors, tokenDisplayMode) {
+    if (!actors || !tokenDisplayMode) {
+        return;
+    }
+    let updates = actors.filter(a => a.prototypeToken.displayBars != tokenDisplayMode)
+        .map(a => ({ "_id": a._id, "prototypeToken": { "displayBars": tokenDisplayMode } }));
+    if (!updates || updates.length == 0) {
+        return;
+    }
+    console.log(`Updating ${updates.length} prototypes...`);
+    Actor.updateDocuments(updates);
+}
+
+async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
+    if (!scenes || !tokenDisplayMode) {
+        return;
+    }
+    for (let scene of scenes) {
+        let updates = await scene.tokens.filter(t => t.displayBars != tokenDisplayMode)
+            .map(t => ({ "_id": t._id, "displayBars": tokenDisplayMode}));
+        if (!updates || updates.length == 0){
+            continue;
+        }
+        console.log(`Updating ${updates.length} in ${scene.name}...`);
+        await scene.tokens.update(updates);
+    }
+}
+
+async function buffActors(actorType, useMax, multiplier) {
+    let mod = Number.parseFloat(multiplier);
+    if (!mod) {
+        mod = 1;
+    }
+    let npcs = game.actors.filter(a => a.type === actorType && a.name == "Zygfrek Belview");
+    if (!npcs){
+        return;
+    }
+    for (let npc of npcs) {
+        const hp = npc.system?.attributes?.hp;
+        
+        const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
+        let maxHp = Math.floor(eval(rollFormula));
+        if (isNaN(maxHp)){
+            maxHp = hp.max;
+        }
+        if (mod > 0) {
+            maxHp *= mod;
+        }
+        console.log(`Updating ${npc.name}: hp from ${hp.max} to ${maxHp}...`);
+        await npc.update({
+            "system": {
+                "attributes": {
+                    "hp": {
+                        "max": maxHp,
+                        "value": maxHp
+                    }
+                }
+            }
+        });
+    }
+}
+
+function getAverageHpFormula(formula) {
+    let match = {}
+    while (match = DIE_MATCH.exec(formula)) {
+        let dieCount = Number.parseInt(match[1]);
+        let dieType = Number.parseInt(match[2]);
+        let dieAverage = (dieType + 1) / 2;
+        const newDieFormula = `${dieCount} * ${dieAverage}`
+        formula = formula.replace(match[0], newDieFormula);
+    }
+    return eval(formula);
 }
 
 export function createItemHeaderButton(config, buttons) {

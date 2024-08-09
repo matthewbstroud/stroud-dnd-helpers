@@ -375,7 +375,7 @@
 	"manifest": "#{MANIFEST}#",
 	"download": "#{DOWNLOAD}#",
 	"license": "LICENSE",
-	"readme": "README.md",
+	"readme": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/master/README.md",
 	"media": [
 		{
 			"type": "cover",
