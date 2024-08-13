@@ -30,6 +30,76 @@ export let items = {
             return 1;
         }
         return 0;
-    }
+    },
+	"convertConsumableToLoot": convertConsumableToLoot
 }
 
+
+
+const itemResource = 
+{
+	"name": "Resource",
+	"type": "loot",
+	"img": "systems/dnd5e/icons/svg/items/loot.svg",
+	"system": {
+	  "description": {
+		"value": "",
+		"chat": ""
+	  },
+	  "source": {},
+	  "identified": true,
+	  "unidentified": {
+		"description": ""
+	  },
+	  "container": null,
+	  "quantity": 1,
+	  "weight": 0,
+	  "price": {
+		"value": 0,
+		"denomination": "gp"
+	  },
+	  "rarity": "",
+	  "properties": [],
+	  "type": {
+		"value": "resource",
+		"subtype": ""
+	  }
+	},
+	"effects": [],
+	"folder": null,
+	"flags": {
+	  "exportSource": {
+		"system": "dnd5e",
+		"coreVersion": "11.315",
+		"systemVersion": "3.1.2"
+	  }
+	},
+	"_stats": {
+	  "systemId": "dnd5e",
+	  "systemVersion": "3.1.2",
+	  "coreVersion": "11.315",
+	  "createdTime": 1723338340157,
+	  "modifiedTime": 1723338366662,
+	  "lastModifiedBy": "6yhz13iFYYklKtgA"
+	}
+  }
+
+  async function convertConsumableToLoot(itemID) {
+	let item = await game.items.get(itemID);
+	if (!item || item.type != "consumable") {
+		return;
+	}
+	let newItem = JSON.parse(JSON.stringify(itemResource));
+	if (!newItem) {
+		return;
+	}
+	newItem.name = item.name;
+	newItem.img = item.img;
+	newItem.folder = item.folder;
+	newItem.system.rarity = item.system.rarity;
+	newItem.system.weight = item.system.weight;
+	newItem.system.price.value = item.system.price.value;
+	newItem.system.price.denomination = item.system.price.denomination;
+	await Item.create(newItem);
+	await Item.deleteDocuments([item.id]);
+  }
