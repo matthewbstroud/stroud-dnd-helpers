@@ -22,6 +22,7 @@ import { hooks } from './hooks.js';
 import { backpacks } from './backpacks/backpacks.js';
 import { tagging } from './utility/tagging.js';
 import { actors } from './actors/actors.js';
+import { plants } from './plants/plants.js';
 
 // CONFIG.debug.hooks = true;
 
@@ -57,6 +58,7 @@ globalThis['stroudDnD'] = {
 	macros,
 	money,
 	music,
+	plants,
 	spells,
 	tagging,
 	tokens,
