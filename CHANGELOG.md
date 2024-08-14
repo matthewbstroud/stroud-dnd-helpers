@@ -1,3 +1,6 @@
+# v11.4.4
+# Bug Fixes
+- Bloody Axe events should only fire for GM.
 # v11.4.3
 # New Features
 - Ryath Root
