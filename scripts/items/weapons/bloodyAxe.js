@@ -14,21 +14,31 @@ async function onDamageTaken(actor, changes, update, userId) {
     if (!axe || !axe.system?.equipped) {
         return;
     }
-    const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.wis.abbreviation, {
+    let rollOptions = {
         targetValue: 15,
         fastForward: true,
         chatMessage: false
-    });
+    };
+    if (axe.system.identified) {
+        rollOptions.chatMessage = true;
+        rollOptions.flavor = `${actor.name} fights against madness... (${dnd5e.config.abilities.wis.label})`;
+    }
+    const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.wis.abbreviation, rollOptions);
 
-    if (!dieRoll.options.success) {
-        await gmFunctions.createEffects(actor.uuid, [createBerserkEffect(axe.uuid)]);
+    if (dieRoll.options.success) {
         await ChatMessage.create({
             emote: true,
             speaker: { "actor": actor },
-            content: `A strange look comes over ${actor.name}...`
+            content: `${actor.name} holds on to his sanity...`
         });
+        return;
     }
-
+    await gmFunctions.createEffects(actor.uuid, [createBerserkEffect(axe.uuid)]);
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": actor },
+        content: `A strange look comes over ${actor.name}...`
+    });
 }
 
 function createBerserkEffect(itemUuid) {

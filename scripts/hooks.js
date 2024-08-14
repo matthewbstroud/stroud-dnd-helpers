@@ -111,8 +111,8 @@ export let hooks = {
                 Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
                 Hooks.on('updateActor', syncBackpackPermissions);
             }
+            await combat.hooks.ready();
         }
         await backpacks.hooks.ready();
-        await combat.hooks.ready();
     }
 };
