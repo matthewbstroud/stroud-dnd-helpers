@@ -63,7 +63,7 @@ export let gmFunctions = {
                 if (effectData.name && actor.effects.find(e => e.name == effectData.name)) {
                     return;
                 }
-                actor.createEmbeddedDocuments("ActiveEffect", effectData);
+                await actor.createEmbeddedDocuments("ActiveEffect", effectData);
             },
             async () => await socket.executeAsGM("createEffects", actorUuid, effectData)
         );
