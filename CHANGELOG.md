@@ -1,3 +1,6 @@
+# v11.4.6
+# Bug Fixes
+- Async bug with Create Effects.
 # v11.4.5
 # New Features
 - Handle Blight Icor
