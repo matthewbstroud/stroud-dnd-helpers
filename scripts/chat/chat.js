@@ -1,6 +1,8 @@
 import { dialog } from "../dialog/dialog.js";
 import { guid } from "../utility/guid.js";
 import { socket } from "../module.js";
+import { sdndConstants } from "../constants.js";
+import { gmFunctions } from "../gm/gmFunctions.js";
 
 export let chat = {
     "prune": async function _prune() {
@@ -49,15 +51,30 @@ export let chat = {
         await promptForMessage(async function(message) {
             const secretId = guid.uuidv4();
             let htmlContent = `
-            <input id="secret_${secretId}" type="hidden" value="${message}" />
             <div id="message_${secretId}">This message is yet to be revealed...</div>
             <button type="button" id="button_${secretId}">Reveal</button>
             `;
-            await ChatMessage.create({content: htmlContent});
+            let chatMessage = await ChatMessage.create({
+                speaker: {
+                    actor: game.user.character?._id
+                },
+                content: htmlContent,
+                flags: {
+                    [sdndConstants.MODULE_ID]: {
+                        "SecretMessage": message
+                    }
+                }
+            });
             $(`#button_${secretId}`).one("click", function(e) { 
-                socket.executeForEveryone("revealSecret", secretId);
+                socket.executeAsGM("revealSecret", chatMessage.id);
             });
         });
+    },
+    "forceReveal": async function _forceReveal(messageID) {
+        if (!game.user.isTheGM) {
+            return;
+        }
+        gmFunctions.revealSecret(messageID);
     }
 };
 
@@ -68,7 +85,7 @@ async function promptForMessage(callback) {
         title: title,
         content: `
         <form>
-            <input id="secretMessage" type="text" />
+            <input id="secretMessage" type="text" autofocus />
         </form>
     `,
         buttons: {
