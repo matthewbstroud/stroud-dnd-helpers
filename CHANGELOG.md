@@ -1,3 +1,8 @@
+# v11.4.5
+# New Features
+- Handle Blight Icor
+# Bug Fixes
+- Persist Secret Messages once revealed.
 # v11.4.4
 # Bug Fixes
 - Bloody Axe events should only fire for GM.

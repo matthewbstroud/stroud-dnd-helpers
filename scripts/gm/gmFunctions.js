@@ -4,6 +4,7 @@ import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
 import { spawnSpirtualWeapon } from "../spells/spiritualWeapon/spiritualWeapon.js";
 import { gmCheckActorWeight, gmDropBackpack, gmPickupBackpack } from "../backpacks/backpacks.js";
+import { sdndConstants } from "../constants.js";
 
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
@@ -139,8 +140,16 @@ export let gmFunctions = {
             keybinds.setCommonKeybinds();
         }
     },
-    "revealSecret": async function _revealSecret(secretId) {
-        $(`#message_${secretId}`).text($(`#secret_${secretId}`).val()); 
+    "revealSecret": async function _revealSecret(messageId) {
+        let message = await game.messages.get(messageId);
+        if (!message) {
+            return;
+        }
+        let secret = message.getFlag(sdndConstants.MODULE_ID, "SecretMessage");
+        if (!secret) {
+            return;
+        }
+        await message.update({ "content": `The secret has been revealed to be:<br/><b>${secret}</b>` });
     },
     "removeEffects": async function _removeEffects(effectIDs) {
         if (!effectIDs || effectIDs.length == 0) {
