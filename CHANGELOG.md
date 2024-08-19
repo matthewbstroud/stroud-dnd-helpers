@@ -1,3 +1,12 @@
+# v11.4.7
+# New Features
+- Tagging
+  - Doors
+  - Lighting
+  - SFX
+  - Tiles
+# Bug Fixes
+- Async bug with Create Effects.
 # v11.4.6
 # Bug Fixes
 - Async bug with Create Effects.

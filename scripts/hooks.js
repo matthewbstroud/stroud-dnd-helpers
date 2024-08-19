@@ -5,6 +5,9 @@ import { combat } from './combat.js';
 
 export let hooks = {
     "init": function _init() {
+        if (!game.user.isTheGM){
+            return;
+        }
         Hooks.on("getCompendiumDirectoryEntryContext", (html, options) => {
             options.push({
                 name: game.i18n.localize("sdnd.compendium.entry.context.exportThumbnails"),
