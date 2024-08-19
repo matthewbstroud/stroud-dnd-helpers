@@ -12,7 +12,7 @@ const RUN_MODES = {
     NO_RUN: "NO_RUN"
 }
 function areActiveGms() {
-    return !!game.users.find(u => u.isGM && u.active);
+    return game.users.find(u => u.isGM && u.active);
 }
 
 async function getRunMode() {
@@ -20,7 +20,7 @@ async function getRunMode() {
         ui.notifications.error("No Active GMs!");
         return RUN_MODES.NO_RUN;
     }
-    if (!game.user.isGM) {
+    if (!game.user.isTheGM) {
         return RUN_MODES.RUN_REMOTE;
     }
     return RUN_MODES.RUN_LOCAL;

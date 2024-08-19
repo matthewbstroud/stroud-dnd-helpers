@@ -37,7 +37,7 @@ export let combat = {
     },
     "hooks": {
         "ready": async function _ready() {
-            if (sdndSettings.OnDamageEvents.getValue()) {
+            if (game.user.isTheGM && sdndSettings.OnDamageEvents.getValue()) {
                 Hooks.on("dnd5e.damageActor", onDamageTaken);
             }
         }
