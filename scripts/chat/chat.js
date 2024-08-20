@@ -48,7 +48,7 @@ export let chat = {
         });
     },
     "secretMessage": async function _secretMessage() {
-        await promptForMessage(async function(message) {
+        await dialog.textPrompt("Secret Message", "Send Message", async function(message) {
             const secretId = guid.uuidv4();
             let htmlContent = `
             <div id="message_${secretId}">This message is yet to be revealed...</div>
@@ -78,32 +78,6 @@ export let chat = {
     }
 };
 
-async function promptForMessage(callback) {
-    let title = `Secret Message`;
-
-    new Dialog({
-        title: title,
-        content: `
-        <form>
-            <input id="secretMessage" type="text" autofocus />
-        </form>
-    `,
-        buttons: {
-            yes: {
-                icon: "<i class='fas fa-check'></i>",
-                label: "Send Message",
-                callback: (html) => {
-                    callback(html.find("#secretMessage").val());
-                }
-            },
-            no: {
-                icon: "<i class='fas fa-times'></i>",
-                label: `Cancel`
-            },
-        },
-        default: "yes"
-    }).render(true)
-}
 
 let chatInternal = {
     "removeRecent": async function _removeRecent() {

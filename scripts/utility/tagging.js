@@ -1,8 +1,10 @@
+import { dialog } from "../dialog/dialog.js";
 import { sdndConstants } from "../constants.js";
 
 export let tagging = {
     "tagDocuments": tagDocuments,
     "getTaggedDocuments": getTaggedDocuments,
+    "tagSelected": tagSelected,
     "doors": {
         "setState": async function _setDoorState(name, state) {
             await executeAction(canvas.scene.walls, name, async function (door) {
@@ -11,7 +13,8 @@ export let tagging = {
         },
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.walls, sdndConstants.MODULE_ID, "tagName", name);
-        }
+        },
+        "toggle": toggleDoors
     },
     "lighting": {
         "toggle": async function _toggleLights(name) {
@@ -61,11 +64,75 @@ async function tagControlled(collection, scope, key, value) {
     tagDocuments(controlledDocuments, scope, key, value);
 }
 
+async function tagSelected() {
+    if (!game.user.isGM) {
+        ui.notifications.warn("Only a GM can use this!");
+        return;
+    }
+    // determine what collections are popluated
+    let objectType = "";
+    let objectCount = 0;
+    if (canvas.lighting.controlled.length > 0) {
+        objectType = "Lights";
+        objectCount = canvas.lighting.controlled.length;
+    }
+    else if (canvas.sounds.controlled.length > 0) {
+        objectType = "Sounds";
+        objectCount = canvas.sounds.controlled.length;
+    }
+    else if (canvas.tiles.controlled.length > 0) {
+        objectType = "Tiles";
+        objectCount = canvas.tiles.controlled.length;
+    }
+    else if (canvas.walls.controlled.length > 0) {
+        objectType = "Doors";
+        objectCount = canvas.walls.controlled.length;
+    }
+    if (objectType.length == 0) {
+        ui.notifications.warn("No selected lighting, sounds, tiles, or walls.");
+        return;
+    }
+    await dialog.textPrompt(`Tag select ${objectType} (${objectCount})`, `Tag ${objectType}`, async function(text) {
+        switch (objectType) {
+            case "Lights":
+                tagging.lighting.tagSelected(text);
+                break;
+            case "Sounds":
+                tagging.sfx.tagSelected(text);
+                break;
+            case "Tiles":
+                tagging.tiles.tagSelected(text);
+                break;
+            case "Doors":
+                tagging.doors.tagSelected(text);
+                break;
+        }
+    });    
+}
+
 async function toggleHidden(collection, name) {
     await executeAction(collection, name, async function (doc) {
         doc.update({
             "hidden": !doc.hidden
         });
+    });
+}
+
+async function toggleDoors(name) {
+    await executeAction(canvas.scene.walls, name, async function (door) {
+        let newState = "";
+        switch (door.ds) {
+            case CONST.WALL_DOOR_STATES.OPEN:
+                newState = CONST.WALL_DOOR_STATES.CLOSED;
+                break;
+            case CONST.WALL_DOOR_STATES.CLOSED:
+                newState = CONST.WALL_DOOR_STATES.OPEN;
+                break;
+            case CONST.WALL_DOOR_STATES.LOCKED:
+                newState = CONST.WALL_DOOR_STATES.CLOSED;
+                break;
+        }
+        door.update({ "ds": newState });
     });
 }
 
