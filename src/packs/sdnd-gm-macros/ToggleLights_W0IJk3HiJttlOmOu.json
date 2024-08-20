@@ -1,0 +1,27 @@
+{
+  "name": "ToggleLights",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/LightBulb_Icon.webp",
+  "scope": "global",
+  "command": "stroudDnD.tagging.lighting.toggle(args[0]);",
+  "folder": "LAjpUMvUGw395xXg",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1721873062397,
+    "modifiedTime": 1724174153391,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "W0IJk3HiJttlOmOu",
+  "sort": 300000,
+  "_key": "!macros!W0IJk3HiJttlOmOu"
+}

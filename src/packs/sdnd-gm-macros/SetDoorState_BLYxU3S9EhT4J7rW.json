@@ -1,0 +1,27 @@
+{
+  "name": "SetDoorState",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/toggle_doors.webp",
+  "scope": "global",
+  "command": "stroudDnD.tagging.doors.setState(args[0], args[1]);",
+  "folder": "LAjpUMvUGw395xXg",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1722829655076,
+    "modifiedTime": 1724174511360,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "BLYxU3S9EhT4J7rW",
+  "sort": 0,
+  "_key": "!macros!BLYxU3S9EhT4J7rW"
+}

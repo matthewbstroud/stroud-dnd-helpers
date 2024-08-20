@@ -42,9 +42,34 @@ export let dialog = {
             },
             default: "yes"
         }, { width: 500 }).render(true);
-    }
+    },
+    "textPrompt": textPrompt
 };
 
+async function textPrompt(title, buttonLabel, callback) {
+    new Dialog({
+        title: title,
+        content: `
+        <form>
+            <input id="sdndTextPrompt" type="text" autofocus />
+        </form>
+    `,
+        buttons: {
+            yes: {
+                icon: "<i class='fas fa-check'></i>",
+                label: buttonLabel,
+                callback: (html) => {
+                    callback(html.find("#sdndTextPrompt").val());
+                }
+            },
+            no: {
+                icon: "<i class='fas fa-times'></i>",
+                label: `Cancel`
+            },
+        },
+        default: "yes"
+    }).render(true)
+}
 
 function getNumberFormHtml(description, propertyName, label, defaultValue) {
     return `

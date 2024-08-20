@@ -1,0 +1,25 @@
+{
+  "folder": "LAjpUMvUGw395xXg",
+  "name": "Tag Selected",
+  "type": "script",
+  "_id": "dcps3k67MCqGi0M0",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/tagging.webp",
+  "scope": "global",
+  "command": "stroudDnD.tagging.tagSelected()",
+  "sort": 200000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1724173709337,
+    "modifiedTime": 1724174153391,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!dcps3k67MCqGi0M0"
+}
