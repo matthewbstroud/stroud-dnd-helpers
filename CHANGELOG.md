@@ -1,3 +1,6 @@
+# v11.5.0
+# New Features
+- Add macro to list tags in scene.
 # v11.4.9
 # New Features
 - Add tagging macros.
