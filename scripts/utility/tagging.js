@@ -4,6 +4,7 @@ import { sdndConstants } from "../constants.js";
 export let tagging = {
     "tagDocuments": tagDocuments,
     "getTaggedDocuments": getTaggedDocuments,
+    "listTags": listTags,
     "tagSelected": tagSelected,
     "doors": {
         "setState": async function _setDoorState(name, state) {
@@ -54,6 +55,23 @@ async function tagDocuments(documents, scope, key, value) {
 async function getTaggedDocuments(collection, scope, key, value) {
     return await collection.filter(i => i.getFlag(scope, key) == value);
 }
+
+function getUniqueTags(collection, scope, key) {
+    let tags = collection.filter(i => i.getFlag(scope, key)).map(i => i.getFlag(scope, key)).sort();
+    if (!tags || tags.length == 0) {
+        return null;
+    }
+    let result = {};
+    for (let i = 0; i < tags.length; i++) {
+        if (!Object.hasOwn(result, tags[i])) {
+            result[tags[i]] = 1;
+            continue;
+        }
+        result[tags[i]]++;
+    }
+    return result;
+}
+
 
 async function tagControlled(collection, scope, key, value) {
     let controlledDocuments = collection?.controlled?.map(c => c.document);
@@ -110,6 +128,33 @@ async function tagSelected() {
     });    
 }
 
+function listTags() {
+    if (!canvas.scene) {
+        ui.notifications.warn("No scene selected!");
+        return;
+    }
+    let tags = {
+        doorTags: (getUniqueTags(canvas.scene.walls, sdndConstants.MODULE_ID, "tagName")),
+        lightTags: (getUniqueTags(canvas.scene.lights, sdndConstants.MODULE_ID, "tagName")),
+        soundTags: (getUniqueTags(canvas.scene.sounds, sdndConstants.MODULE_ID, "tagName")),
+        tileTags: (getUniqueTags(canvas.scene.tiles, sdndConstants.MODULE_ID, "tagName"))
+    };
+    let tagsHtml = `
+<b>Tags in Scene: ${canvas.scene.name}:</b><br />
+<ul>
+<li><b>Doors</b><ul>${tagsToLI(tags.doorTags)}</ul></li>
+<li><b>Lights</b><ul>${tagsToLI(tags.lightTags)}</ul></li>
+<li><b>Sounds</b><ul>${tagsToLI(tags.soundTags)}</ul></li>
+<li><b>Tiles</b><ul>${tagsToLI(tags.tileTags)}</ul></li>
+</ul>`;  
+    ChatMessage.create({
+        content: tagsHtml,
+        whisper: ChatMessage.getWhisperRecipients('GM'),
+    });
+}
+function tagsToLI(tags) {
+    return tags ? Object.entries(tags).map(i => `<li>${i[0]}: ${i[1]}</li>`).join('') : "None";
+}
 async function toggleHidden(collection, name) {
     await executeAction(collection, name, async function (doc) {
         doc.update({
