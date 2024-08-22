@@ -1,3 +1,6 @@
+# v11.5.1
+# Bug Fixes
+- Restore missing context menus for GM.
 # v11.5.0
 # New Features
 - Add macro to list tags in scene.

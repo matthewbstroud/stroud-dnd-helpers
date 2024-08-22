@@ -5,9 +5,6 @@ import { combat } from './combat.js';
 
 export let hooks = {
     "init": function _init() {
-        if (!game.user.isTheGM){
-            return;
-        }
         Hooks.on("getCompendiumDirectoryEntryContext", (html, options) => {
             options.push({
                 name: game.i18n.localize("sdnd.compendium.entry.context.exportThumbnails"),
@@ -21,6 +18,9 @@ export let hooks = {
                     await scene.packModuleThumbnails(moduleId);
                 },
                 condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
                     const fullyQualifiedPack = $(li).data("pack");
                     if (!fullyQualifiedPack) {
                         return false;
@@ -52,6 +52,9 @@ export let hooks = {
                     }
                 },
                 condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
                     let folderID = $(li).closest("li").data("folderId");
                     if (!folderID) {
                         return false;
@@ -87,6 +90,9 @@ export let hooks = {
                     // }
                 },
                 condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
                     let folderID = $(li).closest("li").data("folderId");
                     if (!folderID) {
                         return false;
