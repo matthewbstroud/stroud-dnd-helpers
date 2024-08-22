@@ -1,3 +1,6 @@
+# v11.5.2
+# Bug Fixes
+- Add missing image files.
 # v11.5.1
 # Bug Fixes
 - Restore missing context menus for GM.
