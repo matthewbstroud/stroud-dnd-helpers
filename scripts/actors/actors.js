@@ -9,9 +9,10 @@ const DIE_MATCH = /(\d+)d(\d+)/g;
 
 export let actors = {
     "ensureActor": ensureActor,
-    "buffNpcs": async function _buffNpcs(useMax, multiplier){
+    "buffNpcs": async function _buffNpcs(useMax, multiplier) {
         return buffActors("npc", useMax, multiplier)
     },
+    "renderSheet": renderSheet,
     "setPrototypeTokenBarsVisibility": setPrototypeTokenBarsVisibility,
     "setTokenBarsVisibility": setTokenBarsVisibility
 }
@@ -34,8 +35,8 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
     }
     for (let scene of scenes) {
         let updates = await scene.tokens.filter(t => t.displayBars != tokenDisplayMode)
-            .map(t => ({ "_id": t._id, "displayBars": tokenDisplayMode}));
-        if (!updates || updates.length == 0){
+            .map(t => ({ "_id": t._id, "displayBars": tokenDisplayMode }));
+        if (!updates || updates.length == 0) {
             continue;
         }
         console.log(`Updating ${updates.length} in ${scene.name}...`);
@@ -49,15 +50,15 @@ async function buffActors(actorType, useMax, multiplier) {
         mod = 1;
     }
     let npcs = game.actors.filter(a => a.type === actorType);
-    if (!npcs){
+    if (!npcs) {
         return;
     }
     for (let npc of npcs) {
         const hp = npc.system?.attributes?.hp;
-        
+
         const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
         let maxHp = Math.floor(eval(rollFormula));
-        if (isNaN(maxHp)){
+        if (isNaN(maxHp)) {
             maxHp = hp.max;
         }
         if (mod > 0) {
@@ -336,6 +337,60 @@ async function promptForSpellOverrides(actor, overrideableItems, overriddenItems
         },
         default: "yes"
     }, { width: 500 }).render(true);
+}
+
+function renderSheet(sheet, form, data) {
+    let actor = data?.actor;
+    if (actor?.type != "character") {
+        return;
+    }
+    let filterEnabled = actor.getFlag(sdndConstants.MODULE_ID, "filterSpellsByUsable");
+    $("div.tab.spells").find("ul.filter-list").append(`<li><button type="button" class="filter-item ${filterEnabled ? 'active' : ''}" data-filter="usable" id="usableFilter">Usable</button></li>`);
+    $("#usableFilter").click(toggleFilter);
+    $("div.tab.spells button[data-action='clear']").click(clearFilters);
+    if (filterEnabled) {
+        applyUsableFilter(actor, filterEnabled);
+    }
+}
+
+function applyUsableFilter(actor, enabled) {
+    if (!enabled) {
+        $("section.spells-list li.item").removeAttr("hidden", "hidden");
+        return;
+    }
+    let usableSpellIds = actor.items
+        .filter(
+            i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || i.system.preparation?.mode == "innate" ||
+            (i.system.properties.has("ritual") && actor._classes?.wizard))
+        ).map(i  => `li[data-item-id='${i._id}']`)
+        ?.join(", ") ?? "";
+    $("section.spells-list li.item").attr("hidden", "hidden");
+    $(usableSpellIds).removeAttr("hidden");
+}
+
+function toggleFilter(event) {
+    const actorId = $("div.sheet.actor.character")?.attr("id")?.split("-")?.pop();
+    if (!actorId || actorId.length == 0) {
+        ui.notifications.error("Failed to determine sheet's actor id!");
+        return;
+    }
+    let actor = game.actors.get(actorId);
+    let button = $(event.target);
+    if (!button) {
+        ui.notifications.error("Couldn't find the usable filter button!");
+        return;
+    }
+    button.toggleClass("active");
+    let active = button.hasClass("active");
+    actor.setFlag(sdndConstants.MODULE_ID, "filterSpellsByUsable", active);
+    applyUsableFilter(actor, active);
+}
+
+function clearFilters(event) {
+    const actorId = $("div.sheet.actor.character")?.attr("id")?.split("-")?.pop();
+    $("#usableFilter").removeClass("active");
+    game.actors.get(actorId)?.setFlag(sdndConstants.MODULE_ID, "filterSpellsByUsable", false);
+    applyUsableFilter(false);
 }
 
 async function promptForTargetActor(item) {
