@@ -1,3 +1,6 @@
+# v11.5.3
+# New Features
+- Add ability to filter spells by Usability.
 # v11.5.2
 # Bug Fixes
 - Add missing image files.
