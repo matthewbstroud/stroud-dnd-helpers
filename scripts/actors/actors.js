@@ -359,8 +359,10 @@ function applyUsableFilter(actor, enabled) {
         return;
     }
     let usableSpellIds = actor.items
-        .filter(i => i.type == "spell" && (i.system.level == 0 || i.system.properties.has("ritual") || i.system.preparation?.prepared))
-        .map(i  => `li[data-item-id='${i._id}']`)
+        .filter(
+            i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || i.system.preparation?.mode == "innate" ||
+            (i.system.properties.has("ritual") && actor._classes?.wizard))
+        ).map(i  => `li[data-item-id='${i._id}']`)
         ?.join(", ") ?? "";
     $("section.spells-list li.item").attr("hidden", "hidden");
     $(usableSpellIds).removeAttr("hidden");
