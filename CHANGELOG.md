@@ -1,4 +1,10 @@
-# v11.5.4s
+# v11.5.5
+# New Features
+- Tagging
+  - Toggle Tiles Active State
+# Bug Fixes
+- Update Scene Token Bars should now properly save the changes.
+# v11.5.4
 # New Features
 - New shared images.
 # v11.5.3

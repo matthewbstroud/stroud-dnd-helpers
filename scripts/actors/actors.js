@@ -40,7 +40,7 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
             continue;
         }
         console.log(`Updating ${updates.length} in ${scene.name}...`);
-        await scene.tokens.update(updates);
+        await scene.updateEmbeddedDocuments("Token", updates);
     }
 }
 
