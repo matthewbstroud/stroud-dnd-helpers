@@ -34,6 +34,13 @@ export let tagging = {
         }
     },
     "tiles": {
+        "toggleEnabled": async function _toggleEnabled(name) {
+            await executeAction(canvas.scene.tiles, name, async function (doc) {
+                let enabled = !doc.getFlag("monks-active-tiles", "active");
+                console.log(`Setting ${doc._id} to ${enabled ? 'enabled' : 'disabled'}`);
+                doc.setFlag("monks-active-tiles", "active", enabled);
+            });
+        },
         "trigger": async function _triggerTiles(name) {
             await executeAction(canvas.scene.tiles, name, async function (doc) {
                 console.log(doc._id);
