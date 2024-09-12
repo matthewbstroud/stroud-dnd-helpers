@@ -36,7 +36,7 @@ export let money = {
             return;
         }
         const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == playersFolderName).map(t => t.actor);
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder?.name == playersFolderName).map(t => t.actor);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;
@@ -55,7 +55,7 @@ export let money = {
             return;
         }
         const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == playersFolderName).map(t => t.actor);
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder?.name == playersFolderName).map(t => t.actor);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;
@@ -76,7 +76,7 @@ export let moneyInternal = {
             return;
         }
         const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
-        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder.name == playersFolderName).map(t => t.actor).sort(items.sortByName);
+        let sharees = canvas.scene.tokens.filter((token) => token.actor && token.actor.folder?.name == playersFolderName).map(t => t.actor).sort(items.sortByName);
         if (sharees.length == 0) {
             ui.notifications.notify('There are no character tokens in this scene.');
             return;

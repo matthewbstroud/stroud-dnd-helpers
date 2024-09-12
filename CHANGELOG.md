@@ -1,3 +1,10 @@
+# v11.5.6
+# New Features
+- Actors
+  - Added macro for Buff NPCs
+# Bug Fixes
+- Give Money: Fixed issue with NPCs with no folder.
+- Buff NPCs: do not log to console if no change is made.
 # v11.5.5
 # New Features
 - Tagging

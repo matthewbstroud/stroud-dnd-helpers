@@ -4,11 +4,15 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
 import { folders } from "../folders/folders.js";
 import { dialog } from "../dialog/dialog.js";
+import { numbers } from "../utility/numbers.js";
 
 const DIE_MATCH = /(\d+)d(\d+)/g;
 
 export let actors = {
     "ensureActor": ensureActor,
+    "buffNpcsWithPrompt": async function _buffNpcsWithPrompt() {
+        promptForBuff(buffActors); 
+    },
     "buffNpcs": async function _buffNpcs(useMax, multiplier) {
         return buffActors("npc", useMax, multiplier)
     },
@@ -62,7 +66,10 @@ async function buffActors(actorType, useMax, multiplier) {
             maxHp = hp.max;
         }
         if (mod > 0) {
-            maxHp *= mod;
+            maxHp = Math.floor(maxHp * mod);
+        }
+        if (hp.value == maxHp) {
+            continue;
         }
         console.log(`Updating ${npc.name}: hp from ${hp.max} to ${maxHp}...`);
         await npc.update({
@@ -393,7 +400,87 @@ function clearFilters(event) {
     applyUsableFilter(false);
 }
 
-async function promptForTargetActor(item) {
+async function promptForBuff(callback) {
+    let title = `Buff NPCs`;
+    let label = 'Save';
+    const dialogHtml = `
+<style>
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
 
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    margin-left: 10px;
+    border-radius: 6px;
+    
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+}
 
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+</style>
+    
+<div style="display: flex; flex-wrap: wrap; width: 100%; margin: 10px 0px 10px 0px">
+    <label for="buffUseMax" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Use Max:</label>
+    <select name="buffUseMax" id="buffUseMax">
+        <option value="True" selected>Yes</option>
+        <option value="False">No</option>
+    </select>
+    <div class="tooltip">
+        <span class="tooltiptext">No will use the average HP as the starting number.</span>
+        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
+    </div>
+    <div style="flex-basis: 100%; height: 10px;"></div>
+    <label for="buffMultiplier" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Multiplier:</label>
+    <input type="number" id="buffMultiplier" name="buffMultiplier" value="1.0" min="0.1" style="width: 40px;" />
+    <div class="tooltip">
+        <span class="tooltiptext">1.5 would increase by 50%<br/>0.5 would decrease by 50%</span>
+        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
+    </div>
+</div>
+`;
+
+    new Dialog({
+        title: title,
+        content: `
+        <form>
+            ${dialogHtml}
+        </form>
+    `,
+        buttons: {
+            yes: {
+                icon: "<i class='fas fa-check'></i>",
+                label: label,
+                callback: (html) => {
+                    let useMax = html.find('#useMax') === "True";
+                    let buffMultiplier = numbers.toNumber(html.find('#buffMultiplier').val());
+                    callback("npc", useMax, buffMultiplier);
+                    // let totalPP = numbers.toNumber(html.find('#pp').val());
+                    // let totalGP = numbers.toNumber(html.find('#gp').val());
+                    // let totalEP = numbers.toNumber(html.find('#ep').val());
+                    // let totalSP = numbers.toNumber(html.find('#sp').val());
+                    // let totalCP = numbers.toNumber(html.find('#cp').val());
+                    // callback(actorUuids, Number(totalPP), Number(totalGP), Number(totalEP), Number(totalSP), Number(totalCP));
+                }
+            },
+            no: {
+                icon: "<i class='fas fa-times'></i>",
+                label: `Cancel`
+            },
+        },
+        default: "yes"
+    }).render(true)
 }
