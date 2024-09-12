@@ -465,7 +465,7 @@ async function promptForBuff(callback) {
                 icon: "<i class='fas fa-check'></i>",
                 label: label,
                 callback: (html) => {
-                    let useMax = html.find('#useMax') === "True";
+                    let useMax = html.find('#buffUseMax').val() == "True";
                     let buffMultiplier = numbers.toNumber(html.find('#buffMultiplier').val());
                     callback("npc", useMax, buffMultiplier);
                     // let totalPP = numbers.toNumber(html.find('#pp').val());

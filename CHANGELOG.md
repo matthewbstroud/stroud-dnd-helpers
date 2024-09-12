@@ -1,3 +1,6 @@
+# v11.5.7
+# Bug Fixes
+- Buff NPCs: fix macro prompt.
 # v11.5.6
 # New Features
 - Actors
