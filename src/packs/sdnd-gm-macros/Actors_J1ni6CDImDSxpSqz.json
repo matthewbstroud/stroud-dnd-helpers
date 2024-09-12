@@ -1,0 +1,19 @@
+{
+  "name": "Actors",
+  "sorting": "a",
+  "folder": null,
+  "type": "Macro",
+  "_id": "J1ni6CDImDSxpSqz",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726178429695,
+    "modifiedTime": 1726178429695,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!J1ni6CDImDSxpSqz"
+}
