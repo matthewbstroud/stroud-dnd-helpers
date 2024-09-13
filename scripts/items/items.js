@@ -1,5 +1,6 @@
 import { lightBringer } from "./weapons/lightBringer.js"
 import { devoteesCenser } from "./weapons/devoteesCenser.js";
+import { baneWeapon } from "./weapons/baneWeapon.js";
 
 export let items = {
     'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -19,6 +20,7 @@ export let items = {
 		}
 	},
     "weapons": {
+		"baneWeapon": baneWeapon,
         "lightBringer": lightBringer,
 		"devoteesCenser": devoteesCenser
     },

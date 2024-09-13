@@ -468,12 +468,6 @@ async function promptForBuff(callback) {
                     let useMax = html.find('#buffUseMax').val() == "True";
                     let buffMultiplier = numbers.toNumber(html.find('#buffMultiplier').val());
                     callback("npc", useMax, buffMultiplier);
-                    // let totalPP = numbers.toNumber(html.find('#pp').val());
-                    // let totalGP = numbers.toNumber(html.find('#gp').val());
-                    // let totalEP = numbers.toNumber(html.find('#ep').val());
-                    // let totalSP = numbers.toNumber(html.find('#sp').val());
-                    // let totalCP = numbers.toNumber(html.find('#cp').val());
-                    // callback(actorUuids, Number(totalPP), Number(totalGP), Number(totalEP), Number(totalSP), Number(totalCP));
                 }
             },
             no: {

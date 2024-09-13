@@ -1,3 +1,6 @@
+# v11.5.8
+# New Features
+- Added Bane Weapons
 # v11.5.7
 # Bug Fixes
 - Buff NPCs: fix macro prompt.
