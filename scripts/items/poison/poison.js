@@ -1,10 +1,31 @@
 import { sdndConstants } from "../../constants.js";
 import { dialog } from "../../dialog/dialog.js";
 import { items } from "../items.js";
+import { money } from "../../money/money.js";
 import { utility } from "../../utility/utility.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
+import { moneyInternal } from "../../money/money.js";
 
 const POISON_MACRO = "function.stroudDnD.items.poison.ItemMacro";
+
+const POISON_RECIPIES = [
+    {
+        "name": "Basic Poison",
+        "dc": 10,
+        "ingredients": [],
+        "cost": 10,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.rrYk6P43QM47dotq'
+    },
+    {
+        "name": "Advanced Poison",
+        "dc": 10,
+        "ingredients": [
+            "Wyrmtongue Petals"
+        ],
+        "cost": 15,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.X2Qzo01uoXO61mTo'
+    }
+];
 
 const POISON_EFFECTS = {
     "AdvancedPoison": {
@@ -137,7 +158,6 @@ export let poison = {
             speaker: { "actor": controlledActor },
             content: `${controlledActor.name} has applied ${poison.name} to ${weapon.name}...`
         });
-        console.log(weaponUuid);
     },
     "ApplyPoisonToItem": function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
         durationMinutes = durationMinutes ?? 0;
@@ -196,6 +216,71 @@ export let poison = {
             "halfDamageOnSave": halfDamageOnSave
         });
     },
+    "CraftPoison": async function _CraftPoison() {
+        let controlledActor = utility.getControlledToken()?.actor;
+        if (!controlledActor) {
+            return;
+        }
+        let kit = controlledActor.items.find(i => i.name == "Poisoner's Kit");
+        if (!kit) {
+            ui.notifications.warn(`${controlledActor.name} does not have a poisoner's kit!`);
+            return;
+        }
+        let poisoning = controlledActor.system?.tools?.pois;
+        if (!poisoning || (poisoning?.prof?.multiplier ?? 0) == 0) {
+            ui.notifications.warn(`${controlledActor.name} is not proficient with a poisoner's kit!`);
+            return;
+        }
+        let recipies = await getRecipies(controlledActor);
+        if (!recipies || recipies.length == 0) {
+            ui.notifications.warn(`${controlledActor.name} has no recipies with required components or he is broke.`);
+            return;
+        }
+        let recipieButtons = recipies.map(p => ({ label: p.name, value: p.name }));
+        let recipieName = await dialog.createButtonDialog("Select Recipie to Craft", recipieButtons, 'column');
+        if (!recipieName || recipieName.length == 0) {
+            return;
+        }
+        let recipie = POISON_RECIPIES.find(r => r.name == recipieName);
+        if (!recipie) {
+            console.log(`Could not resolve ${recipieName}!`);
+            return;
+        }
+        let totalCopper = moneyInternal.getTotalCopper(controlledActor);
+        if (totalCopper < (recipie.cost * 100)) {
+            ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipie.cost} gp required for this recipie.`);
+            return;
+        }
+        await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipie.cost, 0, 0, 0);
+        await deleteIngredients(controlledActor, recipie);
+        let result = await rollToolCheck(controlledActor, recipie);
+        if (!result) {
+            await ChatMessage.create({
+                emote: true,
+                speaker: { "actor": controlledActor },
+                content: `${controlledActor.name} has failed to create ${recipie.name}...`
+            });
+            return;
+        }
+        const isCrit = (result == "Critical");
+        let existingPotion = controlledActor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType.name") == recipie.name);
+        if (existingPotion) {
+            await existingPotion.update({ "system": { "quantity": (existingPotion.system?.quantity ?? 0) + (isCrit ? 2 : 1) }});
+        }
+        else {
+            let poison = await fromUuid(recipie.poisonUuid);
+            let newItems = await controlledActor.createEmbeddedDocuments('Item', [poison]);
+            if (isCrit) {
+                let newItem = newItems[0];
+                newItem.update({ "system": { "quantity": 2 }})
+            }
+        }
+        await ChatMessage.create({
+            emote: true,
+            speaker: { "actor": controlledActor },
+            content: `${(isCrit ? 'Critical Success! ' : '')}${controlledActor.name} has successfully crafted ${(isCrit ? 'two ' : '')}${recipie.name}...`
+        });
+    },
     "ItemMacro": _itemMacro
 };
 
@@ -248,6 +333,21 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     return { damageRoll: rollData, flavor: `${poisonData.name} damage!` };
 }
 
+async function getRecipies(actor) {
+    let totalCopper = moneyInternal.getTotalCopper(actor);
+    return POISON_RECIPIES.filter(recipie => {
+        if (totalCopper < (recipie.cost * 100)) {
+            return false;
+        }
+        for (let ingredient of recipie.ingredients) {
+            if (!actor.items.find(i => i.name == ingredient)) {
+                return false;
+            }
+        }
+        return true;
+    });
+}
+
 async function getPoisons(actor) {
     return actor?.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType"));
 }
@@ -294,6 +394,20 @@ async function rollDC(targetActor, poisonData) {
     return false;
 }
 
+async function rollToolCheck(actor, recipie) {
+    let rollOptions = {
+        targetValue: recipie.dc,
+        fastForward: true,
+        chatMessage: true,
+        flavor: `(DC ${recipie.dc}) attempt to craft ${recipie.name}`
+    };
+    const dieRoll = await actor.rollToolCheck("pois", rollOptions);
+    if (dieRoll.isCritical) {
+        return "Critical";
+    }
+    return (dieRoll._total >= recipie.dc) ? true : false;
+}
+
 async function removePoison(actor, item, poisonData) {
     item.unsetFlag(sdndConstants.MODULE_ID, "PoisonData");
     items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
@@ -314,4 +428,22 @@ async function applyEffect(item, targetActor, poisonData) {
         content: `${targetActor.name} has been afflicted with ${effect.name}...`
     });
     return true;
+}
+
+async function deleteIngredients(actor, recipie) {
+    if (!recipie?.ingredients || recipie.ingredients.length == 0) {
+        return;
+    }
+    for (let ingredientName of recipie.ingredients) {
+        let ingredient = actor.items.find(i => i.name == ingredientName);
+        if (!ingredient) {
+            continue;
+        }
+        if (ingredient.system?.quantity == 1) {
+            await ingredient.delete();
+        }
+        else {
+            await ingredient.update({ "system": { "quantity": (ingredient.system?.quantity - 1) } });
+        }
+    }
 }

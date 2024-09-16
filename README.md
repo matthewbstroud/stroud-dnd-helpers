@@ -49,6 +49,10 @@ Grab them [HERE](/misc/fred_custom_effects.json "download").
   - **Combat**: Combat playlist can be set in the module settings.
     - **Start**: Start combat music if it isn't already playing.
     - **Toggle**: Toggle the current state of combat music.
+- **Poisons**
+  - Add the ability to craft and use poisons.
+    - Basic Poison
+    - Advanced Poison
 - **Scene**: Scene macros
   - **Rewire Monk's Active Tiles**: When you duplicate a scene, the links to other scene tiles still point to the original scene.  This macro will rewire them to the current scene.
 - **Tagging**: Allows a simple command-line system for tagging selected placeables and then having the ability to toggle their state.
