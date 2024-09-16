@@ -38,6 +38,17 @@ export let sdndSettings = {
 		},
 		'getValue': () =>  getModuleSettingValue('AutoApplyAdhocDamage')
 	},
+	'PoisonDCModifier': {
+		'config': {
+			'name': 'Poison DC Modifier',
+			'hint': 'Adjusts the base DC of all poisons.',
+			'scope': 'world',
+			'config': true,
+			'type': Number,
+			'default': 0
+		},
+		'getValue': () =>  getModuleSettingValue('PoisonDCModifier')
+	},
 	'CombatPlayList': {
 		'config': {
 			'name': 'Select Your Combat Music Playlist',

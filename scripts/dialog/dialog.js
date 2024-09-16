@@ -1,6 +1,26 @@
 import { numbers } from "../utility/numbers.js";
 
 export let dialog = {
+    "confirmation": async function _confirmation(title, content) {
+        let selected = await buttonDialog(
+            {
+                "buttons": [
+                    {
+                        "label": "Yes",
+                        "value": "True"
+                    },
+                    {
+                        "label": "No",
+                        "value": "False"
+                    }
+                ],
+                "title": title,
+                "content": content
+            },
+            'row'
+        );
+        return selected;
+    },
     "createButtonDialog": async function _createButtonDialog(title, buttons, direction) {
         if (!direction) {
             direction = "column";

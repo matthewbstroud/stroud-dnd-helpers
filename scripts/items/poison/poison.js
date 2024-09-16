@@ -1,10 +1,10 @@
 import { sdndConstants } from "../../constants.js";
 import { dialog } from "../../dialog/dialog.js";
 import { items } from "../items.js";
-import { money } from "../../money/money.js";
 import { utility } from "../../utility/utility.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { moneyInternal } from "../../money/money.js";
+import { sdndSettings } from "../../settings.js";
 
 const POISON_MACRO = "function.stroudDnD.items.poison.ItemMacro";
 const RECIPE_MACRO = "function.stroudDnD.items.poison.UnlockRecipe";
@@ -25,6 +25,15 @@ const POISON_RECIPES = [
         ],
         "cost": 15,
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.X2Qzo01uoXO61mTo'
+    },
+    {
+        "name": "Carrion Crawler Poison",
+        "dc": 17,
+        "ingredients": [
+            "Carrion Crawler Mucus"
+        ],
+        "cost": 200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.8dpkMmpBlSBmUMdq'
     }
 ];
 
@@ -95,6 +104,100 @@ const POISON_EFFECTS = {
             }
         },
         "tint": null
+    },
+    "CarrionCrawlerPoison": {
+        "name": "Carrion Crawler Poison",
+        "icon": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+        "changes": [
+            {
+                "key": "flags.midi-qol.OverTime",
+                "value": "turn=end,type=slashing,saveDC=8,saveAbility=con,label=Carrion Crawler Mucus",
+                "mode": 0,
+                "priority": 20
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.ability.check.all",
+                "value": "1",
+                "mode": 0,
+                "priority": 20
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.attack.all",
+                "value": "1",
+                "mode": 0,
+                "priority": 20
+            },
+            {
+                "key": "flags.midi-qol.fail.ability.save.dex",
+                "mode": 0,
+                "value": "1",
+                "priority": null
+            },
+            {
+                "key": "flags.midi-qol.fail.ability.save.str",
+                "mode": 0,
+                "value": "1",
+                "priority": null
+            },
+            {
+                "key": "flags.midi-qol.grants.advantage.attack.all",
+                "mode": 0,
+                "value": "1",
+                "priority": null
+            },
+            {
+                "key": "flags.midi-qol.grants.critical.range",
+                "mode": 5,
+                "value": "5",
+                "priority": null
+            },
+            {
+                "key": "system.attributes.movement.all",
+                "mode": 0,
+                "value": "0",
+                "priority": 25
+            }
+        ],
+        "disabled": false,
+        "duration": {
+            "startTime": null,
+            "seconds": 60,
+            "combat": null,
+            "rounds": null,
+            "turns": null,
+            "startRound": null,
+            "startTurn": null
+        },
+        "description": "",
+        "origin": null,
+        "transfer": false,
+        "statuses": [],
+        "flags": {
+            "dae": {
+                "stackable": "noneName",
+                "specialDuration": [],
+                "disableIncapacitated": false,
+                "showIcon": false,
+                "macroRepeat": "none"
+            },
+            "ActiveAuras": {
+                "isAura": false,
+                "aura": "None",
+                "nameOverride": "",
+                "radius": "",
+                "alignment": "",
+                "type": "",
+                "customCheck": "",
+                "ignoreSelf": false,
+                "height": false,
+                "hidden": false,
+                "displayTemp": false,
+                "hostile": false,
+                "onlyOnce": false,
+                "wallsBlock": "system"
+            }
+        },
+        "tint": null
     }
 }
 
@@ -127,6 +230,10 @@ export let poison = {
         }
         let weapon = await fromUuid(weaponUuid);
         let poisonType = poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
+        const dcModifier = sdndSettings.PoisonDCModifier.getValue();
+        if (poisonType.dc > 0 && dcModifier != 0) {
+            poisonType.dc += dcModifier;
+        } 
         let poisoning = controlledActor.system?.tools?.pois;
         if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
             poisonType.dc += (poisoning?.total ?? 0);
@@ -174,7 +281,7 @@ export let poison = {
                 return;
             }
         }
-        
+
         item.setFlag(sdndConstants.MODULE_ID, "PoisonData", {
             "name": poisonName,
             "dieFaces": dieFaces,
@@ -242,45 +349,50 @@ export let poison = {
         if (!recipieName || recipieName.length == 0) {
             return;
         }
-        let recipie = POISON_RECIPES.find(r => r.name == recipieName);
-        if (!recipie) {
+        let recipe = POISON_RECIPES.find(r => r.name == recipieName);
+        if (!recipe) {
             console.log(`Could not resolve ${recipieName}!`);
             return;
         }
-        let totalCopper = moneyInternal.getTotalCopper(controlledActor);
-        if (totalCopper < (recipie.cost * 100)) {
-            ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipie.cost} gp required for this recipie.`);
+        let confirmation = await dialog.confirmation("Confirm Recipe", summarizeRecipe(recipe) +
+            "<p>Creating this recipe will cost you non-refundable time, money, and ingredients.</p><p><i>Would you like to continue?</i></p>");
+        if (confirmation != "True") {
             return;
         }
-        await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipie.cost, 0, 0, 0);
-        await deleteIngredients(controlledActor, recipie);
-        await gmFunctions.advanceTime(600);
-        let result = await rollToolCheck(controlledActor, recipie);
+        let totalCopper = moneyInternal.getTotalCopper(controlledActor);
+        if (totalCopper < (recipe.cost * 100)) {
+            ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipe.cost} gp required for this recipie.`);
+            return;
+        }
+        await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipe.cost, 0, 0, 0);
+        await deleteIngredients(controlledActor, recipe);
+        await gmFunctions.advanceTime((recipe.duration ?? 10) * 60);
+        let result = await rollToolCheck(controlledActor, recipe);
         if (!result) {
             await ChatMessage.create({
                 emote: true,
                 speaker: { "actor": controlledActor },
-                content: `${controlledActor.name} has failed to create ${recipie.name}...`
+                content: `${controlledActor.name} has failed to create ${recipe.name}...`
             });
             return;
         }
         const isCrit = (result == "Critical");
-        let existingPotion = controlledActor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType.name") == recipie.name);
+        let existingPotion = controlledActor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType.name") == recipe.name);
         if (existingPotion) {
-            await existingPotion.update({ "system": { "quantity": (existingPotion.system?.quantity ?? 0) + (isCrit ? 2 : 1) }});
+            await existingPotion.update({ "system": { "quantity": (existingPotion.system?.quantity ?? 0) + (isCrit ? 2 : 1) } });
         }
         else {
-            let poison = await fromUuid(recipie.poisonUuid);
+            let poison = await fromUuid(recipe.poisonUuid);
             let newItems = await controlledActor.createEmbeddedDocuments('Item', [poison]);
             if (isCrit) {
                 let newItem = newItems[0];
-                newItem.update({ "system": { "quantity": 2 }})
+                newItem.update({ "system": { "quantity": 2 } })
             }
         }
         await ChatMessage.create({
             emote: true,
             speaker: { "actor": controlledActor },
-            content: `${(isCrit ? 'Critical Success! ' : '')}${controlledActor.name} has successfully crafted ${(isCrit ? 'two ' : '')}${recipie.name}...`
+            content: `${(isCrit ? 'Critical Success! ' : '')}${controlledActor.name} has successfully crafted ${(isCrit ? 'two ' : '')}${recipe.name}...`
         });
     },
     "CreateRecipe": async function _createRecipe(itemUuid, recipeName) {
@@ -302,7 +414,7 @@ export let poison = {
             return;
         }
         let recipes = actor.getFlag(sdndConstants.MODULE_ID, "Recipes.Poison") ?? [];
-        
+
         if (recipes.includes(recipeName)) {
             ui.notifications.info(`${actor.name} already knows ${recipeName}!`);
             return;
@@ -453,7 +565,10 @@ async function applyEffect(item, targetActor, poisonData) {
     if (targetActor?.effects.find(e => e.name == effect.name)) {
         return false;
     }
-    effect.startTime = game.time.worldTime;
+    let overTime = effect.changes.find(e => e.key == "flags.midi-qol.OverTime");
+    if (overTime) {
+        overTime.value = overTime.value.replace("saveDC=8", `saveDC=${poisonData.dc}`);
+    }
     effect.origin = item.uuid;
     await gmFunctions.createEffects(targetActor.uuid, [effect]);
     await ChatMessage.create({
@@ -491,8 +606,8 @@ async function listRecipes(actor, retrieveOnly) {
     if (retrieveOnly) {
         return recipes;
     }
-    let known = recipes.length == 0 ? "No known poisons." : 
-    recipes.map(r => summarizeRecipe(POISON_RECIPES.find(pr => pr.name == r))).join('<br/>');
+    let known = recipes.length == 0 ? "No known poisons." :
+        recipes.map(r => summarizeRecipe(POISON_RECIPES.find(pr => pr.name == r))).join('<br/>');
     await ChatMessage.create({
         emote: true,
         speaker: { "actor": actor },
@@ -508,6 +623,7 @@ function summarizeRecipe(recipe) {
     return `<b>${recipe.name}</b><br/>
 &nbsp;&nbsp;DC: ${recipe.dc}<br/>
 &nbsp;&nbsp;Cost: ${recipe.cost} GP<br/>
-&nbsp;&nbsp;Ingredients: ${recipe.ingredients.length == 0 ? "None": recipe.ingredients.join(", ")}
+&nbsp;&nbsp;Ingredients: ${recipe.ingredients.length == 0 ? "None" : recipe.ingredients.join(", ")}<br/>
+&nbsp;&nbsp;Crafting Time: ${recipe.duration ?? 10} minutes
 `;
 }
