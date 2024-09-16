@@ -125,7 +125,11 @@
     "midi-qol": {
       "onUseMacroName": "[damageBonus]function.stroudDnD.items.weapons.lightBringer.itemMacro",
       "fumbleThreshold": null,
-      "effectActivation": false
+      "effectActivation": false,
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "effectCondition": ""
     },
     "core": {
       "sourceId": "Compendium.world.ddb-lost-mines-phandelver-items.XgOuxM0uNukfa3rC"
@@ -143,7 +147,9 @@
       "autoFailFriendly": false,
       "autoSaveFriendly": false,
       "offHandWeapon": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "confirmTargets": "default",
+      "noConcentrationCheck": false
     },
     "lights-hud-ate": {
       "enable": null,
@@ -309,7 +315,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1684674601716,
-    "modifiedTime": 1723002085153,
+    "modifiedTime": 1726250248190,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": "PP9XFtc3SwmqPjr3",

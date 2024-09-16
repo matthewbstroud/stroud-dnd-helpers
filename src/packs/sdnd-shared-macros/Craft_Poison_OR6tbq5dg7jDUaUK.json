@@ -1,0 +1,25 @@
+{
+  "folder": "4YGr66rLnpg7YXQ1",
+  "name": "Craft Poison",
+  "type": "script",
+  "_id": "OR6tbq5dg7jDUaUK",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/poisoners_kit.webp",
+  "scope": "global",
+  "command": "stroudDnD.items.poison.CraftPoison()",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726459312406,
+    "modifiedTime": 1726459344694,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!OR6tbq5dg7jDUaUK"
+}

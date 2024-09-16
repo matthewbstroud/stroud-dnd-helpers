@@ -1,6 +1,13 @@
+# v11.5.10
+# New Features
+- Craft Poisons
+  - Basic Poison
+  - Advanced Poison
 # v11.5.9
 # New Features
 - Poisons
+  - Basic Poison
+  - Advanced Poison
 # Bug Fixes
 - Make times based off simple calendar.
 # v11.5.8
