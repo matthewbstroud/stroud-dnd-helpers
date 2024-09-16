@@ -1,3 +1,9 @@
+# v11.5.13
+# New Features
+- New Poisons
+  - Carrion Crawler Poison
+- Added Setting to adjust base poison DC..
+- Added Confirmation to Poison Crafting
 # v11.5.12
 # New Features
 - List Poison Recipes Macro
