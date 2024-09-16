@@ -1,6 +1,6 @@
 # v11.5.12
 # New Features
-- List Poison Recipies Macro
+- List Poison Recipes Macro
 - Craft Poison
   - Now Advances Game Time
 # v11.5.11

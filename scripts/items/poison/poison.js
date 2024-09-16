@@ -9,7 +9,7 @@ import { moneyInternal } from "../../money/money.js";
 const POISON_MACRO = "function.stroudDnD.items.poison.ItemMacro";
 const RECIPE_MACRO = "function.stroudDnD.items.poison.UnlockRecipe";
 
-const POISON_RECIPIES = [
+const POISON_RECIPES = [
     {
         "name": "Basic Poison",
         "dc": 10,
@@ -232,17 +232,17 @@ export let poison = {
             ui.notifications.warn(`${controlledActor.name} is not proficient with a poisoner's kit!`);
             return;
         }
-        let recipies = await getRecipies(controlledActor);
-        if (!recipies || recipies.length == 0) {
-            ui.notifications.warn(`${controlledActor.name} has no recipies with required components or they are broke.`);
+        let recipes = await getRecipes(controlledActor);
+        if (!recipes || recipes.length == 0) {
+            ui.notifications.warn(`${controlledActor.name} has no recipes with required components or they are broke.`);
             return;
         }
-        let recipieButtons = recipies.map(p => ({ label: p.name, value: p.name }));
+        let recipieButtons = recipes.map(p => ({ label: p.name, value: p.name }));
         let recipieName = await dialog.createButtonDialog("Select Recipie to Craft", recipieButtons, 'column');
         if (!recipieName || recipieName.length == 0) {
             return;
         }
-        let recipie = POISON_RECIPIES.find(r => r.name == recipieName);
+        let recipie = POISON_RECIPES.find(r => r.name == recipieName);
         if (!recipie) {
             console.log(`Could not resolve ${recipieName}!`);
             return;
@@ -301,15 +301,15 @@ export let poison = {
             console.log("Could not find recipe name on this item!");
             return;
         }
-        let recipies = actor.getFlag(sdndConstants.MODULE_ID, "Recipies.Poison") ?? [];
+        let recipes = actor.getFlag(sdndConstants.MODULE_ID, "Recipes.Poison") ?? [];
         
-        if (recipies.includes(recipeName)) {
+        if (recipes.includes(recipeName)) {
             ui.notifications.info(`${actor.name} already knows ${recipeName}!`);
             return;
         }
-        recipies.push(recipeName);
-        recipies.sort();
-        actor.setFlag(sdndConstants.MODULE_ID, "Recipies.Poison", recipies);
+        recipes.push(recipeName);
+        recipes.sort();
+        actor.setFlag(sdndConstants.MODULE_ID, "Recipes.Poison", recipes);
     },
     "ItemMacro": _itemMacro
 };
@@ -363,11 +363,11 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     return { damageRoll: rollData, flavor: `${poisonData.name} damage!` };
 }
 
-async function getRecipies(actor) {
-    let knownRecipies = await listRecipes(actor, true);
+async function getRecipes(actor) {
+    let knownRecipes = await listRecipes(actor, true);
     let totalCopper = moneyInternal.getTotalCopper(actor);
-    return POISON_RECIPIES.filter(recipie => {
-        if (!knownRecipies.includes(recipie.name)) {
+    return POISON_RECIPES.filter(recipie => {
+        if (!knownRecipes.includes(recipie.name)) {
             return false;
         }
         if (totalCopper < (recipie.cost * 100)) {
@@ -487,18 +487,18 @@ async function listRecipes(actor, retrieveOnly) {
         return;
     }
     retrieveOnly = retrieveOnly ?? false;
-    let recipies = actor.getFlag(sdndConstants.MODULE_ID, "Recipies.Poison") ?? [];
+    let recipes = actor.getFlag(sdndConstants.MODULE_ID, "Recipes.Poison") ?? [];
     if (retrieveOnly) {
-        return recipies;
+        return recipes;
     }
-    let known = recipies.length == 0 ? "No known poisons." : 
-    recipies.map(r => summarizeRecipe(POISON_RECIPIES.find(pr => pr.name == r))).join('<br/>');
+    let known = recipes.length == 0 ? "No known poisons." : 
+    recipes.map(r => summarizeRecipe(POISON_RECIPES.find(pr => pr.name == r))).join('<br/>');
     await ChatMessage.create({
         emote: true,
         speaker: { "actor": actor },
         content: `<b>${actor.name} poison recipes:</b><br/>${known}`
     });
-    return recipies;
+    return recipes;
 }
 
 function summarizeRecipe(recipe) {
