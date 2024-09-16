@@ -1,0 +1,25 @@
+{
+  "folder": "4YGr66rLnpg7YXQ1",
+  "name": "Apply Poison",
+  "type": "script",
+  "_id": "TkHVjZqjLTkQquB6",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+  "scope": "global",
+  "command": "stroudDnD.items.poison.ApplyPoison()",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726437737376,
+    "modifiedTime": 1726437781215,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!TkHVjZqjLTkQquB6"
+}

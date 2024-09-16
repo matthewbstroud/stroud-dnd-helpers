@@ -2,12 +2,79 @@ import { sdndConstants } from "../../constants.js";
 import { dialog } from "../../dialog/dialog.js";
 import { items } from "../items.js";
 import { utility } from "../../utility/utility.js";
+import { gmFunctions } from "../../gm/gmFunctions.js";
 
 const POISON_MACRO = "function.stroudDnD.items.poison.ItemMacro";
 
-const POISONS = [
-    { "name": 'Basic Poison', "dc": 10, "dieFaces": 4, "dieCount": 1}
-];
+const POISON_EFFECTS = {
+    "AdvancedPoison": {
+        "name": "Advanced Poison",
+        "icon": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+        "origin": "",
+        "duration": {
+            "rounds": 10,
+            "startTime": null,
+            "seconds": null,
+            "combat": null,
+            "turns": 0,
+            "startRound": null,
+            "startTurn": null
+        },
+        "disabled": false,
+        "changes": [
+            {
+                "key": "flags.midi-qol.OverTime",
+                "mode": 5,
+                "value": "turn=start,label=Advanced Posion Effect,damageRoll=1d4,damageType=poison",
+                "priority": 20
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.attack.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 0
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.ability.check.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 0
+            }
+        ],
+        "description": "You are under the effects of an Advanced Poison.",
+        "transfer": false,
+        "statuses": [],
+        "flags": {
+            "dae": {
+                "stackable": "multi",
+                "specialDuration": [],
+                "disableIncapacitated": false,
+                "showIcon": false,
+                "macroRepeat": "none"
+            },
+            "ActiveAuras": {
+                "isAura": false,
+                "aura": "None",
+                "nameOverride": "",
+                "radius": "",
+                "alignment": "",
+                "type": "",
+                "customCheck": "",
+                "ignoreSelf": false,
+                "height": false,
+                "hidden": false,
+                "displayTemp": false,
+                "hostile": false,
+                "onlyOnce": false,
+                "wallsBlock": "system"
+            },
+            "times-up": {
+                "durationSeconds": 60
+            }
+        },
+        "tint": null
+    }
+}
 
 export let poison = {
     "ApplyPoison": async function _applyPoison() {
@@ -17,10 +84,10 @@ export let poison = {
         }
         let poisons = await getPoisons(controlledActor);
         if (!poisons || poisons.length == 0) {
-            ui.notifications.notify(`${controlledActor.name} has no poisons.`);
+            ui.notifications.warn(`${controlledActor.name} has no poisons.`);
             return;
         }
-        let poisonButtons = poisons.map(p => ({ label: p.name, value: p.uuid}));
+        let poisonButtons = poisons.map(p => ({ label: p.name, value: p.uuid }));
         let poisonUuid = await dialog.createButtonDialog("Select Poison To Apply", poisonButtons, 'column');
         if (!poisonUuid || poisonUuid.length == 0) {
             return;
@@ -28,7 +95,7 @@ export let poison = {
         let poison = await fromUuid(poisonUuid);
         let weapons = await getWeapons(controlledActor);
         if (!weapons || weapons.length == 0) {
-            ui.notifications.notify(`${controlledActor.name} has no weapons that can be poisoned.`);
+            ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
             return;
         }
         let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
@@ -38,23 +105,32 @@ export let poison = {
         }
         let weapon = await fromUuid(weaponUuid);
         let poisonType = poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
-
-        this.ApplyPoisonToItem(weaponUuid, 
-            poisonType.name, 
-            poisonType.dieFaces, 
-            poisonType.dieCount, 
-            poisonType.damageType, 
-            poisonType.duration, 
-            poisonType.charges, 
-            poisonType.dc, 
-            poisonType.ability, 
+        let poisoning = controlledActor.system?.tools?.pois;
+        if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
+            poisonType.dc += (poisoning?.total ?? 0);
+        }
+        this.ApplyPoisonToItem(weaponUuid,
+            poisonType.name,
+            poisonType.dieFaces,
+            poisonType.dieCount,
+            poisonType.damageType,
+            poisonType.duration,
+            poisonType.charges,
+            poisonType.dc,
+            poisonType.effect,
+            poisonType.ability,
             poisonType.halfDamageOnSave);
         let charges = (poison.system?.uses?.value ?? 0) - 1;
         if (charges <= 0) {
-            await poison.delete();
+            if (poison.system?.quantity == 1) {
+                await poison.delete();
+            }
+            else {
+                await poison.update({ "system": { "quantity": (poison.system?.quantity - 1) } });
+            }
         }
         else {
-            await poison.update({ "system": { "uses": { "value": charges}}});
+            await poison.update({ "system": { "uses": { "value": charges } } });
         }
         await ChatMessage.create({
             emote: true,
@@ -63,8 +139,8 @@ export let poison = {
         });
         console.log(weaponUuid);
     },
-    "ApplyPoisonToItem": function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, damageType, durationHours, charges, dc, ability, halfDamageOnSave) {
-        durationHours = durationHours ?? 0;
+    "ApplyPoisonToItem": function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
+        durationMinutes = durationMinutes ?? 0;
         dc = dc ?? 0;
         ability = ability ?? dnd5e.config.abilities.con.abbreviation;
         halfDamageOnSave = halfDamageOnSave ?? true;
@@ -77,26 +153,26 @@ export let poison = {
                 return;
             }
         }
+        
         item.setFlag(sdndConstants.MODULE_ID, "PoisonData", {
             "name": poisonName,
             "dieFaces": dieFaces,
             "dieCount": dieCount,
             "damageType": damageType,
+            "ability": ability,
             "charges": charges,
-            "duration": durationHours,
-            "startTime": (durationHours > 0 ? game.time.worldTime : null),
+            "duration": durationMinutes,
+            "startTime": (durationMinutes > 0 ? game.time.worldTime : null),
             "dc": dc,
+            "effect": effect,
             "priorData": {
                 "midiProperties": (item.flags["midiProperties"]),
                 "save": item.system?.save
             }
         });
         items.midiQol.addOnUseMacro(item, "damageBonus", POISON_MACRO);
-        if (dc > 0) {
-            items.midiQol.addBonusDamageSave(item, ability, dc, halfDamageOnSave);
-        }
     },
-    "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationHours, charges, dc, damageType, ability, halfDamageOnSave) {
+    "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave) {
         let item = fromUuidSync(itemUuid);
         if (!item) {
             console.log("Item not found!");
@@ -113,9 +189,9 @@ export let poison = {
             "dieCount": dieCount,
             "damageType": damageType,
             "charges": charges,
-            "duration": durationHours,
-            "startTime": (durationHours > 0 ? game.time.worldTime : null),
+            "duration": durationMinutes,
             "dc": dc,
+            "effect": effect,
             "abilitySave": ability,
             "halfDamageOnSave": halfDamageOnSave
         });
@@ -144,19 +220,28 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
         return;
     }
 
+    poisonData.charges -= 1;
+    item.setFlag(sdndConstants.MODULE_ID, "PoisonData", poisonData);
+
     if (poisonData.duration > 0) {
-        let elapsed = (game.time.worldTime - poisonData.startTime) / 60 / 60;
-        if (poisonData.charges == 0 || elapsed > poisonData.duration) {
-            item.unsetFlag(sdndConstants.MODULE_ID, "PoisonData");
-            items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
-            if (poisonData.dc > 0) {
-                items.midiQol.removeBonusDamageSave(item, poisonData.priorData);
-            }
-            ui.notifications.info(`(${actor.name}) ${poisonData.name} has worn off of ${item.name}...`);
+        let elapsedMinutes = (game.time.worldTime - poisonData.startTime) / 60;
+        if (elapsedMinutes > poisonData.duration) {
+            await removePoison(actor, item, poisonData);
             return;
         }
     }
-
+    if (poisonData.charges <= 0) {
+        await removePoison(actor, item, poisonData);
+    }
+    if (await rollDC(target.actor, poisonData)) {
+        return;
+    }
+    if (poisonData.effect) {
+        if (await applyEffect(item, target.actor, poisonData)) {
+            await removePoison(actor, item, poisonData);
+        }
+        return;
+    }
     let isCritical = args[0].isCritical;
     let dieCount = isCritical ? 2 * poisonData.dieCount : poisonData.dieCount;
     var rollData = `${dieCount}d${poisonData.dieFaces}[${poisonData.damageType}]`;
@@ -166,7 +251,6 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
 async function getPoisons(actor) {
     return actor?.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType"));
 }
-
 
 async function getWeapons(actor) {
     let weapons = actor?.items?.filter(i => i.type == "weapon" &&
@@ -184,4 +268,50 @@ async function getWeapons(actor) {
         }
         return true;
     });
+}
+
+async function rollDC(targetActor, poisonData) {
+    if (poisonData.dc <= 0) {
+        return false;
+    }
+    let ability = dnd5e.config.abilities[poisonData.ability];
+    let rollOptions = {
+        targetValue: poisonData.dc,
+        fastForward: true,
+        chatMessage: true,
+        flavor: `(DC ${poisonData.dc}) ${ability.label} save against ${poisonData.name}`
+    };
+    const dieRoll = await targetActor.rollAbilitySave(ability.abbreviation, rollOptions);
+
+    if (dieRoll.options.success) {
+        await ChatMessage.create({
+            emote: true,
+            speaker: { "actor": targetActor },
+            content: `${targetActor.name} resists ${poisonData.name}...`
+        });
+        return true;
+    }
+    return false;
+}
+
+async function removePoison(actor, item, poisonData) {
+    item.unsetFlag(sdndConstants.MODULE_ID, "PoisonData");
+    items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
+    ui.notifications.info(`(${actor.name}) ${poisonData.name} has worn off of ${item.name}...`);
+}
+
+async function applyEffect(item, targetActor, poisonData) {
+    let effect = POISON_EFFECTS[poisonData.effect];
+    if (targetActor?.effects.find(e => e.name == effect.name)) {
+        return false;
+    }
+    effect.startTime = game.time.worldTime;
+    effect.origin = item.uuid;
+    await gmFunctions.createEffects(targetActor.uuid, [effect]);
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": targetActor },
+        content: `${targetActor.name} has been afflicted with ${effect.name}...`
+    });
+    return true;
 }
