@@ -1,0 +1,25 @@
+{
+  "folder": "4YGr66rLnpg7YXQ1",
+  "name": "List Poison Recipies",
+  "type": "script",
+  "_id": "J66JMKPSbP8F9hvV",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/poison_recipe.webp",
+  "scope": "global",
+  "command": "let token = await stroudDnD.utility.getControlledToken();\nif (!token) {\n  return;\n}\nif (!token.actor) {\n  ui.notifications.error(`Token has no associated actor!`);\n  return;\n}\nawait stroudDnD.items.poison.ListRecipes(token.actor);",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726503689421,
+    "modifiedTime": 1726503939379,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!J66JMKPSbP8F9hvV"
+}
