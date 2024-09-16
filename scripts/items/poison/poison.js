@@ -7,6 +7,7 @@ import { gmFunctions } from "../../gm/gmFunctions.js";
 import { moneyInternal } from "../../money/money.js";
 
 const POISON_MACRO = "function.stroudDnD.items.poison.ItemMacro";
+const RECIPE_MACRO = "function.stroudDnD.items.poison.UnlockRecipe";
 
 const POISON_RECIPIES = [
     {
@@ -233,7 +234,7 @@ export let poison = {
         }
         let recipies = await getRecipies(controlledActor);
         if (!recipies || recipies.length == 0) {
-            ui.notifications.warn(`${controlledActor.name} has no recipies with required components or he is broke.`);
+            ui.notifications.warn(`${controlledActor.name} has no recipies with required components or they are broke.`);
             return;
         }
         let recipieButtons = recipies.map(p => ({ label: p.name, value: p.name }));
@@ -280,6 +281,34 @@ export let poison = {
             speaker: { "actor": controlledActor },
             content: `${(isCrit ? 'Critical Success! ' : '')}${controlledActor.name} has successfully crafted ${(isCrit ? 'two ' : '')}${recipie.name}...`
         });
+    },
+    "CreateRecipe": async function _createRecipe(itemUuid, recipeName) {
+        let item = fromUuidSync(itemUuid);
+        if (!item) {
+            console.log("Item not found!");
+            return;
+        }
+        await item.setFlag(sdndConstants.MODULE_ID, "Recipe.name", recipeName);
+        items.midiQol.addOnUseMacro(item, "postNoAction", RECIPE_MACRO);
+    },
+    "ListRecipes": async function _listRecipes(actor) {
+        return await listRecipes(actor, false);
+    },
+    "UnlockRecipe": function _unlockRecipe({ speaker, actor, token, character, item, args }) {
+        let recipeName = item.getFlag(sdndConstants.MODULE_ID, "Recipe.name");
+        if (!recipeName || recipeName.length == 0) {
+            console.log("Could not find recipe name on this item!");
+            return;
+        }
+        let recipies = actor.getFlag(sdndConstants.MODULE_ID, "Recipies.Poison") ?? [];
+        
+        if (recipies.includes(recipeName)) {
+            ui.notifications.info(`${actor.name} already knows ${recipeName}!`);
+            return;
+        }
+        recipies.push(recipeName);
+        recipies.sort();
+        actor.setFlag(sdndConstants.MODULE_ID, "Recipies.Poison", recipies);
     },
     "ItemMacro": _itemMacro
 };
@@ -334,8 +363,12 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
 }
 
 async function getRecipies(actor) {
+    let knownRecipies = await listRecipes(actor, true);
     let totalCopper = moneyInternal.getTotalCopper(actor);
     return POISON_RECIPIES.filter(recipie => {
+        if (!knownRecipies.includes(recipie.name)) {
+            return false;
+        }
         if (totalCopper < (recipie.cost * 100)) {
             return false;
         }
@@ -446,4 +479,22 @@ async function deleteIngredients(actor, recipie) {
             await ingredient.update({ "system": { "quantity": (ingredient.system?.quantity - 1) } });
         }
     }
+}
+
+async function listRecipes(actor, retrieveOnly) {
+    if (!actor) {
+        return;
+    }
+    retrieveOnly = retrieveOnly ?? false;
+    let recipies = actor.getFlag(sdndConstants.MODULE_ID, "Recipies.Poison") ?? [];
+    if (retrieveOnly) {
+        return recipies;
+    }
+    let known = recipies.length == 0 ? "No known poisons." : recipies.join('<br/>');
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": actor },
+        content: `<b>${actor.name} poison recipes:</b><br/>${known}`
+    });
+    return recipies;
 }

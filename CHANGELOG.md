@@ -1,3 +1,8 @@
+# v11.5.11
+# New Features
+- Poison Recipes
+  - Basic Poison
+  - Advanced Poison
 # v11.5.10
 # New Features
 - Craft Poisons
