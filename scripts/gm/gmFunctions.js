@@ -189,6 +189,18 @@ export let gmFunctions = {
         }
         SimpleCalendar.api.startClock();
     },
+    "advanceTime": async function _advanceTime(seconds){
+        run(
+            async () => {
+                if (!SimpleCalendar) {
+                    await game.time.advance(seconds);
+                    return;
+                }
+                await SimpleCalendar.api.changeDate({"seconds": seconds}); 
+            },
+            async ()  => await socket.executeAsGM("advanceTime", seconds)
+        );
+    },
     "notify": async function _notify(type, message) {
         ui.notifications.notify(message, type);
     }

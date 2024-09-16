@@ -254,6 +254,7 @@ export let poison = {
         }
         await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipie.cost, 0, 0, 0);
         await deleteIngredients(controlledActor, recipie);
+        await gmFunctions.advanceTime(600);
         let result = await rollToolCheck(controlledActor, recipie);
         if (!result) {
             await ChatMessage.create({
@@ -490,11 +491,23 @@ async function listRecipes(actor, retrieveOnly) {
     if (retrieveOnly) {
         return recipies;
     }
-    let known = recipies.length == 0 ? "No known poisons." : recipies.join('<br/>');
+    let known = recipies.length == 0 ? "No known poisons." : 
+    recipies.map(r => summarizeRecipe(POISON_RECIPIES.find(pr => pr.name == r))).join('<br/>');
     await ChatMessage.create({
         emote: true,
         speaker: { "actor": actor },
         content: `<b>${actor.name} poison recipes:</b><br/>${known}`
     });
     return recipies;
+}
+
+function summarizeRecipe(recipe) {
+    if (!recipe) {
+        return '';
+    }
+    return `<b>${recipe.name}</b><br/>
+&nbsp;&nbsp;DC: ${recipe.dc}<br/>
+&nbsp;&nbsp;Cost: ${recipe.cost} GP<br/>
+&nbsp;&nbsp;Ingredients: ${recipe.ingredients.length == 0 ? "None": recipe.ingredients.join(", ")}
+`;
 }
