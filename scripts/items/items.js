@@ -1,16 +1,17 @@
 import { lightBringer } from "./weapons/lightBringer.js"
 import { devoteesCenser } from "./weapons/devoteesCenser.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
+import { poison } from "./poison/poison.js";
 
 export let items = {
-    'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
+	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
 		const gamePack = game.packs.get(key);
 		if (!gamePack) {
 			ui.notifications.warn('Invalid compendium specified!');
 			return false;
 		}
-		const packIndex = await gamePack.getIndex({fields: ['name', 'type', 'flags.cf.id']});
-		const match = packIndex.find(item => item.name === name 
+		const packIndex = await gamePack.getIndex({ fields: ['name', 'type', 'flags.cf.id'] });
+		const match = packIndex.find(item => item.name === name
 			&& (!packFolderId || (packFolderId && item.flags.cf?.id === packFolderId)));
 		if (match) {
 			return (await gamePack.getDocument(match._id))?.toObject();
@@ -19,74 +20,134 @@ export let items = {
 			return undefined;
 		}
 	},
-    "weapons": {
+	"midiQol": {
+		"addOnUseMacro": addMidiOnUseMacro,
+		"removeOnUseMacro": removeMidiOnUseMacro,
+		"addBonusDamageSave": addBonusDamageSave,
+		"removeBonusDamageSave": removeBonusDamageSave
+	},
+	"poison": poison,
+	"weapons": {
 		"baneWeapon": baneWeapon,
-        "lightBringer": lightBringer,
+		"lightBringer": lightBringer,
 		"devoteesCenser": devoteesCenser
-    },
-    "sortByName": function _sortByName(item1, item2) {
-        if (item1.name < item2.name){
-            return -1;
-        }
-        else if (item1.name > item2.name){
-            return 1;
-        }
-        return 0;
-    },
+	},
+	"sortByName": function _sortByName(item1, item2) {
+		if (item1.name < item2.name) {
+			return -1;
+		}
+		else if (item1.name > item2.name) {
+			return 1;
+		}
+		return 0;
+	},
 	"convertConsumableToLoot": convertConsumableToLoot
 }
 
+function addMidiOnUseMacro(item, triggerName, script) {
+	let onUseMacro = item.getFlag("midi-qol", "onUseMacroName") ?? "";
+	const macroName = `[${triggerName}]${script}`;
+	if (onUseMacro.includes(macroName)) {
+		return;
+	}
+	let macroItems = onUseMacro.split(",");
+	macroItems.unshift(macroName);
+	item.setFlag("midi-qol", "onUseMacroName", macroItems.join(","));
+}
 
+function removeMidiOnUseMacro(item, triggerName, script) {
+	let onUseMacro = item.getFlag("midi-qol", "onUseMacroName") ?? "";
+	const macroName = `[${triggerName}]${script}`;
+	if (!onUseMacro.includes(macroName)) {
+		return;
+	}
+	let macros = onUseMacro.split(",");
+	let newMacros = macros.filter(i => i != macroName).join(',');
+	item.setFlag("midi-qol", "onUseMacroName", newMacros);
+}
 
-const itemResource = 
+function addBonusDamageSave(item, ability, dc, halfOnSave) {
+	item.update({
+		"flags": {
+			"midiProperties": {
+				"saveDamage": 'fulldam',
+				"bonusSaveDamage": `${(halfOnSave ? 'half' : 'no')}dam`
+			}
+		},
+		"system": {
+			"save": {
+				"ability": ability,
+				"dc": dc,
+				"scaling": 'flat'
+			}
+		}		
+	});
+}
+
+function removeBonusDamageSave(item, priorData) {
+	item.update({
+		"flags": {
+			"midiProperties": (priorData.midiProperties)
+		},
+		"system": {
+			"save": {
+				"ability": priorData?.save?.ability,
+				"dc": priorData?.save?.dc,
+				"scaling": priorData?.save?.scaling
+			}
+		}
+	});
+}
+
+const itemResource =
 {
 	"name": "Resource",
 	"type": "loot",
 	"img": "systems/dnd5e/icons/svg/items/loot.svg",
 	"system": {
-	  "description": {
-		"value": "",
-		"chat": ""
-	  },
-	  "source": {},
-	  "identified": true,
-	  "unidentified": {
-		"description": ""
-	  },
-	  "container": null,
-	  "quantity": 1,
-	  "weight": 0,
-	  "price": {
-		"value": 0,
-		"denomination": "gp"
-	  },
-	  "rarity": "",
-	  "properties": [],
-	  "type": {
-		"value": "resource",
-		"subtype": ""
-	  }
+		"description": {
+			"value": "",
+			"chat": ""
+		},
+		"source": {},
+		"identified": true,
+		"unidentified": {
+			"description": ""
+		},
+		"container": null,
+		"quantity": 1,
+		"weight": 0,
+		"price": {
+			"value": 0,
+			"denomination": "gp"
+		},
+		"rarity": "",
+		"properties": [],
+		"type": {
+			"value": "resource",
+			"subtype": ""
+		}
 	},
 	"effects": [],
 	"folder": null,
 	"flags": {
-	  "exportSource": {
-		"system": "dnd5e",
-		"coreVersion": "11.315",
-		"systemVersion": "3.1.2"
-	  }
+		"exportSource": {
+			"system": "dnd5e",
+			"coreVersion": "11.315",
+			"systemVersion": "3.1.2"
+		}
 	},
 	"_stats": {
-	  "systemId": "dnd5e",
-	  "systemVersion": "3.1.2",
-	  "coreVersion": "11.315",
-	  "createdTime": 1723338340157,
-	  "modifiedTime": 1723338366662,
-	  "lastModifiedBy": "6yhz13iFYYklKtgA"
+		"systemId": "dnd5e",
+		"systemVersion": "3.1.2",
+		"coreVersion": "11.315",
+		"createdTime": 1723338340157,
+		"modifiedTime": 1723338366662,
+		"lastModifiedBy": "6yhz13iFYYklKtgA"
 	}
-  }
+}
 
-  async function convertConsumableToLoot(itemID) {
+async function convertConsumableToLoot(itemID) {
 	let item = await game.items.get(itemID);
 	if (!item || item.type != "consumable") {
 		return;
@@ -104,4 +165,4 @@ const itemResource =
 	newItem.system.price.denomination = item.system.price.denomination;
 	await Item.create(newItem);
 	await Item.deleteDocuments([item.id]);
-  }
+}
