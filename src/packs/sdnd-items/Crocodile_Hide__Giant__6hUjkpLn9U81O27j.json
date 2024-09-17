@@ -1,5 +1,5 @@
 {
-  "name": "Wolf Pelt",
+  "name": "Crocodile Hide (Giant)",
   "type": "loot",
   "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
@@ -14,9 +14,9 @@
     },
     "container": null,
     "quantity": 1,
-    "weight": 3,
+    "weight": 15,
     "price": {
-      "value": 10,
+      "value": 500,
       "denomination": "gp"
     },
     "rarity": "common",
@@ -41,14 +41,14 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726590093815,
+    "modifiedTime": 1726590840604,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "3FkvXIKGQkBpcICX",
-  "sort": 200000,
-  "_key": "!items!3FkvXIKGQkBpcICX"
+  "_id": "6hUjkpLn9U81O27j",
+  "sort": 0,
+  "_key": "!items!6hUjkpLn9U81O27j"
 }

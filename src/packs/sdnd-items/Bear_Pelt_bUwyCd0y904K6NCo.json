@@ -1,5 +1,5 @@
 {
-  "name": "Wolf Pelt",
+  "name": "Bear Pelt",
   "type": "loot",
   "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
@@ -16,7 +16,7 @@
     "quantity": 1,
     "weight": 3,
     "price": {
-      "value": 10,
+      "value": 75,
       "denomination": "gp"
     },
     "rarity": "common",
@@ -41,14 +41,14 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726590093815,
+    "modifiedTime": 1726590277299,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "3FkvXIKGQkBpcICX",
-  "sort": 200000,
-  "_key": "!items!3FkvXIKGQkBpcICX"
+  "_id": "bUwyCd0y904K6NCo",
+  "sort": 0,
+  "_key": "!items!bUwyCd0y904K6NCo"
 }

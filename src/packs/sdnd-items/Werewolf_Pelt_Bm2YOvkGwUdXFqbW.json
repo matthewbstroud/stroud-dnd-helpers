@@ -1,5 +1,5 @@
 {
-  "name": "Wolf Pelt",
+  "name": "Werewolf Pelt",
   "type": "loot",
   "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
@@ -16,7 +16,7 @@
     "quantity": 1,
     "weight": 3,
     "price": {
-      "value": 10,
+      "value": 100,
       "denomination": "gp"
     },
     "rarity": "common",
@@ -48,7 +48,7 @@
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "3FkvXIKGQkBpcICX",
-  "sort": 200000,
-  "_key": "!items!3FkvXIKGQkBpcICX"
+  "_id": "Bm2YOvkGwUdXFqbW",
+  "sort": 100000,
+  "_key": "!items!Bm2YOvkGwUdXFqbW"
 }

@@ -1,10 +1,10 @@
 {
-  "name": "Wolf Pelt",
+  "name": "Vampire Fang",
   "type": "loot",
-  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "img": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
   "system": {
     "description": {
-      "value": "",
+      "value": "<p><span style=\"font-family:Arial\">Gross.</span></p>",
       "chat": ""
     },
     "source": {},
@@ -14,7 +14,7 @@
     },
     "container": null,
     "quantity": 1,
-    "weight": 3,
+    "weight": 0,
     "price": {
       "value": 10,
       "denomination": "gp"
@@ -27,7 +27,7 @@
     }
   },
   "effects": [],
-  "folder": "9NPKylRqyJaMXeLT",
+  "folder": "KraHjSwr0EWcGvH0",
   "flags": {
     "exportSource": {
       "system": "dnd5e",
@@ -41,14 +41,14 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726590093815,
+    "modifiedTime": 1726591308242,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "3FkvXIKGQkBpcICX",
-  "sort": 200000,
-  "_key": "!items!3FkvXIKGQkBpcICX"
+  "_id": "GjBQMPPAPrUck9I2",
+  "sort": 0,
+  "_key": "!items!GjBQMPPAPrUck9I2"
 }

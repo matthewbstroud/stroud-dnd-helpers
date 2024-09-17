@@ -1,5 +1,5 @@
 {
-  "name": "Wolf Pelt",
+  "name": "Spider Venom",
   "type": "loot",
   "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
@@ -14,9 +14,9 @@
     },
     "container": null,
     "quantity": 1,
-    "weight": 3,
+    "weight": 0.25,
     "price": {
-      "value": 10,
+      "value": 50,
       "denomination": "gp"
     },
     "rarity": "common",
@@ -27,28 +27,30 @@
     }
   },
   "effects": [],
-  "folder": "9NPKylRqyJaMXeLT",
+  "folder": "NgOO2DlYU1jrwMT8",
   "flags": {
     "exportSource": {
       "system": "dnd5e",
       "coreVersion": "11.315",
       "systemVersion": "3.1.2"
     },
-    "core": {}
+    "core": {
+      "sourceId": "Item.BTuqggJ5GxK6ztjN"
+    }
   },
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726590093815,
+    "modifiedTime": 1726591283187,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "3FkvXIKGQkBpcICX",
-  "sort": 200000,
-  "_key": "!items!3FkvXIKGQkBpcICX"
+  "sort": 100000,
+  "_id": "eQZgBd4e3Herm4Cp",
+  "_key": "!items!eQZgBd4e3Herm4Cp"
 }
