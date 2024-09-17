@@ -1,0 +1,142 @@
+{
+  "folder": "XClWXSPdHP3ShTRt",
+  "name": "Serpent Venom",
+  "type": "consumable",
+  "img": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+  "system": {
+    "description": {
+      "value": "<p>A venom crafted from the gland of a giant snake. This one is nasty!</p><ul style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;margin-top:0px;margin-bottom:0.5em;padding-left:1em;line-height:1.269em;list-style-position:outside;list-style-type:none;text-indent:-1em;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\"><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Crafting DC:</strong> 7</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Ingredients:</strong> Giant poisonous snake gland</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Ingredient Cost:</strong> 200 gp</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Type:</strong> Injury</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Effect:</strong> This poison must be harvested from a dead or incapacitated giant poisonous snake. A creature subjected to this poison must succeed on a DC 11 Constitution saving throw, taking 10 (3d6) poison damage on a failed save, or half as much damage on a successful one.</span></li></ul>",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 1,
+    "price": {
+      "value": 20,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": 0,
+    "equipped": false,
+    "activation": {
+      "type": "action",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": 1,
+      "max": "1",
+      "per": "charges",
+      "recovery": "",
+      "prompt": true,
+      "autoDestroy": false
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "other",
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "summons": null,
+    "type": {
+      "value": "potion",
+      "subtype": ""
+    },
+    "magicalBonus": null,
+    "properties": []
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "midi-qol": {
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": ""
+    },
+    "stroud-dnd-helpers": {
+      "PoisonType": {
+        "name": "Serpent Venom",
+        "dieFaces": 6,
+        "dieCount": 3,
+        "damageType": "poison",
+        "charges": 10,
+        "duration": 30,
+        "dc": 11,
+        "effect": null,
+        "abilitySave": "con",
+        "halfDamageOnSave": true
+      }
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726417091317,
+    "modifiedTime": 1726593252097,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "QB00M2AOqudoBvba",
+  "sort": 0,
+  "_key": "!items!QB00M2AOqudoBvba"
+}

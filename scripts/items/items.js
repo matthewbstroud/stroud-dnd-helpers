@@ -44,30 +44,30 @@ export let items = {
 	"convertConsumableToLoot": convertConsumableToLoot
 }
 
-function addMidiOnUseMacro(item, triggerName, script) {
-	let onUseMacro = item.getFlag("midi-qol", "onUseMacroName") ?? "";
+async function addMidiOnUseMacro(item, triggerName, script) {
+	let onUseMacro = await item.getFlag("midi-qol", "onUseMacroName") ?? "";
 	const macroName = `[${triggerName}]${script}`;
 	if (onUseMacro.includes(macroName)) {
 		return;
 	}
 	let macroItems = onUseMacro.split(",");
 	macroItems.unshift(macroName);
-	item.setFlag("midi-qol", "onUseMacroName", macroItems.join(","));
+	await item.setFlag("midi-qol", "onUseMacroName", macroItems.join(","));
 }
 
-function removeMidiOnUseMacro(item, triggerName, script) {
-	let onUseMacro = item.getFlag("midi-qol", "onUseMacroName") ?? "";
+async function removeMidiOnUseMacro(item, triggerName, script) {
+	let onUseMacro = await item.getFlag("midi-qol", "onUseMacroName") ?? "";
 	const macroName = `[${triggerName}]${script}`;
 	if (!onUseMacro.includes(macroName)) {
 		return;
 	}
 	let macros = onUseMacro.split(",");
 	let newMacros = macros.filter(i => i != macroName).join(',');
-	item.setFlag("midi-qol", "onUseMacroName", newMacros);
+	await item.setFlag("midi-qol", "onUseMacroName", newMacros);
 }
 
-function addBonusDamageSave(item, ability, dc, halfOnSave) {
-	item.update({
+async function addBonusDamageSave(item, ability, dc, halfOnSave) {
+	await item.update({
 		"flags": {
 			"midiProperties": {
 				"saveDamage": 'fulldam',
