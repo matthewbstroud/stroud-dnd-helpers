@@ -1,0 +1,19 @@
+{
+  "name": "Crafting",
+  "sorting": "a",
+  "folder": null,
+  "type": "RollTable",
+  "_id": "cjJtHPpMYW6tyjkq",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723515528449,
+    "modifiedTime": 1723516393741,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!cjJtHPpMYW6tyjkq"
+}

@@ -1,0 +1,53 @@
+{
+  "name": "Holy Water",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "system": {
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 100,
+      "denomination": "gp"
+    },
+    "rarity": "common",
+    "properties": [],
+    "type": {
+      "value": "resource",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "folder": "Q3YTTfWXtsqu9jr9",
+  "flags": {
+    "exportSource": {
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723338340157,
+    "modifiedTime": 1723340612240,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "9pBRaBrXYq6Wu1j9",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_key": "!items!9pBRaBrXYq6Wu1j9"
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Tavern",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "ZtMojppwOvQrvuhi",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1721695467955,
+    "modifiedTime": 1721695589877,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!ZtMojppwOvQrvuhi"
+}

@@ -1,0 +1,54 @@
+{
+  "name": "Drakkas Flower",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "system": {
+    "description": {
+      "value": "<p><span style=\"font-family:Arial\">Changes poison damage to fire or acid damage; target is still [poisoned] for 1 minute on a failed CON saving throw; this toxin is still considered poison damage when combining with other ingredients.</span></p>",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": "<p><span style=\"font-family:Arial\">Bright Red and Pale Green Flower</span></p>"
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0.1,
+    "price": {
+      "value": 10,
+      "denomination": "gp"
+    },
+    "rarity": "uncommon",
+    "properties": [],
+    "type": {
+      "value": "resource",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "folder": "gUZYCDktNDjtQr59",
+  "flags": {
+    "exportSource": {
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723338340157,
+    "modifiedTime": 1723665648085,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_id": "Fx9gcDfXkBZQWsGq",
+  "sort": 100000,
+  "_key": "!items!Fx9gcDfXkBZQWsGq"
+}

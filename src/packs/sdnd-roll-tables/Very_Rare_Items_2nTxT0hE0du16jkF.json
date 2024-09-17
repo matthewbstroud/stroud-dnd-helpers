@@ -1,0 +1,92 @@
+{
+  "folder": "cjJtHPpMYW6tyjkq",
+  "name": "Very Rare Items",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "<p>You have discovered something very rare…</p><p></p>",
+  "results": [
+    {
+      "type": 0,
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "GkVPfBpP5zWeRY9i",
+      "text": "[[1d2]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.47WDlPX6GnWXb6HF]{Cyclops}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!2nTxT0hE0du16jkF.GkVPfBpP5zWeRY9i"
+    },
+    {
+      "type": 2,
+      "documentCollection": "sdnd-shared.sdnd-ddb-monsters",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "text": "Purple Worm",
+      "documentId": "3o4gi6EW8PhwaktB",
+      "img": "https://www.dndbeyond.com/avatars/30834/703/638063895244767798.png",
+      "_id": "pa7Ey6RqMRhkIf9m",
+      "flags": {},
+      "_key": "!tables.results!2nTxT0hE0du16jkF.pa7Ey6RqMRhkIf9m"
+    },
+    {
+      "type": 2,
+      "documentCollection": "dnd5e.monsters",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "text": "Wyvern",
+      "documentId": "7198siHjPJf8g0cG",
+      "img": "systems/dnd5e/tokens/dragon/Wyvern.webp",
+      "_id": "ZKnnA4ZCszzhLySA",
+      "flags": {},
+      "_key": "!tables.results!2nTxT0hE0du16jkF.ZKnnA4ZCszzhLySA"
+    },
+    {
+      "type": 2,
+      "documentCollection": "dnd5e.monsters",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "text": "Young Green Dragon",
+      "documentId": "85ahD1jEo9B3POaQ",
+      "img": "systems/dnd5e/tokens/dragon/YoungGreenDragon.webp",
+      "_id": "85dfaZMCrYxJli2t",
+      "flags": {},
+      "_key": "!tables.results!2nTxT0hE0du16jkF.85dfaZMCrYxJli2t"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723569347988,
+    "modifiedTime": 1723569891903,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "formula": "1d4",
+  "_id": "2nTxT0hE0du16jkF",
+  "sort": 100000,
+  "_key": "!tables!2nTxT0hE0du16jkF"
+}

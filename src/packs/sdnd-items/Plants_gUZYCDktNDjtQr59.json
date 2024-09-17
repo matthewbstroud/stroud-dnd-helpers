@@ -1,0 +1,19 @@
+{
+  "name": "Plants",
+  "sorting": "a",
+  "folder": "Sq7iDd835A8WkyFe",
+  "type": "Item",
+  "_id": "gUZYCDktNDjtQr59",
+  "sort": 200000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723513077486,
+    "modifiedTime": 1723515749357,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!gUZYCDktNDjtQr59"
+}

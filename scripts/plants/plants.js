@@ -184,7 +184,7 @@ const POISONED = `
 const BLIGHT_ICOR = `
 {
   "name": "Blight Icor",
-  "icon": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
+  "icon": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "origin": null,
   "duration": {
     "rounds": null,
@@ -254,7 +254,7 @@ const BLIGHT_ICOR = `
 const BLIGHT_ICOR_UNDEAD = `
 {
   "name": "Blight Icor (Undead)",
-  "icon": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
+  "icon": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "origin": null,
   "duration": {
     "rounds": 1,

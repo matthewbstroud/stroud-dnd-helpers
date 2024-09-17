@@ -1,0 +1,251 @@
+{
+  "name": "Common Items",
+  "_id": "tp3ssKVmpxZ8AYbY",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "<p>You have discovered something common…</p><p></p>",
+  "results": [
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_id": "uKhupfstaStVr5uQ",
+      "text": "[[1d8]] @UUID[Compendium.dnd5e.monsters.Actor.yawTeS8u2FCfzzZH]{Wolf}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.uKhupfstaStVr5uQ"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "bD6ew9uY4zU5k2xh",
+      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.EYiQZ3rFL25fEJY5]{Dire Wolf}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.bD6ew9uY4zU5k2xh"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "g9F1Sy9mCyY5QBIh",
+      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.7tRhrxuknTpHpYcA]{Werewolf}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.g9F1Sy9mCyY5QBIh"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "pIcTKCDdwx0iD9dL",
+      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.D5WjGwKskeUT8HXa]{Black Bear}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.pIcTKCDdwx0iD9dL"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "eCezN5Oh889vHQ5G",
+      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.qCwlmDt6RRaYnXol]{Aurochs}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.eCezN5Oh889vHQ5G"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "FH7Ib6ItFB5JfqCz",
+      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.D5rwVIxmfFrdyyxT]{Poisonous Snake}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.FH7Ib6ItFB5JfqCz"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "q0EWZTLPiotZolxe",
+      "text": "[[1d8]] @UUID[Compendium.dnd5e.monsters.Actor.28gU50HtG8Kp7uIz]{Spider}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.q0EWZTLPiotZolxe"
+    },
+    {
+      "type": 0,
+      "documentCollection": "Item",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_id": "YFHVuaOvAJ1dT7nv",
+      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.Y0vxQVF7w2P38FK2]{Scorpion}",
+      "documentId": null,
+      "flags": {},
+      "img": "icons/svg/d20-black.svg",
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.YFHVuaOvAJ1dT7nv"
+    },
+    {
+      "type": 0,
+      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "text": "[[1d4]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.1PMpSIUPiJ2mDY2y]{Barley}",
+      "documentId": null,
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "_id": "dccdwK6abTb55be7",
+      "flags": {},
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.dccdwK6abTb55be7"
+    },
+    {
+      "type": 2,
+      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "text": "Timmask",
+      "documentId": "cyadFW5AJd5KtrLX",
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "_id": "wdkzvtT9ElQmdWWs",
+      "flags": {},
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.wdkzvtT9ElQmdWWs"
+    },
+    {
+      "type": 0,
+      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "text": "[[1d4]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.FSUeHu5cpIpkuzKt]{Waterorb}",
+      "documentId": null,
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "_id": "AG84EnkYUT6VGDzh",
+      "flags": {},
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.AG84EnkYUT6VGDzh"
+    },
+    {
+      "type": 2,
+      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "text": "Barrelstalk",
+      "documentId": "T7x63Mwb6rjBJMTy",
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "_id": "CWiYWAZCglWRnT4K",
+      "flags": {},
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.CWiYWAZCglWRnT4K"
+    },
+    {
+      "type": 2,
+      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "text": "Wildroot",
+      "documentId": "hu66BPL0tEKzvqWt",
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "_id": "BkETLYCfmyVrVL8H",
+      "flags": {},
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.BkETLYCfmyVrVL8H"
+    },
+    {
+      "type": 0,
+      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "text": "[[1d4]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.WJPNdVbyPcopj0mz]{Wheat}",
+      "documentId": null,
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "_id": "CBaXVpLiW5wnfeij",
+      "flags": {},
+      "_key": "!tables.results!tp3ssKVmpxZ8AYbY.CBaXVpLiW5wnfeij"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "cjJtHPpMYW6tyjkq",
+  "sort": 500000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723425860820,
+    "modifiedTime": 1723570256230,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "formula": "1d14",
+  "_key": "!tables!tp3ssKVmpxZ8AYbY"
+}

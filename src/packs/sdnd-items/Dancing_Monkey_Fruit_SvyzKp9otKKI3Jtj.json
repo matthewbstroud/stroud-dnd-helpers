@@ -1,0 +1,54 @@
+{
+  "name": "Dancing Monkey Fruit",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "system": {
+    "description": {
+      "value": "<p><span style=\"font-family:Arial\">This rare magical fruit produces enough juice to fill a vial. Any humanoid that eats a dancing monkey fruit or drinks its juice must succeed on a DC 14 Constitution saving throw or begin a comic dance that lasts for 1 minute. Humanoids that can't be poisoned are immune to this magical effect. <br />The dancer must use all its movement to dance without leaving its space and has disadvantage on attack rolls and Dexterity saving throws, and other creatures have advantage on attack rolls against it. Each time it takes damage, the dancer can repeat the saving throw, ending the effect on itself on a success. When the dancing effect ends, the humanoid suffers the poisoned condition for 1 hour.</span></p>",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": "<p><span style=\"font-family:Arial\">A Glowing Apple</span></p>"
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0.1,
+    "price": {
+      "value": 10,
+      "denomination": "gp"
+    },
+    "rarity": "uncommon",
+    "properties": [],
+    "type": {
+      "value": "resource",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "folder": "gUZYCDktNDjtQr59",
+  "flags": {
+    "exportSource": {
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723338340157,
+    "modifiedTime": 1723665738015,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_id": "SvyzKp9otKKI3Jtj",
+  "sort": 500000,
+  "_key": "!items!SvyzKp9otKKI3Jtj"
+}

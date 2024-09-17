@@ -1,3 +1,6 @@
+# v11.6.0
+# New Features
+- Move Crafting Materials and Roll Tables to DND-Helpers
 # v11.5.13
 # New Features
 - New Poisons

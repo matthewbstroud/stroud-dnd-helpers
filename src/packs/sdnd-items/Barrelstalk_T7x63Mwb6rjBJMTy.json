@@ -1,0 +1,57 @@
+{
+  "name": "Barrelstalk",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "system": {
+    "description": {
+      "value": "<p><span style=\"font-family:Arial\">A barrelstalk is a large, cask-shaped fungus that can be tapped and drained of the fresh water stored within it. A single barrelstalk contains 1d4 + 4 gallons of water and yields 1d6 + 4 pounds of food.</span></p>",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": "<p><span style=\"font-family:Arial\">A Large Cask-Shaped Fungus</span></p>",
+      "name": "Unidentified Loot"
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 12,
+    "price": {
+      "value": 150,
+      "denomination": "gp"
+    },
+    "rarity": "common",
+    "properties": [],
+    "type": {
+      "value": "resource",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "folder": "gUZYCDktNDjtQr59",
+  "flags": {
+    "exportSource": {
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    },
+    "core": {
+      "sourceId": "Item.T7x63Mwb6rjBJMTy"
+    }
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723338340157,
+    "modifiedTime": 1723665524520,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "sort": 600000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_id": "T7x63Mwb6rjBJMTy",
+  "_key": "!items!T7x63Mwb6rjBJMTy"
+}

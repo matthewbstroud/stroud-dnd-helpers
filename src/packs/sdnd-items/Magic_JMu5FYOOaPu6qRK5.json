@@ -1,0 +1,19 @@
+{
+  "name": "Magic",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "JMu5FYOOaPu6qRK5",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1722310470457,
+    "modifiedTime": 1722310470457,
+    "lastModifiedBy": "uM5NQ4FonA2UvlQg"
+  },
+  "_key": "!folders!JMu5FYOOaPu6qRK5"
+}
