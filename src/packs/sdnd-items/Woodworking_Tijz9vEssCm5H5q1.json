@@ -1,0 +1,19 @@
+{
+  "name": "Woodworking",
+  "sorting": "a",
+  "folder": "Sq7iDd835A8WkyFe",
+  "type": "Item",
+  "_id": "Tijz9vEssCm5H5q1",
+  "sort": 300000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723403197040,
+    "modifiedTime": 1726590819703,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!Tijz9vEssCm5H5q1"
+}

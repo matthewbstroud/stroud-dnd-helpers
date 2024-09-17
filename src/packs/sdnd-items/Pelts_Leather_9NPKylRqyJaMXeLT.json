@@ -1,0 +1,19 @@
+{
+  "name": "Pelts/Leather",
+  "sorting": "a",
+  "folder": "KraHjSwr0EWcGvH0",
+  "type": "Item",
+  "_id": "9NPKylRqyJaMXeLT",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": null,
+    "modifiedTime": 1726590046457,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!9NPKylRqyJaMXeLT"
+}

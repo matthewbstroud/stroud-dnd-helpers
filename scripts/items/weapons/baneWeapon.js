@@ -35,7 +35,7 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     let target = canvas.tokens.get(args[0].hitTargets[0].id ?? args[0].hitTargets[0]._id);
     if (!target) MidiQOL.error("Bane Weapon macro failed");
 
-    let baneWeaponData = item?.getFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
+    let baneWeaponData = await item?.getFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
     if (!baneWeaponData) {
         console.log(`${item?.name} does not have bane weapon data!`);
         return;
@@ -44,8 +44,8 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     if (baneWeaponData.Duration > 0) {
         let elapsed = (game.time.worldTime - baneWeaponData.StartTime) / 60 / 60;
         if (elapsed > baneWeaponData.Duration) {
-            item.unsetFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
-            items.midiQol.removeOnUseMacro(item, "damageBonus", BANE_MACRO);
+            await item.unsetFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
+            await items.midiQol.removeOnUseMacro(item, "damageBonus", BANE_MACRO);
             ui.notifications.info(`(${actor.name}) Bane Weapon has worn off of ${item.name}...`);
             return;
         }

@@ -1,0 +1,91 @@
+{
+  "name": "Scavenging",
+  "_id": "gKM3IHl048QZdMMa",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": 2,
+      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "weight": 1,
+      "range": [
+        1,
+        50
+      ],
+      "drawn": false,
+      "text": "Common Items",
+      "documentId": "tp3ssKVmpxZ8AYbY",
+      "img": "icons/svg/d20-grey.svg",
+      "_id": "3DOyJMaD7lAfxYcs",
+      "flags": {},
+      "_key": "!tables.results!gKM3IHl048QZdMMa.3DOyJMaD7lAfxYcs"
+    },
+    {
+      "type": 2,
+      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "weight": 1,
+      "range": [
+        51,
+        80
+      ],
+      "drawn": false,
+      "text": "Uncommon Items",
+      "documentId": "vBQVegzVkoxf0m2E",
+      "img": "icons/svg/d20-grey.svg",
+      "_id": "Yg4RlBkNOWMwbKvL",
+      "flags": {},
+      "_key": "!tables.results!gKM3IHl048QZdMMa.Yg4RlBkNOWMwbKvL"
+    },
+    {
+      "type": 2,
+      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "weight": 1,
+      "range": [
+        81,
+        95
+      ],
+      "drawn": false,
+      "text": "Rare Items",
+      "documentId": "GmDrZFXobtWndJBy",
+      "img": "icons/svg/d20-grey.svg",
+      "_id": "Ttw5sgtH9ymWuZLy",
+      "flags": {},
+      "_key": "!tables.results!gKM3IHl048QZdMMa.Ttw5sgtH9ymWuZLy"
+    },
+    {
+      "type": 2,
+      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "weight": 1,
+      "range": [
+        96,
+        100
+      ],
+      "drawn": false,
+      "text": "Very Rare Items",
+      "documentId": "2nTxT0hE0du16jkF",
+      "img": "icons/svg/d20-grey.svg",
+      "_id": "pOgOjDi2DZUezX9v",
+      "flags": {},
+      "_key": "!tables.results!gKM3IHl048QZdMMa.pOgOjDi2DZUezX9v"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "cjJtHPpMYW6tyjkq",
+  "sort": 400000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723425651103,
+    "modifiedTime": 1723570499791,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "formula": "1d100",
+  "_key": "!tables!gKM3IHl048QZdMMa"
+}

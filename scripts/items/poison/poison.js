@@ -34,6 +34,15 @@ const POISON_RECIPES = [
         ],
         "cost": 200,
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.8dpkMmpBlSBmUMdq'
+    },
+    {
+        "name": "Serpent Venom",
+        "dc": 17,
+        "ingredients": [
+            "Giant Poisonous Snake Gland"
+        ],
+        "cost": 200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.QB00M2AOqudoBvba'
     }
 ];
 
@@ -229,7 +238,7 @@ export let poison = {
             return;
         }
         let weapon = await fromUuid(weaponUuid);
-        let poisonType = poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
+        let poisonType = await poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
         const dcModifier = sdndSettings.PoisonDCModifier.getValue();
         if (poisonType.dc > 0 && dcModifier != 0) {
             poisonType.dc += dcModifier;
@@ -238,7 +247,7 @@ export let poison = {
         if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
             poisonType.dc += (poisoning?.total ?? 0);
         }
-        this.ApplyPoisonToItem(weaponUuid,
+        await this.ApplyPoisonToItem(weaponUuid,
             poisonType.name,
             poisonType.dieFaces,
             poisonType.dieCount,
@@ -267,13 +276,13 @@ export let poison = {
             content: `${controlledActor.name} has applied ${poison.name} to ${weapon.name}...`
         });
     },
-    "ApplyPoisonToItem": function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
+    "ApplyPoisonToItem": async function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
         durationMinutes = durationMinutes ?? 0;
         dc = dc ?? 0;
         ability = ability ?? dnd5e.config.abilities.con.abbreviation;
-        halfDamageOnSave = halfDamageOnSave ?? true;
-        let item = fromUuidSync(itemUuid);
-        let poisonData = item.getFlag(sdndConstants.MODULE_ID, "PoisonData");
+        halfDamageOnSave = halfDamageOnSave ?? false;
+        let item = await fromUuid(itemUuid);
+        let poisonData = await item.getFlag(sdndConstants.MODULE_ID, "PoisonData");
         if (poisonData && poisonData.duration > 0 && poisonData.charges > 0) {
             let elapsed = (game.time.worldTime - poisonData.startTime) / 60 / 60;
             if (elapsed < poisonData.duration) {
@@ -282,7 +291,7 @@ export let poison = {
             }
         }
 
-        item.setFlag(sdndConstants.MODULE_ID, "PoisonData", {
+        await item.setFlag(sdndConstants.MODULE_ID, "PoisonData", {
             "name": poisonName,
             "dieFaces": dieFaces,
             "dieCount": dieCount,
@@ -293,12 +302,13 @@ export let poison = {
             "startTime": (durationMinutes > 0 ? game.time.worldTime : null),
             "dc": dc,
             "effect": effect,
+            "halfDamageOnSave": halfDamageOnSave,
             "priorData": {
                 "midiProperties": (item.flags["midiProperties"]),
                 "save": item.system?.save
             }
         });
-        items.midiQol.addOnUseMacro(item, "damageBonus", POISON_MACRO);
+        await items.midiQol.addOnUseMacro(item, "damageBonus", POISON_MACRO);
     },
     "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave) {
         let item = fromUuidSync(itemUuid);
@@ -396,13 +406,13 @@ export let poison = {
         });
     },
     "CreateRecipe": async function _createRecipe(itemUuid, recipeName) {
-        let item = fromUuidSync(itemUuid);
+        let item = await fromUuid(itemUuid);
         if (!item) {
             console.log("Item not found!");
             return;
         }
         await item.setFlag(sdndConstants.MODULE_ID, "Recipe.name", recipeName);
-        items.midiQol.addOnUseMacro(item, "postNoAction", RECIPE_MACRO);
+        await items.midiQol.addOnUseMacro(item, "postNoAction", RECIPE_MACRO);
     },
     "ListRecipes": async function _listRecipes(actor) {
         return await listRecipes(actor, false);
@@ -441,14 +451,14 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     let target = canvas.tokens.get(args[0].hitTargets[0].id ?? args[0].hitTargets[0]._id);
     if (!target) MidiQOL.error("Poison macro failed");
 
-    let poisonData = item?.getFlag(sdndConstants.MODULE_ID, "PoisonData");
+    let poisonData = await item?.getFlag(sdndConstants.MODULE_ID, "PoisonData");
     if (!poisonData) {
         console.log(`${item?.name} does not have poison data!`);
         return;
     }
 
     poisonData.charges -= 1;
-    item.setFlag(sdndConstants.MODULE_ID, "PoisonData", poisonData);
+    await item.setFlag(sdndConstants.MODULE_ID, "PoisonData", poisonData);
 
     if (poisonData.duration > 0) {
         let elapsedMinutes = (game.time.worldTime - poisonData.startTime) / 60;
@@ -460,19 +470,38 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     if (poisonData.charges <= 0) {
         await removePoison(actor, item, poisonData);
     }
-    if (await rollDC(target.actor, poisonData)) {
-        return;
-    }
+    let saveDiceRoll = await rollDC(target.actor, poisonData);
     if (poisonData.effect) {
+        if (saveDiceRoll?.options?.success) {
+            await ChatMessage.create({
+                emote: true,
+                speaker: { "actor": target.actor },
+                content: `${target.actor.name} resists ${poisonData.name}...`
+            });
+            return;
+        }
         if (await applyEffect(item, target.actor, poisonData)) {
             await removePoison(actor, item, poisonData);
         }
         return;
     }
+    if (poisonData.dc > 0  && saveDiceRoll?.options?.success && !poisonData.halfDamageOnSave) {
+        return;
+    }
+    const halfDamage = saveDiceRoll?.options?.success ?? false;
     let isCritical = args[0].isCritical;
     let dieCount = isCritical ? 2 * poisonData.dieCount : poisonData.dieCount;
-    var rollData = `${dieCount}d${poisonData.dieFaces}[${poisonData.damageType}]`;
-    return { damageRoll: rollData, flavor: `${poisonData.name} damage!` };
+
+    const rollOptions = {
+        type: poisonData.damageType,
+        flavor: `${poisonData.name}${halfDamage ? " (Half Damage)" : ""}`,
+    };
+    let damageRoll = `${dieCount}d${poisonData.dieFaces}`;
+    if (halfDamage) {
+        damageRoll = `floor(${damageRoll}/2)`;
+    }
+    let roll = await new CONFIG.Dice.DamageRoll(damageRoll, item?.getRollData() ?? target.actor.getRollData(), rollOptions).evaluate({ async: true });
+    return roll;
 }
 
 async function getRecipes(actor) {
@@ -527,17 +556,7 @@ async function rollDC(targetActor, poisonData) {
         chatMessage: true,
         flavor: `(DC ${poisonData.dc}) ${ability.label} save against ${poisonData.name}`
     };
-    const dieRoll = await targetActor.rollAbilitySave(ability.abbreviation, rollOptions);
-
-    if (dieRoll.options.success) {
-        await ChatMessage.create({
-            emote: true,
-            speaker: { "actor": targetActor },
-            content: `${targetActor.name} resists ${poisonData.name}...`
-        });
-        return true;
-    }
-    return false;
+    return await targetActor.rollAbilitySave(ability.abbreviation, rollOptions);
 }
 
 async function rollToolCheck(actor, recipie) {
@@ -555,8 +574,8 @@ async function rollToolCheck(actor, recipie) {
 }
 
 async function removePoison(actor, item, poisonData) {
-    item.unsetFlag(sdndConstants.MODULE_ID, "PoisonData");
-    items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
+    await item.unsetFlag(sdndConstants.MODULE_ID, "PoisonData");
+    await items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
     ui.notifications.info(`(${actor.name}) ${poisonData.name} has worn off of ${item.name}...`);
 }
 
@@ -602,7 +621,7 @@ async function listRecipes(actor, retrieveOnly) {
         return;
     }
     retrieveOnly = retrieveOnly ?? false;
-    let recipes = actor.getFlag(sdndConstants.MODULE_ID, "Recipes.Poison") ?? [];
+    let recipes = await actor.getFlag(sdndConstants.MODULE_ID, "Recipes.Poison") ?? [];
     if (retrieveOnly) {
         return recipes;
     }

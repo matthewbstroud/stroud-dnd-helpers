@@ -1,0 +1,54 @@
+{
+  "name": "Crafting Ingredient",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "system": {
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "properties": [],
+    "type": {
+      "value": "resource",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "folder": "Sq7iDd835A8WkyFe",
+  "flags": {
+    "exportSource": {
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723338340157,
+    "modifiedTime": 1723340703068,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_id": "X1zZhd56NQdNGs6n",
+  "sort": 0,
+  "_key": "!items!X1zZhd56NQdNGs6n"
+}

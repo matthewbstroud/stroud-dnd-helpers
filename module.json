@@ -245,6 +245,20 @@
 			"module": "stroud-dnd-helpers"
 		},
 		{
+			"name": "SDND-RollTables",
+			"label": "SDND - Roll Tables",
+			"type": "RollTable",
+			"path": "packs/sdnd-roll-tables.db",
+			"system": "dnd5e",
+			"flags": {},
+			"ownership": {
+				"PLAYER": "LIMITED",
+				"ASSISTANT": "OWNER",
+				"GAMEMASTER": "OWNER"
+			},
+			"module": "stroud-dnd-helpers"
+		},
+		{
 			"name": "SDND-Documentation",
 			"label": "SDND Documentation",
 			"path": "packs/sdnd-documentation.db",

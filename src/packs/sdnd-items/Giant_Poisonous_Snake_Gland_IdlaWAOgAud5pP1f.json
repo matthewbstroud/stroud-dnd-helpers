@@ -1,0 +1,54 @@
+{
+  "name": "Giant Poisonous Snake Gland",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "system": {
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 1,
+    "price": {
+      "value": 100,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "properties": [],
+    "type": {
+      "value": "resource",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "folder": "NgOO2DlYU1jrwMT8",
+  "flags": {
+    "exportSource": {
+      "system": "dnd5e",
+      "coreVersion": "11.315",
+      "systemVersion": "3.1.2"
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1723338340157,
+    "modifiedTime": 1726592526849,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_id": "IdlaWAOgAud5pP1f",
+  "sort": 0,
+  "_key": "!items!IdlaWAOgAud5pP1f"
+}
