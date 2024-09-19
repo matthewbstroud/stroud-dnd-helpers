@@ -1,7 +1,7 @@
 import { sdndConstants } from "../constants.js";
 import { sdndSettings } from "../settings.js";
 import { harvesting } from "./harvesting.js";
-import { poison } from "../items/poison/poison.js";
+import { poison } from "./poison.js";
 
 
 

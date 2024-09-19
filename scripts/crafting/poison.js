@@ -1,13 +1,13 @@
-import { sdndConstants } from "../../constants.js";
-import { dialog } from "../../dialog/dialog.js";
-import { items } from "../items.js";
-import { utility } from "../../utility/utility.js";
-import { gmFunctions } from "../../gm/gmFunctions.js";
-import { moneyInternal } from "../../money/money.js";
-import { sdndSettings } from "../../settings.js";
+import { sdndConstants } from "../constants.js";
+import { dialog } from "../dialog/dialog.js";
+import { items } from "../items/items.js";
+import { utility } from "../utility/utility.js";
+import { gmFunctions } from "../gm/gmFunctions.js";
+import { moneyInternal } from "../money/money.js";
+import { sdndSettings } from "../settings.js";
 
-const POISON_MACRO = "function.stroudDnD.items.poison.ItemMacro";
-const RECIPE_MACRO = "function.stroudDnD.items.poison.UnlockRecipe";
+const POISON_MACRO = "function.stroudDnD.crafting.poison.ItemMacro";
+const RECIPE_MACRO = "function.stroudDnD.crafting.poison.UnlockRecipe";
 
 const POISON_RECIPES = [
     {
@@ -374,10 +374,10 @@ export let poison = {
             ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipe.cost} gp required for this recipie.`);
             return;
         }
+        let result = await rollToolCheck(controlledActor, recipe);
         await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipe.cost, 0, 0, 0);
         await deleteIngredients(controlledActor, recipe);
         await gmFunctions.advanceTime((recipe.duration ?? 10) * 60);
-        let result = await rollToolCheck(controlledActor, recipe);
         if (!result) {
             await ChatMessage.create({
                 emote: true,
@@ -562,7 +562,7 @@ async function rollDC(targetActor, poisonData) {
 async function rollToolCheck(actor, recipie) {
     let rollOptions = {
         targetValue: recipie.dc,
-        fastForward: true,
+        fastForward: false,
         chatMessage: true,
         flavor: `(DC ${recipie.dc}) attempt to craft ${recipie.name}`
     };

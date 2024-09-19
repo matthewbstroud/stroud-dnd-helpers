@@ -1,0 +1,25 @@
+{
+  "folder": "xDALdmIduPGE4bg2",
+  "name": "Harvest Selected",
+  "type": "script",
+  "_id": "7UjkPGWTHy4dM4O8",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/harvesting.webp",
+  "scope": "global",
+  "command": "await stroudDnD.crafting.harvesting.HarvestSelected()",
+  "sort": 0,
+  "ownership": {
+    "default": 2,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726751635509,
+    "modifiedTime": 1726751664603,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!7UjkPGWTHy4dM4O8"
+}

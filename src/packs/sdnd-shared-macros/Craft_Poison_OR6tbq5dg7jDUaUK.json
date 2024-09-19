@@ -6,10 +6,10 @@
   "author": "6yhz13iFYYklKtgA",
   "img": "modules/stroud-dnd-helpers/images/icons/poisoners_kit.webp",
   "scope": "global",
-  "command": "stroudDnD.items.poison.CraftPoison()",
+  "command": "await stroudDnD.crafting.poison.CraftPoison()",
   "sort": 0,
   "ownership": {
-    "default": 0,
+    "default": 2,
     "6yhz13iFYYklKtgA": 3
   },
   "flags": {},
@@ -18,7 +18,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1726459312406,
-    "modifiedTime": 1726459344694,
+    "modifiedTime": 1726754789413,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_key": "!macros!OR6tbq5dg7jDUaUK"

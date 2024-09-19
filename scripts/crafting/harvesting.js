@@ -3,6 +3,7 @@ import { sdndConstants } from "../constants.js";
 import { dialog } from "../dialog/dialog.js";
 import { utility } from "../utility/utility.js";
 import { sdndSettings } from "../settings.js";
+import { gmFunctions } from "../gm/gmFunctions.js";
 
 const DEFAULTS = {
     "dc": 10,
@@ -15,8 +16,7 @@ const HARVESTABLES = [
         "name": "Auroch",
         "rewards": [
             {
-                "name": "Auroch's Blood",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.S97ovCbt5PVnTU28"
+                "name": "Auroch's Blood"
             }
         ]
     },
@@ -25,13 +25,11 @@ const HARVESTABLES = [
         "rewards": [
             {
                 "name": "Bear Pelt",
-                "percentage": 80,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.bUwyCd0y904K6NCo"
+                "percentage": 80
             },
             {
                 "name": "Bear Meat",
-                "percentage": 20,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.xqbt4fmzr1jayeDR"
+                "percentage": 20
             }
         ]
     },
@@ -39,8 +37,7 @@ const HARVESTABLES = [
         "name": "Carrion Crawler",
         "rewards": [
             {
-                "name": "Carrion Crawler Mucus",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.WVwUgNP0FjuuJ1Bj"
+                "name": "Carrion Crawler Mucus"
             }
         ]
     },
@@ -48,8 +45,7 @@ const HARVESTABLES = [
         "name": "Cave Fisher",
         "rewards": [
             {
-                "name": "Cave Fisher Blood",
-                'itemUuid': "Compendium.stroud-dnd-helpers.SDND-Items.Item.u51GU15mqkVwAA6f"                
+                "name": "Cave Fisher Blood"            
             }
         ]
     },
@@ -57,8 +53,7 @@ const HARVESTABLES = [
         "name": "Cyclops",
         "rewards": [
             {
-                "name": "Massive Diamond",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.7UvuGoqBRIPUu4qL"
+                "name": "Massive Diamond"
             }
         ]
     },
@@ -66,8 +61,7 @@ const HARVESTABLES = [
         "name": "Dire Wolf",
         "rewards": [
             {
-                "name": "Dire Wolf Pelt",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.gyzo4uxxzYRP7TN3"
+                "name": "Dire Wolf Pelt"
             }
         ]
     },
@@ -75,8 +69,7 @@ const HARVESTABLES = [
         "name": "Ettercap",
         "rewards": [
             {
-                "name": "Cap of Ettercap Fungi",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.TCpkXLKMlvzFXJ22"
+                "name": "Cap of Ettercap Fungi"
             }
         ]
     },
@@ -84,8 +77,7 @@ const HARVESTABLES = [
         "name": "Flumph",
         "rewards": [
             {
-                "name": "Flumph Spray",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.156SsvPINavk5jwf"
+                "name": "Flumph Spray"
             }
         ]
     },
@@ -94,13 +86,11 @@ const HARVESTABLES = [
         "rewards": [
             {
                 "name": "Crocodile Hide (Giant)",
-                "percentage": 90,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.6hUjkpLn9U81O27j"
+                "percentage": 90
             },
             {
                 "name": "Emerald",
-                "percentage": 10,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.4lQiW1WB5cEYkill"
+                "percentage": 10
             }
         ]
     },
@@ -108,8 +98,7 @@ const HARVESTABLES = [
         "name": "Giant Wasp",
         "rewards": [
             {
-                "name": "Wasp Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.cucIFquwJ7YKN2hz"
+                "name": "Wasp Venom"
             }
         ]
     },
@@ -117,8 +106,7 @@ const HARVESTABLES = [
         "name": "Ghost",
         "rewards": [
             {
-                "name": "Gold Amulet",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.8ZknyAUfhexwMZwb"
+                "name": "Gold Amulet"
             }
         ]
     },
@@ -126,8 +114,7 @@ const HARVESTABLES = [
         "name": "Hill Giant",
         "rewards": [
             {
-                "name": "Ironwood",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.Z5EodU6dKoxw0BHN"
+                "name": "Ironwood"
             }
         ]
     },
@@ -135,8 +122,7 @@ const HARVESTABLES = [
         "name": "Myconid Sovereign",
         "rewards": [
             {
-                "name": "Cap of Myconid Fungi",
-                'itemUuid': "Compendium.stroud-dnd-helpers.SDND-Items.Item.TWvfYRld8SrAeoFG"                
+                "name": "Cap of Myconid Fungi"               
             }
         ]
     },
@@ -144,8 +130,7 @@ const HARVESTABLES = [
         "name": "Phase Spider",
         "rewards": [
             {
-                "name": "Phase Spider Venom",
-                'itemUuid': "Compendium.stroud-dnd-helpers.SDND-Items.Item.gdf3eUKVwM9P63fU"                
+                "name": "Phase Spider Venom"              
             }
         ]
     },
@@ -153,8 +138,7 @@ const HARVESTABLES = [
         "name": "Poisonus Snake",
         "rewards": [
             {
-                "name": "Snake Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.exZ9tqiwze2MQKBu"
+                "name": "Snake Venom"
             }
         ]
     },
@@ -162,8 +146,7 @@ const HARVESTABLES = [
         "name": "Poisonus Spider",
         "rewards": [
             {
-                "name": "Spider Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.eQZgBd4e3Herm4Cp"
+                "name": "Spider Venom"
             }
         ]
     },
@@ -171,8 +154,7 @@ const HARVESTABLES = [
         "name": "Purple Worm",
         "rewards": [
             {
-                "name": "Purple Worm Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.YeNaSAHhGMkQf8XG"
+                "name": "Purple Worm Venom"
             }
         ]
     },
@@ -181,13 +163,11 @@ const HARVESTABLES = [
         "rewards": [
             {
                 "name": "Wheat",
-                "count": 2,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.WJPNdVbyPcopj0mz"
+                "count": 2
             },
             {
                 "name": "Barley",
-                "count": 2,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.1PMpSIUPiJ2mDY2y"
+                "count": 2
             }
         ]
     },
@@ -195,8 +175,7 @@ const HARVESTABLES = [
         "name": "Scorpion",
         "rewards": [
             {
-                "name": "Scorpion Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.NCtW2RyGBT0giBmR"
+                "name": "Scorpion Venom"
             }
         ]
     },
@@ -204,8 +183,7 @@ const HARVESTABLES = [
         "name": "Werewolf",
         "rewards": [
             {
-                "name": "Werewolf Pelt",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.Bm2YOvkGwUdXFqbW"
+                "name": "Werewolf Pelt"
             }
         ]
     },
@@ -213,8 +191,7 @@ const HARVESTABLES = [
         "name": "Wolf",
         "rewards": [
             {
-                "name": "Wolf Pelt",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.3FkvXIKGQkBpcICX"
+                "name": "Wolf Pelt"
             }
         ]
     },
@@ -222,8 +199,7 @@ const HARVESTABLES = [
         "name": "Vampire Spawn",
         "rewards": [
             {
-                "name": "Vampire Fang",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.GjBQMPPAPrUck9I2"
+                "name": "Vampire Fang"
             }
         ]
     },
@@ -231,8 +207,7 @@ const HARVESTABLES = [
         "name": "Young Green Dragon",
         "rewards": [
             {
-                "name": "Young Green Dragon Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.73jd1QizuHK7AaR0"
+                "name": "Young Green Dragon Venom"
             }
         ]
     },
@@ -240,34 +215,68 @@ const HARVESTABLES = [
         "name": "Wyvern",
         "rewards": [
             {
-                "name": "Wyvern Venom",
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.zsY7RkljTnOdrRFX"
-            }
-        ]
-    },
-    {
-        "name": "TestWolf",
-        "rewards": [
-            {
-                "name": "Wolf Pelt",
-                "percentage": 80,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.3FkvXIKGQkBpcICX"
-            },
-            {
-                "name": "Wolf Tooth",
-                "percentage": 15,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.TCpkXLKMlvzFXJ22"
-            },
-            {
-                "name": "Wolf Spleen",
-                "percentage": 5,
-                "itemUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.TCpkXLKMlvzFXJ22"
+                "name": "Wyvern Venom"
             }
         ]
     }
 ];
 
+const HARVESETED_EFFECT = 
+{
+    "name": "Harvested",
+    "icon": "modules/stroud-dnd-helpers/images/icons/harvesting.webp",
+    "origin": "",
+    "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+    },
+    "disabled": false,
+    "changes": [],
+    "description": "",
+    "transfer": false,
+    "statuses": [],
+    "flags": {
+        "dae": {
+            "stackable": "multi",
+            "specialDuration": [],
+            "disableIncapacitated": false,
+            "showIcon": true,
+            "macroRepeat": "none"
+        },
+        "ActiveAuras": {
+            "isAura": false,
+            "aura": "None",
+            "nameOverride": "",
+            "radius": "",
+            "alignment": "",
+            "type": "",
+            "customCheck": "",
+            "ignoreSelf": false,
+            "height": false,
+            "hidden": false,
+            "displayTemp": false,
+            "hostile": false,
+            "onlyOnce": false,
+            "wallsBlock": "system"
+        },
+        "core": {
+            "overlay": true
+        }
+    },
+    "tint": null
+}
+
 export let harvesting = {
+    "ValidateHarvestables": function _ValidatedHarvestables() {
+        for (let harvestable of HARVESTABLES) {
+            resolveRewardUuids(harvestable.rewards);
+        }
+    },
     "HarvestSelected": async function _harvestSelected() {
         let controlledActor = utility.getControlledToken()?.actor;
         if (!controlledActor || controlledActor.folder?.name != sdndSettings.ActivePlayersFolder.getValue()) {
@@ -282,8 +291,12 @@ export let harvesting = {
         }
         let target = targets.pop()?.actor;
         let harvestable = await getHarvestingData(target);
-        if (!harvestable) {
+        if (!harvestable || target?.type != "npc") {
             ui.notifications.warn(`${target.name} is not harvestable.`);
+            return;
+        }
+        if ((target.system?.attributes?.hp?.value ?? 0) > 0) {
+            ui.notifications.warn(`${target.name} is not dead!  Gross!`);
             return;
         }
         if (await getHarvested(target)) {
@@ -295,9 +308,10 @@ export let harvesting = {
         if (confirmation != "True") {
             return;
         }
-        await setHarvested(target);
         const flavor = `DC${harvestable.dc} ${dnd5e.config.skills[harvestable.skill].label} check to harvest ${harvestable.name}`;
         let result = await craftingHelpers.rollSkillCheck(controlledActor, harvestable.skill, harvestable.dc, flavor, false);
+        await gmFunctions.advanceTime((harvestable.duration ?? 10) * 60)
+        await setHarvested(target, controlledActor.uuid);
         if (!result.isSuccess) {
             await ChatMessage.create({
                 emote: true,
@@ -316,12 +330,34 @@ export let harvesting = {
     }
 };
 
+
 async function getHarvested(actor) {
     return (await actor.getFlag(sdndConstants.MODULE_ID, "Harvested")) ?? false;
 }
 
-async function setHarvested(actor) {
+async function setHarvested(actor, origin) {
+    let effect = HARVESETED_EFFECT;
+    effect.origin = origin;
+    await gmFunctions.createEffects(actor.uuid, [effect]);
     await actor.setFlag(sdndConstants.MODULE_ID, "Harvested", true);
+}
+
+function getItemUuidFromCompendium(name) {
+    let pack = game.packs.get(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS);
+    if (!pack) {
+        throw `Cannot find pack ${sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS}`;
+    }
+    let item = pack.index.getName(name);
+    if (!item) {
+        throw `${name} does not exist in compendium ${pack.metadata.label}!`;
+    }
+    return item.uuid;
+}
+
+function resolveRewardUuids(rewards) {
+    for (let reward of rewards) {
+        reward.itemUuid = reward.itemUuid ?? getItemUuidFromCompendium(reward.name);
+    }
 }
 
 function getHarvestingData(actor) {
@@ -329,6 +365,7 @@ function getHarvestingData(actor) {
     harvestable.dc = harvestable.dc ?? DEFAULTS.dc;
     harvestable.skill = harvestable.skill ?? DEFAULTS.skill;
     harvestable.duration = harvestable.duration ?? DEFAULTS.duration;
+    resolveRewardUuids(harvestable.rewards);
     if (harvestable.rewards.length == 1) {
         harvestable.rewards[0].percentage = harvestable.rewards[0].percentage ?? DEFAULTS.percentage;
     }

@@ -1,6 +1,9 @@
 # v11.6.1
 # New Features
 - Harvesting
+# Bug Fixes
+- Poisons
+  - Will now prompt player for roll when crafting.
 # v11.6.0
 # New Features
 - Move Crafting Materials and Roll Tables to DND-Helpers
