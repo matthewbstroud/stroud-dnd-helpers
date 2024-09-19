@@ -1,7 +1,7 @@
 {
-  "name": "Bear Pelt",
+  "name": "Massive Diamond",
   "type": "loot",
-  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "img": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
   "system": {
     "description": {
       "value": "",
@@ -14,12 +14,12 @@
     },
     "container": null,
     "quantity": 1,
-    "weight": 10,
+    "weight": 0,
     "price": {
-      "value": 75,
+      "value": 5000,
       "denomination": "gp"
     },
-    "rarity": "common",
+    "rarity": "veryRare",
     "properties": [],
     "type": {
       "value": "resource",
@@ -27,7 +27,7 @@
     }
   },
   "effects": [],
-  "folder": "9NPKylRqyJaMXeLT",
+  "folder": "wnUEstDNLemDQT5U",
   "flags": {
     "exportSource": {
       "system": "dnd5e",
@@ -41,14 +41,14 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726695383674,
+    "modifiedTime": 1726701949174,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "bUwyCd0y904K6NCo",
+  "_id": "7UvuGoqBRIPUu4qL",
   "sort": 0,
-  "_key": "!items!bUwyCd0y904K6NCo"
+  "_key": "!items!7UvuGoqBRIPUu4qL"
 }

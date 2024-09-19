@@ -1,6 +1,13 @@
+# v11.6.1
+# New Features
+- Harvesting
 # v11.6.0
 # New Features
 - Move Crafting Materials and Roll Tables to DND-Helpers
+- New Poison
+  - Serpent Venom
+# Bug Fixes
+- Fixed issue with poison half-damage
 # v11.5.13
 # New Features
 - New Poisons

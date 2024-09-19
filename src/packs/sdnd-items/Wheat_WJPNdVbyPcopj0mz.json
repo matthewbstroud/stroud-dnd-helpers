@@ -14,7 +14,7 @@
     },
     "container": null,
     "quantity": 1,
-    "weight": 70,
+    "weight": 0.25,
     "price": {
       "value": 5,
       "denomination": "gp"
@@ -43,7 +43,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1723515730974,
+    "modifiedTime": 1726697914274,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "sort": 0,

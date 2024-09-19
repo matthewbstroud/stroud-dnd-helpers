@@ -2,6 +2,7 @@ import { calendar } from './calendar/calendar.js';
 import { createActorHeaderButton, createItemHeaderButton, syncBackpackPermissions } from './actors/actors.js';
 import { chat } from './chat/chat.js';
 import { combat } from './combat.js';
+import { crafting } from './crafting/crafting.js';
 import { gmFunctions } from './gm/gmFunctions.js';
 import { features } from './spells/features.js';
 import { identification } from './identification/identification.js';
@@ -49,6 +50,7 @@ globalThis['stroudDnD'] = {
 	calendar,
 	chat,
 	combat,
+	crafting,
 	features,
 	identification,
 	items,

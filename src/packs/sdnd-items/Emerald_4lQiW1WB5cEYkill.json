@@ -1,0 +1,92 @@
+{
+  "name": "Emerald",
+  "type": "loot",
+  "system": {
+    "description": {
+      "value": "<div class=\"ddb\">\n<p>A transparent deep bright green gemstone worth 1,000 gold pieces</p>\n</div>",
+      "chat": ""
+    },
+    "source": {
+      "book": "Player’s Handbook",
+      "page": "",
+      "license": "",
+      "custom": ""
+    },
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 1000,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "properties": [],
+    "type": {
+      "value": "gem",
+      "subtype": ""
+    }
+  },
+  "flags": {
+    "ddbimporter": {
+      "dndbeyond": {
+        "type": "Gemstone",
+        "isConsumable": false,
+        "isContainer": false,
+        "isCustomItem": false,
+        "isHomebrew": false,
+        "isMonkWeapon": false,
+        "isPack": false,
+        "levelInfusionGranted": null,
+        "tags": [],
+        "sources": [
+          {
+            "sourceId": 1,
+            "pageNumber": null,
+            "sourceType": 2
+          },
+          {
+            "sourceId": 2,
+            "pageNumber": null,
+            "sourceType": 1
+          }
+        ],
+        "stackable": true
+      },
+      "id": 0,
+      "entityTypeId": 0,
+      "definitionEntityTypeId": 2103445194,
+      "definitionId": 286,
+      "originalName": "Emerald",
+      "version": "5.1.27"
+    },
+    "midi-qol": {
+      "removeAttackDamageButtons": "default"
+    },
+    "midiProperties": {
+      "confirmTargets": "default"
+    },
+    "core": {}
+  },
+  "effects": [],
+  "img": "icons/commodities/gems/gem-faceted-diamond-green.webp",
+  "folder": "wnUEstDNLemDQT5U",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1721268424625,
+    "modifiedTime": 1726701077941,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "4lQiW1WB5cEYkill",
+  "sort": 0,
+  "_key": "!items!4lQiW1WB5cEYkill"
+}
