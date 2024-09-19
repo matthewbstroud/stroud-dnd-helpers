@@ -1,0 +1,19 @@
+{
+  "name": "Jewelry",
+  "sorting": "a",
+  "folder": "yprG43bQytPq70uQ",
+  "type": "Item",
+  "_id": "EL0v8lxxuyjjwNBb",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": null,
+    "systemVersion": null,
+    "coreVersion": null,
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!EL0v8lxxuyjjwNBb"
+}

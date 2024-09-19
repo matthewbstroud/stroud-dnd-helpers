@@ -111,7 +111,7 @@
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": "",
-      "onUseMacroName": "[postNoAction]function.stroudDnD.items.poison.UnlockRecipe"
+      "onUseMacroName": "[postNoAction]function.stroudDnD.crafting.poison.UnlockRecipe"
     },
     "stroud-dnd-helpers": {
       "Recipe": {

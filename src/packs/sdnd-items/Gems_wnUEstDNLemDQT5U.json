@@ -1,0 +1,19 @@
+{
+  "name": "Gems",
+  "sorting": "a",
+  "folder": "yprG43bQytPq70uQ",
+  "type": "Item",
+  "_id": "wnUEstDNLemDQT5U",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726700872379,
+    "modifiedTime": 1726700872379,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!wnUEstDNLemDQT5U"
+}

@@ -1,5 +1,5 @@
 {
-  "name": "Bear Pelt",
+  "name": "Wasp Venom",
   "type": "loot",
   "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
@@ -14,12 +14,12 @@
     },
     "container": null,
     "quantity": 1,
-    "weight": 10,
+    "weight": 1,
     "price": {
-      "value": 75,
+      "value": 10,
       "denomination": "gp"
     },
-    "rarity": "common",
+    "rarity": "",
     "properties": [],
     "type": {
       "value": "resource",
@@ -27,7 +27,7 @@
     }
   },
   "effects": [],
-  "folder": "9NPKylRqyJaMXeLT",
+  "folder": "NgOO2DlYU1jrwMT8",
   "flags": {
     "exportSource": {
       "system": "dnd5e",
@@ -41,14 +41,14 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726695383674,
+    "modifiedTime": 1726701512011,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_id": "bUwyCd0y904K6NCo",
+  "_id": "cucIFquwJ7YKN2hz",
   "sort": 0,
-  "_key": "!items!bUwyCd0y904K6NCo"
+  "_key": "!items!cucIFquwJ7YKN2hz"
 }

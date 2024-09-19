@@ -17,7 +17,7 @@
     "quantity": 1,
     "weight": 1,
     "price": {
-      "value": 20,
+      "value": 400,
       "denomination": "gp"
     },
     "rarity": "",
@@ -133,7 +133,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1726417091317,
-    "modifiedTime": 1726593252097,
+    "modifiedTime": 1726613860951,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "QB00M2AOqudoBvba",
