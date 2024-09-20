@@ -323,10 +323,11 @@ export let poison = {
         let bonusDamage = 0;
         let poisoning = controlledActor.system?.tools?.pois;
         if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
+            let profBonus = (poisoning?.total ?? 0);
             if (poisonType.includeBonusDamage) {
-                bonusDamage = (poisoning?.total ?? 0);
+                bonusDamage = profBonus;
             }
-            poisonType.dc += bonusDamage;
+            poisonType.dc += profBonus;
         }
         await this.ApplyPoisonToItem(weaponUuid,
             poisonType.name,
@@ -373,7 +374,7 @@ export let poison = {
             }
         }
 
-        await item.setFlag(sdndConstants.MODULE_ID, "PoisonData", {
+        await gmFunctions.setFlag(itemUuid, sdndConstants.MODULE_ID, "PoisonData", {
             "name": poisonName,
             "dieFaces": dieFaces,
             "dieCount": dieCount,
@@ -394,6 +395,10 @@ export let poison = {
         await items.midiQol.addOnUseMacro(item, "damageBonus", POISON_MACRO);
     },
     "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave, includeBonusDamage) {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
         let item = fromUuidSync(itemUuid);
         if (!item) {
             console.log("Item not found!");
@@ -496,6 +501,10 @@ export let poison = {
         });
     },
     "CreateRecipe": async function _createRecipe(itemUuid, recipeName) {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
         let item = await fromUuid(itemUuid);
         if (!item) {
             console.log("Item not found!");
@@ -521,7 +530,7 @@ export let poison = {
         }
         recipes.push(recipeName);
         recipes.sort();
-        actor.setFlag(sdndConstants.MODULE_ID, "Recipes.Poison", recipes);
+        gmFunctions.setFlag(actor.uuid, sdndConstants.MODULE_ID, "Recipes.Poison", recipes);
     },
     "ItemMacro": _itemMacro
 };
@@ -548,7 +557,7 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     }
 
     poisonData.charges -= 1;
-    await item.setFlag(sdndConstants.MODULE_ID, "PoisonData", poisonData);
+    await gmFunctions.setFlag(item.uuid, sdndConstants.MODULE_ID, "PoisonData", poisonData);
 
     if (poisonData.duration > 0) {
         let elapsedMinutes = (game.time.worldTime - poisonData.startTime) / 60;
@@ -676,7 +685,7 @@ async function rollToolCheck(actor, recipie) {
 }
 
 async function removePoison(actor, item, poisonData) {
-    await item.unsetFlag(sdndConstants.MODULE_ID, "PoisonData");
+    await gmFunctions.unsetFlag(item.uuid, sdndConstants.MODULE_ID, "PoisonData");
     await items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
     ui.notifications.info(`(${actor.name}) ${poisonData.name} has worn off of ${item.name}...`);
 }

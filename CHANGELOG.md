@@ -1,3 +1,6 @@
+# v11.6.4
+# Bug Fixes
+- Fixing permission issues when setting flag on npc.
 # v11.6.3
 # Bug Fixes
 - Harvesting

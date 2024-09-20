@@ -167,6 +167,32 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("removeEffects", effectIDs)
         );
     },
+    "setFlag": async function _setFlag(uuid, scope, key, value) {
+        run(
+            async () => {
+                let document = await fromUuid(uuid);
+                if (!document) {
+                    console.log(`Could not find: ${uuid}`);
+                    return;
+                }
+                await document.setFlag(scope, key, value);
+            },
+            async () => await socket.executeAsGM("setFlag", uuid, scope, key, value)
+        );
+    },
+    "unsetFlag": async function _unsetFlag(uuid, scope, key) {
+        run(
+            async () => {
+                let document = await fromUuid(uuid);
+                if (!document) {
+                    console.log(`Could not find: ${uuid}`);
+                    return;
+                }
+                await document.unsetFlag(scope, key);
+            },
+            async () => await socket.executeAsGM("unsetFlag", uuid, scope, key)
+        );
+    },
     "spawnSpiritualWeapon": async function _spawnSpiritualWeapon(userID, actorID, tokenID, level, x, y) {
         run(
             async () => spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y),
