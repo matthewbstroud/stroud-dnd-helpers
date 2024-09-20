@@ -1,3 +1,8 @@
+# v11.6.3
+# Bug Fixes
+- Harvesting
+  - Added an event handler for harvesting that must be enabled in settings.
+  - An icon will now be placed on a mob when it dies to indicate it can be harvested.  Harvesting the mob will remove the icon.
 # v11.6.2
 # New Features
 - Poisons

@@ -221,9 +221,9 @@ const HARVESTABLES = [
     }
 ];
 
-const HARVESETED_EFFECT = 
+const HARVESETABLE_EFFECT = 
 {
-    "name": "Harvested",
+    "name": "Harvestable",
     "icon": "modules/stroud-dnd-helpers/images/icons/harvesting.webp",
     "origin": "",
     "duration": {
@@ -272,6 +272,14 @@ const HARVESETED_EFFECT =
 }
 
 export let harvesting = {
+    "hooks": {
+        "ready": async function _ready() {
+            if (game.user.isTheGM && sdndSettings.HarvestingEnabled.getValue()) {
+                Hooks.on("dnd5e.damageActor", onApplyDamage);
+                Hooks.on("dnd5e.healActor", onApplyDamage);
+            }
+        }
+    },
     "ValidateHarvestables": function _ValidatedHarvestables() {
         for (let harvestable of HARVESTABLES) {
             resolveRewardUuids(harvestable.rewards);
@@ -290,7 +298,7 @@ export let harvesting = {
             return;
         }
         let target = targets.pop()?.actor;
-        let harvestable = await getHarvestingData(target);
+        let harvestable = getHarvestingData(target);
         if (!harvestable || target?.type != "npc") {
             ui.notifications.warn(`${target.name} is not harvestable.`);
             return;
@@ -330,16 +338,42 @@ export let harvesting = {
     }
 };
 
+async function onApplyDamage(actor, damageAmount, options) {
+    if (actor.type != 'npc') {
+        return;
+    }
+    if (await getHarvested(actor)) {
+        return;  // already harvested
+    }
+    let harvestingData = getHarvestingData(actor);
+    if (!harvestingData) {
+        return;
+    }
+    let currentHp = actor.system?.attributes?.hp.value ?? 0;
+    await setHarvestable(actor, (currentHp <=0));
+}
+
+async function toggleEffect(actor, effect, enabled) {
+    let currentEffect = actor.effects.find(e => e.name == effect.name);
+    if (enabled && !currentEffect) {
+        await gmFunctions.createEffects(actor.uuid, [effect]);
+    }
+    else if (!enabled && currentEffect) {
+        await gmFunctions.removeEffects([currentEffect.uuid]);
+    }
+}
 
 async function getHarvested(actor) {
     return (await actor.getFlag(sdndConstants.MODULE_ID, "Harvested")) ?? false;
 }
 
-async function setHarvested(actor, origin) {
-    let effect = HARVESETED_EFFECT;
-    effect.origin = origin;
-    await gmFunctions.createEffects(actor.uuid, [effect]);
+async function setHarvested(actor) {
+    await setHarvestable(actor, false);
     await actor.setFlag(sdndConstants.MODULE_ID, "Harvested", true);
+}
+
+async function setHarvestable(actor, enabled) {
+    await toggleEffect(actor, HARVESETABLE_EFFECT, enabled);
 }
 
 function getItemUuidFromCompendium(name) {
@@ -362,6 +396,9 @@ function resolveRewardUuids(rewards) {
 
 function getHarvestingData(actor) {
     let harvestable = HARVESTABLES.find(h => h.name == actor?.name);
+    if (!harvestable) {
+        return null;
+    }
     harvestable.dc = harvestable.dc ?? DEFAULTS.dc;
     harvestable.skill = harvestable.skill ?? DEFAULTS.skill;
     harvestable.duration = harvestable.duration ?? DEFAULTS.duration;

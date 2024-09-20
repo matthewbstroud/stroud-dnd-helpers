@@ -3,6 +3,7 @@ import { scene } from './utility/scene.js';
 import { createActorHeaderButton } from './actors/actors.js';
 import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
+import { harvesting } from './crafting/harvesting.js';
 
 export let hooks = {
     "init": function _init() {
@@ -125,5 +126,6 @@ export let hooks = {
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);
         await backpacks.hooks.ready();
+        await harvesting.hooks.ready();
     }
 };
