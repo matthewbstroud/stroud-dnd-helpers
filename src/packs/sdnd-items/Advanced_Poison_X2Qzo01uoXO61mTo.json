@@ -115,15 +115,16 @@
     "stroud-dnd-helpers": {
       "PoisonType": {
         "name": "Advanced Poison",
-        "dieFaces": 0,
-        "dieCount": 0,
+        "dieFaces": 4,
+        "dieCount": 1,
         "damageType": "poison",
         "charges": 10,
-        "duration": 30,
+        "duration": 10,
         "dc": 8,
         "abilitySave": "con",
         "halfDamageOnSave": true,
-        "effect": "AdvancedPoison"
+        "effect": null,
+        "includeBonusDamage": true
       }
     },
     "core": {}
@@ -133,7 +134,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1726417091317,
-    "modifiedTime": 1726612821938,
+    "modifiedTime": 1726781611861,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "X2Qzo01uoXO61mTo",

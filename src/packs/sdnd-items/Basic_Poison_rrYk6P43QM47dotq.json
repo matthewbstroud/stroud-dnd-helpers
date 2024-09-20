@@ -123,7 +123,8 @@
         "dc": 8,
         "effect": null,
         "abilitySave": "con",
-        "halfDamageOnSave": false
+        "halfDamageOnSave": false,
+        "includeBonusDamage": false
       }
     },
     "core": {}
@@ -133,7 +134,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1726417091317,
-    "modifiedTime": 1726612861614,
+    "modifiedTime": 1726781799747,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "rrYk6P43QM47dotq",

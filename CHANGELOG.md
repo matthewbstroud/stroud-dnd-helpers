@@ -1,3 +1,7 @@
+# v11.6.2
+# New Features
+- Poisons
+  - Death's Bite
 # v11.6.1
 # New Features
 - Harvesting
