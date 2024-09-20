@@ -38,6 +38,18 @@ export let sdndSettings = {
 		},
 		'getValue': () =>  getModuleSettingValue('AutoApplyAdhocDamage')
 	},
+	'HarvestingEnabled': {
+		'config': {
+			'name': 'Enable Harvesting',
+			'hint': 'When true mobs that can drop crafting ingredients will show a harvesting icon when they die.',
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false,
+			'requiresReload': true
+		},
+		'getValue': () =>  getModuleSettingValue('HarvestingEnabled')
+	},
 	'PoisonDCModifier': {
 		'config': {
 			'name': 'Poison DC Modifier',

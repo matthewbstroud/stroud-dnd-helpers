@@ -36,6 +36,16 @@ const POISON_RECIPES = [
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.8dpkMmpBlSBmUMdq'
     },
     {
+        "name": "Death's Bite",
+        "dc": 18,
+        "ingredients": [
+            "Wyrmtongue Petals",
+            ["Spineflower Berries", "Cap of Ettercap Fungi"]
+        ],
+        "cost": 200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.xDLWQTLejH7H2hKM'
+    },
+    {
         "name": "Serpent Venom",
         "dc": 17,
         "ingredients": [
@@ -86,7 +96,7 @@ const POISON_EFFECTS = {
         "statuses": [],
         "flags": {
             "dae": {
-                "stackable": "multi",
+                "stackable": "noneName",
                 "specialDuration": [],
                 "disableIncapacitated": false,
                 "showIcon": false,
@@ -183,6 +193,70 @@ const POISON_EFFECTS = {
         "statuses": [],
         "flags": {
             "dae": {
+                "stackable": "noneNameOnly",
+                "specialDuration": [],
+                "disableIncapacitated": false,
+                "showIcon": false,
+                "macroRepeat": "none"
+            },
+            "ActiveAuras": {
+                "isAura": false,
+                "aura": "None",
+                "nameOverride": "",
+                "radius": "",
+                "alignment": "",
+                "type": "",
+                "customCheck": "",
+                "ignoreSelf": false,
+                "height": false,
+                "hidden": false,
+                "displayTemp": false,
+                "hostile": false,
+                "onlyOnce": false,
+                "wallsBlock": "system"
+            }
+        },
+        "tint": null
+    },
+    "DeathsBite": {
+        "name": "Death's Bite",
+        "icon": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+        "origin": "",
+        "duration": {
+            "rounds": 5,
+            "startTime": null,
+            "seconds": null,
+            "combat": null,
+            "turns": 0,
+            "startRound": null,
+            "startTurn": null
+        },
+        "disabled": false,
+        "changes": [
+            {
+                "key": "flags.midi-qol.OverTime",
+                "mode": 5,
+                "value": "turn=start,label=Advanced Posion Effect,damageRoll=2d6,damageType=necrotic",
+                "priority": 20
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.attack.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 0
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.ability.check.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 0
+            }
+        ],
+        "description": "You are under the effects of Death's Bite. Take takes necrotic damage each round.",
+        "transfer": false,
+        "statuses": [],
+        "flags": {
+            "dae": {
                 "stackable": "noneName",
                 "specialDuration": [],
                 "disableIncapacitated": false,
@@ -204,6 +278,9 @@ const POISON_EFFECTS = {
                 "hostile": false,
                 "onlyOnce": false,
                 "wallsBlock": "system"
+            },
+            "times-up": {
+                "durationSeconds": 60
             }
         },
         "tint": null
@@ -242,15 +319,20 @@ export let poison = {
         const dcModifier = sdndSettings.PoisonDCModifier.getValue();
         if (poisonType.dc > 0 && dcModifier != 0) {
             poisonType.dc += dcModifier;
-        } 
+        }
+        let bonusDamage = 0;
         let poisoning = controlledActor.system?.tools?.pois;
         if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
-            poisonType.dc += (poisoning?.total ?? 0);
+            if (poisonType.includeBonusDamage) {
+                bonusDamage = (poisoning?.total ?? 0);
+            }
+            poisonType.dc += bonusDamage;
         }
         await this.ApplyPoisonToItem(weaponUuid,
             poisonType.name,
             poisonType.dieFaces,
             poisonType.dieCount,
+            bonusDamage,
             poisonType.damageType,
             poisonType.duration,
             poisonType.charges,
@@ -276,7 +358,7 @@ export let poison = {
             content: `${controlledActor.name} has applied ${poison.name} to ${weapon.name}...`
         });
     },
-    "ApplyPoisonToItem": async function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
+    "ApplyPoisonToItem": async function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, bonusDamage, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
         durationMinutes = durationMinutes ?? 0;
         dc = dc ?? 0;
         ability = ability ?? dnd5e.config.abilities.con.abbreviation;
@@ -296,6 +378,7 @@ export let poison = {
             "dieFaces": dieFaces,
             "dieCount": dieCount,
             "damageType": damageType,
+            "bonusDamage": bonusDamage,
             "ability": ability,
             "charges": charges,
             "duration": durationMinutes,
@@ -310,7 +393,7 @@ export let poison = {
         });
         await items.midiQol.addOnUseMacro(item, "damageBonus", POISON_MACRO);
     },
-    "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave) {
+    "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave, includeBonusDamage) {
         let item = fromUuidSync(itemUuid);
         if (!item) {
             console.log("Item not found!");
@@ -321,11 +404,13 @@ export let poison = {
         dc = dc ?? 0;
         ability = ability ?? dnd5e.config.abilities.con.abbreviation;
         halfDamageOnSave = halfDamageOnSave ?? true;
+        includeBonusDamage = includeBonusDamage ?? false;
         item.setFlag(sdndConstants.MODULE_ID, "PoisonType", {
             "name": name,
             "dieFaces": dieFaces,
             "dieCount": dieCount,
             "damageType": damageType,
+            "includeBonusDamage": includeBonusDamage,
             "charges": charges,
             "duration": durationMinutes,
             "dc": dc,
@@ -369,14 +454,19 @@ export let poison = {
         if (confirmation != "True") {
             return;
         }
+
         let totalCopper = moneyInternal.getTotalCopper(controlledActor);
         if (totalCopper < (recipe.cost * 100)) {
             ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipe.cost} gp required for this recipie.`);
             return;
         }
+        let selectedIngredients = await selectIngredients(controlledActor, recipe);
+        if (selectedIngredients == "cancel") {
+            return;
+        }
         let result = await rollToolCheck(controlledActor, recipe);
         await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipe.cost, 0, 0, 0);
-        await deleteIngredients(controlledActor, recipe);
+        await deleteIngredients(controlledActor, selectedIngredients);
         await gmFunctions.advanceTime((recipe.duration ?? 10) * 60);
         if (!result) {
             await ChatMessage.create({
@@ -485,7 +575,7 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
         }
         return;
     }
-    if (poisonData.dc > 0  && saveDiceRoll?.options?.success && !poisonData.halfDamageOnSave) {
+    if (poisonData.dc > 0 && saveDiceRoll?.options?.success && !poisonData.halfDamageOnSave) {
         return;
     }
     const halfDamage = saveDiceRoll?.options?.success ?? false;
@@ -504,6 +594,20 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     return roll;
 }
 
+function actorHasIngredients(actor, recipe) {
+    if (recipe.ingredients.length == 0) {
+        return true;
+    }
+    let result = false;
+    for (let ingredient of recipe.ingredients) {
+        let items = actor.items.filter(i => ingredient.includes(i.name));
+        if (items.length == 0) {
+            return false;
+        }
+    }
+    return true;
+}
+
 async function getRecipes(actor) {
     let knownRecipes = await listRecipes(actor, true);
     let totalCopper = moneyInternal.getTotalCopper(actor);
@@ -514,10 +618,8 @@ async function getRecipes(actor) {
         if (totalCopper < (recipie.cost * 100)) {
             return false;
         }
-        for (let ingredient of recipie.ingredients) {
-            if (!actor.items.find(i => i.name == ingredient)) {
-                return false;
-            }
+        if (!actorHasIngredients(actor, recipie)) {
+            return false;
         }
         return true;
     });
@@ -584,9 +686,14 @@ async function applyEffect(item, targetActor, poisonData) {
     if (targetActor?.effects.find(e => e.name == effect.name)) {
         return false;
     }
-    let overTime = effect.changes.find(e => e.key == "flags.midi-qol.OverTime");
-    if (overTime) {
-        overTime.value = overTime.value.replace("saveDC=8", `saveDC=${poisonData.dc}`);
+    let overtimeChange = effect.changes.find(e => e.key == "flags.midi-qol.OverTime");
+    if (overtimeChange) {
+        let overtime = Object.fromEntries(overtimeChange.value.split(",").map(i => i.split("=")));
+        if (overtime.saveDc) {
+            overtime.saveDc = poisonData.dc;
+        }
+        overtime.damageRoll += `+${poisonData.bonusDamage}`;
+        overtimeChange.value = Object.entries(overtime).map(e => `${e[0]}=${e[1]}`).join(",");
     }
     effect.origin = item.uuid;
     await gmFunctions.createEffects(targetActor.uuid, [effect]);
@@ -598,11 +705,37 @@ async function applyEffect(item, targetActor, poisonData) {
     return true;
 }
 
-async function deleteIngredients(actor, recipie) {
-    if (!recipie?.ingredients || recipie.ingredients.length == 0) {
+async function selectIngredients(actor, recipe) {
+    let selectedIngredients = [];
+    if (recipe.ingredients.length == 0) {
+        return selectedIngredients;
+    }
+    for (let ingredient of recipe.ingredients) {
+        if (Array.isArray(ingredient)) {
+            let items = actor.items.filter(i => ingredient.includes(i.name));
+            if (items.length == 1) {
+                selectedIngredients.push(items[0].name);
+                continue;
+            }
+            let ingredientButtons = items.map(i => ({ label: i.name, value: i.name }));
+            let selectedIngredient = await dialog.createButtonDialog("Select Ingredient", ingredientButtons, 'column');
+            if (!selectedIngredient) {
+                return "cancel";
+            }
+            selectedIngredients.push(selectedIngredient)
+        }
+        else {
+            selectedIngredients.push(ingredient);
+        }
+    }
+    return selectedIngredients;
+}
+
+async function deleteIngredients(actor, ingredients) {
+    if (!ingredients || ingredients.length == 0) {
         return;
     }
-    for (let ingredientName of recipie.ingredients) {
+    for (let ingredientName of ingredients) {
         let ingredient = actor.items.find(i => i.name == ingredientName);
         if (!ingredient) {
             continue;
@@ -635,6 +768,22 @@ async function listRecipes(actor, retrieveOnly) {
     return recipes;
 }
 
+function listIngredients(recipe) {
+    if (recipe.ingredients.length == 0) {
+        return "None";
+    }
+    let ingredientlist = [];
+    for (let ingredient of recipe.ingredients) {
+        if (Array.isArray(ingredient)) {
+            ingredientlist.push(`(${ingredient.join(" | ")})`);
+        }
+        else {
+            ingredientlist.push(ingredient);
+        }
+    }
+    return ingredientlist.join(", ");
+}
+
 function summarizeRecipe(recipe) {
     if (!recipe) {
         return '';
@@ -642,7 +791,7 @@ function summarizeRecipe(recipe) {
     return `<b>${recipe.name}</b><br/>
 &nbsp;&nbsp;DC: ${recipe.dc}<br/>
 &nbsp;&nbsp;Cost: ${recipe.cost} GP<br/>
-&nbsp;&nbsp;Ingredients: ${recipe.ingredients.length == 0 ? "None" : recipe.ingredients.join(", ")}<br/>
+&nbsp;&nbsp;Ingredients: ${listIngredients(recipe)}<br/>
 &nbsp;&nbsp;Crafting Time: ${recipe.duration ?? 10} minutes
 `;
 }
