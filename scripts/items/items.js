@@ -1,6 +1,7 @@
 import { lightBringer } from "./weapons/lightBringer.js"
 import { devoteesCenser } from "./weapons/devoteesCenser.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
+import { gmFunctions } from "../gm/gmFunctions.js";
 
 export let items = {
 	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -61,7 +62,7 @@ async function removeMidiOnUseMacro(item, triggerName, script) {
 	}
 	let macros = onUseMacro.split(",");
 	let newMacros = macros.filter(i => i != macroName).join(',');
-	await item.setFlag("midi-qol", "onUseMacroName", newMacros);
+	await gmFunctions.setFlag(item.uuid, "midi-qol", "onUseMacroName", newMacros);
 }
 
 async function addBonusDamageSave(item, ability, dc, halfOnSave) {

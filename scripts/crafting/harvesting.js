@@ -281,6 +281,10 @@ export let harvesting = {
         }
     },
     "ValidateHarvestables": function _ValidatedHarvestables() {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
         for (let harvestable of HARVESTABLES) {
             resolveRewardUuids(harvestable.rewards);
         }
@@ -369,7 +373,7 @@ async function getHarvested(actor) {
 
 async function setHarvested(actor) {
     await setHarvestable(actor, false);
-    await actor.setFlag(sdndConstants.MODULE_ID, "Harvested", true);
+    await gmFunctions.setFlag(actor.uuid, sdndConstants.MODULE_ID, "Harvested", true);
 }
 
 async function setHarvestable(actor, enabled) {
