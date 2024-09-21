@@ -35,6 +35,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Carrion Crawler",
+        "dc": 12,
         "rewards": [
             {
                 "name": "Carrion Crawler Mucus"
@@ -67,6 +68,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Ettercap",
+        "dc": 11,
         "rewards": [
             {
                 "name": "Cap of Ettercap Fungi"
@@ -120,6 +122,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Myconid Sovereign",
+        "dc": 11,
         "rewards": [
             {
                 "name": "Cap of Myconid Fungi"               
@@ -128,6 +131,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Phase Spider",
+        "dc": 12,
         "rewards": [
             {
                 "name": "Phase Spider Venom"              
@@ -136,6 +140,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Poisonus Snake",
+        "dc": 11,
         "rewards": [
             {
                 "name": "Snake Venom"
@@ -144,6 +149,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Poisonus Spider",
+        "dc": 11,
         "rewards": [
             {
                 "name": "Spider Venom"
@@ -152,6 +158,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Purple Worm",
+        "dc": 18,
         "rewards": [
             {
                 "name": "Purple Worm Venom"
@@ -173,6 +180,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Scorpion",
+        "dc": 11,
         "rewards": [
             {
                 "name": "Scorpion Venom"
@@ -205,6 +213,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Young Green Dragon",
+        "dc": 14,
         "rewards": [
             {
                 "name": "Young Green Dragon Venom"
@@ -213,6 +222,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Wyvern",
+        "dc": 13,
         "rewards": [
             {
                 "name": "Wyvern Venom"

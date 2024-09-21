@@ -1,0 +1,134 @@
+{
+  "folder": "ehlqK4t3g1i09LJ5",
+  "name": "Recipe: Dragon's Breath",
+  "type": "consumable",
+  "img": "modules/stroud-dnd-helpers/images/icons/poison_recipe.webp",
+  "system": {
+    "description": {
+      "value": "<p><span style=\"font-family:BookSanity\">By slowly harvesting the poison glands of a green dragon, you can bottle the potent poisonous gas and release it, either by breaking the bottle or opening the lid. The thick gas immediately fills up a 10' square area before dissipating away.</span></p><hr style=\"box-sizing:content-box;-webkit-print-color-adjust:exact;height:0px;margin:0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(73, 39, 172);visibility:hidden;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-indent:0px;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\" /><ul style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;margin-top:0px;margin-bottom:0.5em;padding-left:1em;line-height:1.3em;list-style-position:outside;list-style-type:none;text-indent:-1em;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\"><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Mist Poison</strong>, Craft DC 14</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Component Cost:</strong> 1600 gp</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Ingredients:</strong> Green Dragon Venom (Young or Greater) </span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Extract DC:</strong> 14           <strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Recipe DC:</strong> 16</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Poison DC:</strong> 14, Constitution saving throw</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Effect:</strong> This poison, when released, immediately fills up a 10-foot square area centered on its container before dissipating. A creature subjected to this poison must succeed on a DC 14 Constitution saving throw, taking 12d6 poison damage on a fail, or half as much damage on a successful one.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Potency:</strong> The poison dissipates immediately.</span></li></ul>",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 2000,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": 0,
+    "equipped": false,
+    "activation": {
+      "type": "action",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": 1,
+      "max": "1",
+      "per": "charges",
+      "recovery": "",
+      "prompt": true,
+      "autoDestroy": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": null,
+    "actionType": "",
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "summons": null,
+    "type": {
+      "value": "scroll",
+      "subtype": ""
+    },
+    "magicalBonus": null,
+    "properties": []
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "midi-qol": {
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": "",
+      "onUseMacroName": "[postNoAction]function.stroudDnD.crafting.poison.UnlockRecipe,[postNoAction]function.stroudDnD.items.poison.UnlockRecipe"
+    },
+    "stroud-dnd-helpers": {
+      "Recipe": {
+        "name": "Dragon's Breath"
+      }
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726492890493,
+    "modifiedTime": 1726956357363,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "q3fZJOKjQOJBncbx",
+  "sort": 0,
+  "_key": "!items!q3fZJOKjQOJBncbx"
+}

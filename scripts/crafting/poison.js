@@ -46,6 +46,33 @@ const POISON_RECIPES = [
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.xDLWQTLejH7H2hKM'
     },
     {
+        "name": "Dragon's Breath",
+        "dc": 14,
+        "ingredients": [
+            ["Young Green Dragon Venom", "Green Dragon Venom"]
+        ],
+        "cost": 2000,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.scX7VoN2ebH5sWEt'
+    },
+    {
+        "name": "Jumping Jack Flash",
+        "dc": 14,
+        "ingredients": [
+            "Phase Spider Venom"
+        ],
+        "cost": 600,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.SmqukucHHz4zKp1l'
+    },
+    {
+        "name": "Purple Haze",
+        "dc": 20,
+        "ingredients": [
+            "Purple Worm Venom"
+        ],
+        "cost": 2000,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.Z2zIUirtxuEVrbKL'
+    },
+    {
         "name": "Serpent Venom",
         "dc": 17,
         "ingredients": [
@@ -53,6 +80,24 @@ const POISON_RECIPES = [
         ],
         "cost": 200,
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.QB00M2AOqudoBvba'
+    },
+    {
+        "name": "Scorpion's Sting",
+        "dc": 13,
+        "ingredients": [
+            ["Scorpion Venom", "Snake Venom", "Spider Venom"]
+        ],
+        "cost": 200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.zJwXeK5UH99LGKlR'
+    },
+    {
+        "name": "Wyvern's Sting",
+        "dc": 18,
+        "ingredients": [
+            "Wyvern Venom"
+        ],
+        "cost": 1200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.NX6ESFhr2A4zxVdj'
     }
 ];
 
