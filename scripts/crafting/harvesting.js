@@ -98,6 +98,7 @@ const HARVESTABLES = [
     },
     {
         "name": "Giant Wasp",
+        "dc": 11,
         "rewards": [
             {
                 "name": "Wasp Venom"

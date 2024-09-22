@@ -1,6 +1,7 @@
 # v11.6.5
 # New Features
 - Poisons
+  - Burnt Othur Fumes
   - Dragon's Breath
   - Jumping Jack Flash
   - Purple Haze

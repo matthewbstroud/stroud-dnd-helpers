@@ -27,6 +27,15 @@ const POISON_RECIPES = [
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.X2Qzo01uoXO61mTo'
     },
     {
+        "name": "Burnt Othur Fumes",
+        "dc": 13,
+        "ingredients": [
+            "Wasp Venom"
+        ],
+        "cost": 500,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.VbpRIO7Zr3H9JS5C'
+    },
+    {
         "name": "Carrion Crawler Poison",
         "dc": 17,
         "ingredients": [
@@ -577,7 +586,38 @@ export let poison = {
         recipes.sort();
         gmFunctions.setFlag(actor.uuid, sdndConstants.MODULE_ID, "Recipes.Poison", recipes);
     },
-    "ItemMacro": _itemMacro
+    "ItemMacro": _itemMacro,
+    "ItemMacros": {
+        "BurntOthurFumes": async function _itemMacro({ speaker, actor, token, character, item, args }) {
+            if (args[0].macroPass == 'postActiveEffects') {
+                let savedActor = args[0]?.saves[0]?.actor;
+                if (!savedActor) {
+                    return;
+                }
+                let saveCount = await savedActor.getFlag(sdndConstants.MODULE_ID, "SaveCount.BurntOthurFumes") ?? 0;
+                if (++saveCount == 3) {
+                    let effect = savedActor.effects.find(e => e.name == "Burnt Othur Fumes");
+                    if (effect) {
+                        await gmFunctions.removeEffects([effect.uuid]);
+                        await gmFunctions.unsetFlag(savedActor.uuid, sdndConstants.MODULE_ID, "SaveCount.BurntOthurFumes");
+                        await ChatMessage.create({
+                            emote: true,
+                            speaker: { "actor": savedActor },
+                            content: `${savedActor.name} has finally shrugged off Burnt Othur Fumes...`
+                        });
+                        return;
+                    }
+                }
+                await gmFunctions.setFlag(savedActor.uuid, sdndConstants.MODULE_ID, "SaveCount.BurntOthurFumes", saveCount);
+                await ChatMessage.create({
+                    emote: true,
+                    speaker: { "actor": savedActor },
+                    content: `${savedActor.name} has made save (${saveCount} of 3) against Burnt Othur Fumes...`
+                });
+            }
+
+        }
+    }
 };
 
 async function _itemMacro({ speaker, actor, token, character, item, args }) {
