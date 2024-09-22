@@ -1,3 +1,12 @@
+# v11.6.5
+# New Features
+- Poisons
+  - Burnt Othur Fumes
+  - Dragon's Breath
+  - Jumping Jack Flash
+  - Purple Haze
+  - Scorpion's Sting
+  - Wyvern's Sting
 # v11.6.4
 # Bug Fixes
 - Fixing permission issues when setting flag on npc.

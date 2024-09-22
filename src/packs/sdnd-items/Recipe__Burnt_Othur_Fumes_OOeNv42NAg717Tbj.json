@@ -1,0 +1,134 @@
+{
+  "folder": "ehlqK4t3g1i09LJ5",
+  "name": "Recipe: Burnt Othur Fumes",
+  "type": "consumable",
+  "img": "modules/stroud-dnd-helpers/images/icons/poison_recipe.webp",
+  "system": {
+    "description": {
+      "value": "<p>This mist burns through the membranes of nasal passageways and through the soft tissue of the mouth. Created from the dried venom of giant wasps, this lingering poison is designed to kill quickly before its effects can be stopped.</p><hr style=\"box-sizing:content-box;-webkit-print-color-adjust:exact;height:0px;margin:0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(73, 39, 172);visibility:hidden;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-indent:0px;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\" /><ul style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;margin-top:0px;margin-bottom:0.5em;padding-left:1em;line-height:1.3em;list-style-position:outside;list-style-type:none;text-indent:-1em;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\"><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Mist Poison</strong>, Craft DC 12</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Component Cost:</strong> 500 gp</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Creatures:</strong> Wasp Venom</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Extract DC:</strong> 11           <strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Recipe DC:</strong> 13</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Poison DC:</strong> 13, Constitution saving throw</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Effect:</strong> This poison is sprayed out into a 5-foot cube and a creature subjected to this poison must succeed on a DC 13 Constitution saving throw, taking 3d6 poison damage on a failed save.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Aftereffect:</strong> If the target fails the initial saving throw, they must repeat the saving throw at the end of their turn. The target takes 1d6 poison damage on a failed save and must succeed on three successful saves before the poison ends. These successes do not need to be consecutive.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Duration:</strong> The target must make three successful saves.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Potency:</strong> The poison dissipates immediately.</span></li></ul>",
+      "chat": ""
+    },
+    "source": {},
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": 0,
+    "price": {
+      "value": 750,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": 0,
+    "equipped": false,
+    "activation": {
+      "type": "action",
+      "cost": null,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": null,
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": null,
+      "long": null,
+      "units": ""
+    },
+    "uses": {
+      "value": 1,
+      "max": "1",
+      "per": "charges",
+      "recovery": "",
+      "prompt": true,
+      "autoDestroy": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": null,
+    "actionType": "",
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "summons": null,
+    "type": {
+      "value": "scroll",
+      "subtype": ""
+    },
+    "magicalBonus": null,
+    "properties": []
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "midi-qol": {
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": "",
+      "onUseMacroName": "[postNoAction]function.stroudDnD.crafting.poison.UnlockRecipe"
+    },
+    "stroud-dnd-helpers": {
+      "Recipe": {
+        "name": "Burnt Othur Fumes"
+      }
+    },
+    "core": {}
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.1.2",
+    "coreVersion": "11.315",
+    "createdTime": 1726492890493,
+    "modifiedTime": 1727044170824,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "OOeNv42NAg717Tbj",
+  "sort": 0,
+  "_key": "!items!OOeNv42NAg717Tbj"
+}

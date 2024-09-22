@@ -27,6 +27,15 @@ const POISON_RECIPES = [
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.X2Qzo01uoXO61mTo'
     },
     {
+        "name": "Burnt Othur Fumes",
+        "dc": 13,
+        "ingredients": [
+            "Wasp Venom"
+        ],
+        "cost": 500,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.VbpRIO7Zr3H9JS5C'
+    },
+    {
         "name": "Carrion Crawler Poison",
         "dc": 17,
         "ingredients": [
@@ -46,6 +55,33 @@ const POISON_RECIPES = [
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.xDLWQTLejH7H2hKM'
     },
     {
+        "name": "Dragon's Breath",
+        "dc": 14,
+        "ingredients": [
+            ["Young Green Dragon Venom", "Green Dragon Venom"]
+        ],
+        "cost": 2000,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.scX7VoN2ebH5sWEt'
+    },
+    {
+        "name": "Jumping Jack Flash",
+        "dc": 14,
+        "ingredients": [
+            "Phase Spider Venom"
+        ],
+        "cost": 600,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.SmqukucHHz4zKp1l'
+    },
+    {
+        "name": "Purple Haze",
+        "dc": 20,
+        "ingredients": [
+            "Purple Worm Venom"
+        ],
+        "cost": 2000,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.Z2zIUirtxuEVrbKL'
+    },
+    {
         "name": "Serpent Venom",
         "dc": 17,
         "ingredients": [
@@ -53,6 +89,24 @@ const POISON_RECIPES = [
         ],
         "cost": 200,
         "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.QB00M2AOqudoBvba'
+    },
+    {
+        "name": "Scorpion's Sting",
+        "dc": 13,
+        "ingredients": [
+            ["Scorpion Venom", "Snake Venom", "Spider Venom"]
+        ],
+        "cost": 200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.zJwXeK5UH99LGKlR'
+    },
+    {
+        "name": "Wyvern's Sting",
+        "dc": 18,
+        "ingredients": [
+            "Wyvern Venom"
+        ],
+        "cost": 1200,
+        "poisonUuid": 'Compendium.stroud-dnd-helpers.SDND-Items.Item.NX6ESFhr2A4zxVdj'
     }
 ];
 
@@ -532,7 +586,38 @@ export let poison = {
         recipes.sort();
         gmFunctions.setFlag(actor.uuid, sdndConstants.MODULE_ID, "Recipes.Poison", recipes);
     },
-    "ItemMacro": _itemMacro
+    "ItemMacro": _itemMacro,
+    "ItemMacros": {
+        "BurntOthurFumes": async function _itemMacro({ speaker, actor, token, character, item, args }) {
+            if (args[0].macroPass == 'postActiveEffects') {
+                let savedActor = args[0]?.saves[0]?.actor;
+                if (!savedActor) {
+                    return;
+                }
+                let saveCount = await savedActor.getFlag(sdndConstants.MODULE_ID, "SaveCount.BurntOthurFumes") ?? 0;
+                if (++saveCount == 3) {
+                    let effect = savedActor.effects.find(e => e.name == "Burnt Othur Fumes");
+                    if (effect) {
+                        await gmFunctions.removeEffects([effect.uuid]);
+                        await gmFunctions.unsetFlag(savedActor.uuid, sdndConstants.MODULE_ID, "SaveCount.BurntOthurFumes");
+                        await ChatMessage.create({
+                            emote: true,
+                            speaker: { "actor": savedActor },
+                            content: `${savedActor.name} has finally shrugged off Burnt Othur Fumes...`
+                        });
+                        return;
+                    }
+                }
+                await gmFunctions.setFlag(savedActor.uuid, sdndConstants.MODULE_ID, "SaveCount.BurntOthurFumes", saveCount);
+                await ChatMessage.create({
+                    emote: true,
+                    speaker: { "actor": savedActor },
+                    content: `${savedActor.name} has made save (${saveCount} of 3) against Burnt Othur Fumes...`
+                });
+            }
+
+        }
+    }
 };
 
 async function _itemMacro({ speaker, actor, token, character, item, args }) {
