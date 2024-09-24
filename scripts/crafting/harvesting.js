@@ -140,7 +140,7 @@ const HARVESTABLES = [
         ]
     },
     {
-        "name": "Poisonus Snake",
+        "name": "Poisonous Snake",
         "dc": 11,
         "rewards": [
             {
@@ -149,7 +149,7 @@ const HARVESTABLES = [
         ]
     },
     {
-        "name": "Poisonus Spider",
+        "name": "Poisonous Spider",
         "dc": 11,
         "rewards": [
             {

@@ -1,3 +1,7 @@
+# v11.6.6
+# Bug Fixes
+- Harvesting
+  - Fix name typos
 # v11.6.5
 # New Features
 - Poisons
