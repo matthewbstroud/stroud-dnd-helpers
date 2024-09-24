@@ -78,7 +78,7 @@
       ],
       "drawn": false,
       "_id": "eCezN5Oh889vHQ5G",
-      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.qCwlmDt6RRaYnXol]{Aurochs}",
+      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.qCwlmDt6RRaYnXol]{Auroch}",
       "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
@@ -243,7 +243,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723425860820,
-    "modifiedTime": 1723570256230,
+    "modifiedTime": 1727204658705,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "formula": "1d14",

@@ -1,7 +1,7 @@
 {
   "name": "Uncommon Items",
   "img": "icons/svg/d20-grey.svg",
-  "description": "<p>You have discovered something uncommon…</p>",
+  "description": "<p>You have discovered something uncommon…</p><p></p>",
   "results": [
     {
       "type": 2,
@@ -173,7 +173,7 @@
       ],
       "drawn": false,
       "_id": "jNWv2Xb8tekCisE7",
-      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.4tXn5a0jdzkBfL57]{Carrion Crawler}",
+      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.EeWTganoVtu0u6gR]{Carrion Crawler}",
       "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
@@ -275,7 +275,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "11.315",
     "createdTime": 1723425681334,
-    "modifiedTime": 1723689062940,
+    "modifiedTime": 1727204492849,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "formula": "1d16",
