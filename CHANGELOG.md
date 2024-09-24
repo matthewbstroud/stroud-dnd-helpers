@@ -2,6 +2,7 @@
 # Bug Fixes
 - Harvesting
   - Fix name typos
+- Fix roll table entries
 # v11.6.5
 # New Features
 - Poisons
