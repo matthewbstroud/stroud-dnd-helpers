@@ -178,7 +178,7 @@
       "_key": "!items.effects!o3MO5hhUarj2R2JO.UBTtwqsiifFYqioI"
     }
   ],
-  "folder": "PP9XFtc3SwmqPjr3",
+  "folder": "BeLUfpJ0d2cACd5n",
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
@@ -213,13 +213,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1661787233442,
-    "modifiedTime": 1723002085153,
+    "modifiedTime": 1727306387607,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "o3MO5hhUarj2R2JO",
-  "sort": 200000,
+  "sort": 100000,
   "_key": "!items!o3MO5hhUarj2R2JO"
 }

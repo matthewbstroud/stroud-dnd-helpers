@@ -20,7 +20,7 @@
     },
     "cover": null,
     "target": {
-      "value": 1,
+      "value": "1",
       "width": null,
       "units": "",
       "type": "creature",
@@ -94,7 +94,8 @@
     "properties": [
       "vocal",
       "concentration"
-    ]
+    ],
+    "enchantment": null
   },
   "name": "Hunter's Mark",
   "flags": {
@@ -325,11 +326,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1683225374129,
-    "modifiedTime": 1719936499734,
-    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+    "modifiedTime": 1727305980412,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": null,
   "sort": 0,

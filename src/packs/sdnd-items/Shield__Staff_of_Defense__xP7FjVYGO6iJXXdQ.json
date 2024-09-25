@@ -23,9 +23,9 @@
     "cover": null,
     "crewed": false,
     "target": {
-      "value": null,
+      "value": "",
       "width": null,
-      "units": "",
+      "units": null,
       "type": "self",
       "prompt": true
     },
@@ -89,7 +89,8 @@
       "vocal",
       "somatic",
       "mgc"
-    ]
+    ],
+    "enchantment": null
   },
   "effects": [
     {
@@ -259,7 +260,11 @@
       "offHandWeapon": false,
       "ignoreTotalCover": false,
       "confirmTargets": "default",
-      "noConcentrationCheck": false
+      "noConcentrationCheck": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "itemacro": {
       "macro": {
@@ -287,12 +292,7 @@
       }
     },
     "core": {},
-    "dnd5e": {
-      "migratedProperties": [
-        "vocal",
-        "somatic"
-      ]
-    },
+    "dnd5e": {},
     "dae": {
       "macro": {
         "name": "Shield (Staff of Defense)",
@@ -327,10 +327,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1685293919611,
-    "modifiedTime": 1720384789681,
+    "modifiedTime": 1727306344125,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "xP7FjVYGO6iJXXdQ",

@@ -23,9 +23,9 @@
     "cover": null,
     "crewed": false,
     "target": {
-      "value": null,
+      "value": "",
       "width": null,
-      "units": "",
+      "units": null,
       "type": "",
       "prompt": true
     },
@@ -90,7 +90,8 @@
       "somatic",
       "material",
       "mgc"
-    ]
+    ],
+    "enchantment": null
   },
   "effects": [
     {
@@ -226,13 +227,7 @@
       "filter-override": false
     },
     "core": {},
-    "dnd5e": {
-      "migratedProperties": [
-        "vocal",
-        "somatic",
-        "material"
-      ]
-    },
+    "dnd5e": {},
     "exportSource": {
       "world": "lost_mines_v10",
       "system": "dnd5e",
@@ -242,10 +237,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1685293916997,
-    "modifiedTime": 1720384789681,
+    "modifiedTime": 1727305980293,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "VjtzQlwlqdmm0uDU",

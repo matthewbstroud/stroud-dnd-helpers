@@ -282,20 +282,20 @@
     }
   ],
   "img": "modules/stroud-dnd-helpers/images/icons/bold_axe.webp",
-  "folder": null,
+  "folder": "BeLUfpJ0d2cACd5n",
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1685289785930,
-    "modifiedTime": 1724182890562,
+    "modifiedTime": 1727306401377,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "kGSsgP4X6Nn9D2HC",
-  "sort": 0,
+  "sort": 50000,
   "_key": "!items!kGSsgP4X6Nn9D2HC"
 }

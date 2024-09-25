@@ -1,3 +1,6 @@
+# v11.6.8
+# New Features
+- DND5e 3.2.1 support
 # v11.6.7
 # Bug Fixes
 - Harvesting

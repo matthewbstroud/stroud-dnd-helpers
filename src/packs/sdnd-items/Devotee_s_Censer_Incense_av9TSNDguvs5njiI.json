@@ -21,7 +21,7 @@
     "cover": null,
     "crewed": false,
     "target": {
-      "value": 600,
+      "value": "600",
       "width": null,
       "units": null,
       "type": "self",
@@ -93,7 +93,8 @@
     "summons": null,
     "properties": [
       "vocal"
-    ]
+    ],
+    "enchantment": null
   },
   "effects": [
     {
@@ -192,11 +193,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1708878032641,
-    "modifiedTime": 1719936499690,
-    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+    "modifiedTime": 1727305980312,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "av9TSNDguvs5njiI",
   "sort": 0,
