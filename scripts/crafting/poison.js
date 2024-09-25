@@ -184,7 +184,7 @@ const POISON_EFFECTS = {
         "changes": [
             {
                 "key": "flags.midi-qol.OverTime",
-                "value": "turn=end,type=slashing,saveDC=8,saveAbility=con,label=Carrion Crawler Mucus",
+                "value": "turn=end,saveDC=8,saveAbility=con,label=Carrion Crawler Mucus",
                 "mode": 0,
                 "priority": 20
             },
@@ -290,7 +290,7 @@ const POISON_EFFECTS = {
             {
                 "key": "flags.midi-qol.OverTime",
                 "mode": 5,
-                "value": "turn=start,label=Advanced Posion Effect,damageRoll=2d6,damageType=necrotic",
+                "value": "turn=start,label=Death's Bite,damageRoll=2d6,damageType=necrotic",
                 "priority": 20
             },
             {
@@ -786,7 +786,9 @@ async function applyEffect(item, targetActor, poisonData) {
         if (overtime.saveDc) {
             overtime.saveDc = poisonData.dc;
         }
-        overtime.damageRoll += `+${poisonData.bonusDamage}`;
+        if (overtime.damageRoll) {
+            overtime.damageRoll += `+${poisonData.bonusDamage}`;
+        }
         overtimeChange.value = Object.entries(overtime).map(e => `${e[0]}=${e[1]}`).join(",");
     }
     effect.origin = item.uuid;

@@ -1,3 +1,9 @@
+# v11.6.7
+# Bug Fixes
+- Harvesting
+  - Added Giant Poisonous Snake
+- Poisons
+  - Misc bug fixes
 # v11.6.6
 # Bug Fixes
 - Harvesting

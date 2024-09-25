@@ -97,6 +97,15 @@ const HARVESTABLES = [
         ]
     },
     {
+        "name": "Giant Poisonous Snake",
+        "dc": 11,
+        "rewards": [
+            {
+                "name": "Giant Poisonous Snake Gland"
+            }
+        ]
+    },
+    {
         "name": "Giant Wasp",
         "dc": 11,
         "rewards": [
