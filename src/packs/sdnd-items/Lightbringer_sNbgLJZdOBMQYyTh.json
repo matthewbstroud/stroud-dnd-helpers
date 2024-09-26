@@ -34,9 +34,7 @@
           "specialDuration": [],
           "transfer": true
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "dnd5e-helpers": {
           "rest-effect": "Ignore"
         },

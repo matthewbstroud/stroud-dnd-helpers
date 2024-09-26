@@ -1,6 +1,7 @@
 import { dialog } from "../../dialog/dialog.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { sdndConstants } from "../../constants.js";
+import { items } from "../../items/items.js";
 
 const twilightUtil = {
     ensureResourceLink: async function _ensureResourceLink(actor, item) {
@@ -50,7 +51,7 @@ const twilightUtil = {
         let current_tempHP = target.system?.attributes?.hp?.temp;
 
         // Roll Twilight Sanctuary temporary hit points
-        let healRoll = new Roll('1d6 + @classes.cleric.levels', caster.getRollData()).evaluate({ async: false });
+        let healRoll = await new Roll('1d6 + @classes.cleric.levels', caster.getRollData()).evaluate();
 
         healRoll.toMessage({
             user: game.user._id,
@@ -162,6 +163,35 @@ export let twilightDomain = {
         }
 
         await twilightUtil.removeTwilightEffects(caster);
+    },
+    "applyPatches": async function _applyPatches() {
+        let actors = await game.actors.filter(a => a.items.filter(i => i.effects.filter(e => e.getFlag("effectmacro", "onDelete.script")?.includes("?.label")).length > 0).length > 0);
+        if (actors.length == 0) {
+            return;
+        }
+        let summary = [];
+        let fromCompendium = await items.getItemFromCompendium(sdndConstants.PACKS.COMPENDIUMS.ITEM.FEATURES, "Channel Divinity: Twilight Sanctuary", true, null);
+        if (!fromCompendium) {
+            return;
+        }
+        for (let actor of actors) {
+            summary.push(`Patching Twilight Domain on ${actor.name}...`);
+            let twlightSanctuary = actor.items.find(i => i.img == "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp");
+            if (!twlightSanctuary) {
+                summary.push(`Couldn't find SDND Twilight Sanctuary`);
+                continue;
+            }
+            await actor.createEmbeddedDocuments('Item', [fromCompendium]);
+            await twlightSanctuary.delete();
+            summary.push("Patch successful!");
+        }
+        if (summary.length == 0) {
+            return;
+        }
+        ChatMessage.create({
+            content: (summary.join("<br/>")),
+            whisper: ChatMessage.getWhisperRecipients('GM'),
+        });
     }
 };
 

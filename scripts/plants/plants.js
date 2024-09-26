@@ -88,7 +88,7 @@ async function applyTempHP(target, formula, flavor) {
   let current_tempHP = target.system?.attributes?.hp?.temp;
 
   // Roll Temp HP
-  let healRoll = new Roll(formula, target.getRollData()).evaluate({ async: false });
+  let healRoll = await new Roll(formula, target.getRollData()).evaluate();
 
   healRoll.toMessage({
     user: game.user._id,

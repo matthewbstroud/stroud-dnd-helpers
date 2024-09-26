@@ -1,7 +1,7 @@
 {
   "name": "Carrion Crawler Mucus",
   "type": "loot",
-  "img": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
     "description": {
       "value": "",

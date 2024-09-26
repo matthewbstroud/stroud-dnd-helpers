@@ -36,7 +36,7 @@ async function syncPortentDice({speaker, actor, token, character, item, args}) {
 }
 
 async function createPortentDice(actor) {
-    let diceRoll = new Roll('1d20').evaluate({ async: false });
+    let diceRoll = await new Roll('1d20').evaluate();
     let portentDie = await items.getItemFromCompendium(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS, sdndConstants.TEMP_ITEMS.PORTENT_DIE, false, null);
     portentDie.name = `Portent Die (${diceRoll.total})`;
     portentDie.system.damage.parts[0] = `${diceRoll.total}`;

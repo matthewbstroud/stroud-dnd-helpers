@@ -148,9 +148,7 @@
         "dfreds-convenient-effects": {
           "description": ""
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",

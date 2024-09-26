@@ -43,9 +43,7 @@
           "transfer": false,
           "selfTargetAlways": false
         },
-        "core": {
-          "statusId": "Sharpshooter"
-        },
+        "core": {},
         "dnd5e-helpers": {
           "rest-effect": "Ignore"
         },

@@ -152,9 +152,7 @@
           "dontApply": false,
           "showIcon": false
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",

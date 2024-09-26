@@ -292,9 +292,7 @@
         "dfreds-convenient-effects": {
           "description": "Marked by a skilled Hunter"
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",

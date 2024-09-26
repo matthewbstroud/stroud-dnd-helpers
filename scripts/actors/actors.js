@@ -18,7 +18,8 @@ export let actors = {
     },
     "renderSheet": renderSheet,
     "setPrototypeTokenBarsVisibility": setPrototypeTokenBarsVisibility,
-    "setTokenBarsVisibility": setTokenBarsVisibility
+    "setTokenBarsVisibility": setTokenBarsVisibility,
+    "replaceSpells": replaceSpells
 }
 async function setPrototypeTokenBarsVisibility(actors, tokenDisplayMode) {
     if (!actors || !tokenDisplayMode) {
@@ -236,6 +237,20 @@ async function overrideSpells(actor, spells) {
         await spell.delete();
     }
     ui.notifications.info(`Number of spells replaced: ${spells.length}.`);
+}
+
+async function replaceSpells(actor, spells) {
+    let summary = [];
+    for (let spell of spells) {
+        let sndSpell = await getReplacementFromCompendium(spell);
+        if (!sndSpell) {
+            continue;
+        }
+        await actor.createEmbeddedDocuments('Item', [sndSpell]);
+        await spell.delete();
+        summary.push(`  Patched ${sndSpell.name}`);
+    }
+    return summary.join("<br/>");
 }
 
 async function getReplacementFromCompendium(spell) {

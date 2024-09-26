@@ -92,7 +92,6 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|
 |Hunter's Mark|True|True|None|Allows multiple players to mark the same target simultaneously.|
-|Magic Missile|True|True|None|Allows casting each missile individually without spell prompts.|
 |Spiritual Weapon|True|True|Spiritual Weapon||
 
 # Magic Items
