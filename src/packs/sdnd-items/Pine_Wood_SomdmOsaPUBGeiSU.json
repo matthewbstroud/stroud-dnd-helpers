@@ -1,7 +1,7 @@
 {
   "name": "Pine Wood",
   "type": "loot",
-  "img": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
     "description": {
       "value": "",
@@ -37,10 +37,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1726590819674,
+    "modifiedTime": 1727305980170,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "sort": 100000,

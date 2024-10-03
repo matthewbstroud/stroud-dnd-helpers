@@ -4,6 +4,7 @@ import { createActorHeaderButton } from './actors/actors.js';
 import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
+import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
 
 export let hooks = {
     "init": function _init() {
@@ -123,9 +124,47 @@ export let hooks = {
                 Hooks.on('updateActor', syncBackpackPermissions);
             }
             await combat.hooks.ready();
+	 	let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
+let options = { "none": "(None)" };
+				let playlists = game?.playlists?.contents ?? [];
+				playlists.forEach(pl => {
+					options[pl.id] = pl.name;
+				});
+		setting.choices = options;
+			
+            await applyPatches();
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);
         await backpacks.hooks.ready();
         await harvesting.hooks.ready();
     }
 };
+
+async function applyPatches() {
+    await twilightDomain.applyPatches();
+    await removeCoreStatusId();
+}
+
+async function removeCoreStatusId() {
+    let validNames = Array.from(game.packs).filter(p => p.metadata.type == "Item" && p.metadata.packageName == "stroud-dnd-helpers").flatMap(p => p.index.filter(i => ['spell', 'feat', 'weapon', 'item'].includes(i.type)).map(i => i.name));
+    let patchData = await game.actors.filter(a => a.items.filter(i => validNames.includes(i.name) && i.effects.filter(e => e.flags?.core?.statusId).length > 0)?.length > 0)
+        .map(a => ({"actor": a, "items": (a.items.filter(i => i.effects.filter(e => e.flags?.core?.statusId).length > 0))}));
+    if (patchData?.length == 0) {
+        return;
+    }
+    let summary = [];
+    for (let patch of patchData) {
+        if (!patch.actor || !patch.items || patch.items.length == 0) {
+            continue;
+        }
+        summary.push(`Patching ${patch.actor.name}...`);
+        summary.push(await actors.replaceSpells(patch.actor, patch.items));
+    }
+    if (summary.length == 0) {
+        return;
+    }
+    ChatMessage.create({
+        content: (summary.join("<br/>")),
+        whisper: ChatMessage.getWhisperRecipients('GM'),
+    });
+}

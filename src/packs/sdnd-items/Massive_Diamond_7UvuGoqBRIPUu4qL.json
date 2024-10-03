@@ -1,7 +1,7 @@
 {
   "name": "Massive Diamond",
   "type": "loot",
-  "img": "modules/sdnd-shared/images/items/crafting_ingredient.webp",
+  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
   "system": {
     "description": {
       "value": "",
@@ -38,10 +38,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1723338340157,
-    "modifiedTime": 1727201365089,
+    "modifiedTime": 1727305980164,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {

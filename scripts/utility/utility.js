@@ -42,5 +42,6 @@ export let utility = {
             let pack = await game.packs.get(packID);
             await dnd5e.migrations.migrateCompendium(pack);
         }
+        console.log(`${sdndConstants.MODULE_ID} compendium migration complete...`);
     }
 };

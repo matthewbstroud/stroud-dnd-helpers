@@ -188,9 +188,7 @@
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",
@@ -206,7 +204,7 @@
         },
         "effectmacro": {
           "onDelete": {
-            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.label);"
+            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.name);"
           },
           "onTurnEnd": {
             "script": "await stroudDnD.features.TwilightDomain.turnEnd(origin.parent.uuid, actor.uuid);"
@@ -247,9 +245,7 @@
           "macroRepeat": "none",
           "specialDuration": []
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",
@@ -265,7 +261,7 @@
         },
         "effectmacro": {
           "onDelete": {
-            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.label);\nawait stroudDnD.features.TwilightDomain.removeTwilightEffects(origin.parent.uuid);"
+            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.name);\nawait stroudDnD.features.TwilightDomain.removeTwilightEffects(origin.parent.uuid);"
           },
           "onTurnEnd": {
             "script": "await stroudDnD.features.TwilightDomain.turnEnd(origin.parent.uuid, actor.uuid);"
@@ -435,11 +431,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1682167256793,
-    "modifiedTime": 1719936499639,
-    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+    "modifiedTime": 1727305979858,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": "YcCwvZw8ou9MVGEF",
   "sort": 0,

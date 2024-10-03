@@ -10,7 +10,7 @@ let reloader = {
     },
     getAmmo: function _getAmmo(target, weapon) {
         let ammoType = "unknown";
-        switch (weapon.system.baseItem) {
+        switch (weapon.system.type.baseItem) {
             case "longbow":
             case "shortbow":
                 ammoType = "arrow";

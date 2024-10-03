@@ -36,12 +36,12 @@ async function syncPortentDice({speaker, actor, token, character, item, args}) {
 }
 
 async function createPortentDice(actor) {
-    let diceRoll = new Roll('1d20').evaluate({ async: false });
+    let diceRoll = await new Roll('1d20').evaluate();
     let portentDie = await items.getItemFromCompendium(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS, sdndConstants.TEMP_ITEMS.PORTENT_DIE, false, null);
     portentDie.name = `Portent Die (${diceRoll.total})`;
     portentDie.system.damage.parts[0] = `${diceRoll.total}`;
     portentDie.system.chatFlavor = `The die flashes ${diceRoll.total} and disappears...`;
-    actor.createEmbeddedDocuments('Item', [portentDie]);
+    await actor.createEmbeddedDocuments('Item', [portentDie]);
     return diceRoll.total;
 }
 
@@ -73,7 +73,7 @@ async function rollPortentDice(){
     let dice1 = await createPortentDice(actor);
     let dice2 = await createPortentDice(actor);
     
-    ChatMessage.create({
+    await ChatMessage.create({
         speaker: { alias: actor.name },
         content: `Summons two mystical dice, each die has the same value on every face. The values are ${dice1} and ${dice2}.`,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE

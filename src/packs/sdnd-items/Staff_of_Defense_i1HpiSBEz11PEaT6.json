@@ -1,19 +1,19 @@
 {
   "name": "Staff of Defense",
   "sorting": "a",
-  "folder": "PP9XFtc3SwmqPjr3",
+  "folder": "BeLUfpJ0d2cACd5n",
   "type": "Item",
   "_id": "i1HpiSBEz11PEaT6",
-  "sort": 0,
+  "sort": 200000,
   "color": null,
   "flags": {},
   "_stats": {
-    "systemId": null,
-    "systemVersion": null,
-    "coreVersion": null,
+    "systemId": "dnd5e",
+    "systemVersion": "3.2.1",
+    "coreVersion": "11.315",
     "createdTime": null,
-    "modifiedTime": null,
-    "lastModifiedBy": null
+    "modifiedTime": 1727306381002,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_key": "!folders!i1HpiSBEz11PEaT6"
 }

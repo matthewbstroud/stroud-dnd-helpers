@@ -30,7 +30,7 @@ const devoteesCenserUtil = {
         }
 
         // Roll Twilight Sanctuary temporary hit points
-        let healRoll = new Roll('1d4[heal]', caster.getRollData()).evaluate({ async: false });
+        let healRoll = await new Roll('1d4[heal]', caster.getRollData()).evaluate();
 
         healRoll.toMessage({
             user: game.user._id,

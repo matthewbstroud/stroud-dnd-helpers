@@ -68,14 +68,14 @@ export let sdndSettings = {
 			'scope': 'world',
 			'config': true,
 			'type': String,
-			'choices': function () {
+			'choices': (function() {
 				let options = { "none": "(None)" };
 				let playlists = game?.playlists?.contents ?? [];
 				playlists.forEach(pl => {
 					options[pl.id] = pl.name;
 				});
 				return options;
-			},
+			})(),
 			'default': 'none'
 		},
 		'getValue': () =>  getModuleSettingValue('CombatPlayList')

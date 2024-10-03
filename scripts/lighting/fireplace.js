@@ -50,7 +50,7 @@ export let fireplace = {
             else {
                 message = "The fire bursts to life.";
             }
-            ChatMessage.create({ content: message });
+            await ChatMessage.create({ content: message });
         }
         else {
             ui.notifications.notify(`Fireplace ${fireplaceID} does not exist in this scene.`);
@@ -63,6 +63,7 @@ export let fireplace = {
         if (!toggleFireplaceMacro) {
             return;
         }
+        let maxSort = Math.max(...canvas.scene.tiles.map(t => t.sort));
         for (let fireplace of fireplaces) {
             let actions = fireplace.getFlag("monks-active-tiles", "actions");
             let scriptAction = actions.find(a => a.data.entity.name == "toggleFireplace");
@@ -72,8 +73,8 @@ export let fireplace = {
             scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
             fireplace.setFlag("monks-active-tiles", "actions", actions);
 
-            if (fireplace.texture.src.endsWith('custom_icons/Fireplace_Icon.webp')) {
-                await fireplace.update({ "texture.src": 'modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp'});
+            if (fireplace.texture.src.endsWith('custom_icons/Fireplace_Icon.webp') || fireplace.sort < maxSort) {
+                await fireplace.update({ "texture.src": 'modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp', "sort": (maxSort)});
             }
         }
     }

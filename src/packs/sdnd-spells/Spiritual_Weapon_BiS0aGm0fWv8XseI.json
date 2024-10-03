@@ -20,7 +20,7 @@
     },
     "cover": null,
     "target": {
-      "value": null,
+      "value": "",
       "width": null,
       "units": null,
       "type": "",
@@ -94,7 +94,8 @@
     "properties": [
       "vocal",
       "somatic"
-    ]
+    ],
+    "enchantment": null
   },
   "name": "Spiritual Weapon",
   "flags": {
@@ -276,9 +277,7 @@
         "dfreds-convenient-effects": {
           "description": ""
         },
-        "core": {
-          "statusId": ""
-        },
+        "core": {},
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",
@@ -314,11 +313,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1682167256810,
-    "modifiedTime": 1719936499723,
-    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+    "modifiedTime": 1727305980403,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": null,
   "sort": 0,

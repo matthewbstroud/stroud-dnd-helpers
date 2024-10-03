@@ -92,7 +92,6 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 |Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
 |---|---|---|---|---|
 |Hunter's Mark|True|True|None|Allows multiple players to mark the same target simultaneously.|
-|Magic Missile|True|True|None|Allows casting each missile individually without spell prompts.|
 |Spiritual Weapon|True|True|Spiritual Weapon||
 
 # Magic Items
@@ -111,7 +110,7 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 | Dynamic effects using Active Effects (DAE) | 11.3.36 | https://gitlab.com/tposney/dae |
 | Effect Macro | 11.2.2 | https://github.com/krbz999/effectmacro/releases/download/v11.2.2/module.json |
 | libWrapper | 1.12.14.0 | https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json |
-| Midi QOL | 11.3.11 | https://gitlab.com/tposney/midi-qol/raw/dnd3/package/module.json |
+| Midi QOL | 11.4.48 | https://gitlab.com/tposney/midi-qol/raw/dnd3/package/module.json |
 | Monk's Active Tile Triggers | 11.27 | https://github.com/ironmonk88/monks-active-tiles/releases/download/11.27/module.json |
 | socketlib | 1.1.0 | https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/v1.1.0/module.json |
 | Template Macro | 11.0.1 | https://github.com/krbz999/templatemacro/releases/latest/download/module.json |
