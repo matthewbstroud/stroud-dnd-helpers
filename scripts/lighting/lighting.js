@@ -10,7 +10,7 @@ export let lighting = {
 async function getUniqueConfigsFromScene() {
     let configs = canvas.scene.lights.map(l => JSON.stringify({
         "type": l.config.animation.type ?? "none",
-        "color": l.config.color ?? "#000000",
+        "color": l.config.color ? l.config.color.toString() : "#000000",
         "bright": l.config.bright,
         "dim": l.config.dim,
         "alpha": l.config.alpha,
@@ -19,7 +19,7 @@ async function getUniqueConfigsFromScene() {
             "max": l.config.darkness.max
         },
         "count": canvas.scene.lights.filter(l2 => l2.config.animation.type == l.config.animation.type &&
-            l2.config.color == l.config.color &&
+            l2.config.color?.toString() == l.config.color?.toString() &&
             l2.config.bright == l.config.bright &&
             l2.config.dim == l.config.dim &&
             l2.config.alpha == l.config.alpha &&
@@ -63,9 +63,13 @@ function generateConfigOptionsTable(uniqueConfigs) {
 }
 
 async function updateLights() {
+    let gameMajorVersion = numbers.toNumber(game.version.split(".").shift());
     function _updateLights(search_options, new_animation, new_color, bright, dim, alpha, min_activation, max_activation) {
         if (search_options?.color == "#000000") {
             search_options.color = null;
+        }
+        else if (gameMajorVersion >= 12) {
+            search_options.color = Color.from(search_options.color);  
         }
         if (search_options.type == "none") {
             search_options.type = null;
@@ -73,13 +77,16 @@ async function updateLights() {
         if (new_color == "#000000") {
             new_color = null;
         }
+        else if (gameMajorVersion >= 12) {
+            new_color = Color.from(new_color);  
+        }
         if (new_animation == "none") {
             new_animation = null;
         }
         let targetLights = canvas.scene.lights
             .filter(l =>
                 l.config.animation.type == search_options.type &&
-                l.config.color == search_options.color &&
+                l.config.color?.toString() == search_options.color?.toString() &&
                 l.config.bright == search_options.bright &&
                 l.config.dim == search_options.dim &&
                 l.config.alpha == search_options.alpha &&

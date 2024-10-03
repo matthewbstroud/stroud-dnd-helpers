@@ -58,7 +58,7 @@ async function organizeMacros() {
         console.log(user.name);
         let playerFolder = playersFolder.getSubfolders().find(f => f.name == user.name);
         if (!playerFolder) {
-            playerFolder = await Folder.create({ "name": user.name, "type": "Macro", "parent": playersFolder.id });
+            playerFolder = await Folder.create({ "name": user.name, "type": "Macro", "folder": playersFolder.id });
         }
         if (!playerFolder) {
             ui.notifications.notify(`Cannot create folder for user ${user.name}.`);

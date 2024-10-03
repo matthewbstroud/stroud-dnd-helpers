@@ -2,7 +2,6 @@ import { socket } from "../module.js";
 import { folders } from "../folders/folders.js";
 import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
-import { spawnSpirtualWeapon } from "../spells/spiritualWeapon/spiritualWeapon.js";
 import { gmCheckActorWeight, gmDropBackpack, gmPickupBackpack } from "../backpacks/backpacks.js";
 import { sdndConstants } from "../constants.js";
 
@@ -191,12 +190,6 @@ export let gmFunctions = {
                 await document.unsetFlag(scope, key);
             },
             async () => await socket.executeAsGM("unsetFlag", uuid, scope, key)
-        );
-    },
-    "spawnSpiritualWeapon": async function _spawnSpiritualWeapon(userID, actorID, tokenID, level, x, y) {
-        run(
-            async () => spawnSpirtualWeapon(userID, actorID, tokenID, level, x, y),
-            async () => await socket.executeAsGM("spawnSpiritualWeapon", userID, actorID, tokenID, level, x, y)
         );
     },
     "importFromCompendium": async function _importFromCompedium(type, packId, packItemId, parentFolderId){

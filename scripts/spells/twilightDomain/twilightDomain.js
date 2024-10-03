@@ -1,7 +1,6 @@
 import { dialog } from "../../dialog/dialog.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { sdndConstants } from "../../constants.js";
-import { items } from "../../items/items.js";
 
 const twilightUtil = {
     ensureResourceLink: async function _ensureResourceLink(actor, item) {

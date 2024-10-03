@@ -164,7 +164,7 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
         return false;
     }
     if (source instanceof dnd5e.documents.Actor5e) {
-        let sceneTokens = canvas.scene.tokens.filter(t => t.actor.id == source.id);
+        let sceneTokens = canvas.scene.tokens.filter(t => t.actor?.id == source.id);
         let backpackId = source.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
         if (itemData.item._id == backpackId) {
             if (sceneTokens && sceneTokens.length == 1) {

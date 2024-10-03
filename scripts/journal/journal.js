@@ -28,9 +28,15 @@ export let journal = {
         }
         journalInternal.pruneSessionSummaries(folder.id);
         await JournalEntry.create({
-            name: `${SUMMARY_JOURNAL_NAME}: ${(new Date()).toLocaleString()}`,
-            content: journalInternal.generateSummaryHtml(players),
-            folder: folder.id
+            "name": `${SUMMARY_JOURNAL_NAME}: ${(new Date()).toLocaleString()}`,
+            "folder": folder.id,
+            "pages": [{
+                "name": "Player Summary",
+                "type": 'text',
+                "text": {
+                    "content": (journalInternal.generateSummaryHtml(players))
+                }
+            }]
         });
     }
 };

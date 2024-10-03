@@ -124,6 +124,14 @@ export let hooks = {
                 Hooks.on('updateActor', syncBackpackPermissions);
             }
             await combat.hooks.ready();
+	 	let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
+let options = { "none": "(None)" };
+				let playlists = game?.playlists?.contents ?? [];
+				playlists.forEach(pl => {
+					options[pl.id] = pl.name;
+				});
+		setting.choices = options;
+			
             await applyPatches();
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);

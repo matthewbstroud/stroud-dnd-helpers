@@ -18,7 +18,7 @@
     "url": "https://github.com/matthewbstroud/stroud-dnd-helpers/issues"
   },
   "homepage": "https://github.com/matthewbstroud/stroud-dnd-helpers#readme",
-  "dependencies": {
-    "@foundryvtt/foundryvtt-cli": "^1.0.2"
+  "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^1.0.3"
   }
 }
