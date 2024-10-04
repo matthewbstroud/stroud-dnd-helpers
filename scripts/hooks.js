@@ -117,30 +117,34 @@ export let hooks = {
         });
     },
     "ready": async function _ready() {
-		if (game.user?.isGM) {
+        if (game.user?.isGM) {
             Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
             if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
                 Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
                 Hooks.on('updateActor', syncBackpackPermissions);
             }
             await combat.hooks.ready();
-	 	let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
-let options = { "none": "(None)" };
-				let playlists = game?.playlists?.contents ?? [];
-				playlists.forEach(pl => {
-					options[pl.id] = pl.name;
-				});
-		setting.choices = options;
-			
-            await applyPatches();
+            let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
+            let options = { "none": "(None)" };
+            let playlists = game?.playlists?.contents ?? [];
+            playlists.forEach(pl => {
+                options[pl.id] = pl.name;
+            });
+            setting.choices = options;
+
+            // await applyPatches();
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);
         await backpacks.hooks.ready();
         await harvesting.hooks.ready();
+        await applyPatches();
     }
 };
 
 async function applyPatches() {
+    if (!game.user?.isTheGM) {
+        return;
+    }
     await twilightDomain.applyPatches();
     await removeCoreStatusId();
 }
@@ -148,7 +152,7 @@ async function applyPatches() {
 async function removeCoreStatusId() {
     let validNames = Array.from(game.packs).filter(p => p.metadata.type == "Item" && p.metadata.packageName == "stroud-dnd-helpers").flatMap(p => p.index.filter(i => ['spell', 'feat', 'weapon', 'item'].includes(i.type)).map(i => i.name));
     let patchData = await game.actors.filter(a => a.items.filter(i => validNames.includes(i.name) && i.effects.filter(e => e.flags?.core?.statusId).length > 0)?.length > 0)
-        .map(a => ({"actor": a, "items": (a.items.filter(i => i.effects.filter(e => e.flags?.core?.statusId).length > 0))}));
+        .map(a => ({ "actor": a, "items": (a.items.filter(i => i.effects.filter(e => e.flags?.core?.statusId).length > 0)) }));
     if (patchData?.length == 0) {
         return;
     }
@@ -163,7 +167,7 @@ async function removeCoreStatusId() {
     if (summary.length == 0) {
         return;
     }
-    ChatMessage.create({
+    await ChatMessage.create({
         content: (summary.join("<br/>")),
         whisper: ChatMessage.getWhisperRecipients('GM'),
     });
