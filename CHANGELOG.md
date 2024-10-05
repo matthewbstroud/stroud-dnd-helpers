@@ -1,6 +1,14 @@
+# v11.6.9
+# New Features
+- Mounts handling
+# Bug Fixes
+- Fix event handlers
 # v11.6.8
 # New Features
+- Foundry v12 support
 - DND5e 3.2.1 support
+# Bug Fixes
+- Backpack Bug when tokens with null actors exist in scene
 # v11.6.7
 # Bug Fixes
 - Harvesting

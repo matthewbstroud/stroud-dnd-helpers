@@ -22,7 +22,7 @@ export let tokens = {
     },
     "releaseInvalidTokens": function _releaseInvalidTokens(allowInCombat) {
         function shouldRelease(token, allowInCombat) {
-            let excludedFolders = [ sdndConstants.FOLDERS.ACTOR.TEMP ];
+            let excludedFolders = [sdndConstants.FOLDERS.ACTOR.TEMP];
             excludedFolders = excludedFolders.concat(sdndSettings.ExcludedFolders.getValue()?.split(','));
             if (!allowInCombat && token.inCombat) {
                 return true;
@@ -63,7 +63,15 @@ export let tokens = {
         ip.shareImage(); // Display to all other players
     },
     "toggleNpcName": _toggleNpcName,
-    "pushTokenPrototype": pushTokenPrototype
+    "pushTokenPrototype": pushTokenPrototype,
+    "getDistance": function _getDistance(sourceToken, targetToken) {
+        let distance = canvas.dimensions.distance;
+        let sourceCenter = (sourceToken instanceof dnd5e.documents.TokenDocument5e) ? 
+            canvas.tokens.get(sourceToken.id)?.center : sourceToken.center;
+        let targetCenter = (targetToken instanceof dnd5e.documents.TokenDocument5e) ? 
+        canvas.tokens.get(targetToken.id)?.center : targetToken.center;
+        return distance * Math.round(canvas.grid.measureDistance(sourceCenter, targetCenter) / distance);
+    }
 };
 
 async function _toggleNpcName() {
@@ -104,7 +112,7 @@ async function _toggleNpcName() {
     }
 }
 
-async function _toggleNpcNameCub(currentToken){
+async function _toggleNpcNameCub(currentToken) {
     const CUB_SCOPE = "combat-utility-belt";
     const CUB_HIDENAMES = "enableHideName";
 
@@ -128,10 +136,10 @@ async function _toggleNpcNameCub(currentToken){
     return strVal;
 }
 
-async function _toggleNpcNameAnon(api, currentToken){
+async function _toggleNpcNameAnon(api, currentToken) {
     let strVal = "";
     let playersSeeName = api.playersSeeName(currentToken.actor);
-    
+
     if (playersSeeName) {
         currentToken.document.update({ "displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER });
         api.toggleSeeName(currentToken.actor);
@@ -168,7 +176,7 @@ async function pushTokenPrototype() {
         return mergeObject(token, actor.prototypeToken);
     });
 
-    if (!updates || updates.length == 0){
+    if (!updates || updates.length == 0) {
         return;
     }
 

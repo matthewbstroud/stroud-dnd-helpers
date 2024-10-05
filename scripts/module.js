@@ -17,12 +17,12 @@ import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
 import { macros } from './macros/macros.js';
 import { utility } from './utility/utility.js';
-import { createBackpackHeaderButton } from './backpacks/backpacks.js';
 import { hooks } from './hooks.js';
 import { backpacks } from './backpacks/backpacks.js';
 import { tagging } from './utility/tagging.js';
 import { actors } from './actors/actors.js';
 import { plants } from './plants/plants.js';
+import { mounts } from './mounts/mounts.js';
 
 // CONFIG.debug.hooks = true;
 
@@ -58,6 +58,7 @@ globalThis['stroudDnD'] = {
 	lighting,
 	macros,
 	money,
+	mounts,
 	music,
 	plants,
 	spells,
