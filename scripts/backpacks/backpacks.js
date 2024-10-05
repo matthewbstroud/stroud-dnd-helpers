@@ -1,6 +1,7 @@
 import { sdndConstants } from "../constants.js";
 import { folders } from "../folders/folders.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { mounts } from "../mounts/mounts.js";
 import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
 import { activeEffects } from "../../active_effects/activeEffects.js";
@@ -198,7 +199,7 @@ async function checkItemParentWeight(item) {
     if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
         return;
     }
-    if (actor.getFlag("item-piles", "data.type") || actor.type != "character") {
+    if (actor.getFlag("item-piles", "data.type") || actor?.type != "character") {
         return;
     }
     if ((item?.system?.weight ?? 0) == 0) {
@@ -266,18 +267,19 @@ export async function gmCheckActorWeight(actorUuid, force) {
 
 async function interact(pileUuid) {
     let pile = await fromUuid(pileUuid);
+    let isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
     if (!(pile.actor.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
-        ui.notifications.warn("This is not your pack!");
+        ui.notifications.warn(`This does not belong to you!`);
         return false;
     }
-    let choice = await dialog.createButtonDialog("Backpack",
+    let choice = await dialog.createButtonDialog(pile.actor.name,
         [
             {
                 "label": "Open",
                 "value": "open"
             },
             {
-                "label": "Pick up",
+                "label": (isMount ? "Mount" : "Pick up"),
                 "value": "pickup"
             }
         ]
@@ -311,7 +313,8 @@ async function getPrimaryPackId(tokenId) {
     return backpackId;
 }
 
-export async function gmDropBackpack(tokenId, backpackId, userUuid) {
+export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
+    isMount ??= false;
     let controlledToken = canvas.tokens.get(tokenId);
     let actor = controlledToken.actor;
     if (!actor) {
@@ -395,12 +398,15 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
         if (transferred && transferred.length > 0) {
             let newBackpackID = transferred[0].item._id;
             let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
-            newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
-            backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "lockedItem", newBackpackID);
-            backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
+            await newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
+            await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "lockedItem", newBackpackID);
+            await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
             let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
             if (backpack.id == primaryBackpackId) {
-                backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "IsPrimary", true);
+                await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "IsPrimary", true);
+            }
+            if (isMount) {
+                await backpackToken?.actor.setFlag(sdndConstants.MODULE_ID, "IsMount", true);
             }
         }
     }
@@ -409,9 +415,11 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid) {
     }
 
     await gmCheckActorWeight(actor, true);
+    let message = isMount ? `Has dismounted ${backpack.name}.` :
+        `Has dropped ${backpack.name} on the ground.`;
     ChatMessage.create({
         speaker: { alias: actor.name },
-        content: `Has dropped ${backpack.name} on the ground.`,
+        content: message,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
     });
 }
@@ -422,7 +430,7 @@ export async function gmPickupBackpack(pileUuid) {
         ui.notifications.error(`Couldn't find container with id ${pileUuid}`);
         return;
     }
-
+    const isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
     let lockedItemID = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     let backpack = pile.actor.items.get(lockedItemID);
     if (!backpack) {
@@ -463,10 +471,12 @@ export async function gmPickupBackpack(pileUuid) {
         }
         await pileActor.delete();
         let newBackpack = actor.items.get(backpackId);
+        await newBackpack.update({ "system.equipped": true });
         await gmCheckActorWeight(actor, true);
+        let message = isMount ? `Has mounted ${newBackpack.name}` : `Has picked up ${newBackpack.name}.`
         ChatMessage.create({
             speaker: { alias: actor.name },
-            content: `Has picked up their ${newBackpack.name}.`,
+            content: message,
             type: CONST.CHAT_MESSAGE_TYPES.EMOTE
         });
     }
@@ -478,9 +488,10 @@ export async function gmPickupBackpack(pileUuid) {
 export function createBackpackHeaderButton(config, buttons) {
     if (config.object instanceof Item) {
         let item = config.object;
-        if (item.type != "container") {
+        if (item.type != "container" || mounts.isMount(item)) {
             return;
         }
+
         let actor = item?.parent;
         if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
             return;
