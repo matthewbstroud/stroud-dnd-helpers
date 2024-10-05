@@ -1,3 +1,8 @@
+# v11.6.10
+# Bug Fixes
+- Fix typo.
+- Add effect for mount.
+- Remove override for Spiritual Weapon.
 # v11.6.9
 # New Features
 - Mounts handling
