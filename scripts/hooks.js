@@ -5,6 +5,7 @@ import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
+import { mounts } from './mounts/mounts.js';
 
 export let hooks = {
     "init": function _init() {
@@ -146,6 +147,7 @@ async function applyPatches() {
         return;
     }
     await twilightDomain.applyPatches();
+    await mounts.applyPatches();
     await removeCoreStatusId();
 }
 

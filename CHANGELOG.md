@@ -1,8 +1,11 @@
 # v11.6.10
+# New Features
+- Foundry v12 support
 # Bug Fixes
 - Fix typo.
 - Add effect for mount.
 - Remove override for Spiritual Weapon.
+- Handle distance calculation when attempting to interact with dropped horse/backpack.
 # v11.6.9
 # New Features
 - Mounts handling
@@ -10,7 +13,6 @@
 - Fix event handlers
 # v11.6.8
 # New Features
-- Foundry v12 support
 - DND5e 3.2.1 support
 # Bug Fixes
 - Backpack Bug when tokens with null actors exist in scene
