@@ -6,6 +6,7 @@ import { sdndSettings } from "../settings.js";
 import { dialog } from "../dialog/dialog.js";
 import { activeEffects } from "../../active_effects/activeEffects.js";
 import { utility } from "../utility/utility.js";
+import { tokens } from "../tokens.js";
 
 const nonItems = [
     "race", "background", "class", "subclass", "spell", "feat"
@@ -272,6 +273,19 @@ async function interact(pileUuid) {
         ui.notifications.warn(`This does not belong to you!`);
         return false;
     }
+    let actorUuid = pile.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+    let actor = await fromUuid(actorUuid);
+    let actorTokens = actor?.getActiveTokens();
+    if (actorTokens > 1) {
+        ui.notifications.error(`More than one token exists in the scene for ${actor.name}!`);
+        return false;
+    }
+    const maxDistance = isMount ? 30 : 5;
+    let distance = tokens.getDistance(pile, actorTokens[0]);
+    if (distance > maxDistance) {
+        ui.notifications.warn(`${actor.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
+        return false;
+    }
     let choice = await dialog.createButtonDialog(pile.actor.name,
         [
             {
@@ -473,7 +487,7 @@ export async function gmPickupBackpack(pileUuid) {
         let newBackpack = actor.items.get(backpackId);
         await newBackpack.update({ "system.equipped": true });
         await gmCheckActorWeight(actor, true);
-        let message = isMount ? `Has mounted ${newBackpack.name}` : `Has picked up ${newBackpack.name}.`
+        let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`
         ChatMessage.create({
             speaker: { alias: actor.name },
             content: message,
