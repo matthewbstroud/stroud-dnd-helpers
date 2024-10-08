@@ -68,6 +68,9 @@ const MOUNTED_EFFECT = {
         "hostile": false,
         "onlyOnce": false,
         "wallsBlock": "system"
+      },
+      "stroud-dnd-helpers": {
+        "effectName": "Mounted"
       }
     },
     "tint": null
@@ -77,6 +80,17 @@ export let mounts = {
     "isMount": function _isMount(item) {
         return item.getFlag(sdndConstants.MODULE_ID, "IsMount") || (item.type == "container" && (item.name?.toLowerCase().includes("horse") || item.img?.toLowerCase()?.includes("horse") ||
             item.system?.description?.value?.toLowerCase()?.includes("horse")));
+    },
+    "changeHealth": async function changeHealth(actorUuid, healthPercentage) {
+        let health = (Math.ceil(healthPercentage / 5) * 5);
+        let actor = await fromUuid(actorUuid);
+        let horse = getHorse(actor);
+        let effect = horse.effects.find(e => e.getFlag(sdndConstants.MODULE_ID, "effectName") == "Mounted");
+        if (!effect) {
+            return false;
+        }
+        let icon = `modules/stroud-dnd-helpers/images/icons/saddle_health/saddle_health_${health < 10 ? "0" : ""}${health}.webp`;
+        await horse.updateEmbeddedDocuments("ActiveEffect", [{ "_id": effect.id, "icon": icon }])
     },
     "toggleMount": async function _targetMount() {
         let controlledToken = utility.getControlledToken();

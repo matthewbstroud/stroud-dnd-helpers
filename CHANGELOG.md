@@ -1,3 +1,7 @@
+# v12.0.1
+# Bug Fixes
+- Make dropped item permissions mirror that of the owning actor.
+- Limit interaction distance on dropped backpacks/mounts.
 # v12.0.0
 # New Features
 - Foundry v12 support.
