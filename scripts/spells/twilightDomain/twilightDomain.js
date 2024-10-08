@@ -176,7 +176,7 @@ export let twilightDomain = {
         }
         for (let actor of actors) {
             summary.push(`Patching Twilight Domain on ${actor.name}...`);
-            let twlightSanctuary = actor.items.find(i => i.img == "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp");
+            let twlightSanctuary = actor.items.find(i => i.img.includes("modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp"));
             if (!twlightSanctuary) {
                 summary.push(`Couldn't find SDND Twilight Sanctuary`);
                 continue;

@@ -95,13 +95,22 @@
       "offHandWeapon": false,
       "ignoreTotalCover": false,
       "confirmTargets": "default",
-      "noConcentrationCheck": false
+      "noConcentrationCheck": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "core": {},
     "ddbimporter": {
       "ignoreIcon": true,
       "ignoreItemImport": true,
       "retainResourceConsumption": false
+    },
+    "chris-premades": {
+      "info": {
+        "source": "stroud-dnd-helpers.SDND-Features"
+      }
     }
   },
   "system": {
@@ -186,7 +195,7 @@
     "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1706802839208,
-    "modifiedTime": 1727305979859,
+    "modifiedTime": 1728352982282,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "z9DlWhEGWPMlwaNv",

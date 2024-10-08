@@ -1,6 +1,12 @@
+# v12.0.0
+# New Features
+- Foundry v12 support.
+  - Update Foundry deploy to allow V12 support.
+# Bug Fixes
+- Twilight domain patch.
 # v11.6.10
 # New Features
-- Foundry v12 support
+- Foundry v12 support (unofficial)
 # Bug Fixes
 - Fix typo.
 - Add effect for mount.
