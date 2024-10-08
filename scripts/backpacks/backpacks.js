@@ -281,7 +281,7 @@ async function interact(pileUuid) {
         ui.notifications.error(`More than one token exists in the scene for ${actor.name}!`);
         return false;
     }
-    const maxDistance = isMount ? 30 : 5;
+    const maxDistance = 5;
     let distance = tokens.getDistance(pile, actorTokens[0]);
     if (distance > maxDistance) {
         ui.notifications.warn(`${actor.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
@@ -366,9 +366,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
                     }
                 }
             },
-            "ownership": {
-                [userUuid.split(".").pop()]: foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
-            }
+            "ownership": actor.ownership
         },
         "position": {
             "x": controlledToken.x,
