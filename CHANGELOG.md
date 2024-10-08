@@ -4,6 +4,7 @@
   - Update Foundry deploy to allow V12 support.
 # Bug Fixes
 - Twilight domain patch.
+- Fix bug with patching mounted effect.
 # v11.6.10
 # New Features
 - Foundry v12 support (unofficial)
