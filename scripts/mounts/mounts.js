@@ -124,7 +124,7 @@ export let mounts = {
         if (existingEffect) {
             await existingEffect.delete();
         }
-        let effect = MOUNTED_EFFECT;
+        let effect = structuredClone(MOUNTED_EFFECT);
         effect.origin = itemUuid;
         if (ac != 4) {
             let acMod = effect.changes.find(c => c.key == "system.attributes.ac.bonus");
@@ -133,7 +133,7 @@ export let mounts = {
             }
         }
         await item.setFlag(sdndConstants.MODULE_ID, "IsMount", true);
-        await item.createEmbeddedDocuments('ActiveEffect', [MOUNTED_EFFECT]);
+        await item.createEmbeddedDocuments('ActiveEffect', [effect]);
         let properties = item.system?.properties;
         if (!properties.has('weightlessContents')) {
             properties.add('weightlessContents');

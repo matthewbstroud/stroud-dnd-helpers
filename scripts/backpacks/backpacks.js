@@ -210,6 +210,7 @@ async function checkItemParentWeight(item) {
 }
 
 export async function gmCheckActorWeight(actorUuid, force) {
+    force ??= false;
     if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
     }
@@ -221,7 +222,7 @@ export async function gmCheckActorWeight(actorUuid, force) {
     if (!actor) {
         return;
     }
-    if (isLocked(actor.id)) {
+    if (isLocked(actor.id) && !force) {
         return;
     }
     lockActor(actor.id);
@@ -358,6 +359,13 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         "actorOverrides": {
             "name": backpackName,
             'folder': backpacksFolder.id,
+            "system": {
+                "abilities": {
+                    "str": {
+                        "value": (Math.ceil((backpack?.system?.capacity?.value ?? 70) / 15))
+                    }
+                }
+            },
             "ownership": {
                 [userUuid.split(".").pop()]: foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
             }
@@ -404,6 +412,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         }
     }
     try {
+        lockActor(actor.id);
         let result = await game.itempiles.API.createItemPile(pileOptions);
         let backpackToken = await fromUuid(result.tokenUuid);
         let items = actor.items.filter(i => i?.system?.container == backpack.id);
@@ -427,11 +436,13 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     catch (exception) {
         ui.notifications.error(exception.message);
     }
-
+    finally {
+        releaseActor(actor.id);
+    }
     await gmCheckActorWeight(actor, true);
     let message = isMount ? `Has dismounted ${backpack.name}.` :
         `Has dropped ${backpack.name} on the ground.`;
-    ChatMessage.create({
+    await ChatMessage.create({
         speaker: { alias: actor.name },
         content: message,
         type: CONST.CHAT_MESSAGE_TYPES.EMOTE
@@ -459,6 +470,7 @@ export async function gmPickupBackpack(pileUuid) {
     
     let actor = await fromUuid(actorUuId);
     try {
+        lockActor(actor.id);
         let items = game.itempiles.API.getActorItems(backpack.actor);
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
         await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
@@ -488,7 +500,7 @@ export async function gmPickupBackpack(pileUuid) {
         await newBackpack.update({ "system.equipped": true });
         await gmCheckActorWeight(actor, true);
         let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`
-        ChatMessage.create({
+        await ChatMessage.create({
             speaker: { alias: actor.name },
             content: message,
             type: CONST.CHAT_MESSAGE_TYPES.EMOTE
@@ -496,6 +508,9 @@ export async function gmPickupBackpack(pileUuid) {
     }
     catch (exception) {
         ui.notifications.error(exception.message);
+    }
+    finally {
+        releaseActor(actor.id);
     }
 }
 

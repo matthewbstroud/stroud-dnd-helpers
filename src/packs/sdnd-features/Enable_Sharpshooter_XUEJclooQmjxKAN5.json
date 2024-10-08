@@ -77,7 +77,10 @@
     "midi-qol": {
       "effectActivation": false,
       "forceCEOff": false,
-      "onUseMacroName": ""
+      "onUseMacroName": "",
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": ""
     },
     "midiProperties": {
       "nodam": false,
@@ -92,13 +95,24 @@
       "autoFailFriendly": false,
       "autoSaveFriendly": false,
       "offHandWeapon": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "confirmTargets": "default",
+      "noConcentrationCheck": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "core": {},
     "ddbimporter": {
       "ignoreIcon": true,
       "ignoreItemImport": true,
       "retainResourceConsumption": false
+    },
+    "chris-premades": {
+      "info": {
+        "source": "stroud-dnd-helpers.SDND-Features"
+      }
     }
   },
   "system": {
@@ -183,7 +197,7 @@
     "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1706802930478,
-    "modifiedTime": 1727305979859,
+    "modifiedTime": 1728353071410,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "XUEJclooQmjxKAN5",

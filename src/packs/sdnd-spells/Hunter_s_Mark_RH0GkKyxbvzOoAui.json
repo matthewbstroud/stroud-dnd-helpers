@@ -158,7 +158,13 @@
       "offHandWeapon": false,
       "concentration": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "confirmTargets": "default",
+      "noConcentrationCheck": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "spell-class-filter-for-5e": {
       "parentClass": "ranger"
@@ -201,7 +207,10 @@
       "forceCEOff": true,
       "effectActivation": false,
       "onUseMacroName": "[preActiveEffects]function.stroudDnD.spells.HuntersMark.itemMacro,[damageBonus]function.stroudDnD.spells.HuntersMark.itemMacro",
-      "forceCEOn": false
+      "forceCEOn": false,
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": ""
     },
     "core": {
       "sourceId": "Actor.jsFnmyL717S10ISa.Item.UVdRV3e0q27MizHs"
@@ -248,6 +257,11 @@
           "modifiedTime": null,
           "lastModifiedBy": null
         }
+      }
+    },
+    "chris-premades": {
+      "info": {
+        "source": "stroud-dnd-helpers.SDND-Features"
       }
     }
   },
@@ -327,7 +341,7 @@
     "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1683225374129,
-    "modifiedTime": 1727305980412,
+    "modifiedTime": 1728353069745,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": null,

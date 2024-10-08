@@ -109,7 +109,10 @@
     },
     "midi-qol": {
       "effectActivation": false,
-      "onUseMacroName": "[preItemRoll]function.stroudDnD.features.TwilightDomain.itemMacro,[postActiveEffects]function.stroudDnD.features.TwilightDomain.itemMacro"
+      "onUseMacroName": "[preItemRoll]function.stroudDnD.features.TwilightDomain.itemMacro,[postActiveEffects]function.stroudDnD.features.TwilightDomain.itemMacro",
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": ""
     },
     "midiProperties": {
       "nodam": false,
@@ -124,7 +127,13 @@
       "magiceffect": false,
       "concentration": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "confirmTargets": "default",
+      "noConcentrationCheck": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "cf": {
       "id": "temp_81rnc31mf7e"
@@ -156,6 +165,11 @@
     },
     "stroud-dnd-helpers": {
       "importedItem": true
+    },
+    "chris-premades": {
+      "info": {
+        "source": "stroud-dnd-helpers.SDND-Features"
+      }
     }
   },
   "effects": [
@@ -434,7 +448,7 @@
     "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1682167256793,
-    "modifiedTime": 1727305979858,
+    "modifiedTime": 1728352983184,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": "YcCwvZw8ou9MVGEF",
