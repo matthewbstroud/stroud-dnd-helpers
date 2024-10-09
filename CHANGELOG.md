@@ -1,3 +1,8 @@
+# v12.0.5
+# New Features
+- Tagging
+  - Allow tagging selected tokens.
+  - Toggle Tokens macro allows toggling visibility of named tokens.
 # v12.0.4
 # New Features
 - New icons.
