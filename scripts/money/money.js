@@ -10,25 +10,7 @@ const MONEY_MODE = {
 };
 
 export let money = {
-    "manageMoney": async function _manageMoney() {
-        if (!game.user.isGM) {
-            ui.notifications.notify(`Can only be run by the gamemaster!`);
-            return;
-        }
-        let buttons = [];
-        for (let property in MONEY_MODE) {
-            buttons.push({ "label": MONEY_MODE[property], "value": MONEY_MODE[property] });
-        }
-        let moneyMode = await dialog.createButtonDialog("Manage Money", buttons);
-        switch (moneyMode) {
-            case MONEY_MODE.GIVE:
-                return this.giveMoney();
-            case MONEY_MODE.TAKE:
-                return this.takeMoney();
-            case MONEY_MODE.EQUALIZE:
-                return moneyInternal.equalizeCurrency();
-        }
-    },
+    "manageMoney": foundry.utils.debounce(_manageMoney, 250),
     /* Give a specified money to a single player or divide between all players. */
     "giveMoney": async function _giveMoney() {
         if (!game.user.isGM) {
@@ -239,6 +221,26 @@ export let moneyInternal = {
                 "system.currency.sp": newSP,
                 "system.currency.cp": newTotalCP
             });
+    }
+}
+
+async function _manageMoney() {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    let buttons = [];
+    for (let property in MONEY_MODE) {
+        buttons.push({ "label": MONEY_MODE[property], "value": MONEY_MODE[property] });
+    }
+    let moneyMode = await dialog.createButtonDialog("Manage Money", buttons);
+    switch (moneyMode) {
+        case MONEY_MODE.GIVE:
+            return this.giveMoney();
+        case MONEY_MODE.TAKE:
+            return this.takeMoney();
+        case MONEY_MODE.EQUALIZE:
+            return moneyInternal.equalizeCurrency();
     }
 }
 

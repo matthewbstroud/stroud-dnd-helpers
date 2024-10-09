@@ -5,42 +5,43 @@ const SUMMARY_FOLDER_NAME = "Session Summaries";
 const SUMMARY_JOURNAL_NAME = "Session End Summary";
 
 export let journal = {
-    "generateSessionSummary": async function _generateSessionSummary() {
-        if (!game.user.isGM) {
-            ui.notifications.notify(`Can only be run by the gamemaster!`);
-            return;
-        }
-        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
-        let playersFolder = game.folders.getName(playersFolderName);
-        if (!playersFolder) {
-            ui.notifications.warn(`Make sure your players are in an actors folder named ${playersFolderName}...`);
-            return;
-        }
-        let players = canvas.scene.tokens.filter((token) => token.actor && token.actor?.folder?.name == playersFolderName).map(t => t.actor).sort(sortByName);
-        if (players.length == 0) {
-            ui.notifications.notify('There are no player tokens in this scene.');
-            return;
-        }
-        var folder = game.folders.getName(SUMMARY_FOLDER_NAME);
-
-        if (!folder) {
-            folder = await Folder.create({ "name": SUMMARY_FOLDER_NAME, "type": "JournalEntry" });
-        }
-        journalInternal.pruneSessionSummaries(folder.id);
-        await JournalEntry.create({
-            "name": `${SUMMARY_JOURNAL_NAME}: ${(new Date()).toLocaleString()}`,
-            "folder": folder.id,
-            "pages": [{
-                "name": "Player Summary",
-                "type": 'text',
-                "text": {
-                    "content": (journalInternal.generateSummaryHtml(players))
-                }
-            }]
-        });
-    }
+    "generateSessionSummary": foundry.utils.debounce(generateSessionSummary, 250)
 };
 
+async function generateSessionSummary() {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+    let playersFolder = game.folders.getName(playersFolderName);
+    if (!playersFolder) {
+        ui.notifications.warn(`Make sure your players are in an actors folder named ${playersFolderName}...`);
+        return;
+    }
+    let players = canvas.scene.tokens.filter((token) => token.actor && token.actor?.folder?.name == playersFolderName).map(t => t.actor).sort(sortByName);
+    if (players.length == 0) {
+        ui.notifications.notify('There are no player tokens in this scene.');
+        return;
+    }
+    var folder = game.folders.getName(SUMMARY_FOLDER_NAME);
+
+    if (!folder) {
+        folder = await Folder.create({ "name": SUMMARY_FOLDER_NAME, "type": "JournalEntry" });
+    }
+    journalInternal.pruneSessionSummaries(folder.id);
+    await JournalEntry.create({
+        "name": `${SUMMARY_JOURNAL_NAME}: ${(new Date()).toLocaleString()}`,
+        "folder": folder.id,
+        "pages": [{
+            "name": "Player Summary",
+            "type": 'text',
+            "text": {
+                "content": (journalInternal.generateSummaryHtml(players))
+            }
+        }]
+    });
+}
 
 let journalInternal = {
     "generateSummaryHtml": function _generateSummaryHtml(players) {

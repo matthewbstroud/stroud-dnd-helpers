@@ -22,7 +22,7 @@ export let macros = {
             return;
         }
     },
-    "organize": organizeMacros
+    "organize": foundry.utils.debounce(organizeMacros, 250)
 };
 
 async function organizeMacros() {

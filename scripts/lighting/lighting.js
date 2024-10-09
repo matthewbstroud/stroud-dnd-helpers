@@ -3,7 +3,7 @@ import { numbers } from "../utility/numbers.js";
 export let lighting = {
     "fireplace": fireplace,
     "lights": {
-        "update": updateLights
+        "update": foundry.utils.debounce(updateLights, 250)
     }
 };
 

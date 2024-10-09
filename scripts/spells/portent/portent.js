@@ -1,7 +1,7 @@
 import { items } from "../../items/items.js";
 import { sdndConstants } from "../../constants.js";
 export let portent = {
-    "rollPortentDice": rollPortentDice,
+    "rollPortentDice": foundry.utils.debounce(rollPortentDice, 250),
     "syncPortentDice": syncPortentDice
 };
 

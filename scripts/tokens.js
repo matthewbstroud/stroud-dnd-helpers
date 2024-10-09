@@ -3,23 +3,7 @@ import { dialog } from "./dialog/dialog.js";
 import { sdndSettings } from "./settings.js";
 
 export let tokens = {
-    "manageTokens": async function _manageTokens() {
-        if (!game.user.isGM) {
-            ui.notifications.notify(`Can only be run by the gamemaster!`);
-            return;
-        }
-        let options = [
-            { label: "Show Token Art", value: "showTokenArt" },
-            { label: "Toggle Npc Name", value: "toggleNpcName" },
-            { label: "Push Prototype Changes", value: "pushTokenPrototype" }
-        ];
-        let option = await dialog.createButtonDialog("Manage Tokens", options);
-        if (!option) {
-            return;
-        }
-        let tokenFunction = tokens[option];
-        await tokenFunction();
-    },
+    "manageTokens": foundry.utils.debounce(manageTokens, 250),
     "releaseInvalidTokens": function _releaseInvalidTokens(allowInCombat) {
         function shouldRelease(token, allowInCombat) {
             let excludedFolders = [sdndConstants.FOLDERS.ACTOR.TEMP];
@@ -42,28 +26,9 @@ export let tokens = {
             t.release();
         });
     },
-    "showTokenArt": async function _showTokenArt() {
-        if (!game.user.isGM) {
-            ui.notifications.notify(`Can only be run by the gamemaster!`);
-            return;
-        }
-        let actor = canvas.tokens.controlled[0]?.actor;
-        if (!actor) {
-            ui.notifications.notify('No token selected!');
-            return;
-        }
-        // search for existing popout
-        var popout = Object.values(ui.windows)?.find(v => v instanceof ImagePopout && v?.options.uuid == actor.uuid);
-        if (popout) {
-            // already shown
-            return;
-        }
-        let ip = new ImagePopout(actor.img, { uuid: actor.uuid });
-        ip.render(true); // Display for self
-        ip.shareImage(); // Display to all other players
-    },
-    "toggleNpcName": _toggleNpcName,
-    "pushTokenPrototype": pushTokenPrototype,
+    "showTokenArt": foundry.utils.debounce(showTokenArt, 250),
+    "toggleNpcName": foundry.utils.debounce(toggleNpcName, 250),
+    "pushTokenPrototype":  foundry.utils.debounce(pushTokenPrototype, 250),
     "getDistance": function _getDistance(sourceToken, targetToken) {
         let distance = canvas.dimensions.distance;
         let sourceCenter = (sourceToken instanceof dnd5e.documents.TokenDocument5e) ? 
@@ -74,7 +39,46 @@ export let tokens = {
     }
 };
 
-async function _toggleNpcName() {
+async function showTokenArt() {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    let actor = canvas.tokens.controlled[0]?.actor;
+    if (!actor) {
+        ui.notifications.notify('No token selected!');
+        return;
+    }
+    // search for existing popout
+    var popout = Object.values(ui.windows)?.find(v => v instanceof ImagePopout && v?.options.uuid == actor.uuid);
+    if (popout) {
+        // already shown
+        return;
+    }
+    let ip = new ImagePopout(actor.img, { uuid: actor.uuid });
+    ip.render(true); // Display for self
+    ip.shareImage(); // Display to all other players
+}
+
+async function manageTokens() {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    let options = [
+        { label: "Show Token Art", value: "showTokenArt" },
+        { label: "Toggle Npc Name", value: "toggleNpcName" },
+        { label: "Push Prototype Changes", value: "pushTokenPrototype" }
+    ];
+    let option = await dialog.createButtonDialog("Manage Tokens", options);
+    if (!option) {
+        return;
+    }
+    let tokenFunction = tokens[option];
+    await tokenFunction();
+}
+
+async function toggleNpcName() {
     if (!game.user.isGM) {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;

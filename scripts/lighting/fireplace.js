@@ -3,39 +3,7 @@ import { sdndConstants } from "../constants.js";
 import { macros } from "../macros/macros.js";
 
 export let fireplace = {
-    "createFireplace": async function _createFireplace() {
-        if (!game.user.isGM) {
-            ui.notifications.error(`Can only be run by the gamemaster!`);
-            return;
-        }
-        await macros.ensureBTS();
-        await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, sdndConstants.FOLDERS.MACROS.BTS);
-
-        let toggleFireplaceMacro = game.macros.getName("toggleFireplace");
-        if (!toggleFireplaceMacro) {
-            ui.notifications.error(`toggleFireplace macro not loaded`);
-            return;
-        }
-
-        let fireplaceTile = canvas?.tiles?.controlled[0];
-
-        if (!fireplaceTile) {
-            ui.notifications.notify(`No background tile selected`);
-            return;
-        }
-        let tileBounds = getTileBounds(fireplaceTile);
-        let lights = canvas.scene.lights.filter(l => l.x >= tileBounds.x.min && l.x <= tileBounds.x.max && l.y >= tileBounds.y.min && l.y <= tileBounds.y.max);
-        if (lights.length != 1) {
-            ui.notifications.notify(`Only a single light should exist in the space of this tile!`);
-            return;
-        }
-        let sounds = canvas.scene.sounds.filter(l => l.x >= tileBounds.x.min && l.x <= tileBounds.x.max && l.y >= tileBounds.y.min && l.y <= tileBounds.y.max);
-        if (sounds.length != 1) {
-            ui.notifications.notify(`Only a single sound should exist in the space this tile!`);
-            return;
-        }
-        createFireplace(guid.uuidv4(), fireplaceTile, lights[0], sounds[0], toggleFireplaceMacro);
-    },
+    "createFireplace": foundry.utils.debounce(_createFireplace, 250),
     "toggleFireplace": async function _toggleFireplace(fireplaceID) {
         let light = canvas.scene.lights.find(l => l.getFlag("world", "fireplace") == fireplaceID);
         let sound = canvas.scene.sounds.find(l => l.getFlag("world", "fireplace") == fireplaceID);
@@ -56,29 +24,65 @@ export let fireplace = {
             ui.notifications.notify(`Fireplace ${fireplaceID} does not exist in this scene.`);
         }
     },
-    "rewireFireplaces": async function _rewireFireplaces() {
-        let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions?.find(a => a.data?.entity?.name == "toggleFireplace"));
-        await macros.ensureBTS();
-        let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
-        if (!toggleFireplaceMacro) {
-            return;
-        }
-        let maxSort = Math.max(...canvas.scene.tiles.map(t => t.sort));
-        for (let fireplace of fireplaces) {
-            let actions = fireplace.getFlag("monks-active-tiles", "actions");
-            let scriptAction = actions.find(a => a.data.entity.name == "toggleFireplace");
-            if (!scriptAction) {
-                continue;
-            }
-            scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
-            fireplace.setFlag("monks-active-tiles", "actions", actions);
+    "rewireFireplaces": foundry.utils.debounce(rewireFireplaces, 250)
+};
 
-            if (fireplace.texture.src.endsWith('custom_icons/Fireplace_Icon.webp') || fireplace.sort < maxSort) {
-                await fireplace.update({ "texture.src": 'modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp', "sort": (maxSort)});
-            }
+async function _createFireplace() {
+    if (!game.user.isGM) {
+        ui.notifications.error(`Can only be run by the gamemaster!`);
+        return;
+    }
+    await macros.ensureBTS();
+    await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, sdndConstants.FOLDERS.MACROS.BTS);
+
+    let toggleFireplaceMacro = game.macros.getName("toggleFireplace");
+    if (!toggleFireplaceMacro) {
+        ui.notifications.error(`toggleFireplace macro not loaded`);
+        return;
+    }
+
+    let fireplaceTile = canvas?.tiles?.controlled[0];
+
+    if (!fireplaceTile) {
+        ui.notifications.notify(`No background tile selected`);
+        return;
+    }
+    let tileBounds = getTileBounds(fireplaceTile);
+    let lights = canvas.scene.lights.filter(l => l.x >= tileBounds.x.min && l.x <= tileBounds.x.max && l.y >= tileBounds.y.min && l.y <= tileBounds.y.max);
+    if (lights.length != 1) {
+        ui.notifications.notify(`Only a single light should exist in the space of this tile!`);
+        return;
+    }
+    let sounds = canvas.scene.sounds.filter(l => l.x >= tileBounds.x.min && l.x <= tileBounds.x.max && l.y >= tileBounds.y.min && l.y <= tileBounds.y.max);
+    if (sounds.length != 1) {
+        ui.notifications.notify(`Only a single sound should exist in the space this tile!`);
+        return;
+    }
+    createFireplace(guid.uuidv4(), fireplaceTile, lights[0], sounds[0], toggleFireplaceMacro);
+}
+
+async function rewireFireplaces() {
+    let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions?.find(a => a.data?.entity?.name == "toggleFireplace"));
+    await macros.ensureBTS();
+    let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
+    if (!toggleFireplaceMacro) {
+        return;
+    }
+    let maxSort = Math.max(...canvas.scene.tiles.map(t => t.sort));
+    for (let fireplace of fireplaces) {
+        let actions = fireplace.getFlag("monks-active-tiles", "actions");
+        let scriptAction = actions.find(a => a.data.entity.name == "toggleFireplace");
+        if (!scriptAction) {
+            continue;
+        }
+        scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
+        fireplace.setFlag("monks-active-tiles", "actions", actions);
+
+        if (fireplace.texture.src.endsWith('custom_icons/Fireplace_Icon.webp') || fireplace.sort < maxSort) {
+            await fireplace.update({ "texture.src": 'modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp', "sort": (maxSort)});
         }
     }
-};
+}
 
 async function ensureMacro(macroName, packId, parentFolderName) {
     let macro = await game.macros.getName(macroName);

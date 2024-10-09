@@ -1,8 +1,8 @@
 import { gmFunctions } from "../gm/gmFunctions.js";
 
 export let identification = {
-    "createUnidentifiedItem": _createUnidentifiedItem,
-    "identifyItem": _idenfityItemGM,
+    "createUnidentifiedItem": foundry.utils.debounce(_createUnidentifiedItem, 250),
+    "identifyItem": foundry.utils.debounce(_idenfityItemGM, 250),
     "itemMacro": _itemMacro
 };
 

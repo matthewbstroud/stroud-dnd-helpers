@@ -342,77 +342,7 @@ const POISON_EFFECTS = {
 }
 
 export let poison = {
-    "ApplyPoison": async function _applyPoison() {
-        let controlledActor = utility.getControlledToken()?.actor;
-        if (!controlledActor) {
-            return;
-        }
-        let poisons = await getPoisons(controlledActor);
-        if (!poisons || poisons.length == 0) {
-            ui.notifications.warn(`${controlledActor.name} has no poisons.`);
-            return;
-        }
-        let poisonButtons = poisons.map(p => ({ label: p.name, value: p.uuid }));
-        let poisonUuid = await dialog.createButtonDialog("Select Poison To Apply", poisonButtons, 'column');
-        if (!poisonUuid || poisonUuid.length == 0) {
-            return;
-        }
-        let poison = await fromUuid(poisonUuid);
-        let weapons = await getWeapons(controlledActor);
-        if (!weapons || weapons.length == 0) {
-            ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
-            return;
-        }
-        let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
-        let weaponUuid = await dialog.createButtonDialog("Select Weapon to Poison", weaponButtons, 'column');
-        if (!weaponUuid || weaponUuid.length == 0) {
-            return;
-        }
-        let weapon = await fromUuid(weaponUuid);
-        let poisonType = await poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
-        const dcModifier = sdndSettings.PoisonDCModifier.getValue();
-        if (poisonType.dc > 0 && dcModifier != 0) {
-            poisonType.dc += dcModifier;
-        }
-        let bonusDamage = 0;
-        let poisoning = controlledActor.system?.tools?.pois;
-        if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
-            let profBonus = (poisoning?.total ?? 0);
-            if (poisonType.includeBonusDamage) {
-                bonusDamage = profBonus;
-            }
-            poisonType.dc += profBonus;
-        }
-        await this.ApplyPoisonToItem(weaponUuid,
-            poisonType.name,
-            poisonType.dieFaces,
-            poisonType.dieCount,
-            bonusDamage,
-            poisonType.damageType,
-            poisonType.duration,
-            poisonType.charges,
-            poisonType.dc,
-            poisonType.effect,
-            poisonType.ability,
-            poisonType.halfDamageOnSave);
-        let charges = (poison.system?.uses?.value ?? 0) - 1;
-        if (charges <= 0) {
-            if (poison.system?.quantity == 1) {
-                await poison.delete();
-            }
-            else {
-                await poison.update({ "system": { "quantity": (poison.system?.quantity - 1) } });
-            }
-        }
-        else {
-            await poison.update({ "system": { "uses": { "value": charges } } });
-        }
-        await ChatMessage.create({
-            emote: true,
-            speaker: { "actor": controlledActor },
-            content: `${controlledActor.name} has applied ${poison.name} to ${weapon.name}...`
-        });
-    },
+    "ApplyPoison": foundry.utils.debounce(applyPoison, 250),
     "ApplyPoisonToItem": async function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, bonusDamage, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
         durationMinutes = durationMinutes ?? 0;
         dc = dc ?? 0;
@@ -478,82 +408,7 @@ export let poison = {
             "halfDamageOnSave": halfDamageOnSave
         });
     },
-    "CraftPoison": async function _CraftPoison() {
-        let controlledActor = utility.getControlledToken()?.actor;
-        if (!controlledActor) {
-            return;
-        }
-        let kit = controlledActor.items.find(i => i.name == "Poisoner's Kit");
-        if (!kit) {
-            ui.notifications.warn(`${controlledActor.name} does not have a poisoner's kit!`);
-            return;
-        }
-        let poisoning = controlledActor.system?.tools?.pois;
-        if (!poisoning || (poisoning?.prof?.multiplier ?? 0) == 0) {
-            ui.notifications.warn(`${controlledActor.name} is not proficient with a poisoner's kit!`);
-            return;
-        }
-        let recipes = await getRecipes(controlledActor);
-        if (!recipes || recipes.length == 0) {
-            ui.notifications.warn(`${controlledActor.name} has no recipes with required components or they are broke.`);
-            return;
-        }
-        let recipieButtons = recipes.map(p => ({ label: p.name, value: p.name }));
-        let recipieName = await dialog.createButtonDialog("Select Recipie to Craft", recipieButtons, 'column');
-        if (!recipieName || recipieName.length == 0) {
-            return;
-        }
-        let recipe = POISON_RECIPES.find(r => r.name == recipieName);
-        if (!recipe) {
-            console.log(`Could not resolve ${recipieName}!`);
-            return;
-        }
-        let confirmation = await dialog.confirmation("Confirm Recipe", summarizeRecipe(recipe) +
-            "<p>Creating this recipe will cost you non-refundable time, money, and ingredients.</p><p><i>Would you like to continue?</i></p>");
-        if (confirmation != "True") {
-            return;
-        }
-
-        let totalCopper = moneyInternal.getTotalCopper(controlledActor);
-        if (totalCopper < (recipe.cost * 100)) {
-            ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipe.cost} gp required for this recipie.`);
-            return;
-        }
-        let selectedIngredients = await selectIngredients(controlledActor, recipe);
-        if (selectedIngredients == "cancel") {
-            return;
-        }
-        let result = await rollToolCheck(controlledActor, recipe);
-        await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipe.cost, 0, 0, 0);
-        await deleteIngredients(controlledActor, selectedIngredients);
-        await gmFunctions.advanceTime((recipe.duration ?? 10) * 60);
-        if (!result) {
-            await ChatMessage.create({
-                emote: true,
-                speaker: { "actor": controlledActor },
-                content: `${controlledActor.name} has failed to create ${recipe.name}...`
-            });
-            return;
-        }
-        const isCrit = (result == "Critical");
-        let existingPotion = controlledActor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType.name") == recipe.name);
-        if (existingPotion) {
-            await existingPotion.update({ "system": { "quantity": (existingPotion.system?.quantity ?? 0) + (isCrit ? 2 : 1) } });
-        }
-        else {
-            let poison = await fromUuid(recipe.poisonUuid);
-            let newItems = await controlledActor.createEmbeddedDocuments('Item', [poison]);
-            if (isCrit) {
-                let newItem = newItems[0];
-                newItem.update({ "system": { "quantity": 2 } })
-            }
-        }
-        await ChatMessage.create({
-            emote: true,
-            speaker: { "actor": controlledActor },
-            content: `${(isCrit ? 'Critical Success! ' : '')}${controlledActor.name} has successfully crafted ${(isCrit ? 'two ' : '')}${recipe.name}...`
-        });
-    },
+    "CraftPoison": foundry.utils.debounce(craftPoison, 250),
     "CreateRecipe": async function _createRecipe(itemUuid, recipeName) {
         if (!game.user.isGM) {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
@@ -567,9 +422,7 @@ export let poison = {
         await item.setFlag(sdndConstants.MODULE_ID, "Recipe.name", recipeName);
         await items.midiQol.addOnUseMacro(item, "postNoAction", RECIPE_MACRO);
     },
-    "ListRecipes": async function _listRecipes(actor) {
-        return await listRecipes(actor, false);
-    },
+    "ListRecipes": foundry.utils.debounce(listRecipes, 250),
     "UnlockRecipe": function _unlockRecipe({ speaker, actor, token, character, item, args }) {
         let recipeName = item.getFlag(sdndConstants.MODULE_ID, "Recipe.name");
         if (!recipeName || recipeName.length == 0) {
@@ -686,6 +539,155 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     }
     let roll = await new CONFIG.Dice.DamageRoll(damageRoll, item?.getRollData() ?? target.actor.getRollData(), rollOptions).evaluate({ async: true });
     return roll;
+}
+
+async function craftPoison() {
+    let controlledActor = utility.getControlledToken()?.actor;
+    if (!controlledActor) {
+        return;
+    }
+    let kit = controlledActor.items.find(i => i.name == "Poisoner's Kit");
+    if (!kit) {
+        ui.notifications.warn(`${controlledActor.name} does not have a poisoner's kit!`);
+        return;
+    }
+    let poisoning = controlledActor.system?.tools?.pois;
+    if (!poisoning || (poisoning?.prof?.multiplier ?? 0) == 0) {
+        ui.notifications.warn(`${controlledActor.name} is not proficient with a poisoner's kit!`);
+        return;
+    }
+    let recipes = await getRecipes(controlledActor);
+    if (!recipes || recipes.length == 0) {
+        ui.notifications.warn(`${controlledActor.name} has no recipes with required components or they are broke.`);
+        return;
+    }
+    let recipieButtons = recipes.map(p => ({ label: p.name, value: p.name }));
+    let recipieName = await dialog.createButtonDialog("Select Recipie to Craft", recipieButtons, 'column');
+    if (!recipieName || recipieName.length == 0) {
+        return;
+    }
+    let recipe = POISON_RECIPES.find(r => r.name == recipieName);
+    if (!recipe) {
+        console.log(`Could not resolve ${recipieName}!`);
+        return;
+    }
+    let confirmation = await dialog.confirmation("Confirm Recipe", summarizeRecipe(recipe) +
+        "<p>Creating this recipe will cost you non-refundable time, money, and ingredients.</p><p><i>Would you like to continue?</i></p>");
+    if (confirmation != "True") {
+        return;
+    }
+
+    let totalCopper = moneyInternal.getTotalCopper(controlledActor);
+    if (totalCopper < (recipe.cost * 100)) {
+        ui.notifications.warn(`${controlledActor.name} doesn't have the ${recipe.cost} gp required for this recipie.`);
+        return;
+    }
+    let selectedIngredients = await selectIngredients(controlledActor, recipe);
+    if (selectedIngredients == "cancel") {
+        return;
+    }
+    let result = await rollToolCheck(controlledActor, recipe);
+    await moneyInternal.takeCurrency([controlledActor.uuid], 0, recipe.cost, 0, 0, 0);
+    await deleteIngredients(controlledActor, selectedIngredients);
+    await gmFunctions.advanceTime((recipe.duration ?? 10) * 60);
+    if (!result) {
+        await ChatMessage.create({
+            emote: true,
+            speaker: { "actor": controlledActor },
+            content: `${controlledActor.name} has failed to create ${recipe.name}...`
+        });
+        return;
+    }
+    const isCrit = (result == "Critical");
+    let existingPotion = controlledActor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType.name") == recipe.name);
+    if (existingPotion) {
+        await existingPotion.update({ "system": { "quantity": (existingPotion.system?.quantity ?? 0) + (isCrit ? 2 : 1) } });
+    }
+    else {
+        let poison = await fromUuid(recipe.poisonUuid);
+        let newItems = await controlledActor.createEmbeddedDocuments('Item', [poison]);
+        if (isCrit) {
+            let newItem = newItems[0];
+            newItem.update({ "system": { "quantity": 2 } })
+        }
+    }
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": controlledActor },
+        content: `${(isCrit ? 'Critical Success! ' : '')}${controlledActor.name} has successfully crafted ${(isCrit ? 'two ' : '')}${recipe.name}...`
+    });
+}
+
+async function applyPoison() {
+    let controlledActor = utility.getControlledToken()?.actor;
+    if (!controlledActor) {
+        return;
+    }
+    let poisons = await getPoisons(controlledActor);
+    if (!poisons || poisons.length == 0) {
+        ui.notifications.warn(`${controlledActor.name} has no poisons.`);
+        return;
+    }
+    let poisonButtons = poisons.map(p => ({ label: p.name, value: p.uuid }));
+    let poisonUuid = await dialog.createButtonDialog("Select Poison To Apply", poisonButtons, 'column');
+    if (!poisonUuid || poisonUuid.length == 0) {
+        return;
+    }
+    let poison = await fromUuid(poisonUuid);
+    let weapons = await getWeapons(controlledActor);
+    if (!weapons || weapons.length == 0) {
+        ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
+        return;
+    }
+    let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
+    let weaponUuid = await dialog.createButtonDialog("Select Weapon to Poison", weaponButtons, 'column');
+    if (!weaponUuid || weaponUuid.length == 0) {
+        return;
+    }
+    let weapon = await fromUuid(weaponUuid);
+    let poisonType = await poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
+    const dcModifier = sdndSettings.PoisonDCModifier.getValue();
+    if (poisonType.dc > 0 && dcModifier != 0) {
+        poisonType.dc += dcModifier;
+    }
+    let bonusDamage = 0;
+    let poisoning = controlledActor.system?.tools?.pois;
+    if (poisonType.dc > 0 && (poisoning?.prof?.multiplier ?? 0) > 0) {
+        let profBonus = (poisoning?.total ?? 0);
+        if (poisonType.includeBonusDamage) {
+            bonusDamage = profBonus;
+        }
+        poisonType.dc += profBonus;
+    }
+    await this.ApplyPoisonToItem(weaponUuid,
+        poisonType.name,
+        poisonType.dieFaces,
+        poisonType.dieCount,
+        bonusDamage,
+        poisonType.damageType,
+        poisonType.duration,
+        poisonType.charges,
+        poisonType.dc,
+        poisonType.effect,
+        poisonType.ability,
+        poisonType.halfDamageOnSave);
+    let charges = (poison.system?.uses?.value ?? 0) - 1;
+    if (charges <= 0) {
+        if (poison.system?.quantity == 1) {
+            await poison.delete();
+        }
+        else {
+            await poison.update({ "system": { "quantity": (poison.system?.quantity - 1) } });
+        }
+    }
+    else {
+        await poison.update({ "system": { "uses": { "value": charges } } });
+    }
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": controlledActor },
+        content: `${controlledActor.name} has applied ${poison.name} to ${weapon.name}...`
+    });
 }
 
 function actorHasIngredients(actor, recipe) {
