@@ -1,3 +1,6 @@
+# v12.0.3
+# Bug Fixes
+- Remove Magic Missile.
 # v12.0.2
 # Bug Fixes
 - Fix bug with horses.

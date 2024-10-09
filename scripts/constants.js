@@ -101,7 +101,6 @@ export const sdndConstants = {
     "SPELLS": {
         "HUNTERS_MARK": "Hunter's Mark",
         "IDENTIFY": "Identify",
-        "MAGIC_MISSILE": "Magic Missile",
         "SPIRITUAL_WEAPON": "Spiritual Weapon"
     },
     "TEMP_ITEMS":{
