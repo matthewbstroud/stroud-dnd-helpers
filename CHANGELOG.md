@@ -1,3 +1,6 @@
+# v12.0.4
+# New Features
+- New icons.
 # v12.0.3
 # Bug Fixes
 - Remove Magic Missile.
