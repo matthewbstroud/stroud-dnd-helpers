@@ -261,7 +261,7 @@ export async function gmCheckActorWeight(actorUuid, force) {
     }
     finally {
         await new Promise(r => setTimeout(r, 2000)).then(
-            function () { releaseActor(actor.id);},
+            function () { releaseActor(actor.id); },
             function (err) { console.log(err.message); }
         );
     }
@@ -275,6 +275,14 @@ async function interact(pileUuid) {
         return false;
     }
     let actorUuid = pile.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+    if (!actorUuid || actorUuid.length == 0) {
+        actorUuid = pile.actor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "DroppedBy"))
+            ?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+    }
+    if (!actorUuid || actorUuid.length == 0) {
+        ui.notifications.warn(`Cannot determine the owner of this pile!`);
+        return false;
+    }
     let actor = await fromUuid(actorUuid);
     let actorTokens = actor?.getActiveTokens();
     if (actorTokens > 1) {
@@ -341,6 +349,8 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     if (!backpack) {
         return;
     }
+    await backpack.setFlag(sdndConstants.MODULE_ID, "fromBackPackId", backpack.uuid);
+    let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
     var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
     let backpackName = `${backpack.name} (${actor.name})`;
     let pileOptions = {
@@ -359,6 +369,14 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         "actorOverrides": {
             "name": backpackName,
             'folder': backpacksFolder.id,
+            "flags": {
+                [sdndConstants.MODULE_ID]: {
+                    "lockedItem": backpack.id,
+                    "IsMount": isMount,
+                    "DroppedBy": (actor.uuid),
+                    "IsPrimary": (backpack.id == primaryBackpackId)
+                }
+            },
             "system": {
                 "abilities": {
                     "str": {
@@ -417,18 +435,10 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         items.unshift(backpack);
         let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, items);
         if (transferred && transferred.length > 0) {
-            let newBackpackID = transferred[0].item._id;
+            let newBackpackID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.fromBackPackId == backpack.uuid)?.item?._id;
             let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
             await newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
             await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "lockedItem", newBackpackID);
-            await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
-            let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
-            if (backpack.id == primaryBackpackId) {
-                await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "IsPrimary", true);
-            }
-            if (isMount) {
-                await backpackToken?.actor.setFlag(sdndConstants.MODULE_ID, "IsMount", true);
-            }
         }
     }
     catch (exception) {
@@ -454,7 +464,8 @@ export async function gmPickupBackpack(pileUuid) {
         return;
     }
     const isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
-    let lockedItemID = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    let lockedItemID = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "lockedItem") ??
+        pile?.actor?.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "DroppedBy"))?.id;
     let backpack = pile.actor.items.get(lockedItemID);
     if (!backpack) {
         ui.notifications.error("unexpected error resolving backpack!");
@@ -465,7 +476,7 @@ export async function gmPickupBackpack(pileUuid) {
         ui.notifications.error("Cannot determine who dropped this container!");
         return;
     }
-    
+
     let actor = await fromUuid(actorUuId);
     try {
         lockActor(actor.id);
