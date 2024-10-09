@@ -6,6 +6,7 @@ import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
 import { mounts } from './mounts/mounts.js';
+import { macros } from './macros/macros.js';
 
 export let hooks = {
     "init": function _init() {
@@ -132,8 +133,6 @@ export let hooks = {
                 options[pl.id] = pl.name;
             });
             setting.choices = options;
-
-            // await applyPatches();
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);
         await backpacks.hooks.ready();
@@ -147,7 +146,7 @@ async function applyPatches() {
         return;
     }
     await twilightDomain.applyPatches();
-    await mounts.applyPatches();
+    // await mounts.applyPatches();
     await removeCoreStatusId();
 }
 

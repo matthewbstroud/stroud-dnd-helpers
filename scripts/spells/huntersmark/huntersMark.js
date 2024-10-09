@@ -4,7 +4,7 @@ import { getSpellData } from "../spells.js";
 const HUNTERS_MARK = "Hunter's Mark";
 
 export let huntersMark = {
-    "castOrUse": _castOrUse,
+    "castOrUse": foundry.utils.debounce(_castOrUse, 250),
     "itemMacro": _itemMacro,
     "removeMarks": _removeMarks
 };

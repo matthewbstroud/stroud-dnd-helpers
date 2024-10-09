@@ -1,7 +1,7 @@
 import { dialog } from "../dialog/dialog.js";
 
 export let ranged = {
-    "reload": _reload
+    "reload": foundry.utils.debounce(_reload, 250)
 };
 
 let reloader = {

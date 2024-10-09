@@ -15,28 +15,9 @@ const nonItems = [
 let processEvents = true;
 
 export let backpacks = {
-    "dropBackpack": async function _dropBackpack() {
-        let controlledToken = utility.getControlledToken();
-        if (!controlledToken?.actor) {
-            return;
-        }
-        else if (controlledToken.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
-            return;
-        }
-        if (!controlledToken?.actor?.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
-            ui.notifications.warn("You can only drop backpacks for characters you own!");
-            return;
-        }
-        let backpackId = await getPrimaryPackId(controlledToken.id);
-        if (!backpackId) {
-            return;
-        }
-        gmFunctions.dropBackpack(controlledToken.id, backpackId, game.user.uuid);
-    },
-    "interact": interact,
-    "pickupBackpack": async function _pickupBackpack(pileUuid) {
-        gmFunctions.pickupBackpack(pileUuid);
-    },
+    "dropBackpack": foundry.utils.debounce(dropBackpack, 250),
+    "interact": foundry.utils.debounce(interact, 250),
+    "pickupBackpack": foundry.utils.debounce(pickupBackpack, 250),
     "eventsEnabled": () => processEvents,
     "pauseEvents": async function _pauseEvents() {
         processEvents = false;
@@ -44,12 +25,7 @@ export let backpacks = {
     "resumeEvents": async function _resumeEvents() {
         processEvents = true;
     },
-    "forceCheck": async function _forceCheck() {
-        let actorUuids = canvas.scene.tokens?.filter(t => t.actor?.folder?.name == sdndSettings.ActivePlayersFolder.getValue()).map(t => t.actor.uuid);
-        for (const actorUuid of actorUuids) {
-            gmCheckActorWeight(actorUuid, true);
-        }
-    },
+    "forceCheck": foundry.utils.debounce(forceCheck, 250),
     "hooks": {
         "ready": async function _ready() {
             if (!(game.modules.find(m => m.id === "item-piles")?.active ?? false)) {
@@ -71,6 +47,36 @@ export let backpacks = {
 }
 
 let locks = {}
+
+async function forceCheck() {
+    let actorUuids = canvas.scene.tokens?.filter(t => t.actor?.folder?.name == sdndSettings.ActivePlayersFolder.getValue()).map(t => t.actor.uuid);
+    for (const actorUuid of actorUuids) {
+        gmCheckActorWeight(actorUuid, true);
+    }
+}
+
+async function dropBackpack() {
+    let controlledToken = utility.getControlledToken();
+    if (!controlledToken?.actor) {
+        return;
+    }
+    else if (controlledToken.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
+        return;
+    }
+    if (!controlledToken?.actor?.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
+        ui.notifications.warn("You can only drop backpacks for characters you own!");
+        return;
+    }
+    let backpackId = await getPrimaryPackId(controlledToken.id);
+    if (!backpackId) {
+        return;
+    }
+    gmFunctions.dropBackpack(controlledToken.id, backpackId, game.user.uuid);
+}
+
+async function pickupBackpack(pileUuid) {
+    await gmFunctions.pickupBackpack(pileUuid);
+}
 
 function lockActor(actorId) {
     locks[actorId] = true;

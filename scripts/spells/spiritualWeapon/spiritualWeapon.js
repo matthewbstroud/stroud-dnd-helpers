@@ -1,7 +1,7 @@
 import { sdndConstants } from "../../constants.js";
 
 export let spiritualWeapon = {
-    "castOrUse": _castOrUse
+    "castOrUse": foundry.utils.debounce(_castOrUse, 250)
 };
 
 async function _castOrUse() {

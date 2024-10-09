@@ -10,9 +10,7 @@ const DIE_MATCH = /(\d+)d(\d+)/g;
 
 export let actors = {
     "ensureActor": ensureActor,
-    "buffNpcsWithPrompt": async function _buffNpcsWithPrompt() {
-        promptForBuff(buffActors); 
-    },
+    "buffNpcsWithPrompt": foundry.utils.debounce(buffNpcsWithPrompt, 250),
     "buffNpcs": async function _buffNpcs(useMax, multiplier) {
         return buffActors("npc", useMax, multiplier)
     },
@@ -21,6 +19,11 @@ export let actors = {
     "setTokenBarsVisibility": setTokenBarsVisibility,
     "replaceSpells": replaceSpells
 }
+
+async function buffNpcsWithPrompt() {
+    promptForBuff(buffActors); 
+}
+
 async function setPrototypeTokenBarsVisibility(actors, tokenDisplayMode) {
     if (!actors || !tokenDisplayMode) {
         return;

@@ -6,75 +6,75 @@ import { utility } from "../utility/utility.js";
 const MOUNTED_EFFECT = {
     "name": "Mounted",
     "changes": [
-      {
-        "key": "flags.midi-qol.disadvantage.attack.all",
-        "mode": 0,
-        "value": "1",
-        "priority": 20
-      },
-      {
-        "key": "flags.midi-qol.disadvantage.ability.check.dex",
-        "mode": 0,
-        "value": "1",
-        "priority": 20
-      },
-      {
-        "key": "system.attributes.ac.bonus",
-        "mode": 2,
-        "value": "4",
-        "priority": 20
-      }
+        {
+            "key": "flags.midi-qol.disadvantage.attack.all",
+            "mode": 0,
+            "value": "1",
+            "priority": 20
+        },
+        {
+            "key": "flags.midi-qol.disadvantage.ability.check.dex",
+            "mode": 0,
+            "value": "1",
+            "priority": 20
+        },
+        {
+            "key": "system.attributes.ac.bonus",
+            "mode": 2,
+            "value": "4",
+            "priority": 20
+        }
     ],
     "transfer": true,
     "icon": "modules/stroud-dnd-helpers/images/icons/saddle.webp",
     "disabled": false,
     "duration": {
-      "startTime": null,
-      "seconds": null,
-      "combat": null,
-      "rounds": null,
-      "turns": null,
-      "startRound": null,
-      "startTurn": null
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
     },
     "description": "",
     "origin": null,
     "statuses": [],
     "flags": {
-      "dae": {
-        "disableCondition": "",
-        "disableIncapacitated": false,
-        "stackable": "noneName",
-        "showIcon": true,
-        "durationExpression": "",
-        "macroRepeat": "none",
-        "specialDuration": []
-      },
-      "core": {
-        "overlay": false
-      },
-      "ActiveAuras": {
-        "isAura": false,
-        "aura": "None",
-        "nameOverride": "",
-        "radius": "",
-        "alignment": "",
-        "type": "",
-        "customCheck": "",
-        "ignoreSelf": false,
-        "height": false,
-        "hidden": false,
-        "displayTemp": false,
-        "hostile": false,
-        "onlyOnce": false,
-        "wallsBlock": "system"
-      },
-      "stroud-dnd-helpers": {
-        "effectName": "Mounted"
-      }
+        "dae": {
+            "disableCondition": "",
+            "disableIncapacitated": false,
+            "stackable": "noneName",
+            "showIcon": true,
+            "durationExpression": "",
+            "macroRepeat": "none",
+            "specialDuration": []
+        },
+        "core": {
+            "overlay": false
+        },
+        "ActiveAuras": {
+            "isAura": false,
+            "aura": "None",
+            "nameOverride": "",
+            "radius": "",
+            "alignment": "",
+            "type": "",
+            "customCheck": "",
+            "ignoreSelf": false,
+            "height": false,
+            "hidden": false,
+            "displayTemp": false,
+            "hostile": false,
+            "onlyOnce": false,
+            "wallsBlock": "system"
+        },
+        "stroud-dnd-helpers": {
+            "effectName": "Mounted"
+        }
     },
     "tint": null
-  };
+};
 
 export let mounts = {
     "isMount": function _isMount(item) {
@@ -92,38 +92,7 @@ export let mounts = {
         let icon = `modules/stroud-dnd-helpers/images/icons/saddle_health/saddle_health_${health < 10 ? "0" : ""}${health}.webp`;
         await horse.updateEmbeddedDocuments("ActiveEffect", [{ "_id": effect.id, "icon": icon }])
     },
-    "toggleMount": async function _targetMount() {
-        let controlledToken = utility.getControlledToken();
-        if (!controlledToken?.actor) {
-            return;
-        }
-        else if (controlledToken.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
-            return;
-        }
-        if (!controlledToken?.actor?.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
-            ui.notifications.warn("You can only handle your own mount!");
-            return;
-        }
-        let actor = controlledToken.actor;
-        let horse = getHorse(actor);
-        if (horse) {
-            await dismount(controlledToken.id, horse.id);
-            return true;
-        }
-        // find the horse
-        let horseToken = findHorseToken(actor);
-        if (!horseToken) {
-            ui.notifications.warn(`${actor.name} has no owned mount in this scene!`);
-            return false;
-        }
-        const distance = tokens.getDistance(controlledToken, horseToken);
-        if (distance > 30) {
-            let horseName = horseToken?.actor?.name?.split("(")?.shift() ?? "";
-            ui.notifications.warn(`You must be within 30 feet to call ${horseName.trim()}!`);
-            return false;
-        }
-        await gmFunctions.pickupBackpack(horseToken.uuid);
-    },
+    "toggleMount": foundry.utils.debounce(toggleMount, 250),
     "createMount": async function _createMount(itemUuid, ac) {
         if (!game.user?.isTheGM) {
             return;
@@ -132,7 +101,7 @@ export let mounts = {
         if (!item || item.type != "container") {
             console.log(`${itemUuid} cannot be turned into a mount!`);
             return false;
-        } 
+        }
         ac ??= getAc(item);
         let existingEffect = item.effects.find(e => e.name == "Mounted");
         if (existingEffect) {
@@ -151,7 +120,7 @@ export let mounts = {
         let properties = item.system?.properties;
         if (!properties.has('weightlessContents')) {
             properties.add('weightlessContents');
-            await item.update( { "system.properties": (Array.from(properties)) });
+            await item.update({ "system.properties": (Array.from(properties)) });
         }
     },
     "applyPatches": async function _applyPatches() {
@@ -191,6 +160,44 @@ export let mounts = {
         return true;
     }
 };
+
+async function toggleMount() {
+    let controlledToken = utility.getControlledToken();
+    if (!controlledToken?.actor) {
+        return;
+    }
+    else if (controlledToken.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) {
+        return;
+    }
+    if (!controlledToken?.actor?.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER) {
+        ui.notifications.warn("You can only handle your own mount!");
+        return;
+    }
+    let actor = controlledToken.actor;
+    try {
+        let horse = getHorse(actor);
+        if (horse) {
+            await dismount(controlledToken.id, horse.id);
+            return true;
+        }
+        // find the horse
+        let horseToken = findHorseToken(actor);
+        if (!horseToken) {
+            ui.notifications.warn(`${actor.name} has no owned mount in this scene!`);
+            return false;
+        }
+        const distance = tokens.getDistance(controlledToken, horseToken);
+        if (distance > 30) {
+            let horseName = horseToken?.actor?.name?.split("(")?.shift() ?? "";
+            ui.notifications.warn(`You must be within 30 feet to call ${horseName.trim()}!`);
+            return false;
+        }
+        await gmFunctions.pickupBackpack(horseToken.uuid);
+    }
+    catch (exception) {
+        ui.notifications.error(exception.message);
+    }
+}
 
 function getHorse(actor) {
     let horses = actor.items?.filter(i => i.type == "container" && (i.name?.toLowerCase().includes("horse") || i.img?.toLowerCase()?.includes("horse") ||

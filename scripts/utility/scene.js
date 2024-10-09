@@ -1,6 +1,6 @@
 
 export let scene = {
-    "rewireMonksActiveTiles": _rewireMonksActiveTiles,
+    "rewireMonksActiveTiles": foundry.utils.debounce(_rewireMonksActiveTiles, 250),
     "packModuleThumbnails": _packModuleThumbnails,
     "regenerateThumbnails": _regenerateThumbnails
 };

@@ -3,7 +3,7 @@ import { gmFunctions } from "../../gm/gmFunctions.js";
 import { items } from "../../items/items.js";
 import { getSpellData } from "../spells.js";
 export let magicMissile = {
-    "castOrUse": _castOrUse,
+    "castOrUse": foundry.util.debounce(_castOrUse, 250),
     "itemMacro": _itemMacro
 };
 

@@ -8,27 +8,9 @@ import { tokens } from "./tokens.js";
 import { bloodyAxe } from "./items/weapons/bloodyAxe.js";
 
 export let combat = {
-    "applyAdhocDamage": applyAdhocDamage,
-    "simulatedAttackers": simulateAttackers,
-    "startFilteredCombat": async function _startFilteredCombat() {
-        if (!game.user.isGM) {
-            ui.notifications.notify(`Can only be run by the gamemaster!`);
-            return;
-        }
-        tokens.releaseInvalidTokens(false);
-        await canvas.tokens.toggleCombat();
-        await game.combat.rollNPC();
-
-        var combatPlaylistId = sdndSettings.CombatPlayList.getValue();
-        if (!combatPlaylistId || combatPlaylistId == "none") {
-            return;
-        }
-        Hooks.once("deleteCombat", async function () {
-            playlists.stop(combatPlaylistId);
-            SimpleCalendar?.api.startClock();
-        });
-        playlists.start(combatPlaylistId, true);
-    },
+    "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
+    "simulatedAttackers": foundry.utils.debounce(simulateAttackers, 250),
+    "startFilteredCombat": foundry.utils.debounce(startFilteredCombat, 250),
     "weapons": {
         "ranged": ranged
     },
@@ -43,6 +25,26 @@ export let combat = {
         }
     }
 };
+
+async function startFilteredCombat() {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    tokens.releaseInvalidTokens(false);
+    await canvas.tokens.toggleCombat();
+    await game.combat.rollNPC();
+
+    var combatPlaylistId = sdndSettings.CombatPlayList.getValue();
+    if (!combatPlaylistId || combatPlaylistId == "none") {
+        return;
+    }
+    Hooks.once("deleteCombat", async function () {
+        playlists.stop(combatPlaylistId);
+        SimpleCalendar?.api.startClock();
+    });
+    playlists.start(combatPlaylistId, true);
+}
 
 async function onDamageTaken(actor, changes, update, userId) {
     bloodyAxe.onDamageTaken(actor, changes, update, userId);

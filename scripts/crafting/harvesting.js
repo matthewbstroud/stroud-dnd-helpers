@@ -4,6 +4,7 @@ import { dialog } from "../dialog/dialog.js";
 import { utility } from "../utility/utility.js";
 import { sdndSettings } from "../settings.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { macros } from "../macros/macros.js";
 
 const DEFAULTS = {
     "dc": 10,
@@ -309,58 +310,60 @@ export let harvesting = {
             resolveRewardUuids(harvestable.rewards);
         }
     },
-    "HarvestSelected": async function _harvestSelected() {
-        let controlledActor = utility.getControlledToken()?.actor;
-        if (!controlledActor || controlledActor.folder?.name != sdndSettings.ActivePlayersFolder.getValue()) {
-            ui.notifications.warn("Only players can harvest!");
-            return;
-        }
+    "HarvestSelected": foundry.utils.debounce(harvestSelected, 250)
+};
 
-        let targets = Array.from(game.user.targets);
-        if (targets.length != 1) {
-            ui.notifications.warn("Please target a single creature.");
-            return;
-        }
-        let target = targets.pop()?.actor;
-        let harvestable = getHarvestingData(target);
-        if (!harvestable || target?.type != "npc") {
-            ui.notifications.warn(`${target.name} is not harvestable.`);
-            return;
-        }
-        if ((target.system?.attributes?.hp?.value ?? 0) > 0) {
-            ui.notifications.warn(`${target.name} is not dead!  Gross!`);
-            return;
-        }
-        if (await getHarvested(target)) {
-            ui.notifications.warn(`${target.name} has already been harvested.`);
-            return;
-        }
-        let confirmation = await dialog.confirmation("Confirm Harvesting", summarizeHarvestable(harvestable) +
-            "<p><i>Would you like to continue?</i></p>");
-        if (confirmation != "True") {
-            return;
-        }
-        const flavor = `DC${harvestable.dc} ${dnd5e.config.skills[harvestable.skill].label} check to harvest ${harvestable.name}`;
-        let result = await craftingHelpers.rollSkillCheck(controlledActor, harvestable.skill, harvestable.dc, flavor, false);
-        await gmFunctions.advanceTime((harvestable.duration ?? 10) * 60)
-        await setHarvested(target, controlledActor.uuid);
-        if (!result.isSuccess) {
-            await ChatMessage.create({
-                emote: true,
-                speaker: { "actor": controlledActor },
-                content: `${controlledActor.name} has failed to harvest ${harvestable.name}...`
-            });
-            return;
-        }
-        let rewards = await selectRewards(harvestable);
-        let summary = await createRewards(controlledActor, rewards, result.isCritical);
+async function harvestSelected() {
+    let controlledActor = utility.getControlledToken()?.actor;
+    if (!controlledActor || controlledActor.folder?.name != sdndSettings.ActivePlayersFolder.getValue()) {
+        ui.notifications.warn("Only players can harvest!");
+        return;
+    }
+
+    let targets = Array.from(game.user.targets);
+    if (targets.length != 1) {
+        ui.notifications.warn("Please target a single creature.");
+        return;
+    }
+    let target = targets.pop()?.actor;
+    let harvestable = getHarvestingData(target);
+    if (!harvestable || target?.type != "npc") {
+        ui.notifications.warn(`${target.name} is not harvestable.`);
+        return;
+    }
+    if ((target.system?.attributes?.hp?.value ?? 0) > 0) {
+        ui.notifications.warn(`${target.name} is not dead!  Gross!`);
+        return;
+    }
+    if (await getHarvested(target)) {
+        ui.notifications.warn(`${target.name} has already been harvested.`);
+        return;
+    }
+    let confirmation = await dialog.confirmation("Confirm Harvesting", summarizeHarvestable(harvestable) +
+        "<p><i>Would you like to continue?</i></p>");
+    if (confirmation != "True") {
+        return;
+    }
+    const flavor = `DC${harvestable.dc} ${dnd5e.config.skills[harvestable.skill].label} check to harvest ${harvestable.name}`;
+    let result = await craftingHelpers.rollSkillCheck(controlledActor, harvestable.skill, harvestable.dc, flavor, false);
+    await gmFunctions.advanceTime((harvestable.duration ?? 10) * 60)
+    await setHarvested(target, controlledActor.uuid);
+    if (!result.isSuccess) {
         await ChatMessage.create({
             emote: true,
             speaker: { "actor": controlledActor },
-            content: `${(result.isCritical ? 'Critical Success! ' : '')} Result:<br/>${summary}`
+            content: `${controlledActor.name} has failed to harvest ${harvestable.name}...`
         });
+        return;
     }
-};
+    let rewards = await selectRewards(harvestable);
+    let summary = await createRewards(controlledActor, rewards, result.isCritical);
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": controlledActor },
+        content: `${(result.isCritical ? 'Critical Success! ' : '')} Result:<br/>${summary}`
+    });
+}
 
 async function onApplyDamage(actor, damageAmount, options) {
     if (actor.type != 'npc') {

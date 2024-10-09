@@ -1,6 +1,7 @@
 # v12.0.2
 # Bug Fixes
 - Fix bug with horses.
+- Debounce macros.
 # v12.0.1
 # Bug Fixes
 - Make dropped item permissions mirror that of the owning actor.

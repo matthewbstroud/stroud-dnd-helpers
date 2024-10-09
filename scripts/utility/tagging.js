@@ -3,50 +3,31 @@ import { sdndConstants } from "../constants.js";
 
 export let tagging = {
     "tagDocuments": tagDocuments,
-    "getTaggedDocuments": getTaggedDocuments,
-    "listTags": listTags,
-    "tagSelected": tagSelected,
+    "getTaggedDocuments": foundry.utils.debounce(getTaggedDocuments, 250),
+    "listTags": foundry.utils.debounce(listTags, 250),
+    "tagSelected": foundry.utils.debounce(tagSelected, 250),
     "doors": {
-        "setState": async function _setDoorState(name, state) {
-            await executeAction(canvas.scene.walls, name, async function (door) {
-                door.update({ "ds": state });
-            });
-        },
+        "setState": foundry.utils.debounce(setDoorState, 250),
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.walls, sdndConstants.MODULE_ID, "tagName", name);
         },
-        "toggle": toggleDoors
+        "toggle": foundry.utils.debounce(toggleDoors, 250)
     },
     "lighting": {
-        "toggle": async function _toggleLights(name) {
-            await toggleHidden(canvas.scene.lights, name);
-        },
+        "toggle": foundry.utils.debounce(toggleLights, 250),
         "tagSelected": async function _tagSelectedLights(name) {
             await tagControlled(canvas.lighting, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "sfx": {
-        "toggle": async function _toggleSfx(name) {
-            await toggleHidden(canvas.scene.sounds, name);
-        },
+        "toggle": foundry.utils.debounce(toggleSfx, 250),
         "tagSelected": async function _tagSelectedSfx(name) {
             await tagControlled(canvas.sounds, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "tiles": {
-        "toggleEnabled": async function _toggleEnabled(name) {
-            await executeAction(canvas.scene.tiles, name, async function (doc) {
-                let enabled = !doc.getFlag("monks-active-tiles", "active");
-                console.log(`Setting ${doc._id} to ${enabled ? 'enabled' : 'disabled'}`);
-                doc.setFlag("monks-active-tiles", "active", enabled);
-            });
-        },
-        "trigger": async function _triggerTiles(name) {
-            await executeAction(canvas.scene.tiles, name, async function (doc) {
-                console.log(doc._id);
-                doc.trigger({ method: 'manual' });
-            });
-        },
+        "toggleEnabled": foundry.utils.debounce(toggleEnabledTiles, 250),
+        "trigger": foundry.utils.debounce(triggerTiles, 250),
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.tiles, sdndConstants.MODULE_ID, "tagName", name);
         }
@@ -79,6 +60,9 @@ function getUniqueTags(collection, scope, key) {
     return result;
 }
 
+async function toggleLights(name) {
+    await toggleHidden(canvas.scene.lights, name);
+}
 
 async function tagControlled(collection, scope, key, value) {
     let controlledDocuments = collection?.controlled?.map(c => c.document);
@@ -117,7 +101,7 @@ async function tagSelected() {
         ui.notifications.warn("No selected lighting, sounds, tiles, or walls.");
         return;
     }
-    await dialog.textPrompt(`Tag select ${objectType} (${objectCount})`, `Tag ${objectType}`, async function(text) {
+    await dialog.textPrompt(`Tag select ${objectType} (${objectCount})`, `Tag ${objectType}`, async function (text) {
         switch (objectType) {
             case "Lights":
                 tagging.lighting.tagSelected(text);
@@ -132,7 +116,7 @@ async function tagSelected() {
                 tagging.doors.tagSelected(text);
                 break;
         }
-    });    
+    });
 }
 
 function listTags() {
@@ -153,7 +137,7 @@ function listTags() {
 <li><b>Lights</b><ul>${tagsToLI(tags.lightTags)}</ul></li>
 <li><b>Sounds</b><ul>${tagsToLI(tags.soundTags)}</ul></li>
 <li><b>Tiles</b><ul>${tagsToLI(tags.tileTags)}</ul></li>
-</ul>`;  
+</ul>`;
     ChatMessage.create({
         content: tagsHtml,
         whisper: ChatMessage.getWhisperRecipients('GM'),
@@ -186,6 +170,31 @@ async function toggleDoors(name) {
         }
         door.update({ "ds": newState });
     });
+}
+
+async function setDoorState(name, state) {
+    await executeAction(canvas.scene.walls, name, async function (door) {
+        door.update({ "ds": state });
+    });
+}
+
+async function toggleEnabledTiles(name) {
+    await executeAction(canvas.scene.tiles, name, async function (doc) {
+        let enabled = !doc.getFlag("monks-active-tiles", "active");
+        console.log(`Setting ${doc._id} to ${enabled ? 'enabled' : 'disabled'}`);
+        doc.setFlag("monks-active-tiles", "active", enabled);
+    });
+}
+
+async function triggerTiles(name) {
+    await executeAction(canvas.scene.tiles, name, async function (doc) {
+        console.log(doc._id);
+        doc.trigger({ method: 'manual' });
+    });
+}
+
+async function toggleSfx(name) {
+    await toggleHidden(canvas.scene.sounds, name);
 }
 
 async function executeAction(collection, name, action) {
