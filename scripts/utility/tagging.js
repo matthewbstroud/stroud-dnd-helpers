@@ -31,7 +31,13 @@ export let tagging = {
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.tiles, sdndConstants.MODULE_ID, "tagName", name);
         }
-    }
+    },
+    "tokens": {
+        "toggle": foundry.utils.debounce(toggleTokens, 250),
+        "tagSelected": async function _tagSelectedTokens(name) {
+            await tagControlled(canvas.tokens, sdndConstants.MODULE_ID, "tagName", name);
+        }
+    },
 }
 
 async function tagDocuments(documents, scope, key, value) {
@@ -97,6 +103,10 @@ async function tagSelected() {
         objectType = "Doors";
         objectCount = canvas.walls.controlled.length;
     }
+    else if (canvas.tokens.controlled.length > 0) {
+        objectType = "Tokens";
+        objectCount = canvas.tokens.controlled.length;
+    }
     if (objectType.length == 0) {
         ui.notifications.warn("No selected lighting, sounds, tiles, or walls.");
         return;
@@ -104,17 +114,19 @@ async function tagSelected() {
     await dialog.textPrompt(`Tag select ${objectType} (${objectCount})`, `Tag ${objectType}`, async function (text) {
         switch (objectType) {
             case "Lights":
-                tagging.lighting.tagSelected(text);
+                await tagging.lighting.tagSelected(text);
                 break;
             case "Sounds":
-                tagging.sfx.tagSelected(text);
+                await tagging.sfx.tagSelected(text);
                 break;
             case "Tiles":
-                tagging.tiles.tagSelected(text);
+                await tagging.tiles.tagSelected(text);
                 break;
             case "Doors":
-                tagging.doors.tagSelected(text);
+                await tagging.doors.tagSelected(text);
                 break;
+            case "Tokens":
+                await tagging.tokens.tagSelected(text);
         }
     });
 }
@@ -128,7 +140,8 @@ function listTags() {
         doorTags: (getUniqueTags(canvas.scene.walls, sdndConstants.MODULE_ID, "tagName")),
         lightTags: (getUniqueTags(canvas.scene.lights, sdndConstants.MODULE_ID, "tagName")),
         soundTags: (getUniqueTags(canvas.scene.sounds, sdndConstants.MODULE_ID, "tagName")),
-        tileTags: (getUniqueTags(canvas.scene.tiles, sdndConstants.MODULE_ID, "tagName"))
+        tileTags: (getUniqueTags(canvas.scene.tiles, sdndConstants.MODULE_ID, "tagName")),
+        tokenTags: (getUniqueTags(canvas.scene.tokens, sdndConstants.MODULE_ID, "tagName"))
     };
     let tagsHtml = `
 <b>Tags in Scene: ${canvas.scene.name}:</b><br />
@@ -137,6 +150,7 @@ function listTags() {
 <li><b>Lights</b><ul>${tagsToLI(tags.lightTags)}</ul></li>
 <li><b>Sounds</b><ul>${tagsToLI(tags.soundTags)}</ul></li>
 <li><b>Tiles</b><ul>${tagsToLI(tags.tileTags)}</ul></li>
+<li><b>Tiles</b><ul>${tagsToLI(tags.tokenTags)}</ul></li>
 </ul>`;
     ChatMessage.create({
         content: tagsHtml,
@@ -195,6 +209,10 @@ async function triggerTiles(name) {
 
 async function toggleSfx(name) {
     await toggleHidden(canvas.scene.sounds, name);
+}
+
+async function toggleTokens(name) {
+    await toggleHidden(canvas.scene.tokens, name);
 }
 
 async function executeAction(collection, name, action) {
