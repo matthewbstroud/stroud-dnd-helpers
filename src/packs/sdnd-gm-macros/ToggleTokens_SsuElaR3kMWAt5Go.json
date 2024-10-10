@@ -1,0 +1,25 @@
+{
+  "folder": "LAjpUMvUGw395xXg",
+  "name": "ToggleTokens",
+  "type": "script",
+  "_id": "SsuElaR3kMWAt5Go",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/toggle_tokens.webp",
+  "scope": "global",
+  "command": "await stroudDnD.tagging.tokens.toggle(args[0]);",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.2.1",
+    "coreVersion": "11.315",
+    "createdTime": 1728511199712,
+    "modifiedTime": 1728511375357,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!SsuElaR3kMWAt5Go"
+}

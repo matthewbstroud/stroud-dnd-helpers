@@ -1,3 +1,9 @@
+# v12.0.8
+# New Features
+- Tagging
+  - Allowing morphing tagged tokens.
+- Manage Tokens
+  - Allow manipulating multiple tokens at once.
 # v12.0.7
 # Bug Fixes
 - Fix Morphing.
