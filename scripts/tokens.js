@@ -245,11 +245,11 @@ async function morphToken(token) {
     if (!morphData) {
         return false;
     }
-    morphData.current = actor.uuid.endsWith(morphData.current) ? morphData.altActorUuid : morphData.actorUuid; 
-    let morphActor = await fromUuidSync(morphData.current);
+    morphData.current = morphData.current == morphData.actorUuid ? morphData.altActorUuid : morphData.actorUuid; 
+    let morphActor = await fromUuid(morphData.current);
     if (!morphActor) {
         return false;
     }
     await setMorphData(actor, morphData);
-    return await pushTokenPrototype(actor, morphActor, [token]);
+    return await pushTokenPrototype(token, morphActor, [token]);
 }

@@ -1,3 +1,6 @@
+# v12.0.7
+# Bug Fixes
+- Fix Morphing.
 # v12.0.6
 # New Features
 - Token Morphing.
