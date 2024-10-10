@@ -188,6 +188,15 @@
 				}
 			},
 			{
+				"id": "multi-token-edit",
+				"type": "module",
+				"manifest": "https://github.com/Aedif/multi-token-edit/releases/latest/download/module.json",
+				"comaptibility": {
+					"mininum": "1.70.0",
+					"verified": "1.70.0"
+				}
+			},
+			{
 				"id": "templatemacro",
 				"type": "module",
 				"manifest": "https://github.com/krbz999/templatemacro/releases/latest/download/module.json",

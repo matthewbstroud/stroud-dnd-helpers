@@ -1,6 +1,9 @@
+# v12.0.6
+# New Features
+- Token Morphing.
 # v12.0.5
 # New Features
-- Tagging
+- Tagging: Tag doors, lights, sfx, tiles, and now tokens.  Once tagged you can use tagging macros to toggle visibilty, trigger tiles, open doors, etc.  (See the SDND GM Macros compendium)
   - Allow tagging selected tokens.
   - Toggle Tokens macro allows toggling visibility of named tokens.
 # v12.0.4
