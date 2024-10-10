@@ -4,7 +4,7 @@
   "author": "6yhz13iFYYklKtgA",
   "img": "modules/stroud-dnd-helpers/images/icons/toggle_sfx.webp",
   "scope": "global",
-  "command": "stroudDnD.tagging.sfx.toggle(args[0]);",
+  "command": "await stroudDnD.tagging.sfx.toggle(args[0]);",
   "folder": "LAjpUMvUGw395xXg",
   "ownership": {
     "default": 0,
@@ -15,10 +15,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.1.2",
+    "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1722829655076,
-    "modifiedTime": 1724174698435,
+    "modifiedTime": 1728511348090,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "ViRKdG41kZVq4NfI",

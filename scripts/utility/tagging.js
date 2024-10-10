@@ -1,5 +1,6 @@
 import { dialog } from "../dialog/dialog.js";
 import { sdndConstants } from "../constants.js";
+import { morphToken } from "../tokens.js";
 
 export let tagging = {
     "tagDocuments": tagDocuments,
@@ -33,6 +34,7 @@ export let tagging = {
         }
     },
     "tokens": {
+        "morph": foundry.utils.debounce(morphTokens, 250),
         "toggle": foundry.utils.debounce(toggleTokens, 250),
         "tagSelected": async function _tagSelectedTokens(name) {
             await tagControlled(canvas.tokens, sdndConstants.MODULE_ID, "tagName", name);
@@ -215,6 +217,18 @@ async function toggleTokens(name) {
     await toggleHidden(canvas.scene.tokens, name);
 }
 
+async function morphTokens(name) {
+    await executeAction(canvas.scene.tokens, name, async function (token) {
+        if (token instanceof dnd5e.documents.TokenDocument5e) {
+            token = canvas.tokens.get(token.id);
+        }
+        if (!token) {
+            return;
+        }
+        await morphToken(token);
+    });
+}
+
 async function executeAction(collection, name, action) {
     let documents = await getTaggedDocuments(collection, sdndConstants.MODULE_ID, "tagName", name);
     if (!documents || documents.length == 0) {
@@ -222,6 +236,6 @@ async function executeAction(collection, name, action) {
         return;
     }
     await Promise.all(documents.map(async (d) => {
-        action(d);
+        await action(d);
     }));
 }

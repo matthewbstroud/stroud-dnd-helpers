@@ -30,7 +30,9 @@ export let tokens = {
     "toggleNpcName": foundry.utils.debounce(toggleNpcName, 250),
     "pushTokenPrototype":  foundry.utils.debounce(pushTokenPrototype, 250),
     "morphToken":  foundry.utils.debounce(morphToken, 250),
-    "setMorphData": foundry.utils.debounce(addMorphData, 250),
+    "setMorphData": async function _setMorphData(actorUuid, altActorUuid, preservedData) {
+        return dbAddMorphData(actorUuid, altActorUuid, preservedData);
+    },
     "getDistance": function _getDistance(sourceToken, targetToken) {
         let distance = canvas.dimensions.distance;
         let sourceCenter = (sourceToken instanceof dnd5e.documents.TokenDocument5e) ? 
@@ -40,6 +42,20 @@ export let tokens = {
         return distance * Math.round(canvas.grid.measureDistance(sourceCenter, targetCenter) / distance);
     }
 };
+
+function getExecutionMethod(methodName) {
+    switch (methodName) {
+        case 'showTokenArt':
+            return showTokenArt;
+        case 'toggleNpcName':
+            return toggleNpcName;
+        case 'pushTokenPrototype':
+            return pushTokenPrototype;
+        case 'morphToken':
+            return morphToken;
+    }
+    return async function (token) { console.log('do nothing'); };
+}
 
 async function showTokenArt(token) {
     if (!game.user.isGM) {
@@ -69,12 +85,25 @@ async function showTokenArt(token) {
     ip.shareImage(); // Display to all other players
 }
 
-function getMorphData(actor) {
-    return actor?.getFlag(sdndConstants.MODULE_ID, "morphData");
+async function getMorphData(token) {
+    let morphData = token.document.getFlag(sdndConstants.MODULE_ID, "morphData");
+    if (!morphData) {
+        morphData = token.actor?.getFlag(sdndConstants.MODULE_ID, "morphData");
+        if (!morphData) {
+            return null;
+        }
+        await setMorphData(token, morphData);
+    }
+    morphData.preservedData ??= [];
+    return morphData;
 }
 
-async function setMorphData(actor, morphData) {
-    await actor?.setFlag(sdndConstants.MODULE_ID, "morphData", morphData);
+async function setMorphData(token, morphData) {
+    return await token.document.setFlag(sdndConstants.MODULE_ID, "morphData", morphData);
+}
+
+async function setActorMorphData(actor, morphData) {
+    return await actor?.setFlag(sdndConstants.MODULE_ID, "morphData", morphData);
 }
 
 async function manageTokens() {
@@ -82,32 +111,39 @@ async function manageTokens() {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return false;
     }
-    if (canvas.tokens.controlled?.length != 1) {
-        ui.notifications.notify('Only select a single token!');
+    let selectedTokens  = canvas.tokens.controlled.filter(t => t.actor);
+    if (selectedTokens.length == 0) {
+        ui.notifications.notify('You have no actor tokens selected!');
         return false;
     }
-    let token = canvas.tokens.controlled[0];
-    let actor = token?.actor;
-    if (!actor) {
-        ui.notifications.notify('Selected token does not have an associated actor!');
-        return false;
-    }
-
     let options = [
-        { label: "Show Token Art", value: "showTokenArt" },
         { label: "Toggle Npc Name", value: "toggleNpcName" },
         { label: "Push Prototype Changes", value: "pushTokenPrototype" }
     ];
-    const morphData = getMorphData(actor);
-    if (morphData) {
+    if (selectedTokens.length == 1) {
+        options.unshift({ label: "Show Token Art", value: "showTokenArt" });
+    }
+    let allCanBeMorphed = true;
+    for (let token of selectedTokens) {
+        if (!(await getMorphData(token))){
+            allCanBeMorphed = false;
+            break;
+        }
+    }
+    if (allCanBeMorphed) {
         options.push({ label: "Morph Token", value: "morphToken" });
     }
     let option = await dialog.createButtonDialog("Manage Tokens", options);
     if (!option) {
         return;
     }
-    let tokenFunction = tokens[option];
-    await tokenFunction(token);
+    let tokenFunction = getExecutionMethod(option);
+    let executions = [];
+    for (let token of selectedTokens) {
+        executions.push(tokenFunction(token));
+    }
+    Promise.all(executions);
+    return true;
 }
 
 async function toggleNpcName(token) {
@@ -197,20 +233,22 @@ async function _toggleNpcNameAnon(api, currentToken) {
 
 }
 
-async function pushTokenPrototype(token, source, applyTo) {
+async function pushTokenPrototype(token, source, applyTo, preservedProperties) {
     if (!game.user.isGM) {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
     }
+    preservedProperties ??= [];
+    preservedProperties.push('rotation', 'elevation');
     source ??= token.actor;
     applyTo ??= token.actor.getActiveTokens();
     let updates = applyTo.map(t => {
         let token = foundry.utils.duplicate(t.document);
-        let rotation = token.rotation;
-        let elevation = token.elevation;
+        let preservedData = preservedProperties.map(p => ({ "key": p, "value": (token[p]) }));
         let newData = foundry.utils.mergeObject(token, source.prototypeToken);
-        newData.elevation = elevation;
-        newData.rotation = rotation;
+        for (let data of preservedData) {
+            newData[data.key] = data.value;
+        }
         return newData;
     });
 
@@ -221,7 +259,9 @@ async function pushTokenPrototype(token, source, applyTo) {
     return await canvas.scene.updateEmbeddedDocuments("Token", updates);
 }
 
-async function addMorphData(actorUuid, altActorUuid) {
+let dbAddMorphData = foundry.utils.debounce(addMorphData, 250);
+async function addMorphData(actorUuid, altActorUuid, preservedProperties) {
+    preservedProperties ??= [];
     let actor = await fromUuid(actorUuid);
     let altActor = await fromUuid(altActorUuid);
     if (!actor) {
@@ -232,16 +272,20 @@ async function addMorphData(actorUuid, altActorUuid) {
         console.log(`${altActorUuid} does not exist!`);
         return false;
     }
-    return await setMorphData(actor, { "actorUuid": actor.uuid, "altActorUuid": altActor.uuid, "current": actor.uuid });
+    return await setActorMorphData(actor, { 
+        "actorUuid": actor.uuid, 
+        "altActorUuid": altActor.uuid, 
+        "preservedProperties": preservedProperties,
+        "current": actor.uuid 
+    });
 }
 
-async function morphToken(token) {
+export async function morphToken(token) {
     if (!game.user.isGM) {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
-        return;
+        return false;
     }
-    const actor = token?.actor;
-    const morphData = getMorphData(actor);
+    const morphData = await getMorphData(token);
     if (!morphData) {
         return false;
     }
@@ -250,6 +294,7 @@ async function morphToken(token) {
     if (!morphActor) {
         return false;
     }
-    await setMorphData(actor, morphData);
-    return await pushTokenPrototype(token, morphActor, [token]);
+    await setMorphData(token, morphData);
+    await pushTokenPrototype(token, morphActor, [token], morphData.preservedData);
+    return true;
 }
