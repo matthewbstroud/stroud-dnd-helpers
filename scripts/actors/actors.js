@@ -5,6 +5,7 @@ import { sdndSettings } from "../settings.js";
 import { folders } from "../folders/folders.js";
 import { dialog } from "../dialog/dialog.js";
 import { numbers } from "../utility/numbers.js";
+import { mounts } from "../mounts/mounts.js";
 
 const DIE_MATCH = /(\d+)d(\d+)/g;
 
@@ -53,6 +54,7 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
 }
 
 async function buffActors(actorType, useMax, multiplier) {
+    await mounts.buffMounts(useMax, multiplier);
     let mod = Number.parseFloat(multiplier);
     if (!mod) {
         mod = 1;
@@ -89,7 +91,7 @@ async function buffActors(actorType, useMax, multiplier) {
     }
 }
 
-function getAverageHpFormula(formula) {
+export function getAverageHpFormula(formula) {
     let match = {}
     while (match = DIE_MATCH.exec(formula)) {
         let dieCount = Number.parseInt(match[1]);

@@ -2,6 +2,7 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndConstants } from "../constants.js";
 import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
+import { getAverageHpFormula } from "../actors/actors.js";
 
 const MOUNTED_EFFECT = {
     "name": "Mounted",
@@ -116,6 +117,8 @@ export let mounts = {
             }
         }
         await item.setFlag(sdndConstants.MODULE_ID, "IsMount", true);
+        let mountData = await createMountData(item);
+        await setMountData(item, mountData);
         await item.createEmbeddedDocuments('ActiveEffect', [effect]);
         let properties = item.system?.properties;
         if (!properties.has('weightlessContents')) {
@@ -127,12 +130,12 @@ export let mounts = {
         if (!game.user?.isTheGM) {
             return;
         }
-        let actors = await game.actors.filter(a => a.items.filter(i => this.isMount(i) && !i.effects.find(e => e.name == "Mounted")).length > 0);
+        let actors = await game.actors.filter(a => a.items.filter(i => this.isMount(i) && !getMountData(i)).length > 0);
         let summary = [];
         if (actors.length > 0) {
             for (let actor of actors) {
                 summary.push(`Patching mount for ${actor.name}...`);
-                let mount = actor.items.find(i => this.isMount(i));
+                let mount = actor.items.find(i => this.isMount(i) && !getMountData(i));
                 if (!mount) {
                     summary.push(`Couldn't find the mount!`);
                     continue;
@@ -142,7 +145,7 @@ export let mounts = {
                 summary.push("Patch successful!");
             }
         }
-        let items = game.items.filter(i => this.isMount(i) && !i.effects.find(e => e.name == "Mounted"));
+        let items = game.items.filter(i => this.isMount(i) && !getMountData(i));
         if (items.length > 0) {
             for (let item of items) {
                 summary.push(`Patching item ${item.name}...`);
@@ -158,8 +161,91 @@ export let mounts = {
             whisper: ChatMessage.getWhisperRecipients('GM'),
         });
         return true;
+    },
+    "buffMounts": async function _buffMounts(useMax, multiplier) {
+        if (!game.user?.isGM) {
+            return false;
+        }
+        let actors = await game.actors.filter(a => a.items.filter(i => this.isMount(i)).length > 0);
+        if (actors.length > 0) {
+            for (let actor of actors) {
+                let mount = actor.items.find(i => this.isMount(i));
+                if (!mount) {
+                    console.log(`Couldn't find the mount in actor ${actor.name}!`);
+                    continue;
+                }
+                await buffMount(mount, useMax, multiplier);
+            }
+        }
+        let items = game.items.filter(i => this.isMount(i));
+        if (items.length > 0) {
+            for (let item of items) {
+                await buffMount(item, useMax, multiplier);
+            }
+        }
+        return true;
     }
 };
+
+async function buffMount(mount, useMax, multiplier) {
+    let mod = Number.parseFloat(multiplier);
+    if (!mod) {
+        mod = 1;
+    }
+    let mountData = await getMountData(mount);
+    const hp = mountData.hp;
+
+    const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
+    let maxHp = Math.floor(eval(rollFormula));
+    if (isNaN(maxHp)) {
+        maxHp = hp.max;
+    }
+    if (mod > 0) {
+        maxHp = Math.floor(maxHp * mod);
+    }
+    if (hp.value == maxHp) {
+        return;
+    }
+    console.log(`Updating ${mount.name}: hp from ${hp.max} to ${maxHp}...`);
+    const resetCurrent = (hp.value == hp.max);
+    mountData.hp.max = maxHp;
+    if (resetCurrent) {
+        mountData.hp.value = maxHp;
+    }
+    await setMountData(mount, mountData);
+}
+
+async function createMountData(mountItem) {
+    let mountActorUuid = game.packs.get("dnd5e.monsters").index.getName(mountItem.name).uuid;
+    let mountActor = await fromUuid(mountActorUuid);
+    let type = getType(mountItem.name);
+    return {
+        "type": type,
+        "actorUuid": mountActorUuid,
+        "ac": foundry.utils.duplicate(mountActor.system.attributes.ac),
+        "hp": foundry.utils.duplicate(mountActor.system.attributes.hp)
+    };
+}
+
+function getType(name) {
+    switch (name) {
+        case "Draft Horse":
+            return "draft";
+        case "Riding Horse":
+            return "riding";
+        case "Warhorse":
+            return "war";
+    }
+    return "unknown";
+}
+
+async function setMountData(item, mountData) {
+    await item.setFlag(sdndConstants.MODULE_ID, "MountData", mountData);
+}
+
+async function getMountData(item) {
+    return item.getFlag(sdndConstants.MODULE_ID, "MountData");
+}
 
 async function toggleMount() {
     let controlledToken = utility.getControlledToken();
@@ -212,12 +298,12 @@ function getAc(item) {
     const desc = item?.system?.description?.value?.toLowerCase() ?? "";
 
     if (desc.includes("warhorse")) {
-        return 6;
-    }
-    else if (desc.includes("riding horse")) {
         return 4;
     }
-    return 2;
+    else if (desc.includes("riding horse")) {
+        return 2;
+    }
+    return 1;
 }
 
 function findHorseToken(actor) {

@@ -1,0 +1,213 @@
+{
+  "name": "Warhorse",
+  "type": "container",
+  "system": {
+    "description": {
+      "value": "<div class=\"ddb\">\n<p>Warhorse Statistics</p>\n<p>A good mount can help you move more quickly through the wilderness, but its primary purpose is to carry the gear that would otherwise slow you down.</p>\n<p>An animal pulling a carriage, cart, chariot, sled, or wagon can move weight up to five times its base carrying capacity, including the weight of the vehicle. If multiple animals pull the same vehicle, they can add their carrying capacity together.</p>\n</div>",
+      "chat": ""
+    },
+    "source": {
+      "book": "Player’s Handbook",
+      "page": "",
+      "license": "",
+      "custom": ""
+    },
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": {
+      "value": 0,
+      "units": "lb"
+    },
+    "price": {
+      "value": 400,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "equipped": false,
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "ep": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "properties": [
+      "weightlessContents"
+    ],
+    "capacity": {
+      "type": "weight",
+      "value": 540
+    },
+    "attuned": false
+  },
+  "flags": {
+    "ddbimporter": {
+      "dndbeyond": {
+        "type": "Mount",
+        "isConsumable": false,
+        "isContainer": true,
+        "isCustomItem": false,
+        "isHomebrew": false,
+        "isMonkWeapon": false,
+        "isPack": false,
+        "levelInfusionGranted": null,
+        "tags": [
+          "Movement",
+          "Utility",
+          "Exploration"
+        ],
+        "sources": [
+          {
+            "sourceId": 1,
+            "pageNumber": null,
+            "sourceType": 2
+          },
+          {
+            "sourceId": 2,
+            "pageNumber": null,
+            "sourceType": 1
+          }
+        ]
+      },
+      "id": 0,
+      "entityTypeId": 0,
+      "definitionEntityTypeId": 2103445194,
+      "definitionId": 169,
+      "originalName": "Warhorse",
+      "version": "5.1.27"
+    },
+    "midi-qol": {
+      "removeAttackDamageButtons": "default"
+    },
+    "midiProperties": {
+      "confirmTargets": "default"
+    },
+    "core": {},
+    "stroud-dnd-helpers": {
+      "IsMount": true,
+      "MountData": {
+        "type": "war",
+        "actorUuid": "Compendium.dnd5e.monsters.Actor.T1xZTDCGuvMBSq8d",
+        "ac": {
+          "flat": 11,
+          "calc": "natural",
+          "formula": "",
+          "armor": 10,
+          "cover": 0,
+          "shield": 0,
+          "bonus": 0,
+          "base": 11,
+          "value": 11
+        },
+        "hp": {
+          "value": 19,
+          "max": 19,
+          "temp": 0,
+          "tempmax": 0,
+          "formula": "3d10 + 3",
+          "effectiveMax": 19,
+          "damage": 0,
+          "pct": 100
+        }
+      }
+    }
+  },
+  "effects": [
+    {
+      "name": "Mounted",
+      "changes": [
+        {
+          "key": "flags.midi-qol.disadvantage.attack.all",
+          "mode": 0,
+          "value": "1",
+          "priority": 20
+        },
+        {
+          "key": "flags.midi-qol.disadvantage.ability.check.dex",
+          "mode": 0,
+          "value": "1",
+          "priority": 20
+        },
+        {
+          "key": "system.attributes.ac.bonus",
+          "mode": 2,
+          "value": "4",
+          "priority": 20
+        }
+      ],
+      "transfer": true,
+      "icon": "modules/stroud-dnd-helpers/images/icons/saddle.webp",
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "origin": "Item.E4ZkRtmiRwDWQs9b",
+      "statuses": [],
+      "flags": {
+        "dae": {
+          "disableCondition": "",
+          "disableIncapacitated": false,
+          "stackable": "noneName",
+          "showIcon": true,
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": []
+        },
+        "core": {
+          "overlay": false
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "nameOverride": "",
+          "radius": "",
+          "alignment": "",
+          "type": "",
+          "customCheck": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false,
+          "wallsBlock": "system"
+        },
+        "stroud-dnd-helpers": {
+          "effectName": "Mounted"
+        }
+      },
+      "tint": null,
+      "_id": "GlGiL0dIq4237KdI",
+      "_key": "!items.effects!zL8wRmtLT8EDnfLH.GlGiL0dIq4237KdI"
+    }
+  ],
+  "img": "icons/environment/people/cavalry-heavy.webp",
+  "folder": "nbaREk8mDMHHotiH",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.2.1",
+    "coreVersion": "11.315",
+    "createdTime": 1721268423525,
+    "modifiedTime": 1728663749717,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "zL8wRmtLT8EDnfLH",
+  "sort": 0,
+  "_key": "!items!zL8wRmtLT8EDnfLH"
+}
