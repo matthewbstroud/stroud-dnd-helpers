@@ -130,12 +130,12 @@ export let mounts = {
         if (!game.user?.isTheGM) {
             return;
         }
-        let actors = await game.actors.filter(a => a.items.filter(i => this.isMount(i) && !getMountData(i)).length > 0);
+        let actors = await game.actors.filter(a => a.items.filter(i => this.isMount(i) && !getMountData(i)?.actorUuid).length > 0);
         let summary = [];
         if (actors.length > 0) {
             for (let actor of actors) {
                 summary.push(`Patching mount for ${actor.name}...`);
-                let mount = actor.items.find(i => this.isMount(i) && !getMountData(i));
+                let mount = actor.items.find(i => this.isMount(i) && !getMountData(i)?.actorUuid);
                 if (!mount) {
                     summary.push(`Couldn't find the mount!`);
                     continue;
@@ -145,7 +145,7 @@ export let mounts = {
                 summary.push("Patch successful!");
             }
         }
-        let items = game.items.filter(i => this.isMount(i) && !getMountData(i));
+        let items = game.items.filter(i => this.isMount(i) && !getMountData(i)?.actorUuid);
         if (items.length > 0) {
             for (let item of items) {
                 summary.push(`Patching item ${item.name}...`);
@@ -307,7 +307,7 @@ function getAc(item) {
 }
 
 function findHorseToken(actor) {
-    return canvas.scene.tokens.find(t => t.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid) &&
+    return canvas.scene.tokens.find(t => t.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy") == actor.uuid &&
         t.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount"));
 }
 
