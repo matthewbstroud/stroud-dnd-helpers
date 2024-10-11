@@ -1,0 +1,19 @@
+{
+  "name": "Mounts",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "nbaREk8mDMHHotiH",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "systemId": "dnd5e",
+    "systemVersion": "3.2.1",
+    "coreVersion": "11.315",
+    "createdTime": 1728663737580,
+    "modifiedTime": 1728663737580,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!nbaREk8mDMHHotiH"
+}

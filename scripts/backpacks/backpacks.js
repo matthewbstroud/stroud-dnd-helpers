@@ -16,7 +16,7 @@ let processEvents = true;
 
 export let backpacks = {
     "dropBackpack": foundry.utils.debounce(dropBackpack, 250),
-    "interact": foundry.utils.debounce(interact, 250),
+    "interact": interact,
     "pickupBackpack": foundry.utils.debounce(pickupBackpack, 250),
     "eventsEnabled": () => processEvents,
     "pauseEvents": async function _pauseEvents() {
@@ -433,6 +433,15 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             ]
         }
     }
+    if (isMount) {
+        let mountData = backpack.getFlag(sdndConstants.MODULE_ID, "MountData");
+        pileOptions.actorOverrides.flags[sdndConstants.MODULE_ID].MountData = mountData;
+        pileOptions.actorOverrides.system.attributes = {
+            "ac": mountData.ac,
+            "hp": mountData.hp
+        };
+        pileOptions.tokenOverrides.displayBars = CONST.TOKEN_DISPLAY_MODES.OWNER;
+    }
     try {
         lockActor(actor.id);
         let result = await game.itempiles.API.createItemPile(pileOptions);
@@ -482,7 +491,9 @@ export async function gmPickupBackpack(pileUuid) {
         ui.notifications.error("Cannot determine who dropped this container!");
         return;
     }
-
+    if (isMount) {
+        await backpack.setFlag(sdndConstants.MODULE_ID, "MountData.hp", pile.actor?.system.attributes.hp);
+    }
     let actor = await fromUuid(actorUuId);
     try {
         lockActor(actor.id);
