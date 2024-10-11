@@ -1,3 +1,7 @@
+# v12.0.10
+# Bug Fixes
+- Mounts
+  - Fix bug with finding mount.
 # v12.0.9
 # New Features
 - Mounts
