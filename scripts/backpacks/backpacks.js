@@ -525,6 +525,10 @@ export async function gmPickupBackpack(pileUuid) {
         let newBackpack = actor.items.get(backpackId);
         await newBackpack.update({ "system.equipped": true });
         await gmCheckActorWeight(actor, true);
+        if (isMount) {
+            let mountData = mounts.getMountData(newBackpack);
+            await mounts.changeHealth(actor.uuid, (mountData.hp.value / mountData.hp.max));
+        }
         let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`
         await ChatMessage.create({
             speaker: { alias: actor.name },
