@@ -23,10 +23,6 @@ export let combat = {
             if (game.user.isTheGM && sdndSettings.OnDamageEvents.getValue()) {
                 Hooks.on("dnd5e.damageActor", onDamageTaken);
             }
-            if (game.user.isTheGM && game.modules.get("midi-qol")) {
-                Hooks.on("midi-qol.AttackRollComplete", onAttackRollComplete);
-                Hooks.on("midi-qol.preDamageRollComplete", onPreDamageRollComplete);
-            }
         }
     }
 };
@@ -53,6 +49,7 @@ async function startFilteredCombat() {
 
 async function onDamageTaken(actor, changes, update, userId) {
     await bloodyAxe.onDamageTaken(actor, changes, update, userId);
+    await mounts.hooks.onDamageTaken(actor, changes, update, userId);
 }
 
 async function onAttackRollComplete(workflow) {

@@ -3,6 +3,9 @@ import { sdndConstants } from "../constants.js";
 import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
 import { getAverageHpFormula } from "../actors/actors.js";
+import { backpacks } from "../backpacks/backpacks.js";
+import { gmDropBackpack } from "../backpacks/backpacks.js";
+import { sdndSettings } from "../settings.js";
 
 const MOUNTED_EFFECT = {
     "name": "Mounted",
@@ -185,10 +188,31 @@ export let mounts = {
         }
         return true;
     },
-    "onAttackRollComplete": onAttackRollComplete,
-    "onPreDamageRollComplete": onPreDamageRollComplete,
-    "getMountData": getMountData
+    "hooks": {
+        "ready": async function _ready() {
+            if (!sdndSettings.EnableHorseDamage.getValue()) {
+                return false;
+            }
+            if (game.modules.get("midi-qol")) {
+                Hooks.on("midi-qol.AttackRollComplete", onAttackRollComplete);
+                // Hooks.on("midi-qol.DamageRollComplete", onDamageRollComplete);
+            }
+            else {
+                ui.notifications.warn("SDND Mount Damage Requires Midi-QOL!");
+            }
+        },
+        "onDamageTaken": onDamageTaken 
+    },
+    "getMountData": getMountData,
+    "setMountData": setMountData
 };
+
+async function onDamageTaken(actor, changes, update, userId) {
+    let horse = getHorse(actor);
+    if (!horse) {
+        return;
+    }
+}
 
 async function buffMount(mount, useMax, multiplier) {
     let mod = Number.parseFloat(multiplier);
@@ -266,7 +290,7 @@ async function toggleMount() {
     try {
         let horse = getHorse(actor);
         if (horse) {
-            await dismount(controlledToken.id, horse.id);
+            await dismount(controlledToken.id, horse);
             return true;
         }
         // find the horse
@@ -281,7 +305,7 @@ async function toggleMount() {
             ui.notifications.warn(`You must be within 30 feet to call ${horseName.trim()}!`);
             return false;
         }
-        await gmFunctions.pickupBackpack(horseToken.uuid);
+        await gmFunctions.pickupBackpack(horseToken.uuid, game.user.id);
     }
     catch (exception) {
         ui.notifications.error(exception.message);
@@ -314,14 +338,15 @@ function findHorseToken(actor) {
         t.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount"));
 }
 
-async function dismount(tokenId, horseId) {
-    await gmFunctions.dropBackpack(tokenId, horseId, game.user.uuid, true);
+async function dismount(tokenId, horse) {
+    await gmFunctions.dropBackpack(tokenId, horse.id, game.user.uuid, true);
 }
 
 async function onAttackRollComplete(workflow) {
     if (!workflow) {
         return;
     }
+    return;
     // check for missed actors to see if horse is hit
     for (let target of workflow.targets.filter(t => !workflow.hitTargets.has(t))) {
         let horse = getHorse(target?.actor);
@@ -330,48 +355,27 @@ async function onAttackRollComplete(workflow) {
         }
         let mountData = getMountData(horse);
         if (mountData.ac.value < workflow.attackTotal) {
+            target["mountHit"] = true;
             workflow.hitTargets.add(target);
-            workflow["mountHit"] = horse;
         }
     }
-    // if (actor.effects?.find(e => e.name == "Berserk")) {
-    //     return; // already gone berserk
-    // }
-    // let axe = actor.items?.find(i => i.flags[sdndConstants.MODULE_ID]?.name == "bloody axe" || i.name == "Bloody Axe");
-    // if (!axe || !axe.system?.equipped) {
-    //     return;
-    // }
-    // let rollOptions = {
-    //     targetValue: 15,
-    //     fastForward: true,
-    //     chatMessage: false
-    // };
-    // if (axe.system.identified) {
-    //     rollOptions.chatMessage = true;
-    //     rollOptions.flavor = `${actor.name} fights against madness... (${dnd5e.config.abilities.wis.label})`;
-    // }
-    // const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.wis.abbreviation, rollOptions);
-
-    // if (dieRoll.options.success) {
-    //     await ChatMessage.create({
-    //         emote: true,
-    //         speaker: { "actor": actor },
-    //         content: `${actor.name} holds on to his sanity...`
-    //     });
-    //     return;
-    // }
-    // await gmFunctions.createEffects(actor.uuid, [createBerserkEffect(axe.uuid)]);
-    // await ChatMessage.create({
-    //     emote: true,
-    //     speaker: { "actor": actor },
-    //     content: `A strange look comes over ${actor.name}...`
-    // });
 }
 
-async function onPreDamageRollComplete(workflow) {
-    if (!workflow || !workflow.mountHit) {
+async function onDamageRollComplete(workflow) {
+    if (!workflow) {
         return true;
     }
+
+    for (let target of workflow.hitTargets.filter(t => t.mountHit)) {
+        let horse = getHorse(target?.actor);
+        if (!horse) {
+            continue;
+        }
+        let mountData = getMountData(horse);
+    }
+
+    return;
+
     // apply damage to mount
     let mountData = getMountData(workflow.mountHit);
     mountData.hp.value -= workflow.damageTotal;
@@ -389,48 +393,4 @@ async function onPreDamageRollComplete(workflow) {
         content: `${workflow.mountHit.name} is struck for ${workflow.damageTotal}${mountData.hp.value <= 0 ? " and killed" : ""}...`
     });
     return false;
-    // check for missed actors to see if horse is hit
-    for (let target of workflow.targets.filter(t => !workflow.hitTargets.has(t))) {
-        let horse = getHorse(target?.actor);
-        if (!horse) {
-            continue;
-        }
-        let mountData = getMountData(horse);
-        if (mountData.ac.value < workflow.attackTotal) {
-            workflow.hitTargets.add(target);
-            workflow["mountHit"] = horse;
-        }
-    }
-    // if (actor.effects?.find(e => e.name == "Berserk")) {
-    //     return; // already gone berserk
-    // }
-    // let axe = actor.items?.find(i => i.flags[sdndConstants.MODULE_ID]?.name == "bloody axe" || i.name == "Bloody Axe");
-    // if (!axe || !axe.system?.equipped) {
-    //     return;
-    // }
-    // let rollOptions = {
-    //     targetValue: 15,
-    //     fastForward: true,
-    //     chatMessage: false
-    // };
-    // if (axe.system.identified) {
-    //     rollOptions.chatMessage = true;
-    //     rollOptions.flavor = `${actor.name} fights against madness... (${dnd5e.config.abilities.wis.label})`;
-    // }
-    // const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.wis.abbreviation, rollOptions);
-
-    // if (dieRoll.options.success) {
-    //     await ChatMessage.create({
-    //         emote: true,
-    //         speaker: { "actor": actor },
-    //         content: `${actor.name} holds on to his sanity...`
-    //     });
-    //     return;
-    // }
-    // await gmFunctions.createEffects(actor.uuid, [createBerserkEffect(axe.uuid)]);
-    // await ChatMessage.create({
-    //     emote: true,
-    //     speaker: { "actor": actor },
-    //     content: `A strange look comes over ${actor.name}...`
-    // });
 }

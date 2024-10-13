@@ -73,38 +73,48 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("checkActorWeight", actorUuid)
         );
     },
+    "selectToken": async function _selectToken(tokenId) {
+        selectToken(tokenId);
+    },
     "dropBackpack": async function _dropBackpack(tokenId, backpackId, userUuid, isMount) {
         run(
-            async () => await gmDropBackpack(tokenId, backpackId, userUuid, isMount),
+            async () => await gmDropBackpack(tokenId, backpackId, userUuid, isMount).then(
+                function () {
+                    const userId = userUuid.split(".").pop();
+                    socket.executeForUsers("selectToken", [userId], tokenId);
+                },
+                function (err) { console.log(err.message); }
+            ),
             async () => await socket.executeAsGM("dropBackpack", tokenId, backpackId, userUuid, isMount)
         );
     },
-    "pickupBackpack": async function _pickupBackpack(pileUuid) {
+    "pickupBackpack": async function _pickupBackpack(pileUuid, userId) {
         run(
-            async () => await gmPickupBackpack(pileUuid),
-            async () => await socket.executeAsGM("pickupBackpack", pileUuid)
+            async () => {
+                let tokenId = null;
+                let pile = await fromUuid(pileUuid);
+                let actorUuid = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+                if (actorUuid) {
+                    let actor = await fromUuid(actorUuid);
+                    let activeTokens = actor?.getActiveTokens();
+                    if (activeTokens && activeTokens.length == 1) {
+                        tokenId = activeTokens[0].id;
+                    }
+                }
+                await gmPickupBackpack(pileUuid).then(
+                    function () {
+                        if (!userId || !tokenId) {
+                            return;
+                        }
+                        socket.executeForUsers("selectToken", [userId], tokenId);
+                    },
+                    
+                    function (err) { console.log(err.message); }
+                )
+            },
+            async () => { return await socket.executeAsGM("pickupBackpack", pileUuid, userId) }
         );
     },
-    // "dismissTokens": async function _removeTokens(arrayOfTokenIds /* [tokenUuid] */) {
-    //     if (!arrayOfTokenIds) {
-    //         return;
-    //     }
-    //     if (!areActiveGms()) {
-    //         ui.notifications.error("No Active GMs!");
-    //         return;
-    //     }
-    //     run(
-    //         async () => {
-    //             arrayOfTokenIds.forEach(tokenId => {
-    //                 let token = canvas.tokens.get(tokenId);
-    //                 if (token) {
-    //                     warpgate.dismiss(token)
-    //                 }
-    //             });
-    //         },
-    //         async () => await socket.executeAsGM("dismissTokens", arrayOfTokenIds)
-    //     );
-    // },
     "deleteTokens": async function _deleteTokens(arrayOfTokenIds /* [tokenUuid] */) {
         if (!arrayOfTokenIds || arrayOfTokenIds.length == 0) {
             return;
@@ -192,13 +202,13 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("unsetFlag", uuid, scope, key)
         );
     },
-    "importFromCompendium": async function _importFromCompedium(type, packId, packItemId, parentFolderId){
+    "importFromCompendium": async function _importFromCompedium(type, packId, packItemId, parentFolderId) {
         run(
             async () => await importFromCompedium(type, packId, packItemId, parentFolderId),
-            async ()  => await socket.executeAsGM("importFromCompendium", type, packId, packItemId, parentFolderId)
+            async () => await socket.executeAsGM("importFromCompendium", type, packId, packItemId, parentFolderId)
         );
     },
-    "startClock": async function _startClock(){
+    "startClock": async function _startClock() {
         if (!SimpleCalendar) {
             return;
         }
@@ -208,22 +218,31 @@ export let gmFunctions = {
         }
         SimpleCalendar.api.startClock();
     },
-    "advanceTime": async function _advanceTime(seconds){
+    "advanceTime": async function _advanceTime(seconds) {
         run(
             async () => {
                 if (!SimpleCalendar) {
                     await game.time.advance(seconds);
                     return;
                 }
-                await SimpleCalendar.api.changeDate({"seconds": seconds}); 
+                await SimpleCalendar.api.changeDate({ "seconds": seconds });
             },
-            async ()  => await socket.executeAsGM("advanceTime", seconds)
+            async () => await socket.executeAsGM("advanceTime", seconds)
         );
     },
     "notify": async function _notify(type, message) {
         ui.notifications.notify(message, type);
     }
 };
+
+function selectToken(tokenId) {
+    if (!tokenId) {
+        let activeTokens = game.user?.character?.getActiveTokens();
+
+    }
+    let token = canvas.tokens.get(tokenId);
+    token.control({ releaseOthers: true });
+}
 
 async function importFromCompedium(type, packId, packItemId, parentFolderName) {
     let pack = game.packs.get(packId);

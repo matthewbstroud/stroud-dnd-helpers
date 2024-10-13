@@ -125,6 +125,18 @@ export let sdndSettings = {
 			return folder;
 		} 
 	},
+	'EnableHorseDamage': {
+		'config': {
+			'name': 'Use Stroud DnD Horse Damage.',
+			'hint': `Requires using the horses from SDND Items compendium.`,
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false,
+			'requiresReload': true
+		},
+		'getValue': () =>  getModuleSettingValue('UseSDnDEncumbrance')
+	},
 	'UseSDnDEncumbrance': {
 		'config': {
 			'name': 'Use Stroud DnD Helpers encumbrance rules.',

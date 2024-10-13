@@ -135,6 +135,7 @@ export let hooks = {
             setting.choices = options;
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);
+        await mounts.hooks.ready();
         await backpacks.hooks.ready();
         await harvesting.hooks.ready();
         await applyPatches();
