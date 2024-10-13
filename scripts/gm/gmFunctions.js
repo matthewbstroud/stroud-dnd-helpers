@@ -110,7 +110,7 @@ export let gmFunctions = {
                     },
                     
                     function (err) { console.log(err.message); }
-                )
+                );
             },
             async () => { return await socket.executeAsGM("pickupBackpack", pileUuid, userId) }
         );

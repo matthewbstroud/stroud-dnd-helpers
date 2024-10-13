@@ -135,7 +135,7 @@ async function updateItemHandler(item, changes, options, id) {
 }
 
 async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
-    let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    let lockedItemID = pile?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     if (item._id == lockedItemID) {
         menu.length = 0;
     }
@@ -300,18 +300,20 @@ async function interact(pileUuid) {
         ui.notifications.warn(`${actor.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
         return false;
     }
-    let choice = await dialog.createButtonDialog(pile.actor.name,
-        [
-            {
-                "label": "Open",
-                "value": "open"
-            },
-            {
-                "label": (isMount ? "Mount" : "Pick up"),
-                "value": "pickup"
-            }
-        ]
-        , 'column');
+    if (isMount && pile?.actor?.system?.attributes?.hp?.value <= 0) {
+        return true;
+    }
+    let buttons = [
+        {
+            "label": "Open",
+            "value": "open"
+        },
+        {
+            "label": (isMount ? "Mount" : "Pick up"),
+            "value": "pickup"
+        }
+    ];
+    let choice = await dialog.createButtonDialog(pile.actor.name, buttons, 'column');
     if (choice == "open") {
         return true;
     }
@@ -379,7 +381,8 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
                     "lockedItem": backpack.id,
                     "IsMount": isMount,
                     "DroppedBy": (actor.uuid),
-                    "IsPrimary": (backpack.id == primaryBackpackId)
+                    "IsPrimary": (backpack.id == primaryBackpackId),
+                    "DroppedUserId": (game.user.id)
                 }
             },
             "system": {
@@ -432,6 +435,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             ]
         }
     }
+    let isMountDead = false;
     if (isMount) {
         let mountData = backpack.getFlag(sdndConstants.MODULE_ID, "MountData");
         pileOptions.actorOverrides.flags[sdndConstants.MODULE_ID].MountData = mountData;
@@ -440,6 +444,11 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             "hp": mountData.hp
         };
         pileOptions.tokenOverrides.displayBars = CONST.TOKEN_DISPLAY_MODES.OWNER;
+        if (mountData.hp.value <= 0) {
+            isMountDead = true;
+            pileOptions.actorOverrides.img = 'modules/stroud-dnd-helpers/images/icons/dead_mount.webp';
+            pileOptions.tokenOverrides.texture.src = 'modules/stroud-dnd-helpers/images/icons/dead_mount.webp'
+        }
     }
     try {
         await lockActor(actor);
@@ -462,6 +471,9 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         await releaseActor(actor);
     }
     await gmCheckActorWeight(actor, true);
+    if (isMountDead) {
+        return;
+    }
     let message = isMount ? `Has dismounted ${backpack.name}.` :
         `Has dropped ${backpack.name} on the ground.`;
     await ChatMessage.create({
@@ -527,6 +539,7 @@ export async function gmPickupBackpack(pileUuid) {
         let newBackpack = actor.items.get(backpackId);
         await newBackpack.update({ "system.equipped": true });
         let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`
+
         await ChatMessage.create({
             speaker: { alias: actor.name },
             content: message,
