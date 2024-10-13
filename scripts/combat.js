@@ -6,6 +6,7 @@ import { sdndConstants } from "./constants.js";
 import { sdndSettings } from "./settings.js";
 import { tokens } from "./tokens.js";
 import { bloodyAxe } from "./items/weapons/bloodyAxe.js";
+import { mounts } from "./mounts/mounts.js";
 
 export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
@@ -47,7 +48,16 @@ async function startFilteredCombat() {
 }
 
 async function onDamageTaken(actor, changes, update, userId) {
-    bloodyAxe.onDamageTaken(actor, changes, update, userId);
+    await bloodyAxe.onDamageTaken(actor, changes, update, userId);
+    await mounts.hooks.onDamageTaken(actor, changes, update, userId);
+}
+
+async function onAttackRollComplete(workflow) {
+    await mounts.onAttackRollComplete(workflow);
+}
+
+async function onPreDamageRollComplete(workflow) {
+    await mounts.onPreDamageRollComplete(workflow);
 }
 
 // apply adhoc damage to selected tokens

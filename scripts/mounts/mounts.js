@@ -3,6 +3,10 @@ import { sdndConstants } from "../constants.js";
 import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
 import { getAverageHpFormula } from "../actors/actors.js";
+import { backpacks, gmDropBackpack } from "../backpacks/backpacks.js";
+import { sdndSettings } from "../settings.js";
+import { lockActor } from "../backpacks/backpacks.js";
+import { socket } from "../module.js";
 
 const MOUNTED_EFFECT = {
     "name": "Mounted",
@@ -83,9 +87,15 @@ export let mounts = {
             item.system?.description?.value?.toLowerCase()?.includes("horse")));
     },
     "changeHealth": async function changeHealth(actorUuid, healthPercentage) {
-        let health = (Math.ceil(healthPercentage / 5) * 5);
+        let health = (Math.ceil(healthPercentage * 100 / 5) * 5);
+        if (health < 0) {
+            health = 0;
+        }
         let actor = await fromUuid(actorUuid);
         let horse = getHorse(actor);
+        if (!horse) {
+            return;
+        }
         let effect = horse.effects.find(e => e.getFlag(sdndConstants.MODULE_ID, "effectName") == "Mounted");
         if (!effect) {
             return false;
@@ -184,15 +194,70 @@ export let mounts = {
             }
         }
         return true;
-    }
+    },
+    "hooks": {
+        "onDamageTaken": onDamageTaken
+    },
+    "getMountData": getMountData,
+    "setMountData": setMountData,
+    "getHorse": getHorse
 };
+
+async function onDamageTaken(actor, changes, update, userId) {
+    let horse = getHorse(actor);
+    if (!horse) {
+        return;
+    }
+    let actorTotalDamage = Math.floor(changes.total / 2);
+    let horseDamage = changes.total - actorTotalDamage;
+    let actorHpDiff = changes.hp - actorTotalDamage;
+    if (actorHpDiff > 0) {
+        changes.hp = 0;
+        changes.temp += actorHpDiff;
+    }
+    else {
+        changes.hp = actorHpDiff;
+    }
+    await applyDamageToHorse(actor, horse, horseDamage);
+}
+
+async function applyDamageToHorse(actor, horse, damage) {
+    let mountData = getMountData(horse);
+    mountData.hp.value += damage;
+    if (mountData.hp.value < 0) {
+        mountData.hp.value = 0;
+    }
+    const isDead = mountData.hp.value <= 0;
+    await setMountData(horse, mountData);
+    await ChatMessage.create({
+        flavor: "Mount injured!",
+        content: `${horse.name} has taken ${damage} hp of damage ${(isDead ? " and has perished." : "")}`
+    });
+    await mounts.changeHealth(actor.uuid, (mountData.hp.value / mountData.hp.max));
+    if (isDead) {
+        await lockActor(actor);
+        let tokenId = actor.getActiveTokens()?.pop()?.id;
+        let userUuid = game.users.find(u => u.character?.uuid == actor.uuid)?.id ?? game.user.id;
+        await gmDropBackpack(tokenId, horse.id, userUuid, true).then(
+            function () {
+                const userId = userUuid?.split(".")?.pop();
+                if (!userId || !tokenId) {
+                    return;
+                }
+                socket.executeForUsers("selectToken", [userId], tokenId);
+            },
+            function (err) { console.log(err.message); }
+        );
+        return;
+    }
+}
 
 async function buffMount(mount, useMax, multiplier) {
     let mod = Number.parseFloat(multiplier);
     if (!mod) {
         mod = 1;
     }
-    let mountData = await getMountData(mount);
+    let mountData = getMountData(mount);
     const hp = mountData.hp;
 
     const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
@@ -243,7 +308,7 @@ async function setMountData(item, mountData) {
     await item.setFlag(sdndConstants.MODULE_ID, "MountData", mountData);
 }
 
-async function getMountData(item) {
+function getMountData(item) {
     return item.getFlag(sdndConstants.MODULE_ID, "MountData");
 }
 
@@ -263,13 +328,13 @@ async function toggleMount() {
     try {
         let horse = getHorse(actor);
         if (horse) {
-            await dismount(controlledToken.id, horse.id);
+            await dismount(controlledToken, horse);
             return true;
         }
         // find the horse
         let horseToken = findHorseToken(actor);
         if (!horseToken) {
-            ui.notifications.warn(`${actor.name} has no owned mount in this scene!`);
+            ui.notifications.warn(`${actor.name} has no living mount in this scene!`);
             return false;
         }
         const distance = tokens.getDistance(controlledToken, horseToken);
@@ -278,7 +343,8 @@ async function toggleMount() {
             ui.notifications.warn(`You must be within 30 feet to call ${horseName.trim()}!`);
             return false;
         }
-        await gmFunctions.pickupBackpack(horseToken.uuid);
+        await lockActor(actor);
+        await gmFunctions.pickupBackpack(horseToken.uuid, game.user.id);
     }
     catch (exception) {
         ui.notifications.error(exception.message);
@@ -286,7 +352,7 @@ async function toggleMount() {
 }
 
 function getHorse(actor) {
-    let horses = actor.items?.filter(i => i.type == "container" && (i.name?.toLowerCase().includes("horse") || i.img?.toLowerCase()?.includes("horse") ||
+    let horses = actor.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "IsMount") || i.type == "container" && (i.name?.toLowerCase().includes("horse") || i.img?.toLowerCase()?.includes("horse") ||
         i.system?.description?.value?.toLowerCase()?.includes("horse")));
     if (horses.length == 1) {
         return horses[0];
@@ -308,10 +374,11 @@ function getAc(item) {
 
 function findHorseToken(actor) {
     return canvas.scene.tokens.find(t => t.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy") == actor.uuid &&
-        t.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount"));
+        t.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") && (t.actor?.system?.attributes?.hp?.value ?? 0) > 0);
 }
 
-async function dismount(tokenId, horseId) {
-    await gmFunctions.dropBackpack(tokenId, horseId, game.user.uuid, true);
+async function dismount(token, horse) {
+    await lockActor(token.actor);
+    await gmFunctions.dropBackpack(token.id, horse.id, game.user.uuid, true);
 }
 

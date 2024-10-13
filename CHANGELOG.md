@@ -1,3 +1,10 @@
+# v12.0.11
+# New Features 
+- Mounts
+  - Mounts take damage in combat.  When you take damage while mounted, half of the damage received will be applied to your mount.
+# Bug Fixes
+- Mounts
+  - Fix bug with getMountData.
 # v12.0.10
 # Bug Fixes
 - Mounts

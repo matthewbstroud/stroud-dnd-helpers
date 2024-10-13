@@ -71,25 +71,27 @@ async function dropBackpack() {
     if (!backpackId) {
         return;
     }
-    gmFunctions.dropBackpack(controlledToken.id, backpackId, game.user.uuid);
+    await lockActor(controlledToken.actor);
+    await gmFunctions.dropBackpack(controlledToken.id, backpackId, game.user.uuid);
 }
 
 async function pickupBackpack(pileUuid) {
-    await gmFunctions.pickupBackpack(pileUuid);
+    await lockActor(controlledToken.actor);
+    await gmFunctions.pickupBackpack(pileUuid, game.user.id);
 }
 
-function lockActor(actorId) {
-    locks[actorId] = true;
+export async function lockActor(actor) {
+    await actor.setFlag(sdndConstants.MODULE_ID, "isLocked", true);
 }
-function releaseActor(actorId) {
-    locks[actorId] = false;
+async function releaseActor(actor) {
+    await actor.setFlag(sdndConstants.MODULE_ID, "isLocked", false);
 }
-function isLocked(actorId) {
-    return locks[actorId];
+function isLocked(actor) {
+    return actor.getFlag(sdndConstants.MODULE_ID, "isLocked") ?? false;
 }
 
 function ipPreDeleteItemPileHandler(pileToken) {
-    if ((!game.user?.isGM) && source.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'))) {
+    if ((!game.user?.isGM) && pileToken?.actor?.items.find(i => i.getFlag(sdndConstants.MODULE_ID, 'DroppedBy'))) {
         ui.notifications.warn("It would be a very bad idea to delete your primary pack!");
         return false;
     }
@@ -114,7 +116,7 @@ async function itemHandler(item, action) {
     if ((item?.system?.weight ?? 0) == 0) {
         return;
     }
-    if (isLocked(actor.id)) {
+    if (isLocked(actor)) {
         return;
     }
     await action(item);
@@ -133,7 +135,7 @@ async function updateItemHandler(item, changes, options, id) {
 }
 
 async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
-    let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    let lockedItemID = pile?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     if (item._id == lockedItemID) {
         menu.length = 0;
     }
@@ -228,10 +230,10 @@ export async function gmCheckActorWeight(actorUuid, force) {
     if (!actor) {
         return;
     }
-    if (isLocked(actor.id) && !force) {
+    if (isLocked(actor) && !force) {
         return;
     }
-    lockActor(actor.id);
+    await lockActor(actor);
     console.log("checking actor weight");
     try {
         let encumbrance = actor.system?.attributes?.encumbrance;
@@ -266,10 +268,7 @@ export async function gmCheckActorWeight(actorUuid, force) {
         ui.notifications.error(ex.message);
     }
     finally {
-        await new Promise(r => setTimeout(r, 2000)).then(
-            function () { releaseActor(actor.id); },
-            function (err) { console.log(err.message); }
-        );
+        await releaseActor(actor);
     }
 }
 
@@ -301,23 +300,25 @@ async function interact(pileUuid) {
         ui.notifications.warn(`${actor.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
         return false;
     }
-    let choice = await dialog.createButtonDialog(pile.actor.name,
-        [
-            {
-                "label": "Open",
-                "value": "open"
-            },
-            {
-                "label": (isMount ? "Mount" : "Pick up"),
-                "value": "pickup"
-            }
-        ]
-        , 'column');
+    if (isMount && pile?.actor?.system?.attributes?.hp?.value <= 0) {
+        return true;
+    }
+    let buttons = [
+        {
+            "label": "Open",
+            "value": "open"
+        },
+        {
+            "label": (isMount ? "Mount" : "Pick up"),
+            "value": "pickup"
+        }
+    ];
+    let choice = await dialog.createButtonDialog(pile.actor.name, buttons, 'column');
     if (choice == "open") {
         return true;
     }
     else if (choice == "pickup") {
-        gmFunctions.pickupBackpack(pileUuid);
+        await gmFunctions.pickupBackpack(pileUuid, game.user.id);
     }
     return false;
 }
@@ -380,7 +381,8 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
                     "lockedItem": backpack.id,
                     "IsMount": isMount,
                     "DroppedBy": (actor.uuid),
-                    "IsPrimary": (backpack.id == primaryBackpackId)
+                    "IsPrimary": (backpack.id == primaryBackpackId),
+                    "DroppedUserId": (game.user.id)
                 }
             },
             "system": {
@@ -433,6 +435,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             ]
         }
     }
+    let isMountDead = false;
     if (isMount) {
         let mountData = backpack.getFlag(sdndConstants.MODULE_ID, "MountData");
         pileOptions.actorOverrides.flags[sdndConstants.MODULE_ID].MountData = mountData;
@@ -441,9 +444,14 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             "hp": mountData.hp
         };
         pileOptions.tokenOverrides.displayBars = CONST.TOKEN_DISPLAY_MODES.OWNER;
+        if (mountData.hp.value <= 0) {
+            isMountDead = true;
+            pileOptions.actorOverrides.img = 'modules/stroud-dnd-helpers/images/icons/dead_mount.webp';
+            pileOptions.tokenOverrides.texture.src = 'modules/stroud-dnd-helpers/images/icons/dead_mount.webp'
+        }
     }
     try {
-        lockActor(actor.id);
+        await lockActor(actor);
         let result = await game.itempiles.API.createItemPile(pileOptions);
         let backpackToken = await fromUuid(result.tokenUuid);
         let items = actor.items.filter(i => i?.system?.container == backpack.id);
@@ -460,9 +468,12 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         ui.notifications.error(exception.message);
     }
     finally {
-        releaseActor(actor.id);
+        await releaseActor(actor);
     }
     await gmCheckActorWeight(actor, true);
+    if (isMountDead) {
+        return;
+    }
     let message = isMount ? `Has dismounted ${backpack.name}.` :
         `Has dropped ${backpack.name} on the ground.`;
     await ChatMessage.create({
@@ -492,11 +503,14 @@ export async function gmPickupBackpack(pileUuid) {
         return;
     }
     if (isMount) {
-        await backpack.setFlag(sdndConstants.MODULE_ID, "MountData.hp", pile.actor?.system.attributes.hp);
+        let mountData = mounts.getMountData(backpack);
+        mountData.hp = pile.actor?.system.attributes.hp;
+        await mounts.setMountData(backpack, mountData);
+        await mounts.changeHealth(pile.actor.uuid, (mountData.hp.value / mountData.hp.max));
     }
     let actor = await fromUuid(actorUuId);
     try {
-        lockActor(actor.id);
+        lockActor(actor);
         let items = game.itempiles.API.getActorItems(backpack.actor);
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
         await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
@@ -524,8 +538,8 @@ export async function gmPickupBackpack(pileUuid) {
         await pileActor.delete();
         let newBackpack = actor.items.get(backpackId);
         await newBackpack.update({ "system.equipped": true });
-        await gmCheckActorWeight(actor, true);
         let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`
+
         await ChatMessage.create({
             speaker: { alias: actor.name },
             content: message,
@@ -536,7 +550,8 @@ export async function gmPickupBackpack(pileUuid) {
         ui.notifications.error(exception.message);
     }
     finally {
-        releaseActor(actor.id);
+        await releaseActor(actor);
+        await gmCheckActorWeight(actor, true);
     }
 }
 
