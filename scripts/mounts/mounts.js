@@ -4,8 +4,8 @@ import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
 import { getAverageHpFormula } from "../actors/actors.js";
 import { backpacks } from "../backpacks/backpacks.js";
-import { gmDropBackpack } from "../backpacks/backpacks.js";
 import { sdndSettings } from "../settings.js";
+import { lockActor } from "../backpacks/backpacks.js";
 
 const MOUNTED_EFFECT = {
     "name": "Mounted",
@@ -290,7 +290,7 @@ async function toggleMount() {
     try {
         let horse = getHorse(actor);
         if (horse) {
-            await dismount(controlledToken.id, horse);
+            await dismount(controlledToken, horse);
             return true;
         }
         // find the horse
@@ -305,6 +305,7 @@ async function toggleMount() {
             ui.notifications.warn(`You must be within 30 feet to call ${horseName.trim()}!`);
             return false;
         }
+        await lockActor(actor);
         await gmFunctions.pickupBackpack(horseToken.uuid, game.user.id);
     }
     catch (exception) {
@@ -338,8 +339,9 @@ function findHorseToken(actor) {
         t.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount"));
 }
 
-async function dismount(tokenId, horse) {
-    await gmFunctions.dropBackpack(tokenId, horse.id, game.user.uuid, true);
+async function dismount(token, horse) {
+    await lockActor(token.actor);
+    await gmFunctions.dropBackpack(token.id, horse.id, game.user.uuid, true);
 }
 
 async function onAttackRollComplete(workflow) {

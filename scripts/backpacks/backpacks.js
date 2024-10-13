@@ -80,7 +80,7 @@ async function pickupBackpack(pileUuid) {
     await gmFunctions.pickupBackpack(pileUuid, game.user.id);
 }
 
-async function lockActor(actor) {
+export async function lockActor(actor) {
     await actor.setFlag(sdndConstants.MODULE_ID, "isLocked", true);
 }
 async function releaseActor(actor) {
