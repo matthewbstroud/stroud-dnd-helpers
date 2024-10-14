@@ -1,3 +1,7 @@
+# v12.1.0
+# New Features 
+- Anonymous Integration
+  - Set anonymous for an array of actors
 # v12.0.11
 # New Features 
 - Mounts

@@ -8,7 +8,6 @@ import { numbers } from "../utility/numbers.js";
 import { mounts } from "../mounts/mounts.js";
 
 const DIE_MATCH = /(\d+)d(\d+)/g;
-
 export let actors = {
     "ensureActor": ensureActor,
     "buffNpcsWithPrompt": foundry.utils.debounce(buffNpcsWithPrompt, 250),
@@ -18,11 +17,30 @@ export let actors = {
     "renderSheet": renderSheet,
     "setPrototypeTokenBarsVisibility": setPrototypeTokenBarsVisibility,
     "setTokenBarsVisibility": setTokenBarsVisibility,
-    "replaceSpells": replaceSpells
+    "replaceSpells": replaceSpells,
+    "getActorsByFolderId": function _getActorsByFolderId(folderId) {
+        return game.actors.filter(a => folders.childOfFolder(a, folderId));
+    },
+    "setAnonymous": async function _setAnonymous(actors, anonymous) {
+        const anonActive = game.modules.get("anonymous")?.active ?? false;
+        for (let actor of actors) {
+            if (anonActive) {
+                await actor.setFlag("anonymous", "showName", !anonymous);
+            }
+        }
+        const tokenDisplayMode = anonymous ? CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER : CONST.TOKEN_DISPLAY_MODES.HOVER;
+        let updates = actors.filter(a => a.prototypeToken.displayName != tokenDisplayMode)
+            .map(a => ({ "_id": a._id, "prototypeToken": { "displayName": tokenDisplayMode } }));
+        if (!updates || updates.length == 0) {
+            return;
+        }
+        console.log(`Updating ${updates.length} prototypes...`);
+        await Actor.updateDocuments(updates);
+    }
 }
 
 async function buffNpcsWithPrompt() {
-    promptForBuff(buffActors); 
+    promptForBuff(buffActors);
 }
 
 async function setPrototypeTokenBarsVisibility(actors, tokenDisplayMode) {
@@ -35,7 +53,7 @@ async function setPrototypeTokenBarsVisibility(actors, tokenDisplayMode) {
         return;
     }
     console.log(`Updating ${updates.length} prototypes...`);
-    Actor.updateDocuments(updates);
+    await Actor.updateDocuments(updates);
 }
 
 async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
@@ -385,8 +403,8 @@ function applyUsableFilter(actor, enabled) {
     let usableSpellIds = actor.items
         .filter(
             i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || i.system.preparation?.mode == "innate" ||
-            (i.system.properties.has("ritual") && actor._classes?.wizard))
-        ).map(i  => `li[data-item-id='${i._id}']`)
+                (i.system.properties.has("ritual") && actor._classes?.wizard))
+        ).map(i => `li[data-item-id='${i._id}']`)
         ?.join(", ") ?? "";
     $("section.spells-list li.item").attr("hidden", "hidden");
     $(usableSpellIds).removeAttr("hidden");

@@ -10,7 +10,7 @@ export let folders = {
         }
     },
     "ensureFolder": ensureFolder,
-
+    "childOfFolder": childOfFolder
 };
 
 async function createFolder(folderName, folderType, parentID) {
@@ -25,4 +25,23 @@ async function ensureFolder(folderName, folderType, parentID) {
     }
 
     return folder;
+}
+
+function childOfFolder(doc, folderId) {
+    let folderSet = getFolders(doc.folder);
+    return folderSet.has(folderId);
+}
+
+function getFolders(folder, set) {
+    if (!set) {
+        set = new Set();
+    }
+    if (!folder) {
+        return set;
+    }
+    set.add(folder.id);
+    if (!folder.folder) {
+        return set;
+    }
+    return getFolders(folder.folder, set);
 }
