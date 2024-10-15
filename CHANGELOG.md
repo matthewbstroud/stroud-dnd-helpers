@@ -1,3 +1,6 @@
+# v12.1.3
+# New Features 
+- Path Fixers
 # v12.1.2
 # New Features 
 - Misc Tagging Fixes

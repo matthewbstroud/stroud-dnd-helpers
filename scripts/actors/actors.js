@@ -36,7 +36,36 @@ export let actors = {
         }
         console.log(`Updating ${updates.length} prototypes...`);
         await Actor.updateDocuments(updates);
+    },
+    "fixImagePath": async function _fixImagePath(searchPattern, replacement, previewOnly) {
+        let updates = game.actors.filter(a => actorMatchesPattern(a, searchPattern)).map(a => {
+            let change = {
+                "_id": a._id
+            };
+            if (a?.img.includes(searchPattern)) {
+                change["img"] = a.img.replace(searchPattern, replacement);
+            }
+            if (a.prototypeToken?.texture?.src?.includes(searchPattern)) {
+                change.prototypeToken = {
+                    "texture": {
+                        "src": a.prototypeToken?.texture?.src?.replace(searchPattern, replacement)
+                    }
+                }
+            }
+            return change;
+        });
+        // let packs = game.packs.filter(p => p.metadata.type == "Actor" && p.index.find(a => actorMatchesPattern(a, searchPattern)));
+        // for (let pack of packs) {
+        //     let packUpdates = pack.index.filter(a => actorMatchesPattern(a, searchPattern)).map(r => {
+
+        //     });
+        // }
+        return updates;
     }
+}
+
+function actorMatchesPattern(actor, searchPattern) {
+    return actor.img?.includes(searchPattern) || actor.prototypeToken?.texture?.src?.includes(searchPattern);
 }
 
 async function buffNpcsWithPrompt() {
