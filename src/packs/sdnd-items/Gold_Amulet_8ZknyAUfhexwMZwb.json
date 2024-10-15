@@ -126,7 +126,11 @@
       "magiceffect": false,
       "noConcentrationCheck": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "midi-qol": {
       "rollAttackPerTarget": "default",
@@ -139,7 +143,7 @@
     "systemVersion": "3.2.1",
     "coreVersion": "11.315",
     "createdTime": 1661787233876,
-    "modifiedTime": 1727305980164,
+    "modifiedTime": 1728958715250,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "8ZknyAUfhexwMZwb",
