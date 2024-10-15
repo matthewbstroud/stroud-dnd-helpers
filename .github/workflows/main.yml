@@ -124,7 +124,7 @@ jobs:
             LICENSE                              \
             templates                            \
             active_effects/                      \
-           # images/                              \
+            images/                              \
             scripts/                             \
             sfx/                                 \
             styles/                              \
