@@ -4,38 +4,38 @@ import { morphToken } from "../tokens.js";
 
 export let tagging = {
     "tagDocuments": tagDocuments,
-    "getTaggedDocuments": foundry.utils.debounce(getTaggedDocuments, 250),
+    "getTaggedDocuments": getTaggedDocuments,
     "listTags": foundry.utils.debounce(listTags, 250),
     "tagSelected": foundry.utils.debounce(tagSelected, 250),
     "doors": {
-        "setState": foundry.utils.debounce(setDoorState, 250),
+        "setState": setDoorState,
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.walls, sdndConstants.MODULE_ID, "tagName", name);
         },
-        "toggle": foundry.utils.debounce(toggleDoors, 250)
+        "toggle": toggleDoors
     },
     "lighting": {
-        "toggle": foundry.utils.debounce(toggleLights, 250),
+        "toggle": toggleLights,
         "tagSelected": async function _tagSelectedLights(name) {
             await tagControlled(canvas.lighting, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "sfx": {
-        "toggle": foundry.utils.debounce(toggleSfx, 250),
+        "toggle": toggleSfx,
         "tagSelected": async function _tagSelectedSfx(name) {
             await tagControlled(canvas.sounds, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "tiles": {
-        "toggleEnabled": foundry.utils.debounce(toggleEnabledTiles, 250),
-        "trigger": foundry.utils.debounce(triggerTiles, 250),
+        "toggleEnabled": toggleEnabledTiles,
+        "trigger": triggerTiles,
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.tiles, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "tokens": {
-        "morph": foundry.utils.debounce(morphTokens, 250),
-        "toggle": foundry.utils.debounce(toggleTokens, 250),
+        "morph": morphTokens,
+        "toggle": toggleTokens,
         "tagSelected": async function _tagSelectedTokens(name) {
             await tagControlled(canvas.tokens, sdndConstants.MODULE_ID, "tagName", name);
         }
@@ -68,8 +68,8 @@ function getUniqueTags(collection, scope, key) {
     return result;
 }
 
-async function toggleLights(name) {
-    await toggleHidden(canvas.scene.lights, name);
+async function toggleLights(name, hidden) {
+    await toggleHidden(canvas.scene.lights, name, hidden);
 }
 
 async function tagControlled(collection, scope, key, value) {
@@ -152,7 +152,7 @@ function listTags() {
 <li><b>Lights</b><ul>${tagsToLI(tags.lightTags)}</ul></li>
 <li><b>Sounds</b><ul>${tagsToLI(tags.soundTags)}</ul></li>
 <li><b>Tiles</b><ul>${tagsToLI(tags.tileTags)}</ul></li>
-<li><b>Tiles</b><ul>${tagsToLI(tags.tokenTags)}</ul></li>
+<li><b>Tokens</b><ul>${tagsToLI(tags.tokenTags)}</ul></li>
 </ul>`;
     ChatMessage.create({
         content: tagsHtml,
@@ -162,10 +162,11 @@ function listTags() {
 function tagsToLI(tags) {
     return tags ? Object.entries(tags).map(i => `<li>${i[0]}: ${i[1]}</li>`).join('') : "None";
 }
-async function toggleHidden(collection, name) {
+async function toggleHidden(collection, name, hidden) {
     await executeAction(collection, name, async function (doc) {
+        hidden ??= !doc.hidden;
         doc.update({
-            "hidden": !doc.hidden
+            "hidden": hidden
         });
     });
 }
@@ -209,12 +210,12 @@ async function triggerTiles(name) {
     });
 }
 
-async function toggleSfx(name) {
-    await toggleHidden(canvas.scene.sounds, name);
+async function toggleSfx(name, hidden) {
+    await toggleHidden(canvas.scene.sounds, name, hidden);
 }
 
-async function toggleTokens(name) {
-    await toggleHidden(canvas.scene.tokens, name);
+async function toggleTokens(name, hidden) {
+    await toggleHidden(canvas.scene.tokens, name, hidden);
 }
 
 async function morphTokens(name) {

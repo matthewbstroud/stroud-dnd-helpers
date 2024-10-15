@@ -1,3 +1,6 @@
+# v12.1.2
+# New Features 
+- Misc Tagging Fixes
 # v12.1.0
 # New Features 
 - Anonymous Integration
