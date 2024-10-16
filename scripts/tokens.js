@@ -273,7 +273,7 @@ async function pushTokenPrototype(token, source, applyTo, preservedProperties) {
         return;
     }
 
-    return await canvas.scene.updateEmbeddedDocuments("Token", updates);
+    return await canvas.scene.updateEmbeddedDocuments(Token.name, updates);
 }
 
 let dbAddMorphData = foundry.utils.debounce(addMorphData, 250);

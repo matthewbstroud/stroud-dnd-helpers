@@ -1,6 +1,7 @@
 import { scene } from "./scene.js";
 import { sdndConstants } from "../constants.js";
 import { actors } from "../actors/actors.js";
+import { journal } from "../journal/journal.js";
 import { playlists } from "../playlists.js";
 import { tokens } from "../tokens.js";
 
@@ -48,34 +49,12 @@ export let utility = {
         }
         console.log(`${sdndConstants.MODULE_ID} compendium migration complete...`);
     },
-    "fixer": {
-        "imagePath": async function _imagePath(searchPattern, replacement, previewOnly) {
-            let updates = [];
-            updates.push(await actors.fixImagePath(searchPattern, replacement, previewOnly));
-            updates.push(await tokens.fixImagePath(searchPattern, replacement, previewOnly));
-            return updates;
-        },
-        "sfxPath": async function _sfxPath(searchPattern, replacement, previewOnly) {
-            let updates = [];
-            updates.push(await fixSfx(searchPattern, replacement, previewOnly));
-            updates.push(await playlists.fixSfxPath(searchPattern, replacement, previewOnly));
-            return updates;
-        }
+    "fixPaths": async function _fixPaths(searchPattern, replacement, previewOnly) {
+        let updates = {};
+        updates.actors = await actors.replaceInActors(searchPattern, replacement, previewOnly);
+        updates.journal = await journal.replaceInJournals(searchPattern, replacement, previewOnly);
+        updates.playlists = await playlists.replaceInPlaylists(searchPattern, replacement, previewOnly);
+        updates.scenes = await scene.replaceInScenes(searchPattern, replacement, previewOnly);
+        return updates;
     }
 };
-
-async function fixSfx(searchPattern, replacement, previewOnly) {
-    let scenes = game.scenes.filter(s => s.sounds?.contents?.filter(s => s.path?.includes(searchPattern)).length > 0);
-    let updates = [];
-    for (let scene of scenes) {
-        let sceneUpdates = scene?.sounds?.filter(s => s.path?.includes(searchPattern)).map(r => ({
-            "_id": r._id,
-            "path": r.path.replace(searchPattern, replacement)
-        }));
-        if (previewOnly) {
-            updates.push({ "scene": scene.name, "updates": sceneUpdates });
-            continue;
-        }
-    }
-    return updates;
-}

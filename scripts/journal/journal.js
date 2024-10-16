@@ -5,8 +5,41 @@ const SUMMARY_FOLDER_NAME = "Session Summaries";
 const SUMMARY_JOURNAL_NAME = "Session End Summary";
 
 export let journal = {
-    "generateSessionSummary": foundry.utils.debounce(generateSessionSummary, 250)
+    "generateSessionSummary": foundry.utils.debounce(generateSessionSummary, 250),
+    "replaceInJournals": async function _replaceInJournals(searchPattern, replacement, previewOnly) {
+        let journals = game.journal.filter(j => j.pages?.find(p => pageMatchesSearchPattern(p, searchPattern)));
+        let updates = [];
+        for (let journal of journals) {
+            let journalUpdates = journal.pages.filter(p => pageMatchesSearchPattern(p, searchPattern)).map(page => {
+                let change = {
+                    "_id": page._id
+                };
+                if (previewOnly) {
+                    change.name = page.name;
+                }
+                if (page.src?.includes(searchPattern)) {
+                    change.src = page.src.replace(searchPattern, replacement);
+                }
+                if (page.text?.content?.includes(searchPattern)) {
+                    change.text = {
+                        "content": page.text.content.replaceAll(searchPattern, replacement)
+                    };
+                }
+                return change;
+            });
+            updates.push({ "journal": journal.name, "updates": journalUpdates });
+            if (previewOnly || journalUpdates.length == 0) {
+                continue;
+            }
+            await journal.updateEmbeddedDocuments(JournalEntryPage.name, journalUpdates);
+        }
+        return updates;
+    }
 };
+
+function pageMatchesSearchPattern(page, searchPattern) {
+    return (page.src?.includes(searchPattern) || page.text?.content?.includes(searchPattern));
+}
 
 async function generateSessionSummary() {
     if (!game.user.isGM) {
@@ -77,7 +110,7 @@ let journalInternal = {
         sessionEndSummaryHtml += `</table>`;
         return sessionEndSummaryHtml;
     },
-    "pruneSessionSummaries": async function _pruneSessionSummaries(folderID){
+    "pruneSessionSummaries": async function _pruneSessionSummaries(folderID) {
         let summaries = await game.journal.filter(j => j.folder?.id == folderID);
         let maxTimestamp = Math.max(...summaries.map(s => s._stats.createdTime));
         let summariesToDelete = summaries.filter(s => s._stats.createdTime < maxTimestamp);
@@ -96,3 +129,4 @@ function sortByName(a, b) {
     }
     return 0;
 }
+

@@ -37,29 +37,30 @@ export let actors = {
         console.log(`Updating ${updates.length} prototypes...`);
         await Actor.updateDocuments(updates);
     },
-    "fixImagePath": async function _fixImagePath(searchPattern, replacement, previewOnly) {
+    "replaceInActors": async function _replaceInActors(searchPattern, replacement, previewOnly) {
         let updates = game.actors.filter(a => actorMatchesPattern(a, searchPattern)).map(a => {
             let change = {
                 "_id": a._id
             };
-            if (a?.img.includes(searchPattern)) {
+            if (previewOnly) {
+                change.name = a.name;
+            }
+            if (a?.img?.includes(searchPattern)) {
                 change["img"] = a.img.replace(searchPattern, replacement);
             }
             if (a.prototypeToken?.texture?.src?.includes(searchPattern)) {
                 change.prototypeToken = {
                     "texture": {
-                        "src": a.prototypeToken?.texture?.src?.replace(searchPattern, replacement)
+                        "src": a.prototypeToken.texture.src.replace(searchPattern, replacement)
                     }
                 }
             }
             return change;
         });
-        // let packs = game.packs.filter(p => p.metadata.type == "Actor" && p.index.find(a => actorMatchesPattern(a, searchPattern)));
-        // for (let pack of packs) {
-        //     let packUpdates = pack.index.filter(a => actorMatchesPattern(a, searchPattern)).map(r => {
-
-        //     });
-        // }
+        if (previewOnly || updates.length == 0) {
+            return updates;
+        }
+        await Actor.updateDocuments(updates);
         return updates;
     }
 }
@@ -96,7 +97,7 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
             continue;
         }
         console.log(`Updating ${updates.length} in ${scene.name}...`);
-        await scene.updateEmbeddedDocuments("Token", updates);
+        await scene.updateEmbeddedDocuments(Token.name, updates);
     }
 }
 

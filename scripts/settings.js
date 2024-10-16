@@ -128,7 +128,7 @@ export let sdndSettings = {
 	'EnableHorseDamage': {
 		'config': {
 			'name': 'Use Stroud DnD Horse Damage.',
-			'hint': `Requires using the horses from SDND Items compendium.`,
+			'hint': `Requires using the horses from SDND Items compendium and On Character Damage Suport `,
 			'scope': 'world',
 			'config': true,
 			'type': Boolean,
@@ -153,7 +153,7 @@ At 75% max carried weight you will have: (-4 to AC and Disadvantage on Attack ro
 	},
 	'OnDamageEvents': {
 		'config': {
-			'name': 'Active on character damage support.',
+			'name': 'Activate on character damage support.',
 			'hint': `Allows certain automations to work.  (Example the berserker axe.)`,
 			'scope': 'world',
 			'config': true,
