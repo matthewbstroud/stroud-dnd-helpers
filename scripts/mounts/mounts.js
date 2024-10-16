@@ -101,7 +101,7 @@ export let mounts = {
             return false;
         }
         let icon = `modules/stroud-dnd-helpers/images/icons/saddle_health/saddle_health_${health < 10 ? "0" : ""}${health}.webp`;
-        await horse.updateEmbeddedDocuments("ActiveEffect", [{ "_id": effect.id, "icon": icon }])
+        await horse.updateEmbeddedDocuments(ActiveEffect.name, [{ "_id": effect.id, "icon": icon }])
     },
     "toggleMount": foundry.utils.debounce(toggleMount, 250),
     "createMount": async function _createMount(itemUuid, ac) {
@@ -204,6 +204,9 @@ export let mounts = {
 };
 
 async function onDamageTaken(actor, changes, update, userId) {
+    if (!sdndSettings.EnableHorseDamage.getValue()) {
+        return;
+    }
     let horse = getHorse(actor);
     if (!horse) {
         return;

@@ -52,14 +52,6 @@ async function onDamageTaken(actor, changes, update, userId) {
     await mounts.hooks.onDamageTaken(actor, changes, update, userId);
 }
 
-async function onAttackRollComplete(workflow) {
-    await mounts.onAttackRollComplete(workflow);
-}
-
-async function onPreDamageRollComplete(workflow) {
-    await mounts.onPreDamageRollComplete(workflow);
-}
-
 // apply adhoc damage to selected tokens
 async function applyAdhocDamage() {
     if (!game.user.isGM) {

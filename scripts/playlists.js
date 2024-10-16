@@ -90,6 +90,28 @@ export let playlists = {
     "stop": async function _stop(playlistId) {
         let combatPlaylist = game.playlists.get(playlistId);
         combatPlaylist.stopAll();
+    },
+    "replaceInPlaylists": async function _replaceInPlaylists(searchPattern, replacement, previewOnly) {
+        let updates = [];
+        let playlists = game.playlists.filter(p => p.sounds.filter(s => s.path?.includes(searchPattern)).length > 0);
+        for (let playlist of playlists) {
+            let playlistUpdates = playlist.sounds.filter(s => s.path?.includes(searchPattern)).map(r => {
+                let change = {
+                    "_id": r._id,
+                    "path": r.path.replace(searchPattern, replacement)
+                };
+                if (previewOnly) {
+                    change.name = r.name;
+                }
+                return change;
+            });
+            updates.push({ "playlist": playlist.name, "updates": playlistUpdates });
+            if (previewOnly || playlistUpdates.length == 0) {
+                continue;
+            }
+            await playlist.updateEmbeddedDocuments(PlaylistSound.name, playlistUpdates);
+        }
+        return updates;
     }
 };
 export let music = {

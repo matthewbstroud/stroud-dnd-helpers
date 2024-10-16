@@ -40,6 +40,23 @@ export let tokens = {
         let targetCenter = (targetToken instanceof dnd5e.documents.TokenDocument5e) ? 
         canvas.tokens.get(targetToken.id)?.center : targetToken.center;
         return distance * Math.round(canvas.grid.measureDistance(sourceCenter, targetCenter) / distance);
+    },
+    "fixImagePath": async function _fixImagePath(searchPattern, replacement, previewOnly) {
+        let scenes = game.scenes.filter(s => s.tokens.filter(t => t?.texture?.src?.includes(searchPattern)).length > 0);
+        let updates = [];
+        for (let scene of scenes) {
+            let sceneUpdates = scene?.tokens?.filter(t => t?.texture?.src?.includes(searchPattern)).map(r => ({
+                "_id": r._id,
+                "texture": {
+                    "src": (r.texture.src.replace(searchPattern, replacement))
+                }
+            }));
+            if (previewOnly) {
+                updates.push({"scene": scene.name, "updates": sceneUpdates});
+                continue;
+            }
+        }
+        return updates;
     }
 };
 
@@ -256,7 +273,7 @@ async function pushTokenPrototype(token, source, applyTo, preservedProperties) {
         return;
     }
 
-    return await canvas.scene.updateEmbeddedDocuments("Token", updates);
+    return await canvas.scene.updateEmbeddedDocuments(Token.name, updates);
 }
 
 let dbAddMorphData = foundry.utils.debounce(addMorphData, 250);

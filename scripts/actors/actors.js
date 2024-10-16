@@ -36,7 +36,37 @@ export let actors = {
         }
         console.log(`Updating ${updates.length} prototypes...`);
         await Actor.updateDocuments(updates);
+    },
+    "replaceInActors": async function _replaceInActors(searchPattern, replacement, previewOnly) {
+        let updates = game.actors.filter(a => actorMatchesPattern(a, searchPattern)).map(a => {
+            let change = {
+                "_id": a._id
+            };
+            if (previewOnly) {
+                change.name = a.name;
+            }
+            if (a?.img?.includes(searchPattern)) {
+                change["img"] = a.img.replace(searchPattern, replacement);
+            }
+            if (a.prototypeToken?.texture?.src?.includes(searchPattern)) {
+                change.prototypeToken = {
+                    "texture": {
+                        "src": a.prototypeToken.texture.src.replace(searchPattern, replacement)
+                    }
+                }
+            }
+            return change;
+        });
+        if (previewOnly || updates.length == 0) {
+            return updates;
+        }
+        await Actor.updateDocuments(updates);
+        return updates;
     }
+}
+
+function actorMatchesPattern(actor, searchPattern) {
+    return actor.img?.includes(searchPattern) || actor.prototypeToken?.texture?.src?.includes(searchPattern);
 }
 
 async function buffNpcsWithPrompt() {
@@ -67,7 +97,7 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
             continue;
         }
         console.log(`Updating ${updates.length} in ${scene.name}...`);
-        await scene.updateEmbeddedDocuments("Token", updates);
+        await scene.updateEmbeddedDocuments(Token.name, updates);
     }
 }
 
