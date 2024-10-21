@@ -111,7 +111,7 @@ async function getMorphData(token) {
         }
         await setMorphData(token, morphData);
     }
-    morphData.preservedData ??= [];
+    morphData.preservedProperties ??= [];
     return morphData;
 }
 
@@ -312,6 +312,6 @@ export async function morphToken(token) {
         return false;
     }
     await setMorphData(token, morphData);
-    await pushTokenPrototype(token, morphActor, [token], morphData.preservedData);
+    await pushTokenPrototype(token, morphActor, [token], morphData.preservedProperties);
     return true;
 }

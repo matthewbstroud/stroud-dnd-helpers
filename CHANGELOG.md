@@ -1,3 +1,6 @@
+# v12.1.4
+# Bug Fixes 
+- Fix bug with morph token data.
 # v12.1.3
 # New Features 
 - Path Fixers
