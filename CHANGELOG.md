@@ -1,3 +1,6 @@
+# v12.2.0
+# New Features
+- Upgrade Compendiums to DND5e v3.3.1
 # v12.1.4
 # Bug Fixes 
 - Fix bug with morph token data.

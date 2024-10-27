@@ -5,7 +5,7 @@
   "description": "<p>You have discovered something common…</p><p></p>",
   "results": [
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -21,7 +21,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.uKhupfstaStVr5uQ"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -37,7 +37,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.bD6ew9uY4zU5k2xh"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -53,7 +53,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.g9F1Sy9mCyY5QBIh"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -69,7 +69,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.pIcTKCDdwx0iD9dL"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -85,7 +85,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.eCezN5Oh889vHQ5G"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -101,7 +101,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.FH7Ib6ItFB5JfqCz"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -117,7 +117,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.q0EWZTLPiotZolxe"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "Item",
       "weight": 1,
       "range": [
@@ -133,7 +133,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.YFHVuaOvAJ1dT7nv"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -149,7 +149,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.dccdwK6abTb55be7"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -165,7 +165,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.wdkzvtT9ElQmdWWs"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -181,7 +181,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.AG84EnkYUT6VGDzh"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -197,7 +197,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.CWiYWAZCglWRnT4K"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -213,7 +213,7 @@
       "_key": "!tables.results!tp3ssKVmpxZ8AYbY.BkETLYCfmyVrVL8H"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -241,10 +241,12 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1723425860820,
     "modifiedTime": 1727204658705,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "formula": "1d14",
   "_key": "!tables!tp3ssKVmpxZ8AYbY"

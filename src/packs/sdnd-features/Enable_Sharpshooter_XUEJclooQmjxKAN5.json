@@ -29,7 +29,6 @@
         "startRound": null,
         "startTurn": null
       },
-      "icon": "icons/weapons/bows/longbow-recurve-skull-brown.webp",
       "transfer": false,
       "flags": {
         "dae": {
@@ -64,11 +63,25 @@
           "description": ""
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
       "origin": null,
       "name": "Sharpshooter",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/weapons/bows/longbow-recurve-skull-brown.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!XUEJclooQmjxKAN5.dbid4gk91pwfbd2m"
     }
   ],
@@ -194,11 +207,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1706802930478,
-    "modifiedTime": 1728353071410,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697677,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "XUEJclooQmjxKAN5",
   "sort": 0,

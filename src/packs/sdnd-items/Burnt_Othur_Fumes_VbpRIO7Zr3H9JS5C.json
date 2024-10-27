@@ -97,7 +97,6 @@
   "effects": [
     {
       "name": "Burnt Othur Fumes",
-      "icon": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
       "origin": "Item.ye4ScKpHDzVwhXqC",
       "duration": {
         "rounds": 99,
@@ -172,7 +171,21 @@
           "dnd5e": {}
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!VbpRIO7Zr3H9JS5C.CFBWDeh1tiuPZ3h8"
     }
   ],
@@ -209,11 +222,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1726955672780,
-    "modifiedTime": 1727305980171,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697744,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "VbpRIO7Zr3H9JS5C",
   "sort": 0,

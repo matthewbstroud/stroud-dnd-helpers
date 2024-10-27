@@ -23,7 +23,7 @@
     "target": {
       "value": "600",
       "width": null,
-      "units": null,
+      "units": "",
       "type": "self",
       "prompt": true
     },
@@ -99,7 +99,6 @@
   "effects": [
     {
       "name": "Devotee's Censer Incense",
-      "icon": "modules/stroud-dnd-helpers/images/icons/devotees_censer.jpg",
       "origin": "Item.Sr8nSrb6EahhjHQd",
       "duration": {
         "rounds": null,
@@ -156,7 +155,21 @@
           }
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "modules/stroud-dnd-helpers/images/icons/devotees_censer.jpg",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!av9TSNDguvs5njiI.4t5pNXrKY6b31j8Z"
     }
   ],
@@ -193,11 +206,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1708878032641,
-    "modifiedTime": 1727305980312,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697857,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "av9TSNDguvs5njiI",
   "sort": 0,

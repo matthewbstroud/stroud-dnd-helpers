@@ -112,11 +112,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1682287844745,
-    "modifiedTime": 1727305980167,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697741,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": "Actor.5Bwlj2TH0De8MFIU.Item.9gDMpOhdJDbc6Aze",
+    "duplicateSource": null
   },
   "ownership": {
     "default": 0,

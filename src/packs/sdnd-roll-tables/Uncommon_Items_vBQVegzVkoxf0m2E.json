@@ -4,7 +4,7 @@
   "description": "<p>You have discovered something uncommon…</p><p></p>",
   "results": [
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -20,7 +20,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.LvetB8yIPVdHDJzM"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -36,7 +36,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.ZSbrrXbMoWibLqvl"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -52,7 +52,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.2t1JpkQFZ1YoknwP"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -68,7 +68,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.ZIgKBQz5uHX6Nr7Z"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -84,7 +84,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.bwzUwBCo9ATyPWlk"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -100,7 +100,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.L2GtCMk0PoxUrsJi"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -116,7 +116,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.LovPeTi6ARDxYAIz"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -132,7 +132,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.NkWSClRjmP9XBRCV"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -148,7 +148,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.AszDZ4mHnqKpgAZP"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -164,7 +164,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.B5EjpBupIITPaMWr"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.jNWv2Xb8tekCisE7"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -196,7 +196,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.abSPsTY5kdjtnANM"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -212,7 +212,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.9QxVR0s1V67qkq8u"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -228,7 +228,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.DHNLs39I4uIzQPmd"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -244,7 +244,7 @@
       "_key": "!tables.results!vBQVegzVkoxf0m2E.Hyc5wxISNgrW9Ke5"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -273,10 +273,12 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1723425681334,
     "modifiedTime": 1727204492849,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "formula": "1d16",
   "_id": "vBQVegzVkoxf0m2E",

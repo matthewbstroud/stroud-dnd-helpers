@@ -92,7 +92,6 @@
   "effects": [
     {
       "name": "Wyrmtongue Petals",
-      "icon": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "origin": "Item.IqPkA4Qk5X8otaVm",
       "duration": {
         "rounds": 1,
@@ -151,7 +150,21 @@
           "wallsBlock": "system"
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!pgC4HXLFDyiEx1WF.oQevvRhngEwtEQOp"
     }
   ],
@@ -181,11 +194,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1723518742590,
-    "modifiedTime": 1727305980176,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697749,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "pgC4HXLFDyiEx1WF",
   "sort": 0,

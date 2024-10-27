@@ -29,7 +29,6 @@
         "startRound": null,
         "startTurn": null
       },
-      "icon": "icons/weapons/swords/greatsword-crossguard-barbed.webp",
       "transfer": false,
       "flags": {
         "dae": {
@@ -60,11 +59,25 @@
           "onlyOnce": false
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
       "origin": null,
       "name": "Great Weapon Master",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/weapons/swords/greatsword-crossguard-barbed.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!z9DlWhEGWPMlwaNv.dbid4gk91pwfbd2m"
     }
   ],
@@ -192,11 +205,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1706802839208,
-    "modifiedTime": 1728352982282,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697678,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "z9DlWhEGWPMlwaNv",
   "sort": 100000,

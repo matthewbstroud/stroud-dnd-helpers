@@ -5,7 +5,7 @@
   "description": "",
   "results": [
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "sdnd-shared.sdnd-roll-tables",
       "weight": 1,
       "range": [
@@ -21,7 +21,7 @@
       "_key": "!tables.results!gKM3IHl048QZdMMa.3DOyJMaD7lAfxYcs"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "sdnd-shared.sdnd-roll-tables",
       "weight": 1,
       "range": [
@@ -37,7 +37,7 @@
       "_key": "!tables.results!gKM3IHl048QZdMMa.Yg4RlBkNOWMwbKvL"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "sdnd-shared.sdnd-roll-tables",
       "weight": 1,
       "range": [
@@ -53,7 +53,7 @@
       "_key": "!tables.results!gKM3IHl048QZdMMa.Ttw5sgtH9ymWuZLy"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "sdnd-shared.sdnd-roll-tables",
       "weight": 1,
       "range": [
@@ -81,10 +81,12 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1723425651103,
     "modifiedTime": 1723570499791,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "formula": "1d100",
   "_key": "!tables!gKM3IHl048QZdMMa"
