@@ -141,7 +141,6 @@
         }
       ],
       "transfer": true,
-      "icon": "modules/stroud-dnd-helpers/images/icons/saddle.webp",
       "disabled": false,
       "duration": {
         "startTime": null,
@@ -188,8 +187,22 @@
           "effectName": "Mounted"
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
       "_id": "GlGiL0dIq4237KdI",
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "modules/stroud-dnd-helpers/images/icons/saddle.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!zL8wRmtLT8EDnfLH.GlGiL0dIq4237KdI"
     }
   ],
@@ -201,11 +214,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1721268423525,
-    "modifiedTime": 1728663749717,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697752,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "zL8wRmtLT8EDnfLH",
   "sort": 0,

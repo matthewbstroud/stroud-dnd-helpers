@@ -95,7 +95,6 @@
   },
   "effects": [
     {
-      "icon": "icons/magic/defensive/shield-barrier-glowing-triangle-blue.webp",
       "changes": [
         {
           "key": "system.attributes.ac.calc",
@@ -113,7 +112,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "disabled": false,
       "flags": {
@@ -133,6 +132,20 @@
       "name": "Mage Armor (Staff of Defense)",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/magic/defensive/shield-barrier-glowing-triangle-blue.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!VjtzQlwlqdmm0uDU.4z9i1uv6rbf29dmk"
     }
   ],
@@ -237,11 +250,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1685293916997,
-    "modifiedTime": 1727305980293,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697744,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "VjtzQlwlqdmm0uDU",
   "sort": 200000,

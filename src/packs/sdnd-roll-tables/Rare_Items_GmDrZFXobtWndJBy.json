@@ -4,7 +4,7 @@
   "description": "<p>You have discovered something rare…</p>",
   "results": [
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -20,7 +20,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.ptsuROoZ7cD5fNeZ"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -36,7 +36,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.XgBvnrAULW9jjUW7"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -52,7 +52,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.m6iV1FCJWpH41uxZ"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -68,7 +68,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.CEBUnYFQ41HZ63ca"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -84,7 +84,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.jMUUVYolgvYCO7Rp"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -100,7 +100,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.cgZv5YeKRMuMI89T"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -116,7 +116,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.uCFXs58FJfIXLCWW"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -132,7 +132,7 @@
       "_key": "!tables.results!GmDrZFXobtWndJBy.2wsIWxoeSDpvlRHP"
     },
     {
-      "type": 0,
+      "type": "text",
       "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
@@ -161,10 +161,12 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1723427432548,
     "modifiedTime": 1723569875024,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "formula": "1d7",
   "_id": "GmDrZFXobtWndJBy",

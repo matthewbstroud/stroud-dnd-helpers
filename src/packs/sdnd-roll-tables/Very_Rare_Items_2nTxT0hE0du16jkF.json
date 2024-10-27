@@ -5,7 +5,7 @@
   "description": "<p>You have discovered something very rare…</p><p></p>",
   "results": [
     {
-      "type": 0,
+      "type": "text",
       "weight": 1,
       "range": [
         1,
@@ -20,7 +20,7 @@
       "_key": "!tables.results!2nTxT0hE0du16jkF.GkVPfBpP5zWeRY9i"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "sdnd-shared.sdnd-ddb-monsters",
       "weight": 1,
       "range": [
@@ -36,7 +36,7 @@
       "_key": "!tables.results!2nTxT0hE0du16jkF.pa7Ey6RqMRhkIf9m"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "dnd5e.monsters",
       "weight": 1,
       "range": [
@@ -52,7 +52,7 @@
       "_key": "!tables.results!2nTxT0hE0du16jkF.ZKnnA4ZCszzhLySA"
     },
     {
-      "type": 2,
+      "type": "pack",
       "documentCollection": "dnd5e.monsters",
       "weight": 1,
       "range": [
@@ -80,10 +80,12 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1723569347988,
     "modifiedTime": 1723569891903,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "formula": "1d4",
   "_id": "2nTxT0hE0du16jkF",

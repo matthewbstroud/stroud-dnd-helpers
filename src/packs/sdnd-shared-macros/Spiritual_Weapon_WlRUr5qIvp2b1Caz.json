@@ -27,10 +27,12 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "2.4.1",
-    "coreVersion": "11.315",
+    "coreVersion": "12.331",
     "createdTime": 1682168583910,
     "modifiedTime": 1704230606942,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": "Macro.mUABw6NPGCL3h69V",
+    "duplicateSource": null
   },
   "folder": "DsdPQNXZ1KytoyaT",
   "sort": 0,

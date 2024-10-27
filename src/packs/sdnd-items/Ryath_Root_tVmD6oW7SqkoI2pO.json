@@ -8,7 +8,9 @@
       "value": "<p><span style=\"font-family:Arial\">Any creature that ingests a ryath root gains 2d4 temporary hit points. A creature that consumes more than one ryath root in a 24-hour period must succeed on a DC 13 Constitution saving throw or suffer the poisoned condition for 1 hour.</span></p>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "custom": ""
+    },
     "identified": true,
     "unidentified": {
       "description": "<p><span style=\"font-family:Arial\">Hairy White Root</span></p>",
@@ -106,7 +108,11 @@
       "magiceffect": false,
       "noConcentrationCheck": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
     "midi-qol": {
       "rollAttackPerTarget": "default",
@@ -118,11 +124,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1723518742590,
-    "modifiedTime": 1727305980179,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697750,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "tVmD6oW7SqkoI2pO",
   "sort": 0,

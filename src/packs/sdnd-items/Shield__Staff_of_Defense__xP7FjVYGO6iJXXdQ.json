@@ -94,7 +94,6 @@
   },
   "effects": [
     {
-      "icon": "icons/equipment/shield/kite-wooden-oak-glow.webp",
       "changes": [
         {
           "key": "system.attributes.ac.bonus",
@@ -124,7 +123,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "tint": null,
+      "tint": "#ffffff",
       "transfer": false,
       "disabled": false,
       "flags": {
@@ -168,6 +167,20 @@
       "name": "Shield (Staff of Defense)",
       "description": "",
       "statuses": [],
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "icons/equipment/shield/kite-wooden-oak-glow.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!xP7FjVYGO6iJXXdQ.wd1jwpvty11zn5l8"
     }
   ],
@@ -325,11 +338,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1685293919611,
-    "modifiedTime": 1727306344125,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697751,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "xP7FjVYGO6iJXXdQ",
   "sort": 300000,

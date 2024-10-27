@@ -92,7 +92,6 @@
   "effects": [
     {
       "name": "Harrada Leaf",
-      "icon": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "origin": "Item.VUu9Jq6xCUvgy416",
       "duration": {
         "startTime": null,
@@ -157,7 +156,21 @@
           "wallsBlock": "system"
         }
       },
-      "tint": null,
+      "tint": "#ffffff",
+      "_stats": {
+        "coreVersion": "12.331",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null
+      },
+      "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+      "type": "base",
+      "system": {},
+      "sort": 0,
       "_key": "!items.effects!ATv3jBuBtWp7y04s.V9uOK6DEqzPWLrji"
     }
   ],
@@ -187,11 +200,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1723518742590,
-    "modifiedTime": 1727305980165,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697739,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": null,
+    "duplicateSource": null
   },
   "_id": "ATv3jBuBtWp7y04s",
   "sort": 0,

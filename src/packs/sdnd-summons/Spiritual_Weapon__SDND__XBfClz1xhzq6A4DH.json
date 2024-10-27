@@ -383,7 +383,11 @@
       "offsetX": 0,
       "offsetY": 0,
       "rotation": 0,
-      "tint": null
+      "tint": "#ffffff",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "fit": "contain",
+      "alphaThreshold": 0.75
     },
     "width": 1,
     "height": 1,
@@ -419,7 +423,9 @@
       "darkness": {
         "min": 0,
         "max": 1
-      }
+      },
+      "negative": false,
+      "priority": 0
     },
     "sight": {
       "enabled": false,
@@ -434,9 +440,7 @@
     },
     "detectionModes": [],
     "flags": {
-      "core": {
-        "occlusionRadius": null
-      },
+      "core": {},
       "autorotate": {
         "enabled": null,
         "offset": null
@@ -444,7 +448,23 @@
     },
     "randomImg": false,
     "appendNumber": false,
-    "prependAdjective": false
+    "prependAdjective": false,
+    "hexagonalShape": 0,
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    }
   },
   "items": [
     {
@@ -582,10 +602,12 @@
       "_stats": {
         "systemId": "dnd5e",
         "systemVersion": "2.1.5",
-        "coreVersion": "10.291",
+        "coreVersion": "12.331",
         "createdTime": 1684418369747,
         "modifiedTime": 1684418620785,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "compendiumSource": null,
+        "duplicateSource": null
       },
       "_key": "!actors.items!XBfClz1xhzq6A4DH.Gb9rzUpSfEuJ4sca"
     }
@@ -633,11 +655,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1684417632792,
-    "modifiedTime": 1727305980516,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697966,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": "Actor.nFmuwd4lWxX2z3z7",
+    "duplicateSource": null
   },
   "folder": null,
   "sort": 0,

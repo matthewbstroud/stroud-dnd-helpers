@@ -22,7 +22,7 @@
     "target": {
       "value": "",
       "width": null,
-      "units": null,
+      "units": "",
       "type": "",
       "prompt": true
     },
@@ -248,11 +248,13 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.2.1",
-    "coreVersion": "11.315",
+    "systemVersion": "3.3.1",
+    "coreVersion": "12.331",
     "createdTime": 1682374019324,
-    "modifiedTime": 1728353067879,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1730037697901,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "compendiumSource": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x",
+    "duplicateSource": null
   },
   "folder": null,
   "sort": 0,
