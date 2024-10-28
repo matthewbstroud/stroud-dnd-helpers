@@ -1,9 +1,6 @@
-# v12.2.2
+# v12.2.3
 # Bug Fixes
-- Lighting automation
-  - Torch
-    - Fix permissions
-    - Create stacks of burnt torches.
+- Fix publish
 # v12.2.1
 # New Features
 - Lighting automation
