@@ -1,3 +1,7 @@
+# v12.2.1
+# New Features
+- Lighting automation
+  - Torch
 # v12.2.0
 # New Features
 - Upgrade Compendiums to DND5e v3.3.1

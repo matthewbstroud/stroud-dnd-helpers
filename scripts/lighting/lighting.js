@@ -1,11 +1,210 @@
 import { fireplace } from "./fireplace.js";
 import { numbers } from "../utility/numbers.js";
+import { sdndConstants } from "../constants.js";
+import { folders } from "../folders/folders.js";
+import { sdndSettings } from "../settings.js";
+
 export let lighting = {
     "fireplace": fireplace,
     "lights": {
         "update": foundry.utils.debounce(updateLights, 250)
+    },
+    "consumables": {
+        "createLightableObject": createLightableObject,
+        "lightableItemMacro": sdndLightableItemMacro,
+        "expendLightable": expendLightable
+    },
+    "hooks": {
+        "ipPreDropItemDeterminedHandler": ipPreDropItemDeterminedHandler,
+        "ipPreClickItemPile": ipPreClickItemPile,
     }
 };
+
+function ipPreClickItemPile(target, interactingActor) {
+    let lightable = target?.actor?.items?.find(i => i.getFlag(sdndConstants.MODULE_ID, "lightable"));
+    if (!lightable) {
+        return true;
+    }
+
+    // if a player didn't click
+    if (!interactingActor) {
+        let gmTarget = game.user.targets.first();
+        let droppedActorUuid = target.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+        interactingActor = gmTarget?.actor ?? fromUuidSync(droppedActorUuid);  
+    }
+
+    pickupLightable(target, interactingActor);
+    return false;
+}
+
+
+function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
+    let item = fromUuidSync(itemData.uuid);
+    if (!item) {
+        return false;
+    }
+    if (!item.getFlag(sdndConstants.MODULE_ID, "lightable")) {
+        return true;
+    }
+
+    if (item.effects?.length == 0) {
+        return true;
+    }
+    let effect = item.effects.contents[0];
+    if (effect.disabled) {
+        return true;
+    }
+
+    if (source instanceof dnd5e.documents.Actor5e) {
+        let sceneTokens = canvas.scene.tokens.filter(t => t.actor?.id == source.id);
+        if (sceneTokens.length == 0) {
+            return true;
+        }
+        dropLightable(sceneTokens[0]._id, item, effect);
+        return false;
+    }
+    return true;
+}
+
+async function dropLightable(tokenId, item, originalEffect) {
+    let controlledToken = canvas.tokens.get(tokenId);
+    let actor = controlledToken.actor;
+    if (!actor) {
+        ui.notifications.warn("Selected token has no associated actor!");
+        return;
+    }
+
+    var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
+    let pileOptions = {
+        "sceneId": `${canvas.scene.id}`,
+        "tokenOverrides": {
+            "name": item.name,
+            "displayName": foundry.CONST.TOKEN_DISPLAY_MODES.HOVER,
+            "disposition": foundry.CONST.TOKEN_DISPOSITIONS.NEUTRAL,
+            "lockRotation": true,
+            "height": 0.5,
+            "width": 0.5,
+            "texture": {
+                "src": item.img
+            }
+        },
+        "actorOverrides": {
+            "name": item.name,
+            'folder': backpacksFolder.id,
+            "flags": {
+                [sdndConstants.MODULE_ID]: {
+                    "DroppedBy": (actor.uuid),
+                    "DroppedUserId": (game.user.id)
+                }
+            },
+            "ownership": actor.ownership
+        },
+        "position": {
+            "x": controlledToken.x,
+            "y": controlledToken.y
+        },
+        "createActor": true,
+        "itemPileFlags": {
+            "enabled": true,
+            "type": game.itempiles.pile_types.PILE,
+            "distance": 5,
+            "deleteWhenEmpty": true,
+            "canStackItems": "yes",
+            "canInspectItems": true,
+            "displayItemTypes": false,
+            "description": "",
+            "overrideItemFilters": false,
+            "overrideCurrencies": false,
+            "overrideSecondaryCurrencies": false,
+            "requiredItemProperties": [],
+            "displayOne": false,
+            "showItemName": false,
+            "cols": 1,
+            "rows": 1,
+        }
+    }
+    try {
+        let result = await game.itempiles.API.createItemPile(pileOptions);
+        let lightableToken = await fromUuid(result.tokenUuid);
+        let transferred = await game.itempiles.API.transferItems(controlledToken, lightableToken, [item]);
+        if (transferred && transferred.length > 0) {
+            let newLightableID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.lightable)?.item?._id;
+            let newLightable = lightableToken?.actor?.items.get(newLightableID);
+            let newEffect = foundry.utils.duplicate(newLightable.effects.contents[0]);
+            newEffect.duration = foundry.utils.duplicate(originalEffect.duration);
+            await newLightable.updateEmbeddedDocuments(ActiveEffect.name, [newEffect]);
+            await newLightable.update({ "system.equipped": true });
+        }
+    }
+    catch (exception) {
+        ui.notifications.error(exception.message);
+    }
+    return false;
+}
+
+async function pickupLightable(pile, actor, source, scope) {
+    let pileId = pile.id;
+    let pileActorId = pile.actor.id;
+    let items = game.itempiles.API.getActorItems(pile.actor);
+    let lightable = items.find(i => i.getFlag(sdndConstants.MODULE_ID, "lightable"));
+    let effect = lightable.effects.contents[0];
+    let transferred = await game.itempiles.API.transferItems(pile.actor, actor, [lightable]);
+    let transferredLightable = transferred.find(i => i.item.flags[sdndConstants.MODULE_ID]?.lightable);
+    let newLightableId = transferredLightable.item._id;
+    let newLightable = actor.items.get(newLightableId);
+    let newEffect = foundry.utils.duplicate(newLightable.effects.contents[0]);
+    newEffect.disabled = effect.disabled;
+    if (!newEffect.disabled) {
+        newEffect.duration.seconds = effect.duration.remaining;
+    }
+    await newLightable.updateEmbeddedDocuments(ActiveEffect.name, [newEffect]);
+    await newLightable.update({ "system.equipped": true });
+    let pileActor = game.actors.get(pileActorId);
+    if (pileActor) {
+        await pileActor.delete();
+    }
+    let pileToken = game.canvas.scene.tokens.get(pileId);
+    if (pileToken) {
+        await pileToken.delete();
+    }
+}
+
+function createLightableObject(unlitItemUuid, litItemUuid, expendedItemUuid) {
+    let unlitItem = fromUuidSync(unlitItemUuid);
+    unlitItem.setFlag(sdndConstants.MODULE_ID, "lightable.litUuid", litItemUuid);
+    let litItem = fromUuidSync(litItemUuid)
+    litItem.setFlag(sdndConstants.MODULE_ID, "lightable.expendedUuid", expendedItemUuid);
+}
+
+async function sdndLightableItemMacro({ speaker, actor, token, character, item, args }) {
+    let litItemUuid = item.getFlag(sdndConstants.MODULE_ID, "lightable.litUuid");
+    if (!litItemUuid || !actor) {
+        return;
+    }
+    let litItem = await fromUuid(litItemUuid);
+    await actor.createEmbeddedDocuments(Item.name, [litItem]);
+}
+
+async function expendLightable(actor, item, effect, force) {
+    force ??= false;
+    if (!force && effect?.duration?.remaining > 0 && !effect?.disabled) {
+        return true;
+    }
+    if (!item) {
+        return false;
+    }
+    let expendedUuid = item.getFlag(sdndConstants.MODULE_ID, "lightable.expendedUuid");
+    if (!expendedUuid) {
+        return false;
+    }
+    let expendedItem = await fromUuid(expendedUuid);
+    if (!expendedItem) {
+        console.log(`${expendedUuid} does not exist!`);
+        return false;
+    }
+    await actor.createEmbeddedDocuments(Item.name, [expendedItem]);
+    await item.delete();
+}
 
 async function getUniqueConfigsFromScene() {
     let configs = canvas.scene.lights.map(l => JSON.stringify({
@@ -69,7 +268,7 @@ async function updateLights() {
             search_options.color = null;
         }
         else if (gameMajorVersion >= 12) {
-            search_options.color = Color.from(search_options.color);  
+            search_options.color = Color.from(search_options.color);
         }
         if (search_options.type == "none") {
             search_options.type = null;
@@ -78,7 +277,7 @@ async function updateLights() {
             new_color = null;
         }
         else if (gameMajorVersion >= 12) {
-            new_color = Color.from(new_color);  
+            new_color = Color.from(new_color);
         }
         if (new_animation == "none") {
             new_animation = null;

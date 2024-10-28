@@ -1,0 +1,248 @@
+{
+  "name": "Torch",
+  "type": "weapon",
+  "img": "modules/stroud-dnd-helpers/images/items/torch-brown-lit.webp",
+  "system": {
+    "description": {
+      "value": "<p>A simple torch, can be used to apply a nominal amount of fire damage.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "",
+      "book": "SRD 5.1",
+      "page": "",
+      "license": "CC-BY-4.0"
+    },
+    "quantity": 1,
+    "weight": {
+      "value": 1,
+      "units": "lb"
+    },
+    "price": {
+      "value": 1,
+      "denomination": "sp"
+    },
+    "attunement": "",
+    "equipped": true,
+    "rarity": "",
+    "identified": true,
+    "activation": {
+      "type": "action",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": ""
+    },
+    "cover": null,
+    "target": {
+      "value": "",
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": 5,
+      "long": null,
+      "units": "ft"
+    },
+    "uses": {
+      "value": null,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": "",
+    "actionType": "mwak",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "1",
+          "fire"
+        ]
+      ],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "spell"
+    },
+    "armor": {
+      "value": 10
+    },
+    "hp": {
+      "value": 0,
+      "max": 0,
+      "dt": null,
+      "conditions": ""
+    },
+    "properties": [
+      "lgt"
+    ],
+    "proficient": null,
+    "type": {
+      "value": "simpleM",
+      "baseItem": "club"
+    },
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "crewed": false,
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "summons": null,
+    "magicalBonus": null,
+    "enchantment": null,
+    "attuned": false
+  },
+  "effects": [
+    {
+      "name": "Torch",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Items.Item.bA7YCEqL7gBif8ay",
+      "duration": {
+        "rounds": 1,
+        "startTime": null,
+        "seconds": 3600,
+        "combat": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "disabled": false,
+      "flags": {
+        "dnd5e": {},
+        "dae": {
+          "disableCondition": "",
+          "disableIncapacitated": false,
+          "stackable": "noneName",
+          "showIcon": false,
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": []
+        },
+        "core": {
+          "overlay": false
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "nameOverride": "",
+          "radius": "",
+          "alignment": "",
+          "type": "",
+          "customCheck": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false,
+          "wallsBlock": "system"
+        },
+        "effectmacro": {
+          "onDisable": {
+            "script": "await stroudDnD.lighting.consumables.expendLightable(actor, item, effect);"
+          },
+          "onDelete": {
+            "script": "await stroudDnD.lighting.consumables.expendLightable(actor, item, effect, true);"
+          }
+        }
+      },
+      "img": "modules/stroud-dnd-helpers/images/items/torch-brown-lit.webp",
+      "_id": "6n7bAvYlmACRUFZd",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "ATL.preset",
+          "mode": 0,
+          "value": "torch",
+          "priority": 20
+        }
+      ],
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.331",
+        "systemId": "dnd5e",
+        "systemVersion": "3.3.1",
+        "createdTime": null,
+        "modifiedTime": 1730064210128,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
+      },
+      "_key": "!items.effects!bA7YCEqL7gBif8ay.6n7bAvYlmACRUFZd"
+    }
+  ],
+  "folder": "LakDp7T0vOYzCxni",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "midi-qol": {
+      "fumbleThreshold": null,
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "effectCondition": ""
+    },
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
+    },
+    "stroud-dnd-helpers": {
+      "lightable": {
+        "expendedUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.fhyjXHSBJlxVcZPE"
+      }
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1730063565415,
+    "modifiedTime": 1730064417818,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "bA7YCEqL7gBif8ay",
+  "sort": 0,
+  "_key": "!items!bA7YCEqL7gBif8ay"
+}
