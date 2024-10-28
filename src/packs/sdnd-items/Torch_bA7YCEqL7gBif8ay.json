@@ -161,9 +161,6 @@
         "effectmacro": {
           "onDisable": {
             "script": "await stroudDnD.lighting.consumables.expendLightable(actor, item, effect);"
-          },
-          "onDelete": {
-            "script": "await stroudDnD.lighting.consumables.expendLightable(actor, item, effect, true);"
           }
         }
       },
@@ -191,7 +188,7 @@
         "systemId": "dnd5e",
         "systemVersion": "3.3.1",
         "createdTime": null,
-        "modifiedTime": 1730064210128,
+        "modifiedTime": 1730091102632,
         "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_key": "!items.effects!bA7YCEqL7gBif8ay.6n7bAvYlmACRUFZd"

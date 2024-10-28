@@ -3,6 +3,7 @@ import { folders } from "../folders/folders.js";
 import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
 import { gmCheckActorWeight, gmDropBackpack, gmPickupBackpack } from "../backpacks/backpacks.js";
+import { gmPickupLightable } from "../lighting/lighting.js";
 import { sdndConstants } from "../constants.js";
 
 const RUN_MODES = {
@@ -113,6 +114,32 @@ export let gmFunctions = {
                 );
             },
             async () => { return await socket.executeAsGM("pickupBackpack", pileUuid, userId) }
+        );
+    },
+    "pickupLightable": async function _pickupLightable(pileUuid, actorUuid, userId) {
+        run(
+            async () => {
+                let tokenId = null;
+                let pile = await fromUuid(pileUuid);
+                let actor = await fromUuid(actorUuid);
+                if (actor) {
+                    let activeTokens = actor?.getActiveTokens();
+                    if (activeTokens && activeTokens.length == 1) {
+                        tokenId = activeTokens[0].id;
+                    }
+                }
+                await gmPickupLightable(pile, actor).then(
+                    function () {
+                        if (!userId || !tokenId) {
+                            return;
+                        }
+                        socket.executeForUsers("selectToken", [userId], tokenId);
+                    },
+                    
+                    function (err) { console.log(err.message); }
+                );
+            },
+            async () => { return await socket.executeAsGM("pickupLightable", pileUuid, actorUuid, userId) }
         );
     },
     "deleteTokens": async function _deleteTokens(arrayOfTokenIds /* [tokenUuid] */) {

@@ -3,6 +3,7 @@ import { numbers } from "../utility/numbers.js";
 import { sdndConstants } from "../constants.js";
 import { folders } from "../folders/folders.js";
 import { sdndSettings } from "../settings.js";
+import { gmFunctions } from "../gm/gmFunctions.js";
 
 export let lighting = {
     "fireplace": fireplace,
@@ -25,16 +26,20 @@ function ipPreClickItemPile(target, interactingActor) {
     if (!lightable) {
         return true;
     }
-
+    
     // if a player didn't click
     if (!interactingActor) {
         let gmTarget = game.user.targets.first();
         let droppedActorUuid = target.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
         interactingActor = gmTarget?.actor ?? fromUuidSync(droppedActorUuid);  
     }
-
-    pickupLightable(target, interactingActor);
+    dbGmPickup(target.uuid, interactingActor.uuid, game.user.id);
     return false;
+}
+
+let dbGmPickup = foundry.utils.debounce(pickup, 250);
+async function pickup(targetUuid, actorUuid, userId) {
+    await gmFunctions.pickupLightable(targetUuid, actorUuid, userId);
 }
 
 
@@ -142,9 +147,9 @@ async function dropLightable(tokenId, item, originalEffect) {
     return false;
 }
 
-async function pickupLightable(pile, actor, source, scope) {
-    let pileId = pile.id;
+export async function gmPickupLightable(pile, actor) {
     let pileActorId = pile.actor.id;
+    let pileId = pile.id;
     let items = game.itempiles.API.getActorItems(pile.actor);
     let lightable = items.find(i => i.getFlag(sdndConstants.MODULE_ID, "lightable"));
     let effect = lightable.effects.contents[0];
@@ -203,6 +208,15 @@ async function expendLightable(actor, item, effect, force) {
         return false;
     }
     await actor.createEmbeddedDocuments(Item.name, [expendedItem]);
+    if (actor.getFlag("item-piles", "data.type")) {
+        actor.img = expendedItem.img;
+        await actor.update({"img": expendedItem.img });
+        let tokenUpdates = actor.getActiveTokens().map(t => foundry.utils.duplicate(t.document));
+        for (let tokenUpdate of tokenUpdates) {
+            tokenUpdate.texture.src = expendedItem.img;
+        }
+        await game.canvas.scene.updateEmbeddedDocuments(Token.name, tokenUpdates);
+    }
     await item.delete();
 }
 
