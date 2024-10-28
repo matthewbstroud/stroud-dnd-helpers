@@ -3,7 +3,7 @@ import { folders } from "../folders/folders.js";
 import { identifyItem } from "../identification/identification.js";
 import { keybinds } from "../keyboard/keybinds.js";
 import { gmCheckActorWeight, gmDropBackpack, gmPickupBackpack } from "../backpacks/backpacks.js";
-import { gmPickupLightable } from "../lighting/lighting.js";
+import { gmPickupLightable, gmDropLightable } from "../lighting/lighting.js";
 import { sdndConstants } from "../constants.js";
 
 const RUN_MODES = {
@@ -114,6 +114,23 @@ export let gmFunctions = {
                 );
             },
             async () => { return await socket.executeAsGM("pickupBackpack", pileUuid, userId) }
+        );
+    },
+    "dropLightable": async function _dropLightable(tokenId, itemId, userId) {
+        run(
+            async () => {
+                await gmDropLightable(tokenId, itemId).then(
+                    function () {
+                        if (!userId || !tokenId) {
+                            return;
+                        }
+                        socket.executeForUsers("selectToken", [userId], tokenId);
+                    },
+                    
+                    function (err) { console.log(err.message); }
+                );
+            },
+            async () => { return await socket.executeAsGM("dropLightable", tokenId, itemId, userId) }
         );
     },
     "pickupLightable": async function _pickupLightable(pileUuid, actorUuid, userId) {
