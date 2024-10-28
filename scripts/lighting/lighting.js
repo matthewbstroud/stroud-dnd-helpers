@@ -26,12 +26,12 @@ function ipPreClickItemPile(target, interactingActor) {
     if (!lightable) {
         return true;
     }
-    
+
     // if a player didn't click
     if (!interactingActor) {
         let gmTarget = game.user.targets.first();
         let droppedActorUuid = target.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
-        interactingActor = gmTarget?.actor ?? fromUuidSync(droppedActorUuid);  
+        interactingActor = gmTarget?.actor ?? fromUuidSync(droppedActorUuid);
     }
     dbGmPickup(target.uuid, interactingActor.uuid, game.user.id);
     return false;
@@ -61,24 +61,25 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
     }
 
     if (source instanceof dnd5e.documents.Actor5e) {
-        let sceneTokens = canvas.scene.tokens.filter(t => t.actor?.id == source.id);
+        let sceneTokens = source.getActiveTokens();
         if (sceneTokens.length == 0) {
             return true;
         }
-        dropLightable(sceneTokens[0]._id, item, effect);
+        gmFunctions.dropLightable(sceneTokens[0].id, item.id, game.user.id);
         return false;
     }
     return true;
 }
 
-async function dropLightable(tokenId, item, originalEffect) {
+export async function gmDropLightable(tokenId, itemId) {
     let controlledToken = canvas.tokens.get(tokenId);
     let actor = controlledToken.actor;
     if (!actor) {
         ui.notifications.warn("Selected token has no associated actor!");
         return;
     }
-
+    let item = actor.items.get(itemId);
+    let originalEffect = item.effects.contents[0];
     var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
     let pileOptions = {
         "sceneId": `${canvas.scene.id}`,
@@ -136,7 +137,10 @@ async function dropLightable(tokenId, item, originalEffect) {
             let newLightableID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.lightable)?.item?._id;
             let newLightable = lightableToken?.actor?.items.get(newLightableID);
             let newEffect = foundry.utils.duplicate(newLightable.effects.contents[0]);
-            newEffect.duration = foundry.utils.duplicate(originalEffect.duration);
+            newEffect.disabled = originalEffect.disabled;
+            if (!newEffect.disabled) {
+                newEffect.duration.seconds = originalEffect.duration.remaining;
+            }
             await newLightable.updateEmbeddedDocuments(ActiveEffect.name, [newEffect]);
             await newLightable.update({ "system.equipped": true });
         }
@@ -207,17 +211,36 @@ async function expendLightable(actor, item, effect, force) {
         console.log(`${expendedUuid} does not exist!`);
         return false;
     }
-    await actor.createEmbeddedDocuments(Item.name, [expendedItem]);
-    if (actor.getFlag("item-piles", "data.type")) {
-        actor.img = expendedItem.img;
-        await actor.update({"img": expendedItem.img });
-        let tokenUpdates = actor.getActiveTokens().map(t => foundry.utils.duplicate(t.document));
-        for (let tokenUpdate of tokenUpdates) {
-            tokenUpdate.texture.src = expendedItem.img;
-        }
-        await game.canvas.scene.updateEmbeddedDocuments(Token.name, tokenUpdates);
-    }
     await item.delete();
+    var isItemPile = actor.getFlag("item-piles", "data.type");
+    if (isItemPile) {
+        let actorId = actor.id;
+        let tokenIds = actor.getActiveTokens().map(t => t.id);
+        await game.canvas.scene.deleteEmbeddedDocuments(Token.name, tokenIds);
+        await Actor.deleteDocuments([actorId]);
+        return false;
+    }
+    await createExpended(actor, expendedItem);
+    return true;
+}
+
+async function createExpended(actor, expendedItem) {
+    let existingReward = actor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "source") == expendedItem.uuid);
+    if (existingReward) {
+        let change = {
+            "_id": existingReward._id,
+            "system": {
+                "quantity": (existingReward.system.quantity + 1)
+            }
+        }
+        await actor.updateEmbeddedDocuments(Item.name, [change]);
+    }
+    else {
+        let documents = await actor.createEmbeddedDocuments(Item.name, [expendedItem]);
+        for (let document of documents) {
+            await document.setFlag(sdndConstants.MODULE_ID, "source", expendedItem.uuid);
+        }
+    }
 }
 
 async function getUniqueConfigsFromScene() {
