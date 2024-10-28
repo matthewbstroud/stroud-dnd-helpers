@@ -1,0 +1,54 @@
+{
+  "folder": "AcqpVvj1Hi7wKe8F",
+  "name": "Burnt Torch",
+  "type": "loot",
+  "img": "modules/stroud-dnd-helpers/images/items/torch-black.webp",
+  "system": {
+    "description": {
+      "value": "<p>This torch has reached the end of its usefulness.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": ""
+    },
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": {
+      "value": 0.5,
+      "units": "lb"
+    },
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "properties": [],
+    "type": {
+      "value": "",
+      "subtype": ""
+    }
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1730063573084,
+    "modifiedTime": 1730064222056,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "fhyjXHSBJlxVcZPE",
+  "sort": 0,
+  "_key": "!items!fhyjXHSBJlxVcZPE"
+}

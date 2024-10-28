@@ -5,8 +5,7 @@ import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
-import { mounts } from './mounts/mounts.js';
-import { macros } from './macros/macros.js';
+import { lighting } from './lighting/lighting.js';
 
 export let hooks = {
     "init": function _init() {

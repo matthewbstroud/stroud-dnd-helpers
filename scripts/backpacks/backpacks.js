@@ -7,6 +7,7 @@ import { dialog } from "../dialog/dialog.js";
 import { activeEffects } from "../../active_effects/activeEffects.js";
 import { utility } from "../utility/utility.js";
 import { tokens } from "../tokens.js";
+import { lighting } from "../lighting/lighting.js";
 
 const nonItems = [
     "race", "background", "class", "subclass", "spell", "feat"
@@ -36,6 +37,7 @@ export let backpacks = {
             Hooks.on('item-piles-preRightClickItem', ipPreRightClickHandler);
             Hooks.on('item-piles-preDropItemDetermined', ipPreDropItemDeterminedHandler);
             Hooks.on('item-piles-deleteItemPile', ipPreDeleteItemPileHandler);
+            Hooks.on('item-piles-preClickItemPile', ipPreClickItemPile);
             if (sdndSettings.UseSDnDEncumbrance.getValue()) {
                 Hooks.on('item-piles-transferItems', ipTransferItemsHandler);
                 Hooks.on('createItem', createItemHandler);
@@ -47,6 +49,13 @@ export let backpacks = {
 }
 
 let locks = {}
+
+function ipPreClickItemPile(target, interactingToken) {
+    if (!lighting.hooks.ipPreClickItemPile(target, interactingToken)) {
+        return false;
+    }
+    return true;
+}
 
 async function forceCheck() {
     let actorUuids = canvas.scene.tokens?.filter(t => t.actor?.folder?.name == sdndSettings.ActivePlayersFolder.getValue()).map(t => t.actor.uuid);
@@ -168,6 +177,9 @@ async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUp
 }
 
 function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
+    if (!lighting.hooks.ipPreDropItemDeterminedHandler(source, target, itemData, position)) {
+        return false
+    }
     let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     if (itemData?.item._id == lockedItemID) {
         ui.notifications.warn("You cannot remove the primary container from the pile!");
