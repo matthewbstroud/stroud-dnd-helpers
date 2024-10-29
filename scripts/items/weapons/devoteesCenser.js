@@ -1,5 +1,6 @@
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { sdndConstants } from "../../constants.js";
+import { tokens } from "../../tokens.js";
 const DCI_FLAG = 'dci_last_heal_round';
 const devoteesCenserUtil = {
     getDistance: function _getDistance(source, target) {
@@ -13,8 +14,7 @@ const devoteesCenserUtil = {
             ui.notifications.notify(`${target.name} can only have 1 active token in the scene!`);
             return 50;
         }
-        let distance = canvas.dimensions.distance;
-        return distance * Math.round(canvas.grid.measureDistance(sourceTokens[0].center, targetTokens[0].center) / distance);
+        return tokens.getDistance(sourceTokens[0], targetTokens[0]);
     },
     applyHeal: async function _applyHeal(caster, target) {
         let lastHealRound = target.getFlag(sdndConstants.MODULE_ID, DCI_FLAG) ?? 0;

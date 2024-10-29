@@ -51,16 +51,13 @@ export let backpacks = {
 let locks = {}
 
 function ipPreClickItemPile(target, interactingToken) {
-    if (!lighting.hooks.ipPreClickItemPile(target, interactingToken)) {
-        return false;
-    }
-    return true;
+    return lighting.hooks.ipPreClickItemPile(target, interactingToken);
 }
 
 async function forceCheck() {
     let actorUuids = canvas.scene.tokens?.filter(t => t.actor?.folder?.name == sdndSettings.ActivePlayersFolder.getValue()).map(t => t.actor.uuid);
     for (const actorUuid of actorUuids) {
-        gmCheckActorWeight(actorUuid, true);
+        await gmCheckActorWeight(actorUuid, true);
     }
 }
 
@@ -118,7 +115,7 @@ async function itemHandler(item, action) {
     if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
         return;
     }
-    let dt = await actor.getFlag("item-piles", "data.type");
+    let dt = actor.getFlag("item-piles", "data.type");
     if (dt || actor.type != "character") {
         return;
     }
@@ -143,7 +140,7 @@ async function updateItemHandler(item, changes, options, id) {
     await itemHandler(item, checkItemParentWeight);
 }
 
-async function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
+function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
     let lockedItemID = pile?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     if (item._id == lockedItemID) {
         menu.length = 0;
@@ -157,18 +154,18 @@ async function ipTransferItemsHandler(source, target, itemDeltas, userId, intera
     let sourceActor = (source?.actor) ?? source;
     let targetActor = (target?.actor) ?? target;
     if (!sourceActor.getFlag("item-piles", "data.type")) {
-        gmFunctions.checkActorWeight(sourceActor.uuid);
+        await gmFunctions.checkActorWeight(sourceActor.uuid);
     }
     if (!targetActor.getFlag("item-piles", "data.type")) {
-        gmFunctions.checkActorWeight(targetActor.uuid);
+        await gmFunctions.checkActorWeight(targetActor.uuid);
     }
 }
 
-async function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUpdates, interactionId) {
+function ipPreTransferItemsHandler(source, sourceUpdates, target, targetUpdates, interactionId) {
     if ((!sourceUpdates) || (!source.getFlag("item-piles", "data.type") || source.getFlag(sdndConstants.MODULE_ID, "PickingUp"))) {
         return true;
     }
-    let lockedItemID = await source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
+    let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     if (sourceUpdates.itemsToDelete.includes(lockedItemID)) {
         ui.notifications.warn("You cannot remove the primary container from the pile!");
         return false;
@@ -306,7 +303,7 @@ async function interact(pileUuid) {
         ui.notifications.error(`More than one token exists in the scene for ${actor.name}!`);
         return false;
     }
-    const maxDistance = 5;
+    const maxDistance = 10;
     let distance = tokens.getDistance(pile, actorTokens[0]);
     if (distance > maxDistance) {
         ui.notifications.warn(`${actor.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
@@ -414,7 +411,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         "itemPileFlags": {
             "enabled": true,
             "type": "vault",
-            "distance": 5,
+            "distance": 10,
             "macro": `Compendium.${sdndConstants.PACKS.COMPENDIUMS.MACRO.GM}.GMPickupBackpack`,
             "deleteWhenEmpty": true,
             "canStackItems": "yes",
@@ -491,7 +488,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     await ChatMessage.create({
         speaker: { alias: actor.name },
         content: message,
-        type: CONST.CHAT_MESSAGE_TYPES.EMOTE
+        style: CONST.CHAT_MESSAGE_STYLES.EMOTE
     });
 }
 
@@ -555,7 +552,7 @@ export async function gmPickupBackpack(pileUuid) {
         await ChatMessage.create({
             speaker: { alias: actor.name },
             content: message,
-            type: CONST.CHAT_MESSAGE_TYPES.EMOTE
+            style: CONST.CHAT_MESSAGE_STYLES.EMOTE
         });
     }
     catch (exception) {

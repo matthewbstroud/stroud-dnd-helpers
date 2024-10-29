@@ -156,5 +156,4 @@ jobs:
           url: "https://api.foundryvtt.com/_api/packages/release_version"
           method: "POST"
           customHeaders: '{"Content-Type": "application/json", "Authorization": "${{ secrets.FOUNDRY_PUBLISH_KEY }}"}'
-          timeout: 10000
           data: '{"dry_run": false, "id": "stroud-dnd-helpers", "release": {"version":  "${{env.VERSION}}", "manifest": "https://github.com/matthewbstroud/stroud-dnd-helpers/releases/latest/download/module.json", "notes": "https://github.com/matthewbstroud/stroud-dnd-helpers/blob/main/CHANGELOG.md", "compatibility": {"minimum": "11", "verified": "12", "maximum": "12"} } }'
