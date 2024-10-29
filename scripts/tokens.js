@@ -34,12 +34,12 @@ export let tokens = {
         return dbAddMorphData(actorUuid, altActorUuid, preservedData);
     },
     "getDistance": function _getDistance(sourceToken, targetToken) {
-        let distance = canvas.dimensions.distance;
-        let sourceCenter = (sourceToken instanceof dnd5e.documents.TokenDocument5e) ? 
-            canvas.tokens.get(sourceToken.id)?.center : sourceToken.center;
-        let targetCenter = (targetToken instanceof dnd5e.documents.TokenDocument5e) ? 
-        canvas.tokens.get(targetToken.id)?.center : targetToken.center;
-        return distance * Math.round(canvas.grid.measureDistance(sourceCenter, targetCenter) / distance);
+        const a = sourceToken.center ?? canvas.tokens.get(sourceToken.id)?.center;
+        const b = targetToken.center ?? canvas.tokens.get(targetToken.id)?.center;
+        if (a && b) {
+            return canvas.grid.measurePath([a, b]).distance;
+        }
+        return 0;
     },
     "fixImagePath": async function _fixImagePath(searchPattern, replacement, previewOnly) {
         let scenes = game.scenes.filter(s => s.tokens.filter(t => t?.texture?.src?.includes(searchPattern)).length > 0);

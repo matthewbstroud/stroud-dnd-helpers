@@ -1,3 +1,6 @@
+# v12.2.4
+# Bug Fixes
+- Prevent actions altogether that require a GM when none is present.
 # v12.2.3
 # Bug Fixes
 - Fix publish

@@ -216,8 +216,8 @@ async function expendLightable(actor, item, effect, force) {
     if (isItemPile) {
         let actorId = actor.id;
         let tokenIds = actor.getActiveTokens().map(t => t.id);
-        await game.canvas.scene.deleteEmbeddedDocuments(Token.name, tokenIds);
-        await Actor.deleteDocuments([actorId]);
+        await gmFunctions.deleteTokens(tokenIds);
+        await gmFunctions.deleteActor(actorId);
         return false;
     }
     await createExpended(actor, expendedItem);

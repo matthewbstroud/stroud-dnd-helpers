@@ -2,6 +2,7 @@ import { dialog } from "../../dialog/dialog.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { sdndConstants } from "../../constants.js";
 import { items } from "../../items/items.js";
+import { tokens } from "../../tokens.js";
 
 const twilightUtil = {
     ensureResourceLink: async function _ensureResourceLink(actor, item) {
@@ -30,8 +31,7 @@ const twilightUtil = {
             ui.notifications.notify(`${target.name} can only have 1 active token in the scene!`);
             return 50;
         }
-        let distance = canvas.dimensions.distance;
-        return distance * Math.round(canvas.grid.measureDistance(sourceTokens[0].center, targetTokens[0].center) / distance);
+        return tokens.getDistance(sourceTokens[0], targetTokens[0]);
     },
     getUserChoice: async function _createDialog(actor) {
         let buttons = [

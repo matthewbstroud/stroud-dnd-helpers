@@ -159,6 +159,20 @@ export let gmFunctions = {
             async () => { return await socket.executeAsGM("pickupLightable", pileUuid, actorUuid, userId) }
         );
     },
+    "deleteActor": async function _deleteActor(actorId) {
+        if (!actorId) {
+            return;
+        }
+        run(
+            async () => {
+                let actor = game.actors.get(actorId);
+                if (actor) {
+                    await actor.delete();
+                }
+            },
+            async () => await socket.executeAsGM("deleteActor", actorId)
+        );
+    },
     "deleteTokens": async function _deleteTokens(arrayOfTokenIds /* [tokenUuid] */) {
         if (!arrayOfTokenIds || arrayOfTokenIds.length == 0) {
             return;
