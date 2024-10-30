@@ -24,9 +24,15 @@ export let lighting = {
 };
 
 function ipPreClickItemPile(target, interactingActor) {
-    let lightable = target?.actor?.items?.find(i => i.getFlag(sdndConstants.MODULE_ID, "lightable"));
-    if (!lightable) {
-        return true;
+    // is this a light?
+    const droppedByUuid = target?.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
+    const pileType = target?.actor.getFlag("item-piles", "data.type");
+    if (!droppedByUuid || pileType != game.itempiles.pile_types.PILE) {
+        return true; // cannot be a dropped lightable
+    }
+    let lightable = target?.actor?.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "lightable"));
+    if (lightable.length != 1) {
+        return true; // also not a dropped lightable
     }
 
     // if a player didn't click

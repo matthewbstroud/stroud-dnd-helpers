@@ -1,3 +1,7 @@
+# v12.2.6
+# Bug Fixes
+- Fix some event duplications.
+- Fix clicking on a vendor that has lightables.
 # v12.2.5
 # New Features
 - Lighting

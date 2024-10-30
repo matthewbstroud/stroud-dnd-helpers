@@ -81,10 +81,10 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("createEmbeddedDocuments", uuid, documentType, documentData)
         );
     },
-    "checkActorWeight": async function _checkActorWeight(actorUuid) {
+    "checkActorWeight": async function _checkActorWeight(actorUuid, scope) {
         run(
-            async () => await gmCheckActorWeight(actorUuid),
-            async () => await socket.executeAsGM("checkActorWeight", actorUuid)
+            async () => await gmCheckActorWeight(actorUuid, false, scope),
+            async () => await socket.executeAsGM("checkActorWeight", actorUuid, scope)
         );
     },
     "selectToken": async function _selectToken(tokenId) {

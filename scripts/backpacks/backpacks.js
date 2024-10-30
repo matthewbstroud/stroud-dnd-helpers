@@ -20,10 +20,10 @@ export let backpacks = {
     "interact": interact,
     "pickupBackpack": foundry.utils.debounce(pickupBackpack, 250),
     "eventsEnabled": () => processEvents,
-    "pauseEvents": async function _pauseEvents() {
+    "pauseEvents": function _pauseEvents() {
         processEvents = false;
     },
-    "resumeEvents": async function _resumeEvents() {
+    "resumeEvents": function _resumeEvents() {
         processEvents = true;
     },
     "forceCheck": foundry.utils.debounce(forceCheck, 250),
@@ -39,7 +39,7 @@ export let backpacks = {
             Hooks.on('item-piles-deleteItemPile', ipPreDeleteItemPileHandler);
             Hooks.on('item-piles-preClickItemPile', ipPreClickItemPile);
             if (sdndSettings.UseSDnDEncumbrance.getValue()) {
-                Hooks.on('item-piles-transferItems', ipTransferItemsHandler);
+                Hooks.on('item-piles-transferItems', dbTransferItemsHandler);
                 Hooks.on('createItem', createItemHandler);
                 Hooks.on('deleteItem', createItemHandler);
                 Hooks.on('updateItem', updateItemHandler);
@@ -57,7 +57,7 @@ function ipPreClickItemPile(target, interactingToken) {
 async function forceCheck() {
     let actorUuids = canvas.scene.tokens?.filter(t => t.actor?.folder?.name == sdndSettings.ActivePlayersFolder.getValue()).map(t => t.actor.uuid);
     for (const actorUuid of actorUuids) {
-        await gmCheckActorWeight(actorUuid, true);
+        await gmCheckActorWeight(actorUuid, true, "forceCheck");
     }
 }
 
@@ -78,11 +78,13 @@ async function dropBackpack() {
         return;
     }
     await lockActor(controlledToken.actor);
+    lastCheck = (new Date()).getTime();
     await gmFunctions.dropBackpack(controlledToken.id, backpackId, game.user.uuid);
 }
 
 async function pickupBackpack(pileUuid) {
     await lockActor(controlledToken.actor);
+    lastCheck = (new Date()).getTime();
     await gmFunctions.pickupBackpack(pileUuid, game.user.id);
 }
 
@@ -104,7 +106,7 @@ function ipPreDeleteItemPileHandler(pileToken) {
     return true;
 }
 
-async function itemHandler(item, action) {
+function itemHandler(item, scope, action) {
     if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
     }
@@ -125,19 +127,19 @@ async function itemHandler(item, action) {
     if (isLocked(actor)) {
         return;
     }
-    await action(item);
+    action(item, scope);
 }
 
-async function createItemHandler(item, options, id) {
-    await itemHandler(item, checkItemParentWeight);
+function createItemHandler(item, options, id) {
+    itemHandler(item, 'createItemHandler', dbCheckItemParentWeight);
 }
 
-async function deleteItemHandler(item, options, id) {
-    await itemHandler(item, checkItemParentWeight);
+function deleteItemHandler(item, options, id) {
+    itemHandler(item, 'deleteItemHandler', dbCheckItemParentWeight);
 }
 
-async function updateItemHandler(item, changes, options, id) {
-    await itemHandler(item, checkItemParentWeight);
+function updateItemHandler(item, changes, options, id) {
+    itemHandler(item, 'updateItemHandler', dbCheckItemParentWeight);
 }
 
 function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
@@ -146,18 +148,42 @@ function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
         menu.length = 0;
     }
 }
-
-async function ipTransferItemsHandler(source, target, itemDeltas, userId, interactionId) {
+let lastCheck = ((new Date()).getTime());
+let dbCheckWeight = foundry.utils.debounce(checkWeight, 500);
+async function checkWeight(actorUuid, scope) {
+    console.log(`lastcheck = ${lastCheck}`);
+    let current = (new Date()).getTime();
+    if (lastCheck) {
+        let diff = current - lastCheck;
+        console.log(`diff = ${diff}`);
+        if (diff < 2000) {
+            return;
+        }
+    }
+    lastCheck = current;
+    await gmFunctions.checkActorWeight(actorUuid, scope);
+}
+let dbTransferItemsHandler = foundry.utils.debounce(ipTransferItemsHandler, 1000);
+function ipTransferItemsHandler(source, target, itemDeltas, userId, interactionId) {
     if (!processEvents) {
         return;
     }
+    let current = (new Date()).getTime();
+    if (lastCheck) {
+        let diff = current - lastCheck;
+        console.log(`ipTransferItemsHandler diff = ${diff}`);
+        if (diff < 2000) {
+            return;
+        }
+    }
+    lastCheck = current;
     let sourceActor = (source?.actor) ?? source;
     let targetActor = (target?.actor) ?? target;
-    if (!sourceActor.getFlag("item-piles", "data.type")) {
-        await gmFunctions.checkActorWeight(sourceActor.uuid);
+    if (!isLocked(sourceActor) && !sourceActor.getFlag("item-piles", "data.type")) {
+        dbCheckWeight(sourceActor.uuid, 'ipTransferItemsHandler');
     }
-    if (!targetActor.getFlag("item-piles", "data.type")) {
-        await gmFunctions.checkActorWeight(targetActor.uuid);
+    if (!isLocked(sourceActor) && !targetActor.getFlag("item-piles", "data.type")) {
+        dbCheckWeight(targetActor.uuid, 'ipTransferItemsHandler');
     }
 }
 
@@ -209,8 +235,12 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
     return true;
 }
 
-async function checkItemParentWeight(item) {
+let dbCheckItemParentWeight = foundry.utils.debounce(checkItemParentWeight, 500);
+function checkItemParentWeight(item, scope) {
     if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
+        return;
+    }
+    if (!processEvents) {
         return;
     }
     let actor = item?.parent;
@@ -223,10 +253,11 @@ async function checkItemParentWeight(item) {
     if ((item?.system?.weight ?? 0) == 0) {
         return;
     }
-    await gmFunctions.checkActorWeight(actor.uuid);
+    dbCheckWeight(actor.uuid, scope);
 }
 
-export async function gmCheckActorWeight(actorUuid, force) {
+export async function gmCheckActorWeight(actorUuid, force, scope) {
+    lastCheck = (new Date()).getTime();
     force ??= false;
     if (!sdndSettings.UseSDnDEncumbrance.getValue()) {
         return;
@@ -243,7 +274,7 @@ export async function gmCheckActorWeight(actorUuid, force) {
         return;
     }
     await lockActor(actor);
-    console.log("checking actor weight");
+    console.log(`(${scope}) checking ${actor.name} weight force = ${force}`);
     try {
         let encumbrance = actor.system?.attributes?.encumbrance;
         if (!encumbrance) {
@@ -254,7 +285,6 @@ export async function gmCheckActorWeight(actorUuid, force) {
             effect = activeEffects.HeavilyEncumbered;
         }
         else if (encumbrance.pct >= 50) {
-            console.log("encumbered");
             effect = activeEffects.Encumbered;
         }
         let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
@@ -264,8 +294,14 @@ export async function gmCheckActorWeight(actorUuid, force) {
             }
             return;
         }
+        console.log(`${actor.name} is ${effect.name}`);
         effect.origin = actor.uuid;
-        if (currentEffects?.find(e => e.name == effect.name)) {
+        let existingEffect = currentEffects?.find(e => e.name == effect.name);
+        if (existingEffect) {
+            let effectsToRemove = currentEffects.filter(e => e.uuid != existingEffect.uuid);
+            if (effectsToRemove.length > 0) {
+                await gmFunctions.removeEffects(effectsToRemove.map(e => e.uuid));
+            }
             return; // already applied
         }
         if (currentEffects && currentEffects.length > 0) {
@@ -327,6 +363,7 @@ async function interact(pileUuid) {
         return true;
     }
     else if (choice == "pickup") {
+        lastCheck = (new Date()).getTime();
         await gmFunctions.pickupBackpack(pileUuid, game.user.id);
     }
     return false;
@@ -365,6 +402,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     if (!backpack) {
         return;
     }
+    backpacks.pauseEvents();
     await backpack.setFlag(sdndConstants.MODULE_ID, "fromBackPackId", backpack.uuid);
     let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
     var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
@@ -478,8 +516,9 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     }
     finally {
         await releaseActor(actor);
+        backpacks.resumeEvents();
     }
-    await gmCheckActorWeight(actor, true);
+    await gmCheckActorWeight(actor, true, 'gmDropBackpack');
     if (isMountDead) {
         return;
     }
@@ -520,6 +559,7 @@ export async function gmPickupBackpack(pileUuid) {
     let actor = await fromUuid(actorUuId);
     try {
         lockActor(actor);
+        backpacks.pauseEvents();
         let items = game.itempiles.API.getActorItems(backpack.actor);
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
         await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
@@ -560,7 +600,8 @@ export async function gmPickupBackpack(pileUuid) {
     }
     finally {
         await releaseActor(actor);
-        await gmCheckActorWeight(actor, true);
+        backpacks.resumeEvents();
+        await gmCheckActorWeight(actor, true, 'gmPickupBackpack');
     }
 }
 
