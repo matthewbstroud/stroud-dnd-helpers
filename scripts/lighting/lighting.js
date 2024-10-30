@@ -4,6 +4,7 @@ import { sdndConstants } from "../constants.js";
 import { folders } from "../folders/folders.js";
 import { sdndSettings } from "../settings.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { bullseyeLantern } from "./bullseye.js";
 
 export let lighting = {
     "fireplace": fireplace,
@@ -13,7 +14,8 @@ export let lighting = {
     "consumables": {
         "createLightableObject": createLightableObject,
         "lightableItemMacro": sdndLightableItemMacro,
-        "expendLightable": expendLightable
+        "expendLightable": expendLightable,
+        "bullseyeLantern": bullseyeLantern
     },
     "hooks": {
         "ipPreDropItemDeterminedHandler": ipPreDropItemDeterminedHandler,
@@ -140,7 +142,9 @@ export async function gmDropLightable(tokenId, itemId) {
             newEffect.disabled = originalEffect.disabled;
             if (!newEffect.disabled) {
                 newEffect.duration.seconds = originalEffect.duration.remaining;
+                newEffect.duration.duration = originalEffect.duration.remaining;
             }
+            await newLightable.setFlag(sdndConstants.MODULE_ID, "lightable.remaining", originalEffect.duration.remaining);
             await newLightable.updateEmbeddedDocuments(ActiveEffect.name, [newEffect]);
             await newLightable.update({ "system.equipped": true });
         }
@@ -165,7 +169,9 @@ export async function gmPickupLightable(pile, actor) {
     newEffect.disabled = effect.disabled;
     if (!newEffect.disabled) {
         newEffect.duration.seconds = effect.duration.remaining;
+        newEffect.duration.duration = effect.duration.remaining;
     }
+    await newLightable.setFlag(sdndConstants.MODULE_ID, "lightable.remaining", effect.duration.remaining);
     await newLightable.updateEmbeddedDocuments(ActiveEffect.name, [newEffect]);
     await newLightable.update({ "system.equipped": true });
     let pileActor = game.actors.get(pileActorId);

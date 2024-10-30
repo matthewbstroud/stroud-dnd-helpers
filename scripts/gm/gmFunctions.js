@@ -68,6 +68,19 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("createEffects", actorUuid, effectData)
         );
     },
+    "createEmbeddedDocuments": async function _createEmbeddedDocuments(uuid, documentType, documentData) {
+        let document = await fromUuid(uuid);
+        if (!document) {
+            ui.notifications.error($`Cannot find document with uuid: ${uuid}`);
+            return;
+        }
+        run(
+            async () => {
+                await document.createEmbeddedDocuments(documentType, documentData);
+            },
+            async () => await socket.executeAsGM("createEmbeddedDocuments", uuid, documentType, documentData)
+        );
+    },
     "checkActorWeight": async function _checkActorWeight(actorUuid) {
         run(
             async () => await gmCheckActorWeight(actorUuid),
