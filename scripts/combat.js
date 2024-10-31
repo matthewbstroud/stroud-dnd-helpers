@@ -22,6 +22,7 @@ export let combat = {
         "ready": async function _ready() {
             if (game.user.isTheGM && sdndSettings.OnDamageEvents.getValue()) {
                 Hooks.on("dnd5e.damageActor", onDamageTaken);
+                Hooks.on("dnd5e.healActor", onHealed);
             }
         }
     }
@@ -50,6 +51,10 @@ async function startFilteredCombat() {
 async function onDamageTaken(actor, changes, update, userId) {
     await bloodyAxe.onDamageTaken(actor, changes, update, userId);
     await mounts.hooks.onDamageTaken(actor, changes, update, userId);
+}
+
+async function onHealed(actor, changes, update, userId) {
+    await mounts.hooks.onHealed(actor, changes, update, userId);
 }
 
 // apply adhoc damage to selected tokens
