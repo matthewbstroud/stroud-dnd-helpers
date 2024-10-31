@@ -92,6 +92,16 @@ export let mounts = {
             health = 0;
         }
         let actor = await fromUuid(actorUuid);
+        if (this.isMount(actor)) {
+            let tokens = actor.getActiveTokens();
+            if (tokens?.length > 0) {
+                await tokens[0].document.update({
+                    "texture": {
+                        "src": (health == 0 ? 'modules/stroud-dnd-helpers/images/icons/dead_mount.webp' : actor.img)
+                    }
+                });
+            }
+        }
         let horse = getHorse(actor);
         if (!horse) {
             return;
@@ -196,15 +206,69 @@ export let mounts = {
         return true;
     },
     "hooks": {
-        "onDamageTaken": onDamageTaken
+        "onDamageTaken": onDamageTaken,
+        "onHealed": onHealed
     },
     "getMountData": getMountData,
     "setMountData": setMountData,
     "getHorse": getHorse
 };
 
+async function onHealed(actor, changes, update, userId) {
+    if (!sdndSettings.EnableHorseDamage.getValue()) {
+        return;
+    }
+    // is this a lone horse?
+    const isMount = actor.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
+    if (!isMount) {
+        return;
+    }
+    let mountData = getMountData(actor);
+    mountData.hp.value = update?.system?.attributes?.hp?.value ?? (mountData.hp.value + changes.total);
+    if (mountData.hp.value > mountData.hp.max) {
+        mountData.hp.value = mountData.hp.max;
+    }
+    await setMountData(actor, mountData);
+    await mounts.changeHealth(actor.uuid, (mountData.hp.value / mountData.hp.max));
+    if (mountData.hp.value > 0) {
+        let ids = getConditionIds(['dead']);
+        let effectsToRemove = actor.effects.filter(e => ids.includes(e._id)).map(e => e.id);
+        if (effectsToRemove && effectsToRemove.length > 0) {
+            await actor.deleteEmbeddedDocuments(ActiveEffect.name, effectsToRemove);
+        }
+    }
+}
+
+function getConditionIds(conditions) {
+    let ids = [];
+    for (let condition of conditions) {
+        let id = CONFIG.statusEffects.find(e => e.id == condition)?._id;
+        if (id) {
+            ids.push(id);
+        }
+    }
+    return ids;
+}
+
 async function onDamageTaken(actor, changes, update, userId) {
     if (!sdndSettings.EnableHorseDamage.getValue()) {
+        return;
+    }
+    // is this a lone horse?
+    const isMount = actor.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
+    if (isMount) {
+        let isDead = await applyDamageToHorse(null, actor, changes.total);
+        if (isDead) {
+            changes.hp = 0;
+            changes.temp = 0;
+            changes.total = 0;
+            await actor.update({"system.attributes.hp.value": 0});
+            let currentEffects = actor.effects.map(e => e.id)
+            if ((currentEffects?.length ?? 0) > 0) {
+                await actor.deleteEmbeddedDocuments(ActiveEffect.name, currentEffects);
+            }
+            await chrisPremades?.utils.effectUtils.applyConditions(actor, ['dead', 'prone']);
+        }
         return;
     }
     let horse = getHorse(actor);
@@ -234,9 +298,12 @@ async function applyDamageToHorse(actor, horse, damage) {
     await setMountData(horse, mountData);
     await ChatMessage.create({
         flavor: "Mount injured!",
-        content: `${horse.name} has taken ${damage} hp of damage ${(isDead ? " and has perished." : "")}`
+        content: `${horse.name} has taken ${Math.abs(damage)} hp of damage ${(isDead ? " and has perished." : "")}`
     });
-    await mounts.changeHealth(actor.uuid, (mountData.hp.value / mountData.hp.max));
+    await mounts.changeHealth((actor?.uuid ?? horse?.uuid), (mountData.hp.value / mountData.hp.max));
+    if (!actor) {
+        return isDead;
+    }
     if (isDead) {
         await lockActor(actor);
         let tokenId = actor.getActiveTokens()?.pop()?.id;

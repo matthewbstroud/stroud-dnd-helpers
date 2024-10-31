@@ -1,3 +1,7 @@
+# v12.2.7
+# Bug Fixes
+- Fix mount damage.
+- Fix integration bug with item-piles.
 # v12.2.6
 # Bug Fixes
 - Fix some event duplications.

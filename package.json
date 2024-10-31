@@ -1,6 +1,6 @@
 {
   "name": "stroud-dnd-helpers",
-  "version": "12.2.6",
+  "version": "12.2.7",
   "description": "Stroud DnD Helpers",
   "main": "module.json",
   "scripts": {

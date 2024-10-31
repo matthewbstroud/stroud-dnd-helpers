@@ -151,11 +151,10 @@ function ipPreRightClickHandler(item, menu, pile, triggeringActor) {
 let lastCheck = ((new Date()).getTime());
 let dbCheckWeight = foundry.utils.debounce(checkWeight, 500);
 async function checkWeight(actorUuid, scope) {
-    console.log(`lastcheck = ${lastCheck}`);
     let current = (new Date()).getTime();
     if (lastCheck) {
         let diff = current - lastCheck;
-        console.log(`diff = ${diff}`);
+        console.log(`checkWeight diff = ${diff}`);
         if (diff < 2000) {
             return;
         }
@@ -163,20 +162,21 @@ async function checkWeight(actorUuid, scope) {
     lastCheck = current;
     await gmFunctions.checkActorWeight(actorUuid, scope);
 }
-let dbTransferItemsHandler = foundry.utils.debounce(ipTransferItemsHandler, 1000);
+let lastTransfer = (new Date()).getTime();
+let dbTransferItemsHandler = foundry.utils.debounce(ipTransferItemsHandler, 500);
 function ipTransferItemsHandler(source, target, itemDeltas, userId, interactionId) {
     if (!processEvents) {
         return;
     }
     let current = (new Date()).getTime();
-    if (lastCheck) {
-        let diff = current - lastCheck;
+    if (lastTransfer) {
+        let diff = current - lastTransfer;
         console.log(`ipTransferItemsHandler diff = ${diff}`);
         if (diff < 2000) {
             return;
         }
     }
-    lastCheck = current;
+    lastTransfer = current;
     let sourceActor = (source?.actor) ?? source;
     let targetActor = (target?.actor) ?? target;
     if (!isLocked(sourceActor) && !sourceActor.getFlag("item-piles", "data.type")) {
@@ -423,6 +423,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         "actorOverrides": {
             "name": backpackName,
             'folder': backpacksFolder.id,
+            "img": backpack.img,
             "flags": {
                 [sdndConstants.MODULE_ID]: {
                     "lockedItem": backpack.id,
@@ -501,9 +502,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         await lockActor(actor);
         let result = await game.itempiles.API.createItemPile(pileOptions);
         let backpackToken = await fromUuid(result.tokenUuid);
-        let items = actor.items.filter(i => i?.system?.container == backpack.id);
-        items.unshift(backpack);
-        let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, items);
+        let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, [backpack]);
         if (transferred && transferred.length > 0) {
             let newBackpackID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.fromBackPackId == backpack.uuid)?.item?._id;
             let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
@@ -560,7 +559,7 @@ export async function gmPickupBackpack(pileUuid) {
     try {
         lockActor(actor);
         backpacks.pauseEvents();
-        let items = game.itempiles.API.getActorItems(backpack.actor);
+        let items = game.itempiles.API.getActorItems(backpack.actor).filter(i => i.system?.container != backpack.id);
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
         await pile.actor.setFlag(sdndConstants.MODULE_ID, "PickingUp", true);
         let transferred = await game.itempiles.API.transferItems(backpack.actor, actor, items);
@@ -570,8 +569,8 @@ export async function gmPickupBackpack(pileUuid) {
         if (isPrimary) {
             await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
         }
-        transferred = transferred.filter(t => t.item._id != backpackId).map(t => t.item._id);
-        for (const id of transferred) {
+        let orphans = transferred.filter(t => t.item._id != backpackId && t.item.system?.container != backpackId).map(t => t.item._id);
+        for (const id of orphans) {
             let item = actor.items.get(id);
             if (!item) {
                 continue;
