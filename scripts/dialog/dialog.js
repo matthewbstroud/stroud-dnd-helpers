@@ -63,7 +63,16 @@ export let dialog = {
             default: "yes"
         }, { width: 500 }).render(true);
     },
-    "textPrompt": textPrompt
+    "textPrompt": textPrompt,
+    "sortByLabel": function _sortByName(item1, item2) {
+		if (item1.label < item2.label) {
+			return -1;
+		}
+		else if (item1.label > item2.label) {
+			return 1;
+		}
+		return 0;
+	}
 };
 
 async function textPrompt(title, buttonLabel, callback) {

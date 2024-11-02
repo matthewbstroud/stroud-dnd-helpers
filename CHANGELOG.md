@@ -1,3 +1,9 @@
+# v12.2.8
+# New Features
+- Mounts/Backpacks
+  - Grant other user temporary access.
+  - Find Lost Items GM Macro.
+  - Remove orphans.
 # v12.2.7
 # Bug Fixes
 - Fix mount damage.
