@@ -1,0 +1,31 @@
+{
+  "folder": "fG9mIYDD4FEYRsph",
+  "name": "Remove Orphans",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/broom.webp",
+  "scope": "global",
+  "command": "await stroudDnD.backpacks.removeOrphans()",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": "GM"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1730556280816,
+    "modifiedTime": 1730556280816,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "yqyCllZxmB1W5GxI",
+  "sort": 0,
+  "_key": "!macros!yqyCllZxmB1W5GxI"
+}

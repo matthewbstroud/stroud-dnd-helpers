@@ -1,0 +1,22 @@
+{
+  "name": "Backpacks",
+  "sorting": "a",
+  "folder": null,
+  "type": "Macro",
+  "_id": "fG9mIYDD4FEYRsph",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": null,
+    "modifiedTime": 1730556318814,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!fG9mIYDD4FEYRsph"
+}

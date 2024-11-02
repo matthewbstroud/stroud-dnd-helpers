@@ -27,6 +27,30 @@ export let backpacks = {
         processEvents = true;
     },
     "forceCheck": foundry.utils.debounce(forceCheck, 250),
+    "findLost": function _findLost() {
+        let controlledActor = utility.getControlledActor();
+        if (!controlledActor) {
+            ui.notifications.warn("No selected token!");
+            return;
+        }
+        let scenes = game.scenes.filter(s => s.tokens.find(t => t.actor?.getFlag(sdndConstants.MODULE_ID, "DroppedBy") == controlledActor.uuid)).map(s => s.name);
+        let message = scenes.length > 0 ? `${controlledActor.name} has lost items in ${scenes.join(", ")}.` : `${controlledActor.name} has no lost items.`;
+        ChatMessage.create({
+            content: message,
+            whisper: ChatMessage.getWhisperRecipients('GM'),
+        });
+    },
+    "removeOrphans": async function _removeOrphans() {
+        var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
+        let droppedItems = game.actors.filter(a => a.folder?.id == backpacksFolder.id);
+        for (let droppedItem of droppedItems) {
+            let scenes = game.scenes.filter(s => s.tokens.find(t => t.actor?.id == droppedItem.id));
+            if (scenes.length == 0) {
+                console.log(`${droppedItem.name} is an orphan and can be deleted.`);
+                await Actor.deleteDocuments([droppedItem.id]);
+            }
+        }
+    },
     "hooks": {
         "ready": async function _ready() {
             if (!(game.modules.find(m => m.id === "item-piles")?.active ?? false)) {
@@ -317,13 +341,18 @@ export async function gmCheckActorWeight(actorUuid, force, scope) {
     }
 }
 
-async function interact(pileUuid) {
+async function interact(pileUuid, token, userId) {
     let pile = await fromUuid(pileUuid);
-    let isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
-    if (!(pile.actor.ownership[game.user.id] == foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
+    if (!pile.actor) {
+        return game.user.isGM ? true : false;;
+    }
+    let user = game.users.get(userId);
+
+    if (!pile.actor.isOwner) {
         ui.notifications.warn(`This does not belong to you!`);
         return false;
     }
+
     let actorUuid = pile.actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy");
     if (!actorUuid || actorUuid.length == 0) {
         actorUuid = pile.actor.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "DroppedBy"))
@@ -333,18 +362,31 @@ async function interact(pileUuid) {
         ui.notifications.warn(`Cannot determine the owner of this pile!`);
         return false;
     }
-    let actor = await fromUuid(actorUuid);
-    let actorTokens = actor?.getActiveTokens();
-    if (actorTokens > 1) {
-        ui.notifications.error(`More than one token exists in the scene for ${actor.name}!`);
-        return false;
+    if (pile.uuid == token.document?.uuid) {
+        let userTokens = game.user.character?.getActiveTokens();
+        if (userTokens && userTokens.length > 0) {
+            token = userTokens[0];
+        } else {
+            let ownerActor = await fromUuid(actorUuid);
+            let actorTokens = ownerActor?.getActiveTokens();
+            if (actorTokens > 1) {
+                ui.notifications.error(`More than one token exists in the scene for ${ownerActor.name}!`);
+                return false;
+            }
+            token = actorTokens[0];
+        }
     }
-    const maxDistance = 10;
-    let distance = tokens.getDistance(pile, actorTokens[0]);
-    if (distance > maxDistance) {
-        ui.notifications.warn(`${actor.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
-        return false;
+    if (!user.isGM) {
+        const distance = tokens.getDistance(pile, token);
+        const maxDistance = 10;
+
+        if (distance > maxDistance) {
+            ui.notifications.warn(`${token.name} must be within ${maxDistance} feet to interact with ${pile.name}.`);
+            return false;
+        }
     }
+
+    let isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
     if (isMount && pile?.actor?.system?.attributes?.hp?.value <= 0) {
         return true;
     }
@@ -352,21 +394,52 @@ async function interact(pileUuid) {
         {
             "label": "Open",
             "value": "open"
-        },
-        {
-            "label": (isMount ? "Mount" : "Pick up"),
-            "value": "pickup"
         }
     ];
+    let actualOwner = (user.isGM || token.actor.uuid == actorUuid);
+    let pileActor = game.actors.get(pile.actor.id);
+    const currentOwners = Object.keys(pileActor.ownership);
+    let grantUsersButtons = game.users.filter(u => !currentOwners.includes(u.id) && u.active && u.id != game.user.id && !u.isGM)
+        .map(u => ({ "label": u.name, "value": u.id })).sort(dialog.sortByLabel);
+    if (actualOwner) {
+        buttons.push({
+            "label": (isMount ? "Mount" : "Pick up"),
+            "value": "pickup"
+        });
+        if (grantUsersButtons.length > 0) {
+            buttons.push({
+                "label": "Grant Permission",
+                "value": "grant"
+            });
+        }
+    }
     let choice = await dialog.createButtonDialog(pile.actor.name, buttons, 'column');
     if (choice == "open") {
         return true;
+    }
+    else if (choice == "grant") {
+        let grantee = await dialog.createButtonDialog('Grant Access', grantUsersButtons, 'column');
+        if (!grantee) {
+            return false;
+        }
+        let granteeUser = grantUsersButtons.find(b => b.value == grantee);
+        grantAcces(pileActor, grantee, granteeUser.label);
+        return false;
     }
     else if (choice == "pickup") {
         lastCheck = (new Date()).getTime();
         await gmFunctions.pickupBackpack(pileUuid, game.user.id);
     }
     return false;
+}
+
+async function grantAcces(pileActor, userId, userName) {
+    await pileActor.update({ "ownership": { [userId]: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER } });
+    await ChatMessage.create({
+        speaker: { alias: game.user.name },
+        content: `${userName} has been granted access to ${pileActor.name}.`,
+        style: CONST.CHAT_MESSAGE_STYLES.EMOTE
+    });
 }
 
 async function getPrimaryPackId(tokenId) {
@@ -583,7 +656,7 @@ export async function gmPickupBackpack(pileUuid) {
         if (!pileActor) {
             return;
         }
-        await pileActor.delete();
+        await Actor.deleteDocuments([pileActorId]);
         let newBackpack = actor.items.get(backpackId);
         await newBackpack.update({ "system.equipped": true });
         let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`

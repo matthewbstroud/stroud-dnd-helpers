@@ -1,0 +1,31 @@
+{
+  "folder": "J1ni6CDImDSxpSqz",
+  "name": "Find Lost Stuff",
+  "type": "script",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/search.webp",
+  "scope": "global",
+  "command": "await stroudDnD.backpacks.findLost()",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": "GM"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1730556312835,
+    "modifiedTime": 1730556312835,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "nSoMuKcvCBVjHYSI",
+  "sort": 0,
+  "_key": "!macros!nSoMuKcvCBVjHYSI"
+}
