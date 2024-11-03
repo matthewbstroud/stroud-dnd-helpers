@@ -1,0 +1,22 @@
+{
+  "name": "Hitchables",
+  "sorting": "a",
+  "folder": null,
+  "type": "Item",
+  "_id": "eClGPnuVzS8ksRZY",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1730652165075,
+    "modifiedTime": 1730652165075,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!eClGPnuVzS8ksRZY"
+}

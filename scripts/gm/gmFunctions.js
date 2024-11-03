@@ -102,7 +102,7 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("dropBackpack", tokenId, backpackId, userUuid, isMount)
         );
     },
-    "pickupBackpack": async function _pickupBackpack(pileUuid, userId) {
+    "pickupBackpack": async function _pickupBackpack(pileUuid, userId, targetUuid) {
         run(
             async () => {
                 let tokenId = null;
@@ -115,7 +115,7 @@ export let gmFunctions = {
                         tokenId = activeTokens[0].id;
                     }
                 }
-                await gmPickupBackpack(pileUuid).then(
+                await gmPickupBackpack(pileUuid, targetUuid).then(
                     function () {
                         if (!userId || !tokenId) {
                             return;
@@ -126,7 +126,7 @@ export let gmFunctions = {
                     function (err) { console.log(err.message); }
                 );
             },
-            async () => { return await socket.executeAsGM("pickupBackpack", pileUuid, userId) }
+            async () => { return await socket.executeAsGM("pickupBackpack", pileUuid, userId, targetUuid) }
         );
     },
     "dropLightable": async function _dropLightable(tokenId, itemId, userId) {

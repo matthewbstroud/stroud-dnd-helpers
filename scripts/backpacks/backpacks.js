@@ -65,7 +65,7 @@ export let backpacks = {
             if (sdndSettings.UseSDnDEncumbrance.getValue()) {
                 Hooks.on('item-piles-transferItems', dbTransferItemsHandler);
                 Hooks.on('createItem', createItemHandler);
-                Hooks.on('deleteItem', createItemHandler);
+                Hooks.on('deleteItem', deleteItemHandler);
                 Hooks.on('updateItem', updateItemHandler);
             }
         }
@@ -154,11 +154,14 @@ function itemHandler(item, scope, action) {
     action(item, scope);
 }
 
+
 function createItemHandler(item, options, id) {
+    mounts.hooks.onCreateItem(item, options, id);
     itemHandler(item, 'createItemHandler', dbCheckItemParentWeight);
 }
 
 function deleteItemHandler(item, options, id) {
+    mounts.hooks.onDeleteItem(item, options, id);
     itemHandler(item, 'deleteItemHandler', dbCheckItemParentWeight);
 }
 
@@ -230,6 +233,10 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
     let lockedItemID = source?.getFlag(sdndConstants.MODULE_ID, "lockedItem");
     if (itemData?.item._id == lockedItemID) {
         ui.notifications.warn("You cannot remove the primary container from the pile!");
+        return false;
+    }
+    if (source.folder?.name == "Managed Backpacks" && itemData.item.flags[sdndConstants.MODULE_ID]?.IsHitchable) {
+        ui.notifications.warn("You can only unhitch while mounted!");
         return false;
     }
     if (source instanceof dnd5e.documents.Actor5e) {
@@ -369,7 +376,7 @@ async function interact(pileUuid, token, userId) {
         } else {
             let ownerActor = await fromUuid(actorUuid);
             let actorTokens = ownerActor?.getActiveTokens();
-            if (actorTokens > 1) {
+            if (actorTokens.length > 1) {
                 ui.notifications.error(`More than one token exists in the scene for ${ownerActor.name}!`);
                 return false;
             }
@@ -390,6 +397,7 @@ async function interact(pileUuid, token, userId) {
     if (isMount && pile?.actor?.system?.attributes?.hp?.value <= 0) {
         return true;
     }
+    let isHitchable = mounts.isHitchable(pile.actor);
     let buttons = [
         {
             "label": "Open",
@@ -402,16 +410,24 @@ async function interact(pileUuid, token, userId) {
     let grantUsersButtons = game.users.filter(u => !currentOwners.includes(u.id) && u.active && u.id != game.user.id && !u.isGM)
         .map(u => ({ "label": u.name, "value": u.id })).sort(dialog.sortByLabel);
     if (actualOwner) {
-        buttons.push({
-            "label": (isMount ? "Mount" : "Pick up"),
-            "value": "pickup"
-        });
+        if (!isHitchable) {
+            buttons.push({
+                "label": (isMount ? "Mount" : "Pick up"),
+                "value": "pickup"
+            });
+        }
         if (grantUsersButtons.length > 0) {
             buttons.push({
                 "label": "Grant Permission",
                 "value": "grant"
             });
         }
+    }
+    if (isHitchable) {
+        buttons.push({
+            "label": "Hitch",
+            "value": "hitch"
+        });
     }
     let choice = await dialog.createButtonDialog(pile.actor.name, buttons, 'column');
     if (choice == "open") {
@@ -429,6 +445,18 @@ async function interact(pileUuid, token, userId) {
     else if (choice == "pickup") {
         lastCheck = (new Date()).getTime();
         await gmFunctions.pickupBackpack(pileUuid, game.user.id);
+    }
+    else if (choice == "hitch") {
+        let hitchables = token.actor.items.filter(i => mounts.isMount(i)).map(i => ({
+            "label": i.name,
+            "value": i.id
+        }));
+        let hitchTo = hitchables.length == 1 ? hitchables[0].value : await await dialog.createButtonDialog(`Hitch ${pile.name}`, hitchables, 'column');
+        if (!hitchTo || hitchTo.length == 0) {
+            return false;
+        } 
+        await pile.actor.setFlag(sdndConstants.MODULE_ID, "DroppedBy", token.actor.uuid);
+        await gmFunctions.pickupBackpack(pileUuid, game.userId, hitchTo)
     }
     return false;
 }
@@ -475,6 +503,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     if (!backpack) {
         return;
     }
+    const isHitchable = mounts.isHitchable(backpack);
     backpacks.pauseEvents();
     await backpack.setFlag(sdndConstants.MODULE_ID, "fromBackPackId", backpack.uuid);
     let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
@@ -501,6 +530,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
                 [sdndConstants.MODULE_ID]: {
                     "lockedItem": backpack.id,
                     "IsMount": isMount,
+                    "IsHitchable": isHitchable,
                     "DroppedBy": (actor.uuid),
                     "IsPrimary": (backpack.id == primaryBackpackId),
                     "DroppedUserId": (game.user.id)
@@ -571,11 +601,21 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             pileOptions.tokenOverrides.texture.src = 'modules/stroud-dnd-helpers/images/icons/dead_mount.webp'
         }
     }
+    let itemsToTransfer = [backpack];
+    if (isHitchable) {
+        let mount = backpack.container;
+        if (mount) {
+            let mountItems = ItemPiles.API.getActorItems(actor).filter(i => i.id != backpackId && i.container?.id == mount.id);
+            if (mountItems.length > 0) {
+                itemsToTransfer.push(...mountItems);
+            } 
+        }
+    }
     try {
         await lockActor(actor);
         let result = await game.itempiles.API.createItemPile(pileOptions);
         let backpackToken = await fromUuid(result.tokenUuid);
-        let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, [backpack]);
+        let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, itemsToTransfer);
         if (transferred && transferred.length > 0) {
             let newBackpackID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.fromBackPackId == backpack.uuid)?.item?._id;
             let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
@@ -595,7 +635,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         return;
     }
     let message = isMount ? `Has dismounted ${backpack.name}.` :
-        `Has dropped ${backpack.name} on the ground.`;
+        `Has ${isHitchable ? 'unhitched' : 'dropped'} ${backpack.name}.`;
     await ChatMessage.create({
         speaker: { alias: actor.name },
         content: message,
@@ -603,13 +643,14 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     });
 }
 
-export async function gmPickupBackpack(pileUuid) {
+export async function gmPickupBackpack(pileUuid, targetContainerId) {
     let pile = await fromUuid(pileUuid);
     if (!pile) {
         ui.notifications.error(`Couldn't find container with id ${pileUuid}`);
         return;
     }
     const isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
+    const isHitchable = mounts.isHitchable(pile.actor);
     let lockedItemID = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "lockedItem") ??
         pile?.actor?.items.find(i => i.getFlag(sdndConstants.MODULE_ID, "DroppedBy"))?.id;
     let backpack = pile.actor.items.get(lockedItemID);
@@ -627,7 +668,7 @@ export async function gmPickupBackpack(pileUuid) {
         mountData.hp = pile.actor?.system.attributes.hp;
         await mounts.setMountData(backpack, mountData);
         await mounts.changeHealth(pile.actor.uuid, (mountData.hp.value / mountData.hp.max));
-    }
+    } 
     let actor = await fromUuid(actorUuId);
     try {
         lockActor(actor);
@@ -642,13 +683,15 @@ export async function gmPickupBackpack(pileUuid) {
         if (isPrimary) {
             await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", backpackId);
         }
-        let orphans = transferred.filter(t => t.item._id != backpackId && t.item.system?.container != backpackId).map(t => t.item._id);
-        for (const id of orphans) {
-            let item = actor.items.get(id);
-            if (!item) {
-                continue;
-            }
-            await item.update({ "system.container": backpackId });
+        let orphans = transferred.filter(t => t.item._id != backpackId && t.item.system?.container != backpackId).map(t => ({ "_id": t.item._id, "system.container": (targetContainerId ?? backpackId)}));
+        if (isHitchable) {
+            orphans.push({ "_id": backpackId, "system.container": targetContainerId });
+        }
+        await actor.updateEmbeddedDocuments(Item.name, orphans);
+        if (isHitchable && targetContainerId) {
+            let hitchable = actor.items.get(backpackId);
+            let targetContainer = actor.items.get(targetContainerId);
+            mounts.updateHitchable(hitchable, targetContainer);
         }
         let pileActorId = pile.actor.id;
         await pile.delete();
@@ -659,7 +702,7 @@ export async function gmPickupBackpack(pileUuid) {
         await Actor.deleteDocuments([pileActorId]);
         let newBackpack = actor.items.get(backpackId);
         await newBackpack.update({ "system.equipped": true });
-        let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has picked up ${newBackpack.name}.`
+        let message = isMount ? `Has mounted ${newBackpack.name}.` : `Has ${targetContainerId ? 'hitched' : 'picked'} up ${newBackpack.name}.`;
 
         await ChatMessage.create({
             speaker: { alias: actor.name },

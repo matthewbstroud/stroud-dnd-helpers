@@ -146,6 +146,20 @@ export let mounts = {
             await item.update({ "system.properties": (Array.from(properties)) });
         }
     },
+    "createHitchable": async function _createHitchable(itemUuid) {
+        if (!game.user?.isTheGM) {
+            return;
+        }
+        let item = await fromUuid(itemUuid);
+        if (!item || item.type != "container") {
+            console.log(`${itemUuid} cannot be turned into a hitchable!`);
+            return false;
+        }
+        await item.setFlag(sdndConstants.MODULE_ID, "IsHitchable", true);
+    },
+    "isHitchable": function _isHitchable(item) {
+        return item?.getFlag(sdndConstants.MODULE_ID, "IsHitchable");
+    },
     "applyPatches": async function _applyPatches() {
         if (!game.user?.isTheGM) {
             return;
@@ -207,11 +221,20 @@ export let mounts = {
     },
     "hooks": {
         "onDamageTaken": onDamageTaken,
-        "onHealed": onHealed
+        "onHealed": onHealed,
+        "onCreateItem": function _onCreateItem(item, options, id) {
+            addMountPullable(item);
+        },
+        "onDeleteItem": function _onDeleteItem(item, options, id) {
+            removeMountPullable(item);
+        }
     },
     "getMountData": getMountData,
     "setMountData": setMountData,
-    "getHorse": getHorse
+    "getHorse": getHorse,
+    "updateHitchable": function _updateHitchable(hitchable, mount) {
+        addMountPullable(hitchable, mount)
+    }
 };
 
 async function onHealed(actor, changes, update, userId) {
@@ -238,6 +261,53 @@ async function onHealed(actor, changes, update, userId) {
         }
     }
 }
+
+function addMountPullable(item, container) {
+    if (!mounts.isHitchable(item)) {
+        return;
+    }
+    container ??= item.container;
+    if (!container) {
+        return;
+    }
+    let mount = container;
+    var mountData = getMountData(mount);
+    if (!mountData) {
+        return;
+    }
+    if (!mountData.capacity) {
+        mountData.capacity = mount.system?.capacity?.value;
+        setMountData(mount, mountData);
+    }
+    const capacity = mountData.capacity * 5;
+    mount.update({ "system.capacity.value": capacity });
+}
+
+function removeMountPullable(item) {
+    if (!mounts.isHitchable(item) || !item.container) {
+        return;
+    }
+    let mount = item.container;
+    var mountData = getMountData(mount);
+    if (!mountData) {
+        return;
+    }
+    if (!mountData.capacity) {
+        mountData.capacity = getDefaultCapacity(mountData.type);
+        setMountData(mount, mountData);
+    }
+    mount.update({ "system.capacity.value": mountData.capacity });
+}
+
+function getDefaultCapacity(type) {
+        switch (type) {
+            case "draft":
+            case "war":
+                return 540;
+        }
+        return 480;
+}
+
 
 function getConditionIds(conditions) {
     let ids = [];
@@ -422,8 +492,7 @@ async function toggleMount() {
 }
 
 function getHorse(actor) {
-    let horses = actor.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "IsMount") || i.type == "container" && (i.name?.toLowerCase().includes("horse") || i.img?.toLowerCase()?.includes("horse") ||
-        i.system?.description?.value?.toLowerCase()?.includes("horse")));
+    let horses = actor.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "IsMount"));
     if (horses.length == 1) {
         return horses[0];
     }
