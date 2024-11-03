@@ -1,0 +1,70 @@
+{
+  "folder": "eClGPnuVzS8ksRZY",
+  "name": "Wagon",
+  "type": "container",
+  "img": "modules/stroud-dnd-helpers/images/items/horse_cart.webp",
+  "system": {
+    "description": {
+      "value": "<p>A sturdy horse-drawn wagon.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": ""
+    },
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
+    "quantity": 1,
+    "weight": {
+      "value": 400,
+      "units": "lb"
+    },
+    "price": {
+      "value": 35,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
+    "attuned": false,
+    "equipped": false,
+    "currency": {
+      "pp": 0,
+      "gp": 0,
+      "ep": 0,
+      "sp": 0,
+      "cp": 0
+    },
+    "properties": [
+      "weightlessContents"
+    ],
+    "capacity": {
+      "type": "weight",
+      "value": 2700
+    }
+  },
+  "effects": [],
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "stroud-dnd-helpers": {
+      "IsHitchable": true
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1730652175716,
+    "modifiedTime": 1730652175716,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "Jv7TVaO6iGwHyuvt",
+  "sort": 0,
+  "_key": "!items!Jv7TVaO6iGwHyuvt"
+}
