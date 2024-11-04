@@ -1,3 +1,6 @@
+# v12.2.10
+# Bug Fixes
+- Allow wagon to be removed from dead horse.
 # v12.2.9
 # New Features
 - Mounts/Backpacks

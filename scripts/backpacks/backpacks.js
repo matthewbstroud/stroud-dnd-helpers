@@ -236,7 +236,8 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
         return false;
     }
     if (source.folder?.name == "Managed Backpacks" && itemData.item.flags[sdndConstants.MODULE_ID]?.IsHitchable) {
-        ui.notifications.warn("You can only unhitch while mounted!");
+        let activeToken = source.getActiveTokens()?.pop();
+        gmFunctions.dropBackpack(activeToken.id, itemData.item._id, game.user.uuid);
         return false;
     }
     if (source instanceof dnd5e.documents.Actor5e) {
@@ -398,6 +399,10 @@ async function interact(pileUuid, token, userId) {
         return true;
     }
     let isHitchable = mounts.isHitchable(pile.actor);
+    let hitchables = token.actor.items.filter(i => mounts.isMount(i)).map(i => ({
+        "label": i.name,
+        "value": i.id
+    }));
     let buttons = [
         {
             "label": "Open",
@@ -423,7 +428,7 @@ async function interact(pileUuid, token, userId) {
             });
         }
     }
-    if (isHitchable) {
+    if (isHitchable && hitchables.length > 0) {
         buttons.push({
             "label": "Hitch",
             "value": "hitch"
@@ -447,10 +452,6 @@ async function interact(pileUuid, token, userId) {
         await gmFunctions.pickupBackpack(pileUuid, game.user.id);
     }
     else if (choice == "hitch") {
-        let hitchables = token.actor.items.filter(i => mounts.isMount(i)).map(i => ({
-            "label": i.name,
-            "value": i.id
-        }));
         let hitchTo = hitchables.length == 1 ? hitchables[0].value : await await dialog.createButtonDialog(`Hitch ${pile.name}`, hitchables, 'column');
         if (!hitchTo || hitchTo.length == 0) {
             return false;
@@ -509,6 +510,8 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
     var backpacksFolder = await folders.ensureFolder(sdndSettings.BackpacksFolder.getValue(), "Actor");
     let backpackName = `${backpack.name} (${actor.name})`;
+    const dest = { x: controlledToken.position.x, y: controlledToken.y + 50 };
+    let vacant = await game.MonksActiveTiles?.findVacantSpot(dest, { width: 0.5, height: 0.5}, game.canvas.scene, [], dest, true);
     let pileOptions = {
         "sceneId": `${canvas.scene.id}`,
         "tokenOverrides": {
@@ -528,10 +531,9 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             "img": backpack.img,
             "flags": {
                 [sdndConstants.MODULE_ID]: {
-                    "lockedItem": backpack.id,
                     "IsMount": isMount,
                     "IsHitchable": isHitchable,
-                    "DroppedBy": (actor.uuid),
+                    "DroppedBy": (actor.folder?.name == "Managed Backpacks" ? backpack.getFlag(sdndConstants.MODULE_ID, "DroppedBy") : actor.uuid),
                     "IsPrimary": (backpack.id == primaryBackpackId),
                     "DroppedUserId": (game.user.id)
                 }
@@ -546,15 +548,14 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             "ownership": actor.ownership
         },
         "position": {
-            "x": controlledToken.x,
-            "y": controlledToken.y
+            "x": (vacant ? vacant.x : controlledToken.x),
+            "y": (vacant ? vacant.y : controlledToken.y)
         },
         "createActor": true,
         "itemPileFlags": {
             "enabled": true,
             "type": "vault",
             "distance": 10,
-            "macro": `Compendium.${sdndConstants.PACKS.COMPENDIUMS.MACRO.GM}.GMPickupBackpack`,
             "deleteWhenEmpty": true,
             "canStackItems": "yes",
             "canInspectItems": true,
@@ -619,9 +620,19 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         if (transferred && transferred.length > 0) {
             let newBackpackID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.fromBackPackId == backpack.uuid)?.item?._id;
             let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
-            await newBackpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
-            await backpackToken?.actor?.setFlag(sdndConstants.MODULE_ID, "lockedItem", newBackpackID);
+            let changes = [
+                {
+                    "_id": backpackToken?.actor._id,
+                    "flags": {
+                        "item-piles.data.macro": `Compendium.${sdndConstants.PACKS.COMPENDIUMS.MACRO.GM}.GMPickupBackpack`,
+                        [`${sdndConstants.MODULE_ID}.lockedItem`]: newBackpackID
+                    }
+                }
+            ];
+            await Actor.updateDocuments(changes);
+            await backpackToken.setFlag("item-piles", "data.macro", `Compendium.${sdndConstants.PACKS.COMPENDIUMS.MACRO.GM}.GMPickupBackpack`)
         }
+
     }
     catch (exception) {
         ui.notifications.error(exception.message);
