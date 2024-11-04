@@ -1,3 +1,6 @@
+# v12.2.12
+# Bug Fixes
+- Dropped By should always be an actor uuid.
 # v12.2.11
 # New Features
 - Automatically unhitch wagon when horse dies.

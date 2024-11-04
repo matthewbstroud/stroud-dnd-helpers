@@ -515,7 +515,10 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     if (!backpack) {
         return;
     }
-    await backpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", userUuid);
+    const droppedBy = (actor.folder?.name == "Managed Backpacks" ? 
+        (backpack.getFlag(sdndConstants.MODULE_ID, "DroppedBy") ?? actor.getFlag(sdndConstants.MODULE_ID, "DroppedBy")) : 
+        actor.uuid);
+    await backpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", droppedBy);
     const isHitchable = mounts.isHitchable(backpack);
     backpacks.pauseEvents();
     await backpack.setFlag(sdndConstants.MODULE_ID, "fromBackPackId", backpack.uuid);
@@ -545,7 +548,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
                 [sdndConstants.MODULE_ID]: {
                     "IsMount": isMount,
                     "IsHitchable": isHitchable,
-                    "DroppedBy": (actor.folder?.name == "Managed Backpacks" ? backpack.getFlag(sdndConstants.MODULE_ID, "DroppedBy") : actor.uuid),
+                    "DroppedBy": droppedBy,
                     "IsPrimary": (backpack.id == primaryBackpackId),
                     "DroppedUserId": (game.user.id)
                 }
