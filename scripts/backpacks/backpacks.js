@@ -395,7 +395,8 @@ async function interact(pileUuid, token, userId) {
     }
 
     let isMount = pile.actor?.getFlag(sdndConstants.MODULE_ID, "IsMount") ?? false;
-    if (isMount && pile?.actor?.system?.attributes?.hp?.value <= 0) {
+    let hitchable = pile.actor?.items.find(i => mounts.isHitchable(i));
+    if (isMount && pile?.actor?.system?.attributes?.hp?.value <= 0 && !hitchable) {
         return true;
     }
     let isHitchable = mounts.isHitchable(pile.actor);
@@ -425,6 +426,12 @@ async function interact(pileUuid, token, userId) {
             buttons.push({
                 "label": "Grant Permission",
                 "value": "grant"
+            });
+        }
+        if (isMount && hitchable) {
+            buttons.push({
+                "label": `Unhitch ${hitchable.name}`,
+                "value": `unhitch`
             });
         }
     }
@@ -458,6 +465,10 @@ async function interact(pileUuid, token, userId) {
         } 
         await pile.actor.setFlag(sdndConstants.MODULE_ID, "DroppedBy", token.actor.uuid);
         await gmFunctions.pickupBackpack(pileUuid, game.userId, hitchTo)
+    }
+    else if (choice == "unhitch") {
+        await gmFunctions.dropBackpack(pile.id, hitchable.id, userId, false);
+        return false;
     }
     return false;
 }
@@ -504,6 +515,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     if (!backpack) {
         return;
     }
+    await backpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", userUuid);
     const isHitchable = mounts.isHitchable(backpack);
     backpacks.pauseEvents();
     await backpack.setFlag(sdndConstants.MODULE_ID, "fromBackPackId", backpack.uuid);
@@ -612,14 +624,14 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
             } 
         }
     }
+    let backpackToken = {};
     try {
         await lockActor(actor);
         let result = await game.itempiles.API.createItemPile(pileOptions);
-        let backpackToken = await fromUuid(result.tokenUuid);
+        backpackToken = await fromUuid(result.tokenUuid);
         let transferred = await game.itempiles.API.transferItems(controlledToken, backpackToken, itemsToTransfer);
         if (transferred && transferred.length > 0) {
             let newBackpackID = transferred.find(t => t.item.flags[(sdndConstants.MODULE_ID)]?.fromBackPackId == backpack.uuid)?.item?._id;
-            let newBackpack = backpackToken?.actor?.items.get(newBackpackID);
             let changes = [
                 {
                     "_id": backpackToken?.actor._id,
@@ -642,7 +654,12 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
         backpacks.resumeEvents();
     }
     await gmCheckActorWeight(actor, true, 'gmDropBackpack');
-    if (isMountDead) {
+    if (isMount && isMountDead) {
+        let hitchable = backpackToken.actor?.items.find(i => mounts.isHitchable(i));
+        if (hitchable) {
+            const userId = userUuid.split(".").pop();
+            await gmDropBackpack(backpackToken.id, hitchable.id, userId);
+        }
         return;
     }
     let message = isMount ? `Has dismounted ${backpack.name}.` :
