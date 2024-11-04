@@ -1,3 +1,6 @@
+# v12.2.11
+# New Features
+- Automatically unhitch wagon when horse dies.
 # v12.2.10
 # Bug Fixes
 - Allow wagon to be removed from dead horse.

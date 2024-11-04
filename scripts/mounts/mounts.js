@@ -338,6 +338,13 @@ async function onDamageTaken(actor, changes, update, userId) {
                 await actor.deleteEmbeddedDocuments(ActiveEffect.name, currentEffects);
             }
             await chrisPremades?.utils.effectUtils.applyConditions(actor, ['dead', 'prone']);
+            let hitchable = actor.items?.find(i => mounts.isHitchable(i));
+            if (hitchable) {
+                let token = actor.getActiveTokens()?.pop();
+                if (token) {
+                    await gmDropBackpack(token.id, hitchable.id, userId);
+                }
+            }
         }
         return;
     }
