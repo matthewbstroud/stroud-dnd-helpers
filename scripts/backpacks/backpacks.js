@@ -515,7 +515,7 @@ export async function gmDropBackpack(tokenId, backpackId, userUuid, isMount) {
     if (!backpack) {
         return;
     }
-    await backpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", userUuid);
+    await backpack.setFlag(sdndConstants.MODULE_ID, "DroppedBy", actor.uuid);
     const isHitchable = mounts.isHitchable(backpack);
     backpacks.pauseEvents();
     await backpack.setFlag(sdndConstants.MODULE_ID, "fromBackPackId", backpack.uuid);
