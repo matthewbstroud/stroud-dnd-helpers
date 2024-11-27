@@ -1,3 +1,10 @@
+# v12.2.13
+# New Features
+- Tagging
+  - GetTagged
+- Fixed dropping macros to retain the image for the macro on the created tile.
+# Bug Fixes
+- Fixed toggle tokens to properly handle mixed states.
 # v12.2.12
 # Bug Fixes
 - Dropped By should always be an actor uuid.

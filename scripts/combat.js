@@ -7,6 +7,7 @@ import { sdndSettings } from "./settings.js";
 import { tokens } from "./tokens.js";
 import { bloodyAxe } from "./items/weapons/bloodyAxe.js";
 import { mounts } from "./mounts/mounts.js";
+import { tagging } from "./utility/tagging.js";
 
 export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
@@ -36,15 +37,20 @@ async function startFilteredCombat() {
     tokens.releaseInvalidTokens(false);
     await canvas.tokens.toggleCombat();
     await game.combat.rollNPC();
-
+    if (game.combats.active?.getFlag(sdndConstants.MODULE_ID, "CombatInitialized") ?? false) {
+        return;
+    }
     var combatPlaylistId = sdndSettings.CombatPlayList.getValue();
     if (!combatPlaylistId || combatPlaylistId == "none") {
         return;
     }
+    await game.combats.active?.setFlag(sdndConstants.MODULE_ID, "CombatInitialized", true);
     Hooks.once("deleteCombat", async function () {
         playlists.stop(combatPlaylistId);
         SimpleCalendar?.api.startClock();
+        tagging.sfx.toggle("SceneMusic", false);
     });
+    tagging.sfx.toggle("SceneMusic", true);
     playlists.start(combatPlaylistId, true);
 }
 
