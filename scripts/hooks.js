@@ -119,6 +119,7 @@ export let hooks = {
     },
     "ready": async function _ready() {
         if (game.user?.isGM) {
+            Hooks.on('preCreateTile', onPreCreateTile);
             Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
             if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
                 Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
@@ -132,6 +133,7 @@ export let hooks = {
                 options[pl.id] = pl.name;
             });
             setting.choices = options;
+
         }
         Hooks.on('renderActorSheet5e', actors.renderSheet);
         await backpacks.hooks.ready();
@@ -148,6 +150,13 @@ async function applyPatches() {
     // await mounts.applyPatches();
     await removeCoreStatusId();
 }
+
+function onPreCreateTile(tileDoc, droppedData, modified, id) {
+    if (droppedData.img && tileDoc?.updateSource) {
+        tileDoc.updateSource({ "texture.src": droppedData.img });
+    }
+    return true;
+} 
 
 async function removeCoreStatusId() {
     let validNames = Array.from(game.packs).filter(p => p.metadata.type == "Item" && p.metadata.packageName == "stroud-dnd-helpers").flatMap(p => p.index.filter(i => ['spell', 'feat', 'weapon', 'item'].includes(i.type)).map(i => i.name));

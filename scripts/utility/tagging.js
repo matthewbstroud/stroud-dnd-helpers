@@ -8,6 +8,9 @@ export let tagging = {
     "listTags": foundry.utils.debounce(listTags, 250),
     "tagSelected": foundry.utils.debounce(tagSelected, 250),
     "doors": {
+        "getTagged": async function _getTaggedDoors(name) {
+            return await getTaggedDocuments(canvas.scene.walls, sdndConstants.MODULE_ID, "tagName", name);
+        },
         "setState": setDoorState,
         "tagSelected": async function _tagSelectedTiles(name) {
             await tagControlled(canvas.walls, sdndConstants.MODULE_ID, "tagName", name);
@@ -15,18 +18,27 @@ export let tagging = {
         "toggle": toggleDoors
     },
     "lighting": {
+        "getTagged": async function _getTaggedLights(name) {
+            return await getTaggedDocuments(canvas.scene.lights, sdndConstants.MODULE_ID, "tagName", name);
+        },
         "toggle": toggleLights,
         "tagSelected": async function _tagSelectedLights(name) {
             await tagControlled(canvas.lighting, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "sfx": {
+        "getTagged": async function _getTaggedSfx(name) {
+            return await getTaggedDocuments(canvas.scene.sounds, sdndConstants.MODULE_ID, "tagName", name);
+        },
         "toggle": toggleSfx,
         "tagSelected": async function _tagSelectedSfx(name) {
             await tagControlled(canvas.sounds, sdndConstants.MODULE_ID, "tagName", name);
         }
     },
     "tiles": {
+        "getTagged": async function _getTaggedTiles(name) {
+            return await getTaggedDocuments(canvas.scene.tiles, sdndConstants.MODULE_ID, "tagName", name);
+        },
         "toggleEnabled": toggleEnabledTiles,
         "trigger": triggerTiles,
         "tagSelected": async function _tagSelectedTiles(name) {
@@ -34,6 +46,9 @@ export let tagging = {
         }
     },
     "tokens": {
+        "getTagged": async function _getTaggedTokens(name) {
+            return await getTaggedDocuments(canvas.scene.tokens, sdndConstants.MODULE_ID, "tagName", name);
+        },
         "morph": morphTokens,
         "toggle": toggleTokens,
         "tagSelected": async function _tagSelectedTokens(name) {
@@ -164,9 +179,8 @@ function tagsToLI(tags) {
 }
 async function toggleHidden(collection, name, hidden) {
     await executeAction(collection, name, async function (doc) {
-        hidden ??= !doc.hidden;
         doc.update({
-            "hidden": hidden
+            "hidden": hidden ?? !doc.hidden
         });
     });
 }
