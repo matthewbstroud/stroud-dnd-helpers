@@ -1,6 +1,6 @@
 {
   "folder": "LAjpUMvUGw395xXg",
-  "name": "ToggleTiles",
+  "name": "ToggleTilesEnabled",
   "type": "script",
   "_id": "jcgmwmSdFQVRSm35",
   "author": "6yhz13iFYYklKtgA",
@@ -18,7 +18,7 @@
     "systemVersion": "3.1.2",
     "coreVersion": "12.331",
     "createdTime": 1724966680214,
-    "modifiedTime": 1724966728820,
+    "modifiedTime": 1732991220970,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

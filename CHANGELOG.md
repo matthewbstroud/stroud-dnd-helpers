@@ -1,3 +1,7 @@
+# v12.3.0
+# New Features
+- Tagging
+  - ToggleTiles
 # v12.2.13
 # New Features
 - Tagging
