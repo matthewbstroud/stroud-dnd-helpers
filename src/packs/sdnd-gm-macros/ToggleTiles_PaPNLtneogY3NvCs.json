@@ -1,0 +1,27 @@
+{
+  "folder": "LAjpUMvUGw395xXg",
+  "name": "ToggleTiles",
+  "type": "script",
+  "_id": "PaPNLtneogY3NvCs",
+  "author": "6yhz13iFYYklKtgA",
+  "img": "modules/stroud-dnd-helpers/images/icons/toggle_tiles.webp",
+  "scope": "global",
+  "command": "await stroudDnD.tagging.tiles.toggle(args[0]);",
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1732991234117,
+    "modifiedTime": 1732991464298,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!macros!PaPNLtneogY3NvCs"
+}

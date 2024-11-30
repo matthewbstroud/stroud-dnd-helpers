@@ -39,6 +39,7 @@ export let tagging = {
         "getTagged": async function _getTaggedTiles(name) {
             return await getTaggedDocuments(canvas.scene.tiles, sdndConstants.MODULE_ID, "tagName", name);
         },
+        "toggle": toggleTiles,
         "toggleEnabled": toggleEnabledTiles,
         "trigger": triggerTiles,
         "tagSelected": async function _tagSelectedTiles(name) {
@@ -222,6 +223,10 @@ async function triggerTiles(name) {
         console.log(doc._id);
         doc.trigger({ method: 'manual' });
     });
+}
+
+async function toggleTiles(name, hidden) {
+    await toggleHidden(canvas.scene.tiles, name, hidden);
 }
 
 async function toggleSfx(name, hidden) {
