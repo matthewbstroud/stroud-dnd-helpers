@@ -1,3 +1,6 @@
+# v12.3.1
+# New Features
+- New Shared Icons
 # v12.3.0
 # New Features
 - Tagging
