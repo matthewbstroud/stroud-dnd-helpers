@@ -178,6 +178,67 @@ const POISON_EFFECTS = {
         },
         "tint": null
     },
+    "BlackPoison": {
+        "name": "Black Poison",
+        "icon": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
+        "origin": "",
+        "duration": {
+            "rounds": 10,
+            "startTime": null,
+            "seconds": null,
+            "combat": null,
+            "turns": 0,
+            "startRound": null,
+            "startTurn": null
+        },
+        "disabled": false,
+        "changes": [
+            {
+                "key": "flags.midi-qol.disadvantage.attack.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 0
+            },
+            {
+                "key": "flags.midi-qol.disadvantage.ability.check.all",
+                "mode": 0,
+                "value": "1",
+                "priority": 0
+            }
+        ],
+        "description": "You are under the effects of a Black Poison.",
+        "transfer": false,
+        "statuses": [],
+        "flags": {
+            "dae": {
+                "stackable": "noneName",
+                "specialDuration": [],
+                "disableIncapacitated": false,
+                "showIcon": false,
+                "macroRepeat": "none"
+            },
+            "ActiveAuras": {
+                "isAura": false,
+                "aura": "None",
+                "nameOverride": "",
+                "radius": "",
+                "alignment": "",
+                "type": "",
+                "customCheck": "",
+                "ignoreSelf": false,
+                "height": false,
+                "hidden": false,
+                "displayTemp": false,
+                "hostile": false,
+                "onlyOnce": false,
+                "wallsBlock": "system"
+            },
+            "times-up": {
+                "durationSeconds": 60
+            }
+        },
+        "tint": null
+    },
     "CarrionCrawlerPoison": {
         "name": "Carrion Crawler Poison",
         "icon": "modules/stroud-dnd-helpers/images/icons/poisoned.webp",
@@ -378,7 +439,7 @@ export let poison = {
         });
         await items.midiQol.addOnUseMacro(item, "damageBonus", POISON_MACRO);
     },
-    "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave, includeBonusDamage) {
+    "CreatePoison": function _createPoison(itemUuid, name, dieFaces, dieCount, durationMinutes, charges, dc, effect, damageType, ability, halfDamageOnSave, includeBonusDamage, applyEffectOnly) {
         if (!game.user.isGM) {
             ui.notifications.notify(`Can only be run by the gamemaster!`);
             return;
@@ -394,6 +455,7 @@ export let poison = {
         ability = ability ?? dnd5e.config.abilities.con.abbreviation;
         halfDamageOnSave = halfDamageOnSave ?? true;
         includeBonusDamage = includeBonusDamage ?? false;
+        applyEffectOnly = applyEffectOnly ?? true;
         item.setFlag(sdndConstants.MODULE_ID, "PoisonType", {
             "name": name,
             "dieFaces": dieFaces,
@@ -405,7 +467,8 @@ export let poison = {
             "dc": dc,
             "effect": effect,
             "abilitySave": ability,
-            "halfDamageOnSave": halfDamageOnSave
+            "halfDamageOnSave": halfDamageOnSave,
+            "applyEffectOnly": applyEffectOnly
         });
     },
     "CraftPoison": foundry.utils.debounce(craftPoison, 250),
@@ -520,7 +583,9 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
         if (await applyEffect(item, target.actor, poisonData)) {
             await removePoison(actor, item, poisonData);
         }
-        return;
+        if (poisonData.applyEffectOnly) {
+            return;
+        }
     }
     if (poisonData.dc > 0 && saveDiceRoll?.options?.success && !poisonData.halfDamageOnSave) {
         return;
@@ -634,18 +699,20 @@ async function applyPoison() {
         return;
     }
     let poison = await fromUuid(poisonUuid);
-    let weapons = await getWeapons(controlledActor);
-    if (!weapons || weapons.length == 0) {
-        ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
-        return;
-    }
-    let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
-    let weaponUuid = await dialog.createButtonDialog("Select Weapon to Poison", weaponButtons, 'column');
-    if (!weaponUuid || weaponUuid.length == 0) {
-        return;
-    }
-    let weapon = await fromUuid(weaponUuid);
     let poisonType = await poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
+    let weapon = (poisonType.name == "Black Poison") ? poison : await selectWeapon(controlledActor);
+    let weaponUuid = weapon.uuid;
+    // let weapons = await getWeapons(controlledActor);
+    // if (!weapons || weapons.length == 0) {
+    //     ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
+    //     return;
+    // }
+    // let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
+    // let weaponUuid = await dialog.createButtonDialog("Select Weapon to Poison", weaponButtons, 'column');
+    // if (!weaponUuid || weaponUuid.length == 0) {
+    //     return;
+    // }
+    // let weapon = await fromUuid(weaponUuid);
     const dcModifier = sdndSettings.PoisonDCModifier.getValue();
     if (poisonType.dc > 0 && dcModifier != 0) {
         poisonType.dc += dcModifier;
@@ -672,7 +739,7 @@ async function applyPoison() {
         poisonType.ability,
         poisonType.halfDamageOnSave);
     let charges = (poison.system?.uses?.value ?? 0) - 1;
-    if (charges <= 0) {
+    if (charges <= 0 && poisonType.name != "Black Poison") {
         if (poison.system?.quantity == 1) {
             await poison.delete();
         }
@@ -688,6 +755,20 @@ async function applyPoison() {
         speaker: { "actor": controlledActor },
         content: `${controlledActor.name} has applied ${poison.name} to ${weapon.name}...`
     });
+}
+
+async function selectWeapon(controlledActor) {
+    let weapons = await getWeapons(controlledActor);
+    if (!weapons || weapons.length == 0) {
+        ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
+        return;
+    }
+    let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
+    let weaponUuid = await dialog.createButtonDialog("Select Weapon to Poison", weaponButtons, 'column');
+    if (!weaponUuid || weaponUuid.length == 0) {
+        return;
+    }
+    let weapon = await fromUuid(weaponUuid);
 }
 
 function actorHasIngredients(actor, recipe) {
@@ -722,7 +803,7 @@ async function getRecipes(actor) {
 }
 
 async function getPoisons(actor) {
-    return actor?.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType"));
+    return actor?.items?.filter(i => i.getFlag(sdndConstants.MODULE_ID, "PoisonType") && (i.system?.uses?.value ?? 0) > 0);
 }
 
 async function getWeapons(actor) {

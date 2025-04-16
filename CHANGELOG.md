@@ -1,3 +1,6 @@
+# v12.3.2
+# New Features
+- Support Dagger of venom
 # v12.3.1
 # New Features
 - New Shared Icons
