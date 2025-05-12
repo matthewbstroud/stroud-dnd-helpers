@@ -73,8 +73,8 @@ export let playlists = {
         await playList.playSound(nextSong);
         if (nextSong.sound) {
             nextSong.sound["playListId"] = playList.id;
-            nextSong.sound.on("end", playNext, { once: true });
-            nextSong.sound.on("stop", stopNext, { once: true });
+            nextSong.sound.addEventListener("end", playNext, { once: true });
+            nextSong.sound.addEventListener("stop", stopNext, { once: true });
         }
     },
     "toggle": async function _toggle(playlistId, random) {

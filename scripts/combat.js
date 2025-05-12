@@ -35,7 +35,7 @@ async function startFilteredCombat() {
         return;
     }
     tokens.releaseInvalidTokens(false);
-    await canvas.tokens.toggleCombat();
+    await TokenDocument.createCombatants(canvas.tokens.controlled);
     await game.combat.rollNPC();
     if (game.combats.active?.getFlag(sdndConstants.MODULE_ID, "CombatInitialized") ?? false) {
         return;
