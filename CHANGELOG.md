@@ -1,3 +1,8 @@
+# v12.3.3
+# New Features
+- Pre-work for DND5e v4.x
+# Bug Fixes
+- Fix everything I broke in poisons with the black dagger.
 # v12.3.2
 # New Features
 - Support Dagger of venom

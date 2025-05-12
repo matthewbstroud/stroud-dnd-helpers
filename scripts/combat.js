@@ -35,7 +35,7 @@ async function startFilteredCombat() {
         return;
     }
     tokens.releaseInvalidTokens(false);
-    await canvas.tokens.toggleCombat();
+    await TokenDocument.createCombatants(canvas.tokens.controlled);
     await game.combat.rollNPC();
     if (game.combats.active?.getFlag(sdndConstants.MODULE_ID, "CombatInitialized") ?? false) {
         return;
@@ -111,14 +111,14 @@ async function applyAdhocDamage() {
         return;
     }
     let damageDice = await adHocDamage.getDamageDice();
-    if (!damageDice) {
+    if (!damageDice) {s
         return;
     }
     let diceCount = await adHocDamage.getDiceCount();
     if (!diceCount) {
         return;
     }
-    const damageRoll = await new Roll(`${diceCount}${damageDice}[${damageType}]`).evaluate({ async: true })
+    const damageRoll = await new Roll(`${diceCount}${damageDice}[${damageType}]`).evaluate();
     const dnd5eDamageType = CONFIG.DND5E.damageTypes[damageType];
     let color = dnd5eDamageType.color;
     if (color) {
@@ -147,11 +147,11 @@ async function applyAttackers(attackerCount, rollFormula, hitModifier, autoApply
     let damageType = damageMatch.exec(rollFormula)?.groups["damage"] ?? 'slashing';
     for (let i = 0; i < attackerCount; i++) {
         let currentTarget = targets[i % targets.length];
-        const hitRoll = await new Roll(`1d20+${hitModifier}`).evaluate({ async: true });
+        const hitRoll = await new Roll(`1d20+${hitModifier}`).evaluate();
         if (hitRoll.total <= (currentTarget?.actor?.system?.attributes?.ac?.value ?? 10)){
             continue;
         }
-        const damageRoll = await new Roll(rollFormula).evaluate({ async: true });
+        const damageRoll = await new Roll(rollFormula).evaluate();
         let totalDamage = damageRoll.total;
         if (hitRoll.total == 20 + hitModifier) {
             totalDamage *= 2;

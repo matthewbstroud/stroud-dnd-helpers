@@ -5,6 +5,7 @@ import { utility } from "../utility/utility.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { moneyInternal } from "../money/money.js";
 import { sdndSettings } from "../settings.js";
+import { numbers } from "../utility/numbers.js";
 
 const POISON_MACRO = "function.stroudDnD.crafting.poison.ItemMacro";
 const RECIPE_MACRO = "function.stroudDnD.crafting.poison.UnlockRecipe";
@@ -583,7 +584,7 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
         if (await applyEffect(item, target.actor, poisonData)) {
             await removePoison(actor, item, poisonData);
         }
-        if (poisonData.applyEffectOnly) {
+        if (poisonData.applyEffectOnly ?? true) {
             return;
         }
     }
@@ -602,7 +603,7 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     if (halfDamage) {
         damageRoll = `floor(${damageRoll}/2)`;
     }
-    let roll = await new CONFIG.Dice.DamageRoll(damageRoll, item?.getRollData() ?? target.actor.getRollData(), rollOptions).evaluate({ async: true });
+    let roll = await new CONFIG.Dice.DamageRoll(damageRoll, item?.getRollData() ?? target.actor.getRollData(), rollOptions).evaluate();
     return roll;
 }
 
@@ -701,18 +702,10 @@ async function applyPoison() {
     let poison = await fromUuid(poisonUuid);
     let poisonType = await poison.getFlag(sdndConstants.MODULE_ID, "PoisonType");
     let weapon = (poisonType.name == "Black Poison") ? poison : await selectWeapon(controlledActor);
+    if (!weapon) {
+        return;
+    }
     let weaponUuid = weapon.uuid;
-    // let weapons = await getWeapons(controlledActor);
-    // if (!weapons || weapons.length == 0) {
-    //     ui.notifications.warn(`${controlledActor.name} has no weapons that can be poisoned.`);
-    //     return;
-    // }
-    // let weaponButtons = weapons.map(w => ({ label: w.name, value: w.uuid }));
-    // let weaponUuid = await dialog.createButtonDialog("Select Weapon to Poison", weaponButtons, 'column');
-    // if (!weaponUuid || weaponUuid.length == 0) {
-    //     return;
-    // }
-    // let weapon = await fromUuid(weaponUuid);
     const dcModifier = sdndSettings.PoisonDCModifier.getValue();
     if (poisonType.dc > 0 && dcModifier != 0) {
         poisonType.dc += dcModifier;
@@ -768,7 +761,7 @@ async function selectWeapon(controlledActor) {
     if (!weaponUuid || weaponUuid.length == 0) {
         return;
     }
-    let weapon = await fromUuid(weaponUuid);
+    return await fromUuid(weaponUuid);
 }
 
 function actorHasIngredients(actor, recipe) {
@@ -807,10 +800,7 @@ async function getPoisons(actor) {
 }
 
 async function getWeapons(actor) {
-    let weapons = actor?.items?.filter(i => i.type == "weapon" &&
-        (i?.system?.damage?.parts?.find(d => d.includes('slashing')) ||
-            i?.system?.damage?.parts?.find(d => d.includes('piercing')))
-    );
+    let weapons = actor?.items?.filter(i => i?.type == "weapon" && isPiercingOrSlashingWeapon(i));
     return weapons.filter(w => {
         let poisonData = w.getFlag(sdndConstants.MODULE_ID, "PoisonData");
         if (!poisonData) {
@@ -822,6 +812,18 @@ async function getWeapons(actor) {
         }
         return true;
     });
+}
+
+function isPiercingOrSlashingWeapon(weapon) {
+    const damage = weapon?.system?.damage;
+    if (!damage) {
+        return false;
+    }
+    const damageTypes = damage?.parts ?? damage?.base.types;
+    if (!damageTypes) {
+        return false;
+    }
+    return damageTypes.filter(dt => dt.includes("slashing") || dt.includes("piercing")).length > 0;
 }
 
 async function rollDC(targetActor, poisonData) {
@@ -845,7 +847,12 @@ async function rollToolCheck(actor, recipie) {
         chatMessage: true,
         flavor: `(DC ${recipie.dc}) attempt to craft ${recipie.name}`
     };
-    const dieRoll = await actor.rollToolCheck("pois", rollOptions);
+    const dndMajorVersion = numbers.toNumber(dnd5e.version[0]);
+    let toolConfig = dndMajorVersion > 3 ? { tool: "pois" } : "tool:pois";
+    let dieRoll = await actor.rollToolCheck(toolConfig, rollOptions);
+    if (Array.isArray(dieRoll)) {
+        dieRoll = dieRoll[0];
+    }
     if (dieRoll.isCritical) {
         return "Critical";
     }
@@ -855,7 +862,11 @@ async function rollToolCheck(actor, recipie) {
 async function removePoison(actor, item, poisonData) {
     await gmFunctions.unsetFlag(item.uuid, sdndConstants.MODULE_ID, "PoisonData");
     await items.midiQol.removeOnUseMacro(item, "damageBonus", POISON_MACRO);
-    ui.notifications.info(`(${actor.name}) ${poisonData.name} has worn off of ${item.name}...`);
+    await ChatMessage.create({
+        emote: true,
+        speaker: { "actor": actor },
+        content: `${poisonData.name} has worn off of ${item.name}...`
+    });
 }
 
 async function applyEffect(item, targetActor, poisonData) {

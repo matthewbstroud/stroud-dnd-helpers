@@ -452,7 +452,7 @@ async function selectRewards(harvestable) {
             rollResults[`${(index++)}`] = reward;
         }
     }
-    let roll = await new Roll('1d100').evaluate({ async: true });
+    let roll = await new Roll('1d100').evaluate();
     return rollResults[`${roll.total}`];
 }
 
