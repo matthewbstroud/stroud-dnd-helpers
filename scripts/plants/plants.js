@@ -24,7 +24,7 @@ async function blightIcorItemMacro({ speaker, actor, token, character, item, arg
     if (!dieRoll.options.success) {
       // add poisoned
       let poisonedEffect = JSON.parse(POISONED);
-      let poisonedDurationMultiplier = await new Roll(`1d6`).evaluate({ async: true })
+      let poisonedDurationMultiplier = await new Roll(`1d6`).evaluate();
       poisonedEffect.duration.seconds = poisonedDurationMultiplier.total * 3600;
       poisonedEffect.origin = compendiumUuid;
       await gmFunctions.createEffects(actor.uuid, [poisonedEffect]);

@@ -1,3 +1,8 @@
+# v12.4.0
+# New Features
+- Support for DND5e 4.4.2
+# New Features
+- Support Dagger of venom
 # v12.3.2
 # New Features
 - Support Dagger of venom

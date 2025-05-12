@@ -602,7 +602,7 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     if (halfDamage) {
         damageRoll = `floor(${damageRoll}/2)`;
     }
-    let roll = await new CONFIG.Dice.DamageRoll(damageRoll, item?.getRollData() ?? target.actor.getRollData(), rollOptions).evaluate({ async: true });
+    let roll = await new CONFIG.Dice.DamageRoll(damageRoll, item?.getRollData() ?? target.actor.getRollData(), rollOptions).evaluate();
     return roll;
 }
 
