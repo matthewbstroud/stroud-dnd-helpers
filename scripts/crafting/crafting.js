@@ -24,7 +24,7 @@ export let craftingHelpers = {
         let roll = await actor.rollAbility(ability5e.abbreviation, rollOptions);
         return { 
             "isCritical": roll.isCritical, 
-            "isSuccess": (roll.options?.success ?? roll.total >= dc),
+            "isSuccess": (roll.options?.success ?? roll.isSuccess ?? roll.total >= dc),
             "total": roll.total
         };
     },
@@ -42,7 +42,7 @@ export let craftingHelpers = {
         let roll = await actor.rollSkill(skill, rollOptions);
         return { 
             "isCritical": roll.isCritical, 
-            "isSuccess": (roll.options?.success ?? roll.total >= dc),
+            "isSuccess": (roll.options?.success ?? roll.isSuccess ?? roll.total >= dc),
             "total": roll.total
         };
     }

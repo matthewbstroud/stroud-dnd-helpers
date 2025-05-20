@@ -6,6 +6,7 @@ import { folders } from "../folders/folders.js";
 import { dialog } from "../dialog/dialog.js";
 import { numbers } from "../utility/numbers.js";
 import { mounts } from "../mounts/mounts.js";
+import { versioning } from "../versioning.js";
 
 const DIE_MATCH = /(\d+)d(\d+)/g;
 export let actors = {

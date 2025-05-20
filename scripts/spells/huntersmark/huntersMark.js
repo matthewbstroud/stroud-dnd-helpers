@@ -15,14 +15,14 @@ async function _removeMarks(caster) {
         return;
     }
     let uuids = canvas.scene.tokens
-        .filter(t => t.id != caster.id)
+        .filter(t => t.id != caster.id && t?.actor?.effects?.contents)
         .map(t => t.actor.effects.contents)
         .reduce((l, r) => l.concat(r)).filter(e => e.origin == huntersMarkItem.uuid && e.name == "Marked")
         .map(e => e.uuid);
     gmFunctions.removeEffects(uuids);
 }
 
-async function _itemMacro({speaker, actor, token, character, item, args}) {
+async function _itemMacro({ speaker, actor, token, character, item, args }) {
     // onUse macro
     if (args[0].hitTargets.length === 0) return;
     if (args[0].tag === "OnUse") {
@@ -86,7 +86,8 @@ async function _itemMacro({speaker, actor, token, character, item, args}) {
         await caster.createEmbeddedDocuments("ActiveEffect", [effectData]);
     } else if (args[0].tag === "DamageBonus") {
         // only weapon attacks
-        if (!["mwak", "rwak"].includes(args[0].item.system.actionType)) return {};
+        const actionType = args[0].item?.system?.actionType ?? args[0].workflow.activity.actionType;
+        if (!["mwak", "rwak"].includes(actionType)) return {};
         const targetUuid = args[0].hitTargets[0].uuid;
         // only on the marked target
         let currentTargetUuid = args[0].actor?.document?.getFlag("midi-qol", "huntersMark") ?? args[0]?.actor.getFlag("midi-qol", "huntersMark");

@@ -65,6 +65,9 @@ export let chat = {
                     }
                 }
             });
+            if (chatMessage.getHTML) {
+                await chatMessage.getHTML();
+            }
             $(`#button_${secretId}`).one("click", function(e) { 
                 socket.executeAsGM("revealSecret", chatMessage.id);
             });
@@ -75,6 +78,13 @@ export let chat = {
             return;
         }
         gmFunctions.revealSecret(messageID);
+    },
+    "revealAll": async function _revealAll() {
+        if (!game.user.isTheGM) {
+            return;
+        }
+        game.messages.filter(m => m.content.includes("Reveal"))
+            .forEach((m) => gmFunctions.revealSecret(m.id));
     }
 };
 
