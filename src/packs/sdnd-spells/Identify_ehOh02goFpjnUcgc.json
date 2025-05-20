@@ -197,10 +197,13 @@
     },
     "midi-qol": {
       "effectActivation": false,
-      "onUseMacroName": "[preambleComplete]function.stroudDnD.identification.itemMacro",
+      "onUseMacroName": "[preActiveEffects]function.stroudDnD.identification.itemMacro",
       "rollAttackPerTarget": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "stroud-dnd-helpers": {
       "importedItem": true
@@ -208,7 +211,11 @@
     "core": {
       "sourceId": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x"
     },
-    "dnd5e": {},
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    },
     "dae": {
       "macro": {
         "name": "Identify",
@@ -248,11 +255,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1682374019324,
-    "modifiedTime": 1730037697901,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "modifiedTime": 1747774677885,
+    "lastModifiedBy": "7fjRA2MFQ2AgH0lw",
     "compendiumSource": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x",
     "duplicateSource": null
   },

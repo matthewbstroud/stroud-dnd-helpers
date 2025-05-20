@@ -10,8 +10,6 @@ async function _itemMacro({speaker, actor, token, character, item, args}) {
     if (!["mwak"].includes(args[0].item.system.actionType)) return {};
     if (args[0].hitTargets.length < 1) return {};
 
-    token = canvas.tokens.get(args[0].tokenId);
-    actor = token.actor;
     if (!actor || !token || args[0].hitTargets.length < 1) return {};
     let lightbringerLit = !(actor.effects.contents.find(e => e.name == 'Lightbringer')?.disabled ?? true);
     if (!lightbringerLit) return {};
