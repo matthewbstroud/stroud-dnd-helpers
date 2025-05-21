@@ -244,7 +244,38 @@
       "_key": "!items.effects!0A0MbTdNEVsB2Epc.yrXsRONV1kdSlkuW"
     },
     {
-      "changes": [],
+      "changes": [
+        {
+          "key": "ATL.light.dim",
+          "mode": 0,
+          "value": "30",
+          "priority": 20
+        },
+        {
+          "key": "ATL.light.bright",
+          "mode": 0,
+          "value": "0",
+          "priority": 20
+        },
+        {
+          "key": "ATL.light.alpha",
+          "mode": 0,
+          "value": "0.5",
+          "priority": 20
+        },
+        {
+          "key": "ATL.light.animation",
+          "mode": 0,
+          "value": "{\n  'type': 'dome',\n  'speed': 1,\n  'intensity': 1\n}",
+          "priority": 20
+        },
+        {
+          "key": "ATL.light.color",
+          "mode": 0,
+          "value": "#000055",
+          "priority": 20
+        }
+      ],
       "transfer": false,
       "_id": "HaKCcsmweDXk6ayn",
       "disabled": false,
@@ -269,9 +300,16 @@
           "stackable": "none",
           "durationExpression": "",
           "macroRepeat": "none",
-          "specialDuration": []
+          "specialDuration": [],
+          "enableCondition": "",
+          "disableCondition": "",
+          "disableIncapacitated": false,
+          "dontApply": false,
+          "showIcon": false
         },
-        "core": {},
+        "core": {
+          "overlay": false
+        },
         "ActiveAuras": {
           "isAura": false,
           "aura": "None",
@@ -283,7 +321,10 @@
           "hidden": false,
           "displayTemp": false,
           "hostile": false,
-          "onlyOnce": false
+          "onlyOnce": false,
+          "nameOverride": "",
+          "customCheck": "",
+          "wallsBlock": "system"
         },
         "effectmacro": {
           "onDelete": {
@@ -451,8 +492,8 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null,
+        "modifiedTime": 1747845890896,
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
         "compendiumSource": null,
         "duplicateSource": null
       },
