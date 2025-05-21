@@ -233,23 +233,31 @@
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "stroud-dnd-helpers": {
       "lightable": {
         "expendedUuid": ""
+      }
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
       }
     }
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "12.343",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.4.2",
     "createdTime": 1730245826786,
-    "modifiedTime": 1730245826786,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1747853792709,
+    "lastModifiedBy": "7fjRA2MFQ2AgH0lw"
   },
   "_id": "TMYSTW2aw5GpzKBv",
   "sort": 0,

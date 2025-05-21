@@ -21,10 +21,8 @@ export let bullseyeLantern = {
 
 async function _itemMacro({ speaker, actor, token, character, item, args }) {
     // check oil level
-    let effect = getEffect(item);
-    if (args[0].macroPass == "preItemRoll" && effect && (!effect.disabled && (effect.duration?.remaining ?? 1) > 0)) {
-        let hours =  Math.round(((effect?.duration?.remaining ?? 1) / 60 / 60) * 100) / 100;
-        ui.notifications.warn(`${item.name} has ${hours} hours worth of oil left.`);
+    let effect = await getEffect(item);
+    if (args[0].macroPass == "preItemRoll" && !handlePreRoll(item, actor, effect)) {
         return false;
     }
     if (args[0].macroPass != "postActiveEffects") {
@@ -33,12 +31,35 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     await createEffect(item);
 }
 
-function getEffect(item) {
+function handlePreRoll(item, actor, effect) {
+    if (!effect) {
+        let flaskOfOil = checkForOil(actor);
+        if (!flaskOfOil) {
+            ui.notifications.warn(`${actor.name} does not have any oil with which to light this lantern.`);
+            return false;
+        }
+    }
+    const isBurning = !effect.isSuppressed;
+    const remaining = isBurning ? (effect?.duration?.remaining ?? 1) : (item.getFlag(sdndConstants.MODULE_ID, "lightable.remaining"));
+    const hours =  Math.round((remaining / 60 / 60) * 100) / 100;
+    ui.notifications.warn(`${item.name} is ${isBurning ? '' : ' not' } burning and has ${hours} hours worth of oil left.`);
+    return false;
+}
+
+function checkForOil(actor) {
+    let flaskOfOil = actor?.items.find(i => i._stats.compendiumSource == "Compendium.dnd5e.items.Item.psoZaItkOScMVaHL");
+    if (!flaskOfOil) {
+        flaskOfOil = actor?.items.find(i => i.name == "Oil Flask" && i.type == "consumable");
+    }
+    return flaskOfOil;
+}
+
+async function getEffect(item) {
     const effects = item.effects.contents;
     if (effects.length == 0) {
         return null;
     } 
-    return effects[0];
+    return await fromUuid(effects[0].uuid);
 }
 
 async function createEffect(item) {
