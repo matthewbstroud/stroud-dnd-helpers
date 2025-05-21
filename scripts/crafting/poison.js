@@ -1,4 +1,5 @@
 import { sdndConstants } from "../constants.js";
+import { combat } from "../combat.js";
 import { dialog } from "../dialog/dialog.js";
 import { items } from "../items/items.js";
 import { utility } from "../utility/utility.js";
@@ -815,27 +816,8 @@ async function getWeapons(actor) {
 }
 
 function isPiercingOrSlashingWeapon(weapon) {
-    const damage = weapon?.system?.damage;
-    if (!damage) {
-        return false;
-    }
-    return versioning.dndVersioned(() => isPiercingOrSlashingWeaponV4(damage), () => isPiercingOrSlashingWeaponV3(damage));
-}
-
-function isPiercingOrSlashingWeaponV3(damage) {
-    const damageTypes = damage?.parts;
-    if (!damageTypes) {
-        return false;
-    }
-    return damageTypes.filter(dt => dt.includes("slashing") || dt.includes("piercing")).length > 0;
-}
-
-function isPiercingOrSlashingWeaponV4(damage) {
-    const damageTypes = damage?.base.types;
-    if (!damageTypes) {
-        return false;
-    }
-    return damageTypes.has("slashing") || damageTypes.has("piercing");
+    let damageTypes = combat.getWeaponDamageTypes(weapon);
+    return damageTypes?.includes("slashing") || damageTypes?.includes("piercing");
 }
 
 async function rollDC(targetActor, poisonData) {
