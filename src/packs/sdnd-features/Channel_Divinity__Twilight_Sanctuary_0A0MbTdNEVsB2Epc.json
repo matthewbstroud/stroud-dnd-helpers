@@ -266,13 +266,19 @@
         {
           "key": "ATL.light.animation",
           "mode": 0,
-          "value": "{\n  'type': 'dome',\n  'speed': 1,\n  'intensity': 1\n}",
+          "value": "{\n  'type': 'torch',\n  'speed': 1,\n  'intensity': 1\n}",
           "priority": 20
         },
         {
           "key": "ATL.light.color",
           "mode": 0,
-          "value": "#000055",
+          "value": "#000044",
+          "priority": 20
+        },
+        {
+          "key": "ATL.light.angle",
+          "mode": 0,
+          "value": "360",
           "priority": 20
         }
       ],
@@ -492,7 +498,7 @@
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
-        "modifiedTime": 1747845890896,
+        "modifiedTime": 1747846838740,
         "lastModifiedBy": "6yhz13iFYYklKtgA",
         "compendiumSource": null,
         "duplicateSource": null
