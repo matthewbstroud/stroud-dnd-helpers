@@ -1,6 +1,7 @@
 import { sdndConstants } from "./constants.js";
 import { dialog } from "./dialog/dialog.js";
 import { sdndSettings } from "./settings.js";
+import { actors } from "./actors/actors.js";
 
 export let tokens = {
     "manageTokens": foundry.utils.debounce(manageTokens, 250),
@@ -179,7 +180,7 @@ async function toggleNpcName(token) {
     let strVal = "";
     let api = game.modules.get("anonymous")?.api;
     if (api) {
-        strVal = await _toggleNpcNameAnon(api, currentToken);
+        strVal = await _toggleNpcNameAnon(currentToken);
     }
     else if (game.modules.get("combat-utility-belt")?.active ?? false) {
         strVal = await _toggleNpcNameCub(currentToken);
@@ -227,27 +228,19 @@ async function _toggleNpcNameCub(currentToken) {
     return strVal;
 }
 
-async function _toggleNpcNameAnon(api, currentToken) {
+async function _toggleNpcNameAnon(currentToken) {
+    let anonymous = currentToken?.actor?.getFlag("anonymous", "showName");
     let strVal = "";
-    let playersSeeName = api.playersSeeName(currentToken.actor);
-
-    if (playersSeeName) {
-        currentToken.document.update({ "displayName": CONST.TOKEN_DISPLAY_MODES.OWNER_HOVER });
-        api.toggleSeeName(currentToken.actor);
-        strVal = "Hover Owner";
+    await actors.setAnonymous([currentToken.actor], anonymous);
+    await pushTokenPrototype(currentToken);
+    if (anonymous) {
+        return "Hover Owner";
     }
-    else {
-        currentToken.document.update({ "displayName": CONST.TOKEN_DISPLAY_MODES.HOVER });
-        api.toggleSeeName(currentToken.actor);
-        strVal = "Hover Anyone";
-        ChatMessage.create({
-            content: `You will now recognize ${currentToken.name}.`,
-            type: CONST.CHAT_MESSAGE_TYPES.OOC
-        });
-    }
-
-    return strVal;
-
+    ChatMessage.create({
+        content: `You will now recognize ${currentToken.name}.`,
+        type: CONST.CHAT_MESSAGE_TYPES.OOC
+    });
+    return "Hover Anyone";
 }
 
 async function pushTokenPrototype(token, source, applyTo, preservedProperties) {
