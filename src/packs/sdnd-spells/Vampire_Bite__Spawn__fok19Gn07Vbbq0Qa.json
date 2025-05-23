@@ -1,0 +1,175 @@
+{
+  "name": "Vampire Bite (Spawn)",
+  "type": "weapon",
+  "flags": {
+    "ddbimporter": {
+      "dndbeyond": {}
+    },
+    "monsterMunch": {
+      "titleHTML": "<strong>Bite.</strong>",
+      "fullName": "Bite."
+    },
+    "midi-qol": {
+      "fumbleThreshold": null,
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "effectCondition": "",
+      "onUseMacroName": "[postCleanup]function.stroudDnD.spells.DrainingAttack.itemMacro,[preActiveEffects]function.stroudDnD.spells.DrainingAttack.itemMacro"
+    },
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
+    },
+    "stroud-dnd-helpers": {
+      "drainingAttack": {
+        "damageType": "necrotic"
+      }
+    }
+  },
+  "img": "icons/creatures/abilities/mouth-teeth-long-red.webp",
+  "effects": [],
+  "folder": null,
+  "system": {
+    "description": {
+      "value": "<p><em><strong></strong> Melee Weapon Attack:</em> +6 to hit, reach 5 ft., one willing creature, or a creature that is grappled by the vampire, incapacitated, or restrained. <em>Hit:</em> 6 (1d6 + 3) piercing damage plus 7 (2d6) necrotic damage. The target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and the vampire regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "Basic Rules pg 354"
+    },
+    "quantity": 1,
+    "weight": {
+      "value": 0,
+      "units": "lb"
+    },
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "attunement": "",
+    "rarity": "",
+    "identified": true,
+    "activation": {
+      "type": "special",
+      "cost": 1,
+      "condition": ""
+    },
+    "duration": {
+      "value": "",
+      "units": "inst"
+    },
+    "cover": null,
+    "crewed": false,
+    "target": {
+      "value": "",
+      "width": null,
+      "units": "",
+      "type": "",
+      "prompt": true
+    },
+    "range": {
+      "value": 5,
+      "long": null,
+      "units": "ft"
+    },
+    "uses": {
+      "value": 0,
+      "max": "",
+      "per": null,
+      "recovery": "",
+      "prompt": true
+    },
+    "consume": {
+      "type": "",
+      "target": null,
+      "amount": null,
+      "scale": false
+    },
+    "ability": "str",
+    "actionType": "mwak",
+    "chatFlavor": "",
+    "critical": {
+      "threshold": null,
+      "damage": ""
+    },
+    "damage": {
+      "parts": [
+        [
+          "1d6[piercing] + @mod",
+          "piercing"
+        ],
+        [
+          "2d6[necrotic]",
+          "necrotic"
+        ]
+      ],
+      "versatile": ""
+    },
+    "formula": "",
+    "save": {
+      "ability": "",
+      "dc": null,
+      "scaling": "flat"
+    },
+    "armor": {
+      "value": 10
+    },
+    "hp": {
+      "value": 0,
+      "max": 0,
+      "dt": null,
+      "conditions": ""
+    },
+    "properties": [
+      "rch"
+    ],
+    "unidentified": {
+      "description": ""
+    },
+    "type": {
+      "value": "natural",
+      "baseItem": ""
+    },
+    "attack": {
+      "bonus": "",
+      "flat": false
+    },
+    "container": null,
+    "enchantment": null,
+    "summons": null,
+    "magicalBonus": null,
+    "attuned": false,
+    "equipped": true,
+    "proficient": null
+  },
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.331",
+    "systemId": "dnd5e",
+    "systemVersion": "3.3.1",
+    "createdTime": 1747964243840,
+    "modifiedTime": 1747964280000,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "fok19Gn07Vbbq0Qa",
+  "sort": 0,
+  "_key": "!items!fok19Gn07Vbbq0Qa"
+}
