@@ -151,7 +151,7 @@
           "priority": 20
         }
       ],
-      "description": "<p>Your max hp have been temporarily reduced. You will be weakend until you can complete a long rest.</p>",
+      "description": "<p>Your max hp have been temporarily reduced. You will be weakened until you can complete a long rest.</p>",
       "tint": "#ffffff",
       "transfer": false,
       "statuses": [],
