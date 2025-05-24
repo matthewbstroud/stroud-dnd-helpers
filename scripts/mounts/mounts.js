@@ -7,6 +7,7 @@ import { backpacks, gmDropBackpack } from "../backpacks/backpacks.js";
 import { sdndSettings } from "../settings.js";
 import { lockActor } from "../backpacks/backpacks.js";
 import { socket } from "../module.js";
+import { versioning } from "../versioning.js";
 
 const MOUNTED_EFFECT = {
     "name": "Mounted",
@@ -80,6 +81,10 @@ const MOUNTED_EFFECT = {
     },
     "tint": null
 };
+
+function GetCapacityProperty(){
+    return versioning.isLegacyVersion() ? "system.capacity.value" : "system.capacity.weight.value";
+}
 
 export let mounts = {
     "isMount": function _isMount(item) {
@@ -280,7 +285,7 @@ function addMountPullable(item, container) {
         setMountData(mount, mountData);
     }
     const capacity = mountData.capacity * 5;
-    mount.update({ "system.capacity.value": capacity });
+    mount.update({ [GetCapacityProperty()]: capacity });
 }
 
 function removeMountPullable(item) {
@@ -296,7 +301,7 @@ function removeMountPullable(item) {
         mountData.capacity = getDefaultCapacity(mountData.type);
         setMountData(mount, mountData);
     }
-    mount.update({ "system.capacity.value": mountData.capacity });
+    mount.update({ [GetCapacityProperty()]: mountData.capacity });
 }
 
 function getDefaultCapacity(type) {
