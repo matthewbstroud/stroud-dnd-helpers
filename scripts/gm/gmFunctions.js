@@ -247,6 +247,18 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("removeEffects", effectIDs)
         );
     },
+    "removeActorEffects": async function _removeActorEffects(actorUuid, effectIDs) {
+        if (!actorUuid || !effectIDs || effectIDs.length == 0) {
+            return;
+        }
+        run(
+            async () => {
+                let actor = await fromUuid(actorUuid);
+                await actor.deleteEmbeddedDocuments(ActiveEffect.name, effectIDs);
+            },
+            async () => await socket.executeAsGM("removeActorEffects", actorUuid, effectIDs)
+        );
+    },
     "setFlag": async function _setFlag(uuid, scope, key, value) {
         run(
             async () => {

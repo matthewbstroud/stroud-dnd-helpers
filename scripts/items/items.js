@@ -20,6 +20,14 @@ export let items = {
 			return undefined;
 		}
 	},
+	'getItemUuid': async function _getItemUuid(key, name) {
+		const gamePack = game.packs.get(key);
+		if (!gamePack) {
+			ui.notifications.warn('Invalid compendium specified!');
+			return false;
+		}
+		return gamePack.index?.find(i => i.name == name)?.uuid ?? game.items.getName(name)?.uuid;
+	},
 	"midiQol": {
 		"addOnUseMacro": addMidiOnUseMacro,
 		"removeOnUseMacro": removeMidiOnUseMacro,

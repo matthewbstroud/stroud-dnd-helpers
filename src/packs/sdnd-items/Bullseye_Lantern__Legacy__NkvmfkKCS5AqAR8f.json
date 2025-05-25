@@ -1,5 +1,5 @@
 {
-  "name": "Bullseye Lantern",
+  "name": "Bullseye Lantern (Legacy)",
   "type": "consumable",
   "img": "modules/stroud-dnd-helpers/images/items/bullseye_unlit.webp",
   "system": {
@@ -112,7 +112,10 @@
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": "",
-      "onUseMacroName": "[preItemRoll]function.stroudDnD.lighting.consumables.bullseyeLantern.itemMacro,[postActiveEffects]function.stroudDnD.lighting.consumables.bullseyeLantern.itemMacro"
+      "onUseMacroName": "[preItemRoll]function.stroudDnD.lighting.consumables.bullseyeLantern.itemMacro,[postActiveEffects]function.stroudDnD.lighting.consumables.bullseyeLantern.itemMacro",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "midiProperties": {
       "confirmTargets": "default",
@@ -135,19 +138,24 @@
         "litUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.TMYSTW2aw5GpzKBv",
         "unlitImg": "modules/stroud-dnd-helpers/images/items/bullseye_unlit.webp"
       }
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "12.343",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.4.2",
     "createdTime": 1730245821261,
-    "modifiedTime": 1730245859254,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1747857620496,
+    "lastModifiedBy": "7fjRA2MFQ2AgH0lw"
   },
   "_id": "NkvmfkKCS5AqAR8f",
-  "sort": 0,
+  "sort": 300000,
   "_key": "!items!NkvmfkKCS5AqAR8f"
 }

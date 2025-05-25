@@ -8,6 +8,7 @@ import { tokens } from "./tokens.js";
 import { bloodyAxe } from "./items/weapons/bloodyAxe.js";
 import { mounts } from "./mounts/mounts.js";
 import { tagging } from "./utility/tagging.js";
+import { versioning } from "./versioning.js";
 
 export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
@@ -26,8 +27,42 @@ export let combat = {
                 Hooks.on("dnd5e.healActor", onHealed);
             }
         }
-    }
+    },
+    "getWeaponDamageTypes": getWeaponDamageTypes
 };
+
+function getWeaponDamageTypes(weapon) {
+    const damage = weapon?.system?.damage;
+    if (!damage) {
+        return [];
+    }
+    let damageTypes = versioning.dndVersioned(() => getWeaponDamageTypesV4(damage), () => getWeaponDamageTypesV3(damage));
+    return damageTypes ?? [];
+}
+
+function getWeaponDamageTypesV3(damage) {
+    const damageTypes = damage?.parts;
+    if (!damageTypes) {
+        return null;
+    }
+    let damageTypesSet = new Set();
+    for (let damageType of damageTypes) {
+        if (damageType.length > 0) {
+            let embeddedType = /\[(?<type>\w+)\]/.exec(damageType[1])?.groups?.type;
+            if (embeddedType) {
+                damageTypesSet.add(embeddedType);
+            }
+        }
+        if (damageType.length > 1) {
+            damageTypesSet.add(damageType[1]);
+        }
+    }
+    return Array.from(damageTypesSet);
+}
+
+function getWeaponDamageTypesV4(damage) {
+    return Array.from(damage?.base?.types);
+}
 
 async function startFilteredCombat() {
     if (!game.user.isGM) {

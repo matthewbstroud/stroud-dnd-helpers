@@ -24,12 +24,10 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     if (args[0]?.macroPass != "DamageBonus") {
         return;
     }
-    if (!["mwak", "rwak"].includes(args[0].item.system.actionType)) return {};
+    const actionType = args[0].item?.system?.actionType ?? args[0].workflow.activity.actionType;
+    if (!["mwak", "rwak"].includes(actionType)) return {};
     if (args[0].hitTargets.length < 1) return {};
 
-
-    token = canvas.tokens.get(args[0].tokenId);
-    actor = token.actor;
     if (!actor || !token || args[0].hitTargets.length < 1) return {};
 
     let target = canvas.tokens.get(args[0].hitTargets[0].id ?? args[0].hitTargets[0]._id);

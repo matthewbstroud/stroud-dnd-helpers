@@ -105,6 +105,7 @@ export const sdndConstants = {
     },
     "TEMP_ITEMS":{
         "MAGIC_DART": "Magic Dart",
-        "PORTENT_DIE": "Portent Die"
+        "PORTENT_DIE": "Portent Die",
+        "PORTENT_DIE_LEGACY": "Portent Die (Legacy)"
     }
 }

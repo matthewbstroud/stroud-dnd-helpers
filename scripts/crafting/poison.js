@@ -1,4 +1,5 @@
 import { sdndConstants } from "../constants.js";
+import { combat } from "../combat.js";
 import { dialog } from "../dialog/dialog.js";
 import { items } from "../items/items.js";
 import { utility } from "../utility/utility.js";
@@ -6,6 +7,7 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 import { moneyInternal } from "../money/money.js";
 import { sdndSettings } from "../settings.js";
 import { numbers } from "../utility/numbers.js";
+import { versioning } from "../versioning.js";
 
 const POISON_MACRO = "function.stroudDnD.crafting.poison.ItemMacro";
 const RECIPE_MACRO = "function.stroudDnD.crafting.poison.UnlockRecipe";
@@ -541,12 +543,10 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
     if (args[0]?.macroPass != "DamageBonus") {
         return;
     }
-    if (!["mwak", "rwak"].includes(args[0].item.system.actionType)) return {};
+    const actionType = args[0].item?.system?.actionType ?? args[0].workflow.activity.actionType;
+    if (!["mwak", "rwak"].includes(actionType)) return {};
     if (args[0].hitTargets.length < 1) return {};
 
-
-    token = canvas.tokens.get(args[0].tokenId);
-    actor = token.actor;
     if (!actor || !token || args[0].hitTargets.length < 1) return {};
 
     let target = canvas.tokens.get(args[0].hitTargets[0].id ?? args[0].hitTargets[0]._id);
@@ -572,8 +572,9 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
         await removePoison(actor, item, poisonData);
     }
     let saveDiceRoll = await rollDC(target.actor, poisonData);
+    const successfullSave = saveDiceRoll?.options?.success ?? saveDiceRoll?.isSuccess ?? false;
     if (poisonData.effect) {
-        if (saveDiceRoll?.options?.success) {
+        if (successfullSave) {
             await ChatMessage.create({
                 emote: true,
                 speaker: { "actor": target.actor },
@@ -588,10 +589,10 @@ async function _itemMacro({ speaker, actor, token, character, item, args }) {
             return;
         }
     }
-    if (poisonData.dc > 0 && saveDiceRoll?.options?.success && !poisonData.halfDamageOnSave) {
+    if (poisonData.dc > 0 && successfullSave && !poisonData.halfDamageOnSave) {
         return;
     }
-    const halfDamage = saveDiceRoll?.options?.success ?? false;
+    const halfDamage = successfullSave;
     let isCritical = args[0].isCritical;
     let dieCount = isCritical ? 2 * poisonData.dieCount : poisonData.dieCount;
 
@@ -815,15 +816,8 @@ async function getWeapons(actor) {
 }
 
 function isPiercingOrSlashingWeapon(weapon) {
-    const damage = weapon?.system?.damage;
-    if (!damage) {
-        return false;
-    }
-    const damageTypes = damage?.parts ?? damage?.base.types;
-    if (!damageTypes) {
-        return false;
-    }
-    return damageTypes.filter(dt => dt.includes("slashing") || dt.includes("piercing")).length > 0;
+    let damageTypes = combat.getWeaponDamageTypes(weapon);
+    return damageTypes?.includes("slashing") || damageTypes?.includes("piercing");
 }
 
 async function rollDC(targetActor, poisonData) {

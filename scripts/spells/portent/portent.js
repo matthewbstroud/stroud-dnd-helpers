@@ -1,5 +1,7 @@
 import { items } from "../../items/items.js";
 import { sdndConstants } from "../../constants.js";
+import { versioning } from "../../versioning.js";
+
 export let portent = {
     "rollPortentDice": foundry.utils.debounce(rollPortentDice, 250),
     "syncPortentDice": syncPortentDice
@@ -36,13 +38,46 @@ async function syncPortentDice({speaker, actor, token, character, item, args}) {
 }
 
 async function createPortentDice(actor) {
+
     let diceRoll = await new Roll('1d20').evaluate();
-    let portentDie = await items.getItemFromCompendium(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS, sdndConstants.TEMP_ITEMS.PORTENT_DIE, false, null);
+    let portentDie = await items.getItemFromCompendium(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS, getPortentDieName(), false, null);
     portentDie.name = `Portent Die (${diceRoll.total})`;
-    portentDie.system.damage.parts[0] = `${diceRoll.total}`;
-    portentDie.system.chatFlavor = `The die flashes ${diceRoll.total} and disappears...`;
+    assignDamageAndChatFlavor(portentDie, diceRoll.total);
     await actor.createEmbeddedDocuments('Item', [portentDie]);
     return diceRoll.total;
+}
+
+function getPortentDieName() {
+    return versioning.dndVersioned(
+        () => getPortentDieNameV4(),
+        () => getPortentDieNameV3()
+    );
+}
+
+function getPortentDieNameV3() {
+    return sdndConstants.TEMP_ITEMS.PORTENT_DIE_LEGACY;
+}
+function getPortentDieNameV4() {
+    return sdndConstants.TEMP_ITEMS.PORTENT_DIE;   
+}
+
+
+function assignDamageAndChatFlavor(die, face) {
+    versioning.dndVersioned(
+        () => assignDamageAndChatFlavorV4(die, face), 
+        () => assignDamageAndChatFlavorV3(die, face)
+    );
+}
+
+function assignDamageAndChatFlavorV3(die, face) {
+    die.system.damage.parts[0] = `${face}`;
+    die.system.chatFlavor = `The die flashes ${face} and disappears...`;
+}
+
+function assignDamageAndChatFlavorV4(die, face) {
+    let damageActivity = Object.values(die.system.activities).find(a => a.type == "damage");
+    damageActivity.damage.parts[0].bonus = face;
+    damageActivity.description.chatFlavor = `The die flashes ${face} and disappears...`;
 }
 
 async function rollPortentDice(){

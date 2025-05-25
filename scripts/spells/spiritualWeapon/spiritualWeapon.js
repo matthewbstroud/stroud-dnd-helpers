@@ -1,4 +1,5 @@
 import { sdndConstants } from "../../constants.js";
+import { versioning } from "../../versioning.js";
 
 export let spiritualWeapon = {
     "castOrUse": foundry.utils.debounce(_castOrUse, 250)
@@ -9,34 +10,54 @@ async function _castOrUse() {
         ui.notifications.notify(`Please select a single actor!`);
         return;
     }
-    let targetActor = canvas.tokens.controlled[0]?.actor;
-    let casterActor = targetActor;
-    let casterActorUuid = await targetActor.getFlag("chris-premades", "summons.control.actor");
-    if (casterActorUuid && casterActorUuid.length > 0) {
-        casterActor = await fromUuid(casterActorUuid);
-    }
+    const { weaponActor, casterActor} = await resolveWeaponAndCasterActors(canvas.tokens.controlled[0]?.actor);
     if (!casterActor) {
         ui.notifications.notify(`Please select a player or the spiritual weapon!`);
         return;
     }
-
-    // does the weapon exist in the scene?
-    let weaponActor = canvas.scene.tokens.find(t => t.actor?.getFlag("chris-premades", "summons.control.actor") == casterActor.uuid);
     if (weaponActor) {
-        let attack = casterActor.items.find(i => i.getFlag("chris-premades", "info.identifier") == "spiritualWeaponAttack");
-        if (attack) {
-            attack.use();
-            return;
-        }
+        await getSpritualWeaponAttack(casterActor)?.use();
         return;
     }
 
-    let spiritualWeaponSpell = targetActor?.items.find(i => i.getFlag("chris-premades", "info.identifier") == "spiritualWeapon");
+    let spiritualWeaponSpell = getSpritualWeaponSpell(casterActor);
     if (!spiritualWeaponSpell) {
-        ui.notifications.notify(`${targetActor.name} doesn't know ${sdndConstants.SPELLS.SPIRITUAL_WEAPON}!`);
+        ui.notifications.notify(`${casterActor.name} doesn't know ${sdndConstants.SPELLS.SPIRITUAL_WEAPON}!`);
         return;
     }
 
-    spiritualWeaponSpell.use();
+    await spiritualWeaponSpell.use();
 }
 
+async function resolveWeaponAndCasterActors(controlledActor) {
+    let result = {
+        "weaponActor": {},
+        "casterActor": {}
+    };
+    const casterActorUuid = controlledActor.getFlag("chris-premades", "summons.control.actor");
+    if (casterActorUuid) { // weapon selected
+        result.casterActor = await fromUuid(casterActorUuid);
+        result.weaponActor = controlledActor;
+        return result;
+    }
+    // actor selected
+    result.casterActor = controlledActor;
+    result.weaponActor = canvas.scene.tokens.find(t => t.actor?.getFlag("chris-premades", "summons.control.actor") == controlledActor.uuid);
+    return result;
+}
+
+function getSpritualWeaponSpell(actor) {
+    return getSpiritualWeaponByActivityType(actor, "utility") ??
+        actor?.items?.find(i => i.getFlag("chris-premades", "info.identifier") == "spiritualWeapon");
+}
+
+function getSpritualWeaponAttack(actor) {
+    return getSpiritualWeaponByActivityType(actor, "attack") ??
+        actor?.items?.find(i => i.getFlag("chris-premades", "info.identifier") == "spiritualWeaponAttack");
+}
+
+function getSpiritualWeaponByActivityType(actor, activityType) {
+    return actor?.items?.find(i => i.getFlag("chris-premades", "info.identifier") == "spiritualWeapon")
+        ?.system?.activities?.contents
+        ?.find(a => a.type == activityType);
+}

@@ -1,5 +1,6 @@
 import { sdndConstants } from "../constants.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { items } from "../items/items.js";
 
 export let plants = {
   "BlightIcorItemMacro": blightIcorItemMacro,
@@ -10,7 +11,7 @@ async function blightIcorItemMacro({ speaker, actor, token, character, item, arg
   if (!actor) {
     return;
   }
-  let compendiumUuid = sdndShared.items.common.getItemUuidByName("Blight Icor");
+  let compendiumUuid = items.getItemUuid(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS, "Blight Icor");
   let currentTime = game.time.worldTime;
   let lastTaken = await actor.getFlag(sdndConstants.MODULE_ID, "BlightIcorLastTaken");
   if (lastTaken && ((currentTime - lastTaken) / 60 / 60) < 24) {
@@ -69,7 +70,8 @@ async function ryathRootItemMacro({ speaker, actor, token, character, item, args
     if (!dieRoll.options.success) {
       // add poisoned
       let poisonedEffect = JSON.parse(POISONED);
-      poisonedEffect.origin = sdndShared.items.common.getItemUuidByName("Ryath Root");
+      let ryathRootUuid = items.getItemUuid(sdndConstants.PACKS.COMPENDIUMS.ITEM.ITEMS, "Ryath Root");
+      poisonedEffect.origin = ryathRootUuid;
       await gmFunctions.createEffects(actor.uuid, [poisonedEffect]);
       await actor.setFlag(sdndConstants.MODULE_ID, "RyathRootLastTaken", currentTime);
       await ChatMessage.create({

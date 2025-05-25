@@ -1,3 +1,11 @@
+# v12.4.0
+# New Features
+- Support for DND5e v4.x
+  - Chat
+    - Secret Messages
+  - Crafting
+    - Fixed helper methods
+    - Poisons
 # v12.3.3
 # New Features
 - Pre-work for DND5e v4.x

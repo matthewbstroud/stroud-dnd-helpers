@@ -156,19 +156,24 @@
       "lightable": {
         "litUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.bA7YCEqL7gBif8ay"
       }
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "12.343",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.4.2",
     "createdTime": 1730063561057,
-    "modifiedTime": 1730064184005,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1747857620496,
+    "lastModifiedBy": "7fjRA2MFQ2AgH0lw"
   },
   "_id": "0BelLY6twNdfFADM",
-  "sort": 0,
+  "sort": 100000,
   "_key": "!items!0BelLY6twNdfFADM"
 }

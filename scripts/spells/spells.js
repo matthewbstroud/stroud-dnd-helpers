@@ -1,5 +1,7 @@
+import { drainingAttack } from "./drained/drainingAttack.js";
 import { huntersMark } from "./huntersmark/huntersMark.js";
 import { spiritualWeapon } from "./spiritualWeapon/spiritualWeapon.js";
+
 
 export async function getSpellData(abilityName){
     if (canvas.tokens.controlled.length != 1) {
@@ -28,6 +30,7 @@ export async function getSpellData(abilityName){
 }
 
 export let spells = {
+    "DrainingAttack": drainingAttack,
     "HuntersMark": huntersMark,
     "SpiritualWeapon": spiritualWeapon
 }

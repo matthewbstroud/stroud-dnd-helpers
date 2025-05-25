@@ -3,8 +3,39 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 export let identification = {
     "createUnidentifiedItem": foundry.utils.debounce(_createUnidentifiedItem, 250),
     "identifyItem": foundry.utils.debounce(_idenfityItemGM, 250),
-    "itemMacro": _itemMacro
+    "itemMacro": _itemMacro,
+    "applyPatches": async function _applyPatches() {
+        let actors = game.actors
+            .filter(a => 
+                a.items.find(i => unpatchedIdentifySpell(i)));
+        if (actors.length == 0) {
+            return;
+        }
+        let spells = actors.flatMap(a => a.items.filter(i => unpatchedIdentifySpell(i)));
+
+        let summary = [];
+        for (let spell of spells) {
+            summary.push(`Patching ${spell.name} for ${spell.parent?.name}...`);
+            let onUseMacroName = spell.getFlag("midi-qol", "onUseMacroName");
+            onUseMacroName = onUseMacroName.replace("[preambleComplete]", "[preActiveEffects]");
+            await spell.setFlag("midi-qol", "onUseMacroName", onUseMacroName);
+            summary.push("Patch successful!");
+        }
+        if (summary.length == 0) {
+            return;
+        }
+        ChatMessage.create({
+            content: (summary.join("<br/>")),
+            whisper: ChatMessage.getWhisperRecipients('GM'),
+        });
+    }
 };
+
+function unpatchedIdentifySpell(item) {
+    return  item.name == "Identify" 
+        && item.flags["stroud-dnd-helpers"]?.importedItem
+        && item.flags["midi-qol"]?.onUseMacroName?.includes("preambleComplete");
+}
 
 async function _itemMacro({speaker, actor, token, character, item, args}){
     if (!args || args.length == 0) {
