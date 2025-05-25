@@ -27,7 +27,7 @@
 				"compatibility": {
 					"minimum": "3.1.2",
 					"verified": "4.4.2",
-					"maximum": "4.4.2"
+					"maximum": "4.4.x"
 				}
 			}
 		],
@@ -37,26 +37,26 @@
 				"type": "module",
 				"manifest": "https://github.com/kandashi/Active-Auras/releases/latest/download/module.json",
 				"comaptibility": {
-					"minimum": "0.9.2",
-					"verified": "0.9.2"
+					"minimum": "0.12.2",
+					"verified": "0.12.2"
 				}
 			},
 			{
 				"id": "autoanimations",
 				"type": "module",
-				"manifest": "https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json",
+				"manifest": "https://github.com/theripper93/autoanimations/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "4.2.70",
-					"verified": "4.2.70"
+					"verified": "5.1.4"
 				}
 			},
 			{
 				"id": "dae",
 				"type": "module",
-				"manifest": "https://gitlab.com/tposney/dae/raw/v11/package/module.json",
+				"manifest": "https://gitlab.com/tposney/dae/raw/dndv4/package/module.json",
 				"comaptibility": {
 					"minimum": "11.1.7",
-					"verified": "11.1.7"
+					"verified": "12.0.25"
 				}
 			},
 			{
@@ -65,7 +65,7 @@
 				"manifest": "https://github.com/krbz999/effectmacro/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "11.0.3",
-					"verified": "11.0.3"
+					"verified": "12.1.1"
 				}
 			},
 			{
@@ -74,16 +74,16 @@
 				"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "1.12.13.0",
-					"verified": "1.12.13.0"
+					"verified": "1.13.2.0"
 				}
 			},
 			{
 				"id": "midi-qol",
 				"type": "module",
-				"manifest": "https://gitlab.com/tposney/midi-qol/raw/dnd3/package/module.json",
+				"manifest": "https://gitlab.com/tposney/midi-qol/raw/v12dnd4/package/module.json",
 				"comaptibility": {
 					"minimum": "11.3.11",
-					"verified": "11.4.48"
+					"verified": "12.4.53"
 				}
 			},
 			{
@@ -92,36 +92,36 @@
 				"manifest": "https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "11.19",
-					"verified": "11.19"
+					"verified": "12.02"
 				}
 			},
 			{
 				"id": "socketlib",
 				"type": "module",
-				"manifest": "https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/master/module.json",
+				"manifest": "https://github.com/farling42/foundryvtt-socketlib/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "1.0.13",
-					"verified": "1.0.13"
+					"verified": "1.1.2"
 				}
 			}
 		],
 		"optional": [
-			{
-				"id": "ATL",
-				"type": "module",
-				"manifest": "https://github.com/kandashi/Active-Token-Lighting/releases/latest/download/module.json",
-				"comaptibility": {
-					"minimum": "0.7.0",
-					"verified": "0.7.0"
-				}
-			},
 			{
 				"id": "anonymous",
 				"type": "module",
 				"manifest": "https://raw.githubusercontent.com/reonZ/anonymous/master/module.json",
 				"comaptibility": {
 					"minimum": "1.4.4",
-					"verified": "1.4.4"
+					"verified": "1.6.2"
+				}
+			},
+			{
+				"id": "ATL",
+				"type": "module",
+				"manifest": "https://github.com/kandashi/Active-Token-Lighting/releases/latest/download/module.json",
+				"comaptibility": {
+					"minimum": "0.7.0",
+					"verified": "v0.8.1"
 				}
 			},
 			{
@@ -130,16 +130,7 @@
 				"manifest": "https://github.com/chrisk123999/chris-premades/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "0.11.12",
-					"verified": "0.11.12"
-				}
-			},
-			{
-				"id": "dfreds-convenient-effects",
-				"type": "module",
-				"manifest": "https://github.com/DFreds/dfreds-convenient-effects/releases/latest/download/module.json",
-				"comaptibility": {
-					"minimum": "6.0.0",
-					"verified": "6.0.0"
+					"verified": "1.2.35"
 				}
 			},
 			{
@@ -148,34 +139,16 @@
 				"manifest": "https://github.com/vigoren/foundryvtt-simple-calendar/releases/latest/download/module.json",
 				"comaptibility": {
 					"minimum": "2.4.3",
-					"verified": "2.4.3"
-				}
-			},
-			{
-				"id": "tidy5e-sheet",
-				"type": "module",
-				"manifest": "https://github.com/sdenec/tidy5e-sheet/releases/download/0.10.0/module.json",
-				"compatibility": {
-					"minimum": "0.10.0",
-					"verified": "0.10.0"
+					"verified": "2.4.18"
 				}
 			},
 			{
 				"id": "tokenmagic",
 				"type": "module",
-				"manifest": "https://raw.githubusercontent.com/Feu-Secret/Tokenmagic/master/tokenmagic/module.json",
-				"compatibility": {
+				"manifest": "https://github.com/Feu-Secret/Tokenmagic/releases/latest/download/module.json",
+				"comaptibility": {
 					"minimum": "0.6.5.0",
-					"verified": "0.6.5.0"
-				}
-			},
-			{
-				"id": "ddb-importer",
-				"type": "module",
-				"manifest": "https://github.com/mrprimate/ddb-importer/releases/download/latest/module.json",
-				"compatibility": {
-					"minimum": "3.7.4",
-					"verified": "3.7.4"
+					"verified": "0.6.9"
 				}
 			},
 			{
@@ -197,30 +170,12 @@
 				}
 			},
 			{
-				"id": "templatemacro",
-				"type": "module",
-				"manifest": "https://github.com/krbz999/templatemacro/releases/latest/download/module.json",
-				"comaptibility": {
-					"minimum": "11.0.1",
-					"verified": "11.0.1"
-				}
-			},
-			{
 				"id": "visual-active-effects",
 				"type": "module",
 				"manifest": "https://github.com/krbz999/visual-active-effects/releases/latest/download/module.json",
-				"compatibility": {
-					"minimum": "11.0.6",
-					"verified": "11.0.6"
-				}
-			},
-			{
-				"id": "warpgate",
-				"type": "module",
-				"manifest": "https://github.com/trioderegion/warpgate/releases/latest/download/module.json",
 				"comaptibility": {
-					"minimum": "1.19.2",
-					"verified": "1.19.2"
+					"minimum": "11.0.6",
+					"verified": "12.1.5"
 				}
 			}
 		]

@@ -1,5 +1,5 @@
 # Readme
-My collection of automation for foundy v11 and DND 5e (v3.1.2)
+My collection of automation for foundy v12 and DND 5e (v4.4.2)
 
 If you appreciate the module support me [HERE](https://ko-fi.com/sdnddonations)
 
@@ -104,22 +104,19 @@ Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
 # Required Modules  
 | Module | Verified Version | manifest location 
 | --- | --- | --- | 
-| Active Auras | 0.9.13 | https://github.com/kandashi/Active-Auras/releases/latest/download/module.json |
+| Active Auras | 0.12.2 | https://github.com/kandashi/Active-Auras/releases/latest/download/module.json |
 | Active Token Effects | 0.8.1 | https://github.com/kandashi/Active-Token-Lighting/releases/download/v0.8.1/module.json |
 | Automated Animations | 4.2.74 | https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json |
-| Dynamic effects using Active Effects (DAE) | 11.3.36 | https://gitlab.com/tposney/dae |
-| Effect Macro | 11.2.2 | https://github.com/krbz999/effectmacro/releases/download/v11.2.2/module.json |
-| libWrapper | 1.12.14.0 | https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json |
-| Midi QOL | 11.4.48 | https://gitlab.com/tposney/midi-qol/raw/dnd3/package/module.json |
-| Monk's Active Tile Triggers | 11.27 | https://github.com/ironmonk88/monks-active-tiles/releases/download/11.27/module.json |
-| socketlib | 1.1.0 | https://raw.githubusercontent.com/manuelVo/foundryvtt-socketlib/v1.1.0/module.json |
-| Template Macro | 11.0.1 | https://github.com/krbz999/templatemacro/releases/latest/download/module.json |
+| Dynamic effects using Active Effects (DAE) | 12.0.25 | https://gitlab.com/tposney/dae/raw/dndv4/package/module.json |
+| Effect Macro | 12.1.1 | https://github.com/krbz999/effectmacro/releases/latest/download/module.json |
+| libWrapper | 1.13.2.0 | https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json |
+| Midi QOL | 12.4.53 | https://gitlab.com/tposney/midi-qol/raw/v12dnd4/package/module.json |
+| Monk's Active Tile Triggers | 12.02 | https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json |
+| socketlib | 1.1.2 | https://github.com/farling42/foundryvtt-socketlib/releases/latest/download/module.json |
   
 # Optional supported modules:  
 - Anonymous
-- DF Fred's Convenient Effects
 - D&D Beyond Importer  
-- Tidy5e Sheet  
 - Token Magic FX  
 - Visual Active Effects  
 - JBA Free or Patreon
