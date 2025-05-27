@@ -1,3 +1,7 @@
+# v12.4.1
+# New Features 
+- GM Macros Compendium
+  - Toggle Walls Block Range (midi-qol setting)
 # v12.4.0
 # New Features
 - Support for DND5e v4.x

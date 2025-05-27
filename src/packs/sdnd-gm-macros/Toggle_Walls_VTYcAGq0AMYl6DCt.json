@@ -1,0 +1,31 @@
+{
+  "name": "Toggle Walls",
+  "type": "script",
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": "GM"
+    }
+  },
+  "command": "await stroudDnD.combat.toggleWallsBlockRange();",
+  "img": "modules/stroud-dnd-helpers/images/icons/walls_block_range.webp",
+  "author": "6yhz13iFYYklKtgA",
+  "scope": "global",
+  "folder": "gI24D8dwAmCgrhfH",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1748358911949,
+    "modifiedTime": 1748358911986,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "VTYcAGq0AMYl6DCt",
+  "sort": 200000,
+  "_key": "!macros!VTYcAGq0AMYl6DCt"
+}
