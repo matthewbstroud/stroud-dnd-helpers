@@ -14,6 +14,7 @@ export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
     "simulatedAttackers": foundry.utils.debounce(simulateAttackers, 250),
     "startFilteredCombat": foundry.utils.debounce(startFilteredCombat, 250),
+    "toggleWallsBlockRange": foundry.utils.debounce(toggleWallsBlockRanged, 250),
     "weapons": {
         "ranged": ranged
     },
@@ -30,6 +31,27 @@ export let combat = {
     },
     "getWeaponDamageTypes": getWeaponDamageTypes
 };
+
+const WALLS_BLOCK_RANGE = "optionalRules.wallsBlockRange";
+async function toggleWallsBlockRanged() {
+    
+    let midiConfig = game.settings.get("midi-qol", "ConfigSettings");
+    const currentSetting = foundry.utils.getProperty(midiConfig, WALLS_BLOCK_RANGE);
+    let wallsBlockRange = currentSetting != "none";
+    let messageContent = wallsBlockRange ? "Walls will not block range." : "Walls block range.";
+    if (wallsBlockRange) {
+        await game.user.setFlag(sdndConstants.MODULE_ID, WALLS_BLOCK_RANGE, currentSetting);
+    } 
+    const newSetting = wallsBlockRange ?
+        "none" :
+        game.user.getFlag(sdndConstants.MODULE_ID, WALLS_BLOCK_RANGE) ?? "center";
+    foundry.utils.setProperty(midiConfig, WALLS_BLOCK_RANGE, newSetting);
+    await game.settings.set("midi-qol", "ConfigSettings", midiConfig);
+    await ChatMessage.create({
+        content: messageContent,
+        whisper: ChatMessage.getWhisperRecipients('GM'),
+    });
+}
 
 function getWeaponDamageTypes(weapon) {
     const damage = weapon?.system?.damage;
