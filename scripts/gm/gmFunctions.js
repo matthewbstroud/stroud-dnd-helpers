@@ -58,7 +58,7 @@ export let gmFunctions = {
             ui.notifications.error($`Cannot find actor with uuid: ${actorUuid}`);
             return;
         }
-        run(
+        return run(
             async () => {
                 if (effectData.name && actor.effects.find(e => e.name == effectData.name)) {
                     return;
@@ -74,7 +74,7 @@ export let gmFunctions = {
             ui.notifications.error($`Cannot find document with uuid: ${uuid}`);
             return;
         }
-        run(
+        return run(
             async () => {
                 await document.createEmbeddedDocuments(documentType, documentData);
             },
@@ -82,7 +82,7 @@ export let gmFunctions = {
         );
     },
     "checkActorWeight": async function _checkActorWeight(actorUuid, scope) {
-        run(
+        return run(
             async () => await gmCheckActorWeight(actorUuid, false, scope),
             async () => await socket.executeAsGM("checkActorWeight", actorUuid, scope)
         );
@@ -91,7 +91,7 @@ export let gmFunctions = {
         selectToken(tokenId);
     },
     "dropBackpack": async function _dropBackpack(tokenId, backpackId, userUuid, isMount) {
-        run(
+        return run(
             async () => await gmDropBackpack(tokenId, backpackId, userUuid, isMount).then(
                 function () {
                     const userId = userUuid.split(".").pop();
@@ -103,7 +103,7 @@ export let gmFunctions = {
         );
     },
     "pickupBackpack": async function _pickupBackpack(pileUuid, userId, targetUuid) {
-        run(
+        return run(
             async () => {
                 let tokenId = null;
                 let pile = await fromUuid(pileUuid);
@@ -122,7 +122,7 @@ export let gmFunctions = {
                         }
                         socket.executeForUsers("selectToken", [userId], tokenId);
                     },
-                    
+
                     function (err) { console.log(err.message); }
                 );
             },
@@ -130,7 +130,7 @@ export let gmFunctions = {
         );
     },
     "dropLightable": async function _dropLightable(tokenId, itemId, userId) {
-        run(
+        return run(
             async () => {
                 await gmDropLightable(tokenId, itemId).then(
                     function () {
@@ -139,7 +139,7 @@ export let gmFunctions = {
                         }
                         socket.executeForUsers("selectToken", [userId], tokenId);
                     },
-                    
+
                     function (err) { console.log(err.message); }
                 );
             },
@@ -147,7 +147,7 @@ export let gmFunctions = {
         );
     },
     "pickupLightable": async function _pickupLightable(pileUuid, actorUuid, userId) {
-        run(
+        return run(
             async () => {
                 let tokenId = null;
                 let pile = await fromUuid(pileUuid);
@@ -165,7 +165,7 @@ export let gmFunctions = {
                         }
                         socket.executeForUsers("selectToken", [userId], tokenId);
                     },
-                    
+
                     function (err) { console.log(err.message); }
                 );
             },
@@ -176,7 +176,7 @@ export let gmFunctions = {
         if (!actorId) {
             return;
         }
-        run(
+        return run(
             async () => {
                 let actor = game.actors.get(actorId);
                 if (actor) {
@@ -190,19 +190,19 @@ export let gmFunctions = {
         if (!arrayOfTokenIds || arrayOfTokenIds.length == 0) {
             return;
         }
-        run(
+        return run(
             async () => canvas.scene.deleteEmbeddedDocuments("Token", arrayOfTokenIds),
             async () => await socket.executeAsGM("deleteTokens", arrayOfTokenIds)
         );
     },
     "createFolder": async function _createFolder(folderName, folderType, parentID) {
-        run(
+        return run(
             async () => await createFolder(folderName, folderType, parentID),
             async () => await socket.executeAsGM("createFolder", folderName, folderType, parentID)
         );
     },
     "identifyItem": async function _identifyItem(alias, token, itemID) {
-        run(
+        return run(
             async () => identifyItem(alias, token, itemID),
             async () => await socket.executeAsGM("identifyItem", alias, token, itemID)
         );
@@ -235,7 +235,7 @@ export let gmFunctions = {
         if (!effectIDs || effectIDs.length == 0) {
             return;
         }
-        run(
+        return run(
             async () => {
                 for (const effectID of effectIDs) {
                     const effect = await fromUuid(effectID);
@@ -251,7 +251,7 @@ export let gmFunctions = {
         if (!actorUuid || !effectIDs || effectIDs.length == 0) {
             return;
         }
-        run(
+        return run(
             async () => {
                 let actor = await fromUuid(actorUuid);
                 await actor.deleteEmbeddedDocuments(ActiveEffect.name, effectIDs);
@@ -260,7 +260,7 @@ export let gmFunctions = {
         );
     },
     "setFlag": async function _setFlag(uuid, scope, key, value) {
-        run(
+        return run(
             async () => {
                 let document = await fromUuid(uuid);
                 if (!document) {
@@ -273,7 +273,7 @@ export let gmFunctions = {
         );
     },
     "unsetFlag": async function _unsetFlag(uuid, scope, key) {
-        run(
+        return run(
             async () => {
                 let document = await fromUuid(uuid);
                 if (!document) {
@@ -286,7 +286,7 @@ export let gmFunctions = {
         );
     },
     "importFromCompendium": async function _importFromCompedium(type, packId, packItemId, parentFolderId) {
-        run(
+        return run(
             async () => await importFromCompedium(type, packId, packItemId, parentFolderId),
             async () => await socket.executeAsGM("importFromCompendium", type, packId, packItemId, parentFolderId)
         );
@@ -302,7 +302,7 @@ export let gmFunctions = {
         SimpleCalendar.api.startClock();
     },
     "advanceTime": async function _advanceTime(seconds) {
-        run(
+        return run(
             async () => {
                 if (!SimpleCalendar) {
                     await game.time.advance(seconds);
@@ -327,7 +327,7 @@ function selectToken(tokenId) {
     token.control({ releaseOthers: true });
 }
 
-async function importFromCompedium(type, packId, packItemId, parentFolderName) {
+export async function importFromCompedium(type, packId, packItemId, parentFolderName) {
     let pack = game.packs.get(packId);
     if (!pack) {
         ui.notifications.error(`Cannot find compendium ${packId}!`);
