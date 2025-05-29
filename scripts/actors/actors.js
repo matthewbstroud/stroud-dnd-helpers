@@ -264,7 +264,7 @@ async function actorConfig(actorDocument) {
 }
 
 async function ensureActor(actorName, packId, parentFolderName) {
-    let actor = await game.actors.getName(actorName);
+    let actor = game.actors.getName(actorName);
     if (!actor) {
         let pack = game.packs.get(packId);
         if (!pack) {

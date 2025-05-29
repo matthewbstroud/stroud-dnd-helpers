@@ -1,3 +1,8 @@
+# v12.4.2
+# New Features 
+- AdHoc Damage
+  - Allow triggering reactions.
+  - Add Save Options
 # v12.4.1
 # New Features 
 - GM Macros Compendium

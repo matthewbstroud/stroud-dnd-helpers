@@ -24,12 +24,19 @@
       "width": null,
       "units": "",
       "type": "creature",
-      "prompt": true
+      "prompt": true,
+      "affects": {
+        "special": ""
+      },
+      "template": {
+        "type": ""
+      }
     },
     "range": {
       "value": 90,
       "long": null,
-      "units": "ft"
+      "units": "ft",
+      "special": ""
     },
     "uses": {
       "value": null,
@@ -210,7 +217,10 @@
       "forceCEOn": false,
       "rollAttackPerTarget": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "core": {
       "sourceId": "Actor.jsFnmyL717S10ISa.Item.UVdRV3e0q27MizHs"
@@ -224,7 +234,11 @@
     "stroud-dnd-helpers": {
       "importedItem": true
     },
-    "dnd5e": {},
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    },
     "dae": {
       "macro": {
         "data": {
@@ -351,16 +365,16 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1683225374129,
-    "modifiedTime": 1747928118403,
+    "modifiedTime": 1748482927683,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Actor.jsFnmyL717S10ISa.Item.UVdRV3e0q27MizHs",
     "duplicateSource": null
   },
   "folder": null,
-  "sort": 100000,
+  "sort": 500000,
   "_id": "RH0GkKyxbvzOoAui",
   "_key": "!items!RH0GkKyxbvzOoAui"
 }
