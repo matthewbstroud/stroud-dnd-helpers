@@ -237,6 +237,54 @@ async function applyAdhocDamage() {
                 }
             ];
             return await dialog.createButtonDialog("Select Damage on Save", values, "column");
+        },
+        collectInputData: async function _collectInputData() {
+            let saveData = null;
+            let adhocDamageType = versioning.isLegacyVersion() ? "legacy" : await adHocDamage.getAdhocDamageType();
+            if (!adhocDamageType) {
+                return;
+            }
+
+            if (adhocDamageType === "Damage") {
+                const saveAbility = await adHocDamage.getSaveAbility();
+                if (!saveAbility) {
+                    return;
+                }
+                const saveDC = await adHocDamage.getSaveDC();
+                if (!saveDC) {
+                    return;
+                }
+                const damageOnSave = await adHocDamage.getDamageOnSave();
+                if (!damageOnSave) {
+                    return;
+                }
+                saveData = {
+                    ability: saveAbility,
+                    dc: saveDC,
+                    damageOnSave: damageOnSave
+                };
+            }
+
+            let damageType = await adHocDamage.getDamageType();
+            if (!damageType) {
+                return;
+            }
+            let damageDice = await adHocDamage.getDamageDice();
+            if (!damageDice) {
+                return;
+            }
+            let diceCount = await adHocDamage.getDiceCount();
+            if (!diceCount) {
+                return;
+            }
+
+            return {
+                adhocDamageType,
+                damageType,
+                damageDice,
+                diceCount,
+                saveData
+            };
         }
     };
 
@@ -248,55 +296,31 @@ async function applyAdhocDamage() {
         ui.notifications.notify(`No valid tokens selected!`);
         return;
     }
-    let saveData = null;
-    let adhocDamageType = await adHocDamage.getAdhocDamageType();
-    if (!adhocDamageType) {
+    const inputData = await adHocDamage.collectInputData();
+    if (!inputData) {
         return;
     }
-
-    if (adhocDamageType === "Damage") {
-        const saveAbility = await adHocDamage.getSaveAbility();
-        if (!saveAbility) {
-            return;
-        }
-        const saveDC = await adHocDamage.getSaveDC();
-        if (!saveDC) {
-            return;
-        }
-        const damageOnSave = await adHocDamage.getDamageOnSave();
-        if (!damageOnSave) {
-            return;
-        }
-        saveData = {
-            ability: saveAbility,
-            dc: saveDC,
-            damageOnSave: damageOnSave
-        };
-    }
-
-    let damageType = await adHocDamage.getDamageType();
-    if (!damageType) {
-        return;
-    }
-    let damageDice = await adHocDamage.getDamageDice();
-    if (!damageDice) {
-        return;
-    }
-    let diceCount = await adHocDamage.getDiceCount();
-    if (!diceCount) {
-        return;
-    }
-    const dnd5eDamageType = CONFIG.DND5E.damageTypes[damageType];
-    let color = dnd5eDamageType.color;
-    if (color) {
-        color = `color:${color}`;
-    }
-    await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets);
+    const { adhocDamageType, damageType, damageDice, diceCount, saveData } = inputData;
+    return await versioning.dndVersionedAsync(
+        async () => await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets),
+        async () => await applyDamageLegacyMode(damageType, damageDice, diceCount, targets)
+    );
 }
 
 async function applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets) {
     const item = await createAdhocItem(adhocDamageType, damageType, damageDice, diceCount, saveData, targets);
     return await chrisPremades.utils.workflowUtils.syntheticItemRoll(item, targets, { userId: game.userId });
+}
+
+async function applyDamageLegacyMode(damageType, damageDice, diceCount, targets) {
+    const damageRoll = await new Roll(`${diceCount}d${damageDice}[${damageType}]`).evaluate();
+    const dnd5eDamageType = CONFIG.DND5E.damageTypes[damageType];
+    let color = dnd5eDamageType.color;
+    if (color) {
+        color = `color:${color}`;
+    }
+    damageRoll.toMessage({ flavor: `${getSortedNames(targets)} been struck with <span style='${color}'>${dnd5eDamageType.label}</span> damage!` });
+    await MidiQOL.applyTokenDamage([{ type: `${damageType}`, damage: damageRoll.total }], damageRoll.total, new Set(targets), null, new Set(), { forceApply: true });
 }
 
 const damageMatch = /\[(?<damage>\w+)\]/;
