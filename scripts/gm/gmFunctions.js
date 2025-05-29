@@ -37,7 +37,13 @@ async function run(local, remote) {
 }
 
 async function getTokenOrActor(uuid) {
+    if (!uuid) {
+        return null;
+    }
     let tokenOrActor = await fromUuid(uuid);
+    if (!tokenOrActor) {
+        return null;
+    }
     return tokenOrActor.actor ? tokenOrActor.actor : tokenOrActor;
 }
 

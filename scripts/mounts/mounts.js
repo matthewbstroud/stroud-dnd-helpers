@@ -88,6 +88,9 @@ function GetCapacityProperty(){
 
 export let mounts = {
     "isMount": function _isMount(item) {
+        if (this.isHitchable(item)) {
+            return false;
+        }
         return item.getFlag(sdndConstants.MODULE_ID, "IsMount") || (item.type == "container" && (item.name?.toLowerCase().includes("horse") || item.img?.toLowerCase()?.includes("horse") ||
             item.system?.description?.value?.toLowerCase()?.includes("horse")));
     },
@@ -410,6 +413,10 @@ async function buffMount(mount, useMax, multiplier) {
         mod = 1;
     }
     let mountData = getMountData(mount);
+    if (!mountData) {
+        console.log(`${mount.name} contains no mount data!`);
+        return;
+    }
     const hp = mountData.hp;
 
     const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
