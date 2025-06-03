@@ -4,6 +4,7 @@ import { actors } from "../actors/actors.js";
 import { journal } from "../journal/journal.js";
 import { playlists } from "../playlists.js";
 import { tokens } from "../tokens.js";
+import { versioning } from "../versioning.js";
 
 const migrationPacks = [
     `${sdndConstants.MODULE_ID}.SDND-Features`,
@@ -56,5 +57,8 @@ export let utility = {
         updates.playlists = await playlists.replaceInPlaylists(searchPattern, replacement, previewOnly);
         updates.scenes = await scene.replaceInScenes(searchPattern, replacement, previewOnly);
         return updates;
+    },
+    "setLegacyTestMode": function _setLegacyTestMode(enabled) {
+        versioning.setTestMode(enabled);
     }
 };
