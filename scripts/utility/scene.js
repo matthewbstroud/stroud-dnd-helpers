@@ -1,3 +1,4 @@
+import { folders } from "../folders/folders.js";
 
 export let scene = {
     "rewireMonksActiveTiles": foundry.utils.debounce(_rewireMonksActiveTiles, 250),
@@ -42,7 +43,10 @@ export let scene = {
         }
         await Scene.updateDocuments(updates);
         return updates;
-    }
+    },
+    "getScenesByFolderId": function _getScenesByFolderId(folderId) {
+        return game.scenes.filter(s => folders.childOfFolder(s, folderId));
+    },
 };
 
 let exportCounters = {

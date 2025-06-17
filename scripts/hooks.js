@@ -6,7 +6,7 @@ import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
 import { identification } from './identification/identification.js';
-import { lighting } from './lighting/lighting.js';
+import { tokens } from './tokens.js';
 
 export let hooks = {
     "init": function _init() {
@@ -73,6 +73,39 @@ export let hooks = {
                         return false;
                     }
                     if (sceneCount?.length > 10 || folder.children?.length > 10) {
+                        return false;
+                    }
+                    return true;
+                },
+            });
+            options.push({
+                name: game.i18n.localize("sdnd.scenes.folder.context.removePlayerTokens"),
+                icon: '<i class="fa-regular fa-chess-knight"></i>',
+                callback: async function (li) {
+                    let folderID = $(li).closest("li").data("folderId");
+                    if (!folderID) {
+                        return;
+                    }
+                    let folder = game.folders.get(folderID);
+                    let scenes = await tokens.removePlayerTokensFromSceneFolder(folderID);
+                    let content = (scenes.length == 0) ? `No scenes under ${folder.name} contain actor tokens...` :
+                        `Removed Player Tokens from the following scenes:<br/>${scenes.map(s => s.name).sort().join("<br/>")}`;
+                    await ChatMessage.create({
+                        content: content,
+                        whisper: ChatMessage.getWhisperRecipients('GM'),
+                    });
+                    ui.notifications.notify(`Removed player tokens from  ${scenes.length} scene${(scenes.length == 1 ? '' : 's')}.`);
+                },
+                condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
+                    let folderID = $(li).closest("li").data("folderId");
+                    if (!folderID) {
+                        return false;
+                    }
+                    let folder = game.folders.get(folderID);
+                    if (!folder) {
                         return false;
                     }
                     return true;
@@ -158,7 +191,7 @@ function onPreCreateTile(tileDoc, droppedData, modified, id) {
         tileDoc.updateSource({ "texture.src": droppedData.img });
     }
     return true;
-} 
+}
 
 async function removeCoreStatusId() {
     let validNames = Array.from(game.packs).filter(p => p.metadata.type == "Item" && p.metadata.packageName == "stroud-dnd-helpers").flatMap(p => p.index.filter(i => ['spell', 'feat', 'weapon', 'item'].includes(i.type)).map(i => i.name));
