@@ -2,6 +2,7 @@
     "MODULE.hello": "hello",
     "sdnd.actor.folder.context.togglePlayer":  "Toggle Player Folder",
     "sdnd.scenes.folder.context.regenerateThumbs":  "Regenerate Thumbnails",
+    "sdnd.scenes.folder.context.removePlayerTokens":  "Remove Player Tokens",
     "sdnd.compendium.entry.context.exportThumbnails":  "Export Thumbnails",
     "sdnd.primary":  "Primary"
 }

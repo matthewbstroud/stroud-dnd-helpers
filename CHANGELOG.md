@@ -1,3 +1,7 @@
+# v12.4.3
+# New Features 
+- Removing Player tokens from scenes
+  - Right-click on a folder to remove player tokens from all scenes recursively.  (You must first specify your player actor folder by right-clicking an actor folder and selecting the star.)
 # v12.4.2
 # New Features 
 - AdHoc Damage

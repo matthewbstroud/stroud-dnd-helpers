@@ -2,6 +2,7 @@ import { sdndConstants } from "./constants.js";
 import { dialog } from "./dialog/dialog.js";
 import { sdndSettings } from "./settings.js";
 import { actors } from "./actors/actors.js";
+import { scene } from "./utility/scene.js";
 
 export let tokens = {
     "manageTokens": foundry.utils.debounce(manageTokens, 250),
@@ -29,8 +30,8 @@ export let tokens = {
     },
     "showTokenArt": foundry.utils.debounce(showTokenArt, 250),
     "toggleNpcName": foundry.utils.debounce(toggleNpcName, 250),
-    "pushTokenPrototype":  foundry.utils.debounce(pushTokenPrototype, 250),
-    "morphToken":  foundry.utils.debounce(morphToken, 250),
+    "pushTokenPrototype": foundry.utils.debounce(pushTokenPrototype, 250),
+    "morphToken": foundry.utils.debounce(morphToken, 250),
     "setMorphData": async function _setMorphData(actorUuid, altActorUuid, preservedData) {
         return dbAddMorphData(actorUuid, altActorUuid, preservedData);
     },
@@ -53,13 +54,75 @@ export let tokens = {
                 }
             }));
             if (previewOnly) {
-                updates.push({"scene": scene.name, "updates": sceneUpdates});
+                updates.push({ "scene": scene.name, "updates": sceneUpdates });
                 continue;
             }
         }
         return updates;
+    },
+    "removePlayerTokensFromSceneFolder": async function removePlayerTokensFromSceneFolder(sceneFolderId, preview) {
+        preview ??= false;
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
+        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+        let playersFolder = game.folders.getName(playersFolderName);
+        if (!playersFolder) {
+            ui.notifications.warn(`Make sure your players are in an actors folder named ${playersFolderName}...`);
+            return;
+        }
+        let scenes = scene.getScenesByFolderId(sceneFolderId);
+        if (!scenes || scenes.length == 0) {
+            notifications.error(`No scenes found for ${sceneFolderId}!`);
+            return [];
+        }
+        let scenesWithPlayerTokens = scenes.filter(s => s.tokens.filter((t) => t.actor && t.actor.folder?.id == playersFolder.id).length > 0);
+        if (!scenesWithPlayerTokens || scenesWithPlayerTokens.length == 0) {
+            console.log("No scenes with actor tokens...");
+            return [];
+        }
+        console.log(scenesWithPlayerTokens);
+        if (preview) { 
+            return scenesWithPlayerTokens;
+        }
+        for (let scene of scenesWithPlayerTokens) {
+            await this.removePlayerTokensFromScene(scene.id);
+        }
+        return scenesWithPlayerTokens;
+    },
+    "removePlayerTokensFromScene": async function _removePlayerTokensFromScene(sceneId) {
+        if (!game.user.isGM) {
+            ui.notifications.notify(`Can only be run by the gamemaster!`);
+            return;
+        }
+        const playersFolderName = sdndSettings.ActivePlayersFolder.getValue();
+        let playersFolder = game.folders.getName(playersFolderName);
+        if (!playersFolder) {
+            ui.notifications.warn(`Make sure your players are in an actors folder named ${playersFolderName}...`);
+            return;
+        }
+        let scene = sceneId ? game.scenes.get(sceneId) : game.scenes.current;
+        if (!scene) {
+            notifications.error("Cannot access scene!");
+            return;
+        }
+        let playerTokenIds = scene.tokens.filter((token) => token.actor && token.actor.folder?.id == playersFolder.id).map(t => t.id);
+        await scene.deleteEmbeddedDocuments(Token.name, playerTokenIds);
     }
 };
+
+function findPlayersInScenes(scenes, playerFolderId) {
+    let playerTokenIds = [];
+
+    for (let scene of scenes) {
+        playerTokenIds.push(
+            scene.tokens.filter((token) => token.actor && token.actor.folder?.id == playerFolderId)
+                .map(t => t.id)
+        );
+    }
+    return playerTokenIds;
+}
 
 function getExecutionMethod(methodName) {
     switch (methodName) {
@@ -129,7 +192,7 @@ async function manageTokens() {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return false;
     }
-    let selectedTokens  = canvas.tokens.controlled.filter(t => t.actor);
+    let selectedTokens = canvas.tokens.controlled.filter(t => t.actor);
     if (selectedTokens.length == 0) {
         ui.notifications.notify('You have no actor tokens selected!');
         return false;
@@ -143,7 +206,7 @@ async function manageTokens() {
     }
     let allCanBeMorphed = true;
     for (let token of selectedTokens) {
-        if (!(await getMorphData(token))){
+        if (!(await getMorphData(token))) {
             allCanBeMorphed = false;
             break;
         }
@@ -282,11 +345,11 @@ async function addMorphData(actorUuid, altActorUuid, preservedProperties) {
         console.log(`${altActorUuid} does not exist!`);
         return false;
     }
-    return await setActorMorphData(actor, { 
-        "actorUuid": actor.uuid, 
-        "altActorUuid": altActor.uuid, 
+    return await setActorMorphData(actor, {
+        "actorUuid": actor.uuid,
+        "altActorUuid": altActor.uuid,
         "preservedProperties": preservedProperties,
-        "current": actor.uuid 
+        "current": actor.uuid
     });
 }
 
@@ -299,7 +362,7 @@ export async function morphToken(token) {
     if (!morphData) {
         return false;
     }
-    morphData.current = morphData.current == morphData.actorUuid ? morphData.altActorUuid : morphData.actorUuid; 
+    morphData.current = morphData.current == morphData.actorUuid ? morphData.altActorUuid : morphData.actorUuid;
     let morphActor = await fromUuid(morphData.current);
     if (!morphActor) {
         return false;
