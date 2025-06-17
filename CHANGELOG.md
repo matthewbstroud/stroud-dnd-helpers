@@ -1,3 +1,6 @@
+# v12.4.4
+# Bug Fixes
+- Filter spells by usable.
 # v12.4.3
 # New Features 
 - Removing Player tokens from scenes

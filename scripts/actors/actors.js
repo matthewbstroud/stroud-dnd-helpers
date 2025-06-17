@@ -434,7 +434,7 @@ function applyUsableFilter(actor, enabled) {
     let usableSpellIds = actor.items
         .filter(
             i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || i.system.preparation?.mode == "innate" ||
-                (i.system.properties.has("ritual") && actor._classes?.wizard))
+                (i.system.properties.has("ritual") && actor.classes?.wizard))
         ).map(i => `li[data-item-id='${i._id}']`)
         ?.join(", ") ?? "";
     $("section.spells-list li.item").attr("hidden", "hidden");
