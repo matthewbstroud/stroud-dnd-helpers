@@ -8,14 +8,21 @@
       "chat": "",
       "unidentified": ""
     },
-    "source": "",
+    "source": {
+      "custom": "",
+      "revision": 1,
+      "rules": "2014"
+    },
     "quantity": 1,
-    "weight": 0,
+    "weight": {
+      "value": 0,
+      "units": "lb"
+    },
     "price": {
       "value": 0,
       "denomination": "gp"
     },
-    "attunement": 0,
+    "attunement": "",
     "equipped": false,
     "rarity": "",
     "identified": true,
@@ -45,8 +52,9 @@
       "value": 3,
       "max": "3",
       "per": "charges",
-      "recovery": "",
-      "autoDestroy": true
+      "recovery": [],
+      "autoDestroy": true,
+      "spent": 0
     },
     "consume": {
       "type": "",
@@ -68,7 +76,25 @@
           "force"
         ]
       ],
-      "versatile": ""
+      "versatile": "",
+      "base": {
+        "number": null,
+        "denomination": null,
+        "bonus": "",
+        "types": [
+          "force"
+        ],
+        "custom": {
+          "enabled": true,
+          "formula": "2"
+        },
+        "scaling": {
+          "mode": "",
+          "number": null,
+          "formula": ""
+        }
+      },
+      "replace": false
     },
     "formula": "",
     "save": {
@@ -76,7 +102,136 @@
       "dc": null,
       "scaling": "spell"
     },
-    "consumableType": "trinket"
+    "consumableType": "trinket",
+    "unidentified": {
+      "description": ""
+    },
+    "type": {
+      "value": "trinket",
+      "subtype": ""
+    },
+    "activities": {
+      "dnd5eactivity000": {
+        "_id": "dnd5eactivity000",
+        "type": "utility",
+        "activation": {
+          "type": "action",
+          "value": 0,
+          "condition": "",
+          "override": false
+        },
+        "consumption": {
+          "targets": [
+            {
+              "type": "itemUses",
+              "target": "",
+              "value": "1",
+              "scaling": {
+                "mode": "",
+                "formula": ""
+              }
+            }
+          ],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "concentration": false,
+          "value": "",
+          "units": "",
+          "special": "",
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "value": "120",
+          "units": "ft",
+          "special": "",
+          "override": false
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          },
+          "prompt": true,
+          "override": false
+        },
+        "uses": {
+          "spent": 0,
+          "max": "",
+          "recovery": []
+        },
+        "roll": {
+          "formula": "",
+          "name": "",
+          "prompt": false,
+          "visible": false
+        },
+        "sort": 0,
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        },
+        "otherActivityId": "none"
+      }
+    },
+    "identifier": "magic-dart",
+    "container": null,
+    "attuned": false,
+    "magicalBonus": null,
+    "properties": []
   },
   "effects": [],
   "flags": {
@@ -108,14 +263,20 @@
     },
     "cf": {
       "id": "temp_ue1efz1iyo"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1682287844745,
-    "modifiedTime": 1730037697741,
+    "modifiedTime": 1750248830677,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Actor.5Bwlj2TH0De8MFIU.Item.9gDMpOhdJDbc6Aze",
     "duplicateSource": null

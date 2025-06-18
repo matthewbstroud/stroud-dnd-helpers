@@ -216,10 +216,9 @@
       }
     },
     "dnd5e": {
-      "persistSourceMigration": true,
-      "migratedUses": 1,
       "riders": {
-        "activity": []
+        "activity": [],
+        "effect": []
       }
     }
   },
@@ -230,8 +229,8 @@
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1747857756784,
-    "modifiedTime": 1747857756927,
-    "lastModifiedBy": "7fjRA2MFQ2AgH0lw"
+    "modifiedTime": 1750248835340,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "qNP8FN9Gkzs2ffV7",
   "sort": 200000,

@@ -9,12 +9,15 @@
       "chat": ""
     },
     "source": {
-      "custom": "Basic Rules, Player's Handbook pg 275"
+      "custom": "Basic Rules, Player's Handbook pg 275",
+      "revision": 1,
+      "rules": "2014"
     },
     "activation": {
       "type": "reaction",
       "cost": 1,
-      "condition": "which you take when you are hit by an attack or targeted by the magic missile spell"
+      "condition": "which you take when you are hit by an attack or targeted by the magic missile spell",
+      "value": 1
     },
     "duration": {
       "value": "1",
@@ -27,7 +30,16 @@
       "width": null,
       "units": null,
       "type": "self",
-      "prompt": true
+      "prompt": true,
+      "affects": {
+        "type": "self",
+        "count": "",
+        "choice": false
+      },
+      "template": {
+        "units": "ft",
+        "contiguous": false
+      }
     },
     "range": {
       "value": null,
@@ -38,8 +50,9 @@
       "value": null,
       "max": "",
       "per": null,
-      "recovery": "",
-      "prompt": true
+      "recovery": [],
+      "prompt": true,
+      "spent": 0
     },
     "consume": {
       "type": "charges",
@@ -90,7 +103,115 @@
       "somatic",
       "mgc"
     ],
-    "enchantment": null
+    "enchantment": null,
+    "activities": {
+      "dnd5eactivity000": {
+        "_id": "dnd5eactivity000",
+        "type": "utility",
+        "activation": {
+          "type": "action",
+          "value": null,
+          "override": false
+        },
+        "consumption": {
+          "targets": [
+            {
+              "type": "itemUses",
+              "target": "",
+              "value": "2",
+              "scaling": {
+                "mode": "",
+                "formula": ""
+              }
+            }
+          ],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "units": "inst",
+          "concentration": false,
+          "override": false
+        },
+        "effects": [
+          {
+            "_id": "wd1jwpvty11zn5l8"
+          }
+        ],
+        "range": {
+          "override": false
+        },
+        "target": {
+          "prompt": true,
+          "template": {
+            "contiguous": false,
+            "units": "ft"
+          },
+          "affects": {
+            "choice": false
+          },
+          "override": false
+        },
+        "uses": {
+          "spent": 0,
+          "max": "",
+          "recovery": []
+        },
+        "roll": {
+          "formula": "",
+          "name": "",
+          "prompt": false,
+          "visible": false
+        },
+        "sort": 0,
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        },
+        "otherActivityId": "none"
+      }
+    },
+    "identifier": "shield-staff-of-defense"
   },
   "effects": [
     {
@@ -303,7 +424,12 @@
       }
     },
     "core": {},
-    "dnd5e": {},
+    "dnd5e": {
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
+    },
     "dae": {
       "macro": {
         "name": "Shield (Staff of Defense)",
@@ -338,10 +464,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1685293919611,
-    "modifiedTime": 1730037697751,
+    "modifiedTime": 1750248835694,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

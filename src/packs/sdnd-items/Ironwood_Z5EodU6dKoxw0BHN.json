@@ -7,7 +7,9 @@
       "value": "",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
@@ -24,7 +26,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "ironwood"
   },
   "effects": [],
   "folder": "Tijz9vEssCm5H5q1",
@@ -36,14 +39,19 @@
     },
     "core": {
       "sourceId": "Item.SomdmOsaPUBGeiSU"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697745,
+    "modifiedTime": 1750248834476,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Item.SomdmOsaPUBGeiSU",
     "duplicateSource": null

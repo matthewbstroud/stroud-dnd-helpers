@@ -359,10 +359,6 @@
       "attachToken": "na"
     },
     "dnd5e": {
-      "persistSourceMigration": true,
-      "migratedProperties": [
-        "somatic"
-      ],
       "riders": {
         "activity": [],
         "effect": []
@@ -539,7 +535,9 @@
       }
     },
     "identifier": "absorb-elements",
-    "properties": [],
+    "properties": [
+      "somatic"
+    ],
     "sourceClass": "rogue"
   },
   "_stats": {
@@ -549,7 +547,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1748452803364,
-    "modifiedTime": 1748453251190,
+    "modifiedTime": 1750248835943,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": null,

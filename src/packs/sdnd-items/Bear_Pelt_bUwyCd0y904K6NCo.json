@@ -7,7 +7,9 @@
       "value": "",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
@@ -24,7 +26,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "bear-pelt"
   },
   "effects": [],
   "folder": "9NPKylRqyJaMXeLT",
@@ -34,14 +37,19 @@
       "coreVersion": "11.315",
       "systemVersion": "3.1.2"
     },
-    "core": {}
+    "core": {},
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697745,
+    "modifiedTime": 1750248834548,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

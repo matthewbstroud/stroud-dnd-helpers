@@ -8,20 +8,26 @@
       "value": "<p>This mist burns through the membranes of nasal passageways and through the soft tissue of the mouth. Created from the dried venom of giant wasps, this lingering poison is designed to kill quickly before its effects can be stopped.</p><hr style=\"box-sizing:content-box;-webkit-print-color-adjust:exact;height:0px;margin:0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(73, 39, 172);visibility:hidden;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-indent:0px;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\" /><ul style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;margin-top:0px;margin-bottom:0.5em;padding-left:1em;line-height:1.3em;list-style-position:outside;list-style-type:none;text-indent:-1em;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\"><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Mist Poison</strong>, Craft DC 12</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Component Cost:</strong> 500 gp</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Creatures:</strong> Wasp Venom</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Extract DC:</strong> 11           <strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Recipe DC:</strong> 13</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Poison DC:</strong> 13, Constitution saving throw</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Effect:</strong> This poison is sprayed out into a 5-foot cube and a creature subjected to this poison must succeed on a DC 13 Constitution saving throw, taking 3d6 poison damage on a failed save.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Aftereffect:</strong> If the target fails the initial saving throw, they must repeat the saving throw at the end of their turn. The target takes 1d6 poison damage on a failed save and must succeed on three successful saves before the poison ends. These successes do not need to be consecutive.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Duration:</strong> The target must make three successful saves.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Potency:</strong> The poison dissipates immediately.</span></li></ul>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "revision": 1,
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
     },
     "container": null,
     "quantity": 1,
-    "weight": 1,
+    "weight": {
+      "value": 1,
+      "units": "lb"
+    },
     "price": {
       "value": 750,
       "denomination": "gp"
     },
     "rarity": "veryRare",
-    "attunement": 0,
+    "attunement": "",
     "equipped": false,
     "activation": {
       "type": "action",
@@ -50,9 +56,10 @@
       "value": 1,
       "max": "1",
       "per": "charges",
-      "recovery": "",
+      "recovery": [],
       "prompt": true,
-      "autoDestroy": true
+      "autoDestroy": true,
+      "spent": 0
     },
     "consume": {
       "type": "",
@@ -78,7 +85,25 @@
           "poison"
         ]
       ],
-      "versatile": ""
+      "versatile": "",
+      "base": {
+        "number": 3,
+        "denomination": 6,
+        "bonus": "",
+        "types": [
+          "poison"
+        ],
+        "custom": {
+          "enabled": false,
+          "formula": ""
+        },
+        "scaling": {
+          "mode": "",
+          "number": null,
+          "formula": ""
+        }
+      },
+      "replace": false
     },
     "formula": "",
     "save": {
@@ -92,7 +117,141 @@
       "subtype": ""
     },
     "magicalBonus": null,
-    "properties": []
+    "properties": [],
+    "activities": {
+      "dnd5eactivity000": {
+        "_id": "dnd5eactivity000",
+        "type": "save",
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": "",
+          "override": false
+        },
+        "consumption": {
+          "targets": [
+            {
+              "type": "itemUses",
+              "target": "",
+              "value": "1",
+              "scaling": {
+                "mode": "",
+                "formula": ""
+              }
+            }
+          ],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "concentration": false,
+          "value": "",
+          "units": "inst",
+          "special": "",
+          "override": false
+        },
+        "effects": [
+          {
+            "_id": "CFBWDeh1tiuPZ3h8",
+            "onSave": false
+          }
+        ],
+        "range": {
+          "value": "5",
+          "units": "ft",
+          "special": "",
+          "override": false
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "cube",
+            "size": "5",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          },
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          },
+          "prompt": true,
+          "override": false
+        },
+        "uses": {
+          "spent": 0,
+          "max": "",
+          "recovery": []
+        },
+        "damage": {
+          "onSave": "half",
+          "parts": [],
+          "critical": {
+            "allow": false
+          }
+        },
+        "save": {
+          "ability": [
+            "con"
+          ],
+          "dc": {
+            "calculation": "",
+            "formula": "13"
+          }
+        },
+        "sort": 0,
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        },
+        "otherActivityId": ""
+      }
+    },
+    "identifier": "burnt-othur-fumes",
+    "attuned": false
   },
   "effects": [
     {
@@ -218,14 +377,20 @@
       "removeAttackDamageButtons": "default",
       "onUseMacroName": "[postSave]function.stroudDnD.crafting.poison.ItemMacros.BurntOthurFumes"
     },
-    "core": {}
+    "core": {},
+    "dnd5e": {
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
+    }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1726955672780,
-    "modifiedTime": 1730037697744,
+    "modifiedTime": 1750248834277,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

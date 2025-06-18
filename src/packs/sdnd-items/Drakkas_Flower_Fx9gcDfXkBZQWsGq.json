@@ -7,7 +7,9 @@
       "value": "<p><span style=\"font-family:Arial\">Changes poison damage to fire or acid damage; target is still [poisoned] for 1 minute on a failed CON saving throw; this toxin is still considered poison damage when combining with other ingredients.</span></p>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": "<p><span style=\"font-family:Arial\">Bright Red and Pale Green Flower</span></p>"
@@ -24,7 +26,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "drakkas-flower"
   },
   "effects": [],
   "folder": "gUZYCDktNDjtQr59",
@@ -34,14 +37,19 @@
       "coreVersion": "11.315",
       "systemVersion": "3.1.2"
     },
-    "core": {}
+    "core": {},
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697740,
+    "modifiedTime": 1750248830075,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

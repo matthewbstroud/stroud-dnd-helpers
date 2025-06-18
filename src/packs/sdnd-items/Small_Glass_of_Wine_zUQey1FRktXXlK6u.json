@@ -9,7 +9,9 @@
       "value": "<p>A small glass of red wine.</p>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
@@ -88,7 +90,8 @@
       "subtype": ""
     },
     "magicalBonus": null,
-    "properties": []
+    "properties": [],
+    "identifier": "small-glass-of-wine"
   },
   "effects": [],
   "sort": 0,
@@ -113,14 +116,19 @@
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": ""
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1721695480166,
-    "modifiedTime": 1730037697752,
+    "modifiedTime": 1750248835831,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

@@ -9,7 +9,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "identified": true,
     "unidentified": {
@@ -30,22 +31,29 @@
     "type": {
       "value": "",
       "subtype": ""
-    }
+    },
+    "identifier": "burnt-torch"
   },
   "effects": [],
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "flags": {},
+  "flags": {
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
+  },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "12.343",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.4.2",
     "createdTime": 1730063573084,
-    "modifiedTime": 1730064222056,
+    "modifiedTime": 1750248834787,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "fhyjXHSBJlxVcZPE",

@@ -8,7 +8,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "identified": true,
     "unidentified": {
@@ -26,7 +27,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "timmask"
   },
   "effects": [],
   "folder": "gUZYCDktNDjtQr59",
@@ -38,14 +40,19 @@
     },
     "core": {
       "sourceId": "Item.T7x63Mwb6rjBJMTy"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697746,
+    "modifiedTime": 1750248834618,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Item.T7x63Mwb6rjBJMTy",
     "duplicateSource": null

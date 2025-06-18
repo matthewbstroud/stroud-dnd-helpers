@@ -11,7 +11,9 @@
       "custom": "",
       "book": "SRD 5.1",
       "page": "",
-      "license": "CC-BY-4.0"
+      "license": "CC-BY-4.0",
+      "revision": 1,
+      "rules": "2024"
     },
     "quantity": 1,
     "weight": {
@@ -52,9 +54,10 @@
       "value": 1,
       "max": "1",
       "per": null,
-      "recovery": "",
+      "recovery": [],
       "autoDestroy": false,
-      "prompt": true
+      "prompt": true,
+      "spent": 0
     },
     "consume": {
       "type": "charges",
@@ -71,7 +74,19 @@
     },
     "damage": {
       "parts": [],
-      "versatile": ""
+      "versatile": "",
+      "base": {
+        "number": null,
+        "denomination": null,
+        "types": [],
+        "custom": {
+          "enabled": false
+        },
+        "scaling": {
+          "number": 1
+        }
+      },
+      "replace": false
     },
     "formula": "",
     "save": {
@@ -96,7 +111,9 @@
     "enchantment": null,
     "summons": null,
     "magicalBonus": null,
-    "attuned": false
+    "attuned": false,
+    "activities": {},
+    "identifier": ""
   },
   "effects": [],
   "folder": "eXKC0aUuYVn2fN62",
@@ -141,7 +158,8 @@
     },
     "dnd5e": {
       "riders": {
-        "activity": []
+        "activity": [],
+        "effect": []
       }
     }
   },
@@ -152,8 +170,8 @@
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1730245821261,
-    "modifiedTime": 1747857620496,
-    "lastModifiedBy": "7fjRA2MFQ2AgH0lw"
+    "modifiedTime": 1750248833935,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "NkvmfkKCS5AqAR8f",
   "sort": 300000,

@@ -9,7 +9,9 @@
       "value": "<p>A pitcher of red wine.  It is actually pretty darn good.</p>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
@@ -88,7 +90,8 @@
       "subtype": ""
     },
     "magicalBonus": null,
-    "properties": []
+    "properties": [],
+    "identifier": "pitcher-of-wine"
   },
   "effects": [],
   "sort": 0,
@@ -113,14 +116,19 @@
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": ""
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1721695596930,
-    "modifiedTime": 1730037697747,
+    "modifiedTime": 1750248834968,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

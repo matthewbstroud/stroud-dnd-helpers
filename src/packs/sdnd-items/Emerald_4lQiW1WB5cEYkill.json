@@ -10,7 +10,8 @@
       "book": "Player’s Handbook",
       "page": "",
       "license": "",
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "identified": true,
     "unidentified": {
@@ -28,7 +29,8 @@
     "type": {
       "value": "gem",
       "subtype": ""
-    }
+    },
+    "identifier": "emerald"
   },
   "flags": {
     "ddbimporter": {
@@ -69,7 +71,12 @@
     "midiProperties": {
       "confirmTargets": "default"
     },
-    "core": {}
+    "core": {},
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
   },
   "effects": [],
   "img": "icons/commodities/gems/gem-faceted-diamond-green.webp",
@@ -80,10 +87,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1721268424625,
-    "modifiedTime": 1730037697738,
+    "modifiedTime": 1750248824429,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

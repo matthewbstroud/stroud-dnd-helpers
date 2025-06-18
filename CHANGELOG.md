@@ -1,3 +1,8 @@
+# v12.4.5
+# New Features
+- Drop support of DnD5e version 3.x
+# Bug Fixes
+- Fix spell automations to work with DnD5e v4x.
 # v12.4.4
 # Bug Fixes
 - Filter spells by usable.

@@ -7,7 +7,9 @@
       "value": "<p><span style=\"font-family:Arial\">A barrelstalk is a large, cask-shaped fungus that can be tapped and drained of the fresh water stored within it. A single barrelstalk contains 1d4 + 4 gallons of water and yields 1d6 + 4 pounds of food.</span></p>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": "<p><span style=\"font-family:Arial\">A Large Cask-Shaped Fungus</span></p>",
@@ -25,7 +27,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "barrelstalk"
   },
   "effects": [],
   "folder": "gUZYCDktNDjtQr59",
@@ -37,14 +40,19 @@
     },
     "core": {
       "sourceId": "Item.T7x63Mwb6rjBJMTy"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697744,
+    "modifiedTime": 1750248834194,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Item.T7x63Mwb6rjBJMTy",
     "duplicateSource": null
