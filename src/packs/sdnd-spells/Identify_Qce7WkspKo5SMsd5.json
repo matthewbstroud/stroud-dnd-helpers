@@ -3,74 +3,48 @@
   "system": {
     "description": {
       "value": "<p>You choose one object that you must touch throughout the casting of the spell. If it is a magic item or some other magic-imbued object, you learn its properties and how to use them, whether it requires attunement to use, and how many charges it has, if any. You learn whether any spells are affecting the item and what they are. If the item was created by a spell, you learn which spell created it.</p>\n<p>If you instead touch a creature throughout the casting, you learn what spells, if any, are currently affecting it.</p>",
-      "chat": "",
-      "unidentified": ""
+      "chat": ""
     },
     "source": {
-      "custom": "Basic Rules, Player's Handbook pg 252"
+      "custom": "Basic Rules, Player's Handbook pg 252",
+      "revision": 1,
+      "rules": "2014",
+      "book": "",
+      "page": "",
+      "license": ""
     },
     "activation": {
       "type": "minute",
-      "cost": 1,
-      "condition": ""
+      "condition": "",
+      "value": 1
     },
     "duration": {
       "value": "",
       "units": "inst"
     },
-    "cover": null,
     "target": {
-      "value": "",
-      "width": null,
-      "units": "",
-      "type": "",
-      "prompt": true
+      "affects": {
+        "type": "",
+        "choice": false
+      },
+      "template": {
+        "units": "",
+        "contiguous": false,
+        "type": ""
+      }
     },
     "range": {
-      "value": null,
-      "long": null,
-      "units": "touch"
+      "units": "touch",
+      "special": ""
     },
     "uses": {
-      "value": null,
       "max": "",
-      "per": null,
-      "recovery": "",
-      "prompt": true
-    },
-    "consume": {
-      "type": "",
-      "target": "",
-      "amount": null,
-      "scale": false
+      "spent": 0,
+      "recovery": []
     },
     "ability": "",
-    "actionType": "other",
-    "attackBonus": "",
-    "chatFlavor": "",
-    "critical": {
-      "threshold": null,
-      "damage": ""
-    },
-    "damage": {
-      "parts": [],
-      "versatile": ""
-    },
-    "formula": "",
-    "save": {
-      "ability": "",
-      "dc": null,
-      "scaling": "spell"
-    },
     "level": 1,
     "school": "div",
-    "components": {
-      "vocal": true,
-      "somatic": true,
-      "material": true,
-      "ritual": true,
-      "concentration": false
-    },
     "materials": {
       "value": "a pearl worth at least 100 gp and an owl feather",
       "consumed": false,
@@ -81,23 +55,102 @@
       "mode": "prepared",
       "prepared": false
     },
-    "scaling": {
-      "mode": "none",
-      "formula": ""
-    },
-    "attack": {
-      "bonus": "",
-      "flat": false
-    },
-    "crewed": false,
-    "summons": null,
     "properties": [
       "vocal",
       "somatic",
       "material",
       "ritual"
     ],
-    "enchantment": null
+    "activities": {
+      "jRr2mav1yvgZnir0": {
+        "type": "damage",
+        "_id": "jRr2mav1yvgZnir0",
+        "sort": 0,
+        "activation": {
+          "type": "action",
+          "value": null,
+          "override": false
+        },
+        "consumption": {
+          "scaling": {
+            "allowed": false
+          },
+          "spellSlot": true,
+          "targets": []
+        },
+        "description": {},
+        "duration": {
+          "units": "inst",
+          "concentration": false,
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "override": false
+        },
+        "target": {
+          "template": {
+            "contiguous": false,
+            "units": "ft"
+          },
+          "affects": {
+            "choice": false
+          },
+          "override": false,
+          "prompt": true
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "damage": {
+          "critical": {
+            "allow": false
+          },
+          "parts": []
+        },
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        }
+      }
+    },
+    "identifier": "identify",
+    "sourceClass": "wizard"
   },
   "name": "Identify",
   "flags": {
@@ -213,7 +266,8 @@
     },
     "dnd5e": {
       "riders": {
-        "activity": []
+        "activity": [],
+        "effect": []
       }
     },
     "dae": {
@@ -249,22 +303,22 @@
   },
   "effects": [],
   "img": "icons/tools/scribal/magnifying-glass.webp",
+  "_stats": {
+    "compendiumSource": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x",
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1750250696421,
+    "modifiedTime": 1750253263736,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "folder": null,
+  "_id": "Qce7WkspKo5SMsd5",
+  "sort": 131250,
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_stats": {
-    "systemId": "dnd5e",
-    "systemVersion": "4.4.2",
-    "coreVersion": "12.331",
-    "createdTime": 1682374019324,
-    "modifiedTime": 1747928118403,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
-    "compendiumSource": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x",
-    "duplicateSource": null
-  },
-  "folder": null,
-  "sort": 300000,
-  "_id": "ehOh02goFpjnUcgc",
-  "_key": "!items!ehOh02goFpjnUcgc"
+  "_key": "!items!Qce7WkspKo5SMsd5"
 }

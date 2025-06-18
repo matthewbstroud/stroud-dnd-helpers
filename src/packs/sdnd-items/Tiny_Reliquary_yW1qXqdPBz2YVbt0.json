@@ -7,7 +7,9 @@
       "value": "",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
@@ -24,7 +26,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "tiny-reliquary"
   },
   "effects": [],
   "folder": "Q3YTTfWXtsqu9jr9",
@@ -36,14 +39,19 @@
     },
     "core": {
       "sourceId": "Item.yW1qXqdPBz2YVbt0"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697751,
+    "modifiedTime": 1750248835761,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Item.yW1qXqdPBz2YVbt0",
     "duplicateSource": null

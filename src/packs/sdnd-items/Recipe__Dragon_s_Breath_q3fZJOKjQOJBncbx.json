@@ -8,20 +8,26 @@
       "value": "<p><span style=\"font-family:BookSanity\">By slowly harvesting the poison glands of a green dragon, you can bottle the potent poisonous gas and release it, either by breaking the bottle or opening the lid. The thick gas immediately fills up a 10' square area before dissipating away.</span></p><hr style=\"box-sizing:content-box;-webkit-print-color-adjust:exact;height:0px;margin:0px;border-width:1px 0px 0px;border-right-style:initial;border-bottom-style:initial;border-left-style:initial;border-right-color:initial;border-bottom-color:initial;border-left-color:initial;border-image:initial;border-top-style:solid;border-top-color:rgb(73, 39, 172);visibility:hidden;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-indent:0px;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\" /><ul style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;margin-top:0px;margin-bottom:0.5em;padding-left:1em;line-height:1.3em;list-style-position:outside;list-style-type:none;text-indent:-1em;color:rgb(0, 0, 0);font-family:BookSanity;font-size:11.9811px;font-style:normal;font-variant-ligatures:normal;font-variant-caps:normal;font-weight:400;letter-spacing:normal;orphans:2;text-align:start;text-transform:none;widows:2;word-spacing:0px;-webkit-text-stroke-width:0px;white-space:normal;background-color:rgb(238, 229, 206);text-decoration-thickness:initial;text-decoration-style:initial;text-decoration-color:initial\"><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Mist Poison</strong>, Craft DC 14</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Component Cost:</strong> 1600 gp</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Ingredients:</strong> Green Dragon Venom (Young or Greater) </span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Extract DC:</strong> 14           <strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Recipe DC:</strong> 16</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Poison DC:</strong> 14, Constitution saving throw</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Effect:</strong> This poison, when released, immediately fills up a 10-foot square area centered on its container before dissipating. A creature subjected to this poison must succeed on a DC 14 Constitution saving throw, taking 12d6 poison damage on a fail, or half as much damage on a successful one.</span></li><li style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;break-inside:avoid\"><span style=\"font-family:BookSanity\"><strong style=\"box-sizing:border-box;-webkit-print-color-adjust:exact;font-weight:bold;letter-spacing:0.03em\">Potency:</strong> The poison dissipates immediately.</span></li></ul>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "revision": 1,
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
     },
     "container": null,
     "quantity": 1,
-    "weight": 0,
+    "weight": {
+      "value": 0,
+      "units": "lb"
+    },
     "price": {
       "value": 2000,
       "denomination": "gp"
     },
     "rarity": "",
-    "attunement": 0,
+    "attunement": "",
     "equipped": false,
     "activation": {
       "type": "action",
@@ -50,9 +56,10 @@
       "value": 1,
       "max": "1",
       "per": "charges",
-      "recovery": "",
+      "recovery": [],
       "prompt": true,
-      "autoDestroy": true
+      "autoDestroy": true,
+      "spent": 0
     },
     "consume": {
       "type": "",
@@ -73,7 +80,19 @@
     },
     "damage": {
       "parts": [],
-      "versatile": ""
+      "versatile": "",
+      "base": {
+        "number": null,
+        "denomination": null,
+        "types": [],
+        "custom": {
+          "enabled": false
+        },
+        "scaling": {
+          "number": 1
+        }
+      },
+      "replace": false
     },
     "formula": "",
     "save": {
@@ -87,7 +106,125 @@
       "subtype": ""
     },
     "magicalBonus": null,
-    "properties": []
+    "properties": [],
+    "activities": {
+      "dnd5eactivity000": {
+        "_id": "dnd5eactivity000",
+        "type": "utility",
+        "activation": {
+          "type": "action",
+          "value": null,
+          "condition": "",
+          "override": false
+        },
+        "consumption": {
+          "targets": [
+            {
+              "type": "itemUses",
+              "target": "",
+              "value": "1",
+              "scaling": {
+                "mode": "",
+                "formula": ""
+              }
+            }
+          ],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "concentration": false,
+          "value": "",
+          "units": "",
+          "special": "",
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "units": "",
+          "special": "",
+          "override": false
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          },
+          "prompt": true,
+          "override": false
+        },
+        "uses": {
+          "spent": 0,
+          "max": "",
+          "recovery": []
+        },
+        "roll": {
+          "formula": "",
+          "name": "",
+          "prompt": false,
+          "visible": false
+        },
+        "sort": 0,
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        },
+        "otherActivityId": "none"
+      }
+    },
+    "identifier": "recipe-dragons-breath",
+    "attuned": false
   },
   "effects": [],
   "ownership": {
@@ -118,14 +255,20 @@
         "name": "Dragon's Breath"
       }
     },
-    "core": {}
+    "core": {},
+    "dnd5e": {
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
+    }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1726492890493,
-    "modifiedTime": 1730037697749,
+    "modifiedTime": 1750248835286,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

@@ -210,6 +210,12 @@
     },
     "cf": {
       "id": "temp_xnfiofapc8"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
     }
   },
   "system": {
@@ -218,14 +224,21 @@
       "chat": "",
       "unidentified": "Mace"
     },
-    "source": "Lost Mine of Phandelver",
+    "source": {
+      "custom": "Lost Mine of Phandelver",
+      "revision": 1,
+      "rules": "2014"
+    },
     "quantity": 1,
-    "weight": 4,
+    "weight": {
+      "value": 4,
+      "units": "lb"
+    },
     "price": {
       "value": 1000,
       "denomination": "gp"
     },
-    "attunement": 0,
+    "attunement": "",
     "equipped": false,
     "rarity": "uncommon",
     "identified": true,
@@ -247,15 +260,17 @@
       "type": ""
     },
     "range": {
-      "value": 5,
+      "value": null,
       "long": null,
-      "units": "ft"
+      "units": "ft",
+      "reach": null
     },
     "uses": {
       "value": 0,
       "max": "",
       "per": "",
-      "recovery": ""
+      "recovery": [],
+      "spent": 0
     },
     "consume": {
       "type": "",
@@ -277,7 +292,38 @@
           "bludgeoning"
         ]
       ],
-      "versatile": ""
+      "versatile": {
+        "number": null,
+        "denomination": null,
+        "bonus": "",
+        "types": [],
+        "custom": {
+          "enabled": false,
+          "formula": ""
+        },
+        "scaling": {
+          "mode": "",
+          "number": null,
+          "formula": ""
+        }
+      },
+      "base": {
+        "number": null,
+        "denomination": null,
+        "bonus": "",
+        "types": [
+          "bludgeoning"
+        ],
+        "custom": {
+          "enabled": true,
+          "formula": "1d8[bludgeoning] + @mod + 1"
+        },
+        "scaling": {
+          "mode": "",
+          "number": null,
+          "formula": ""
+        }
+      }
     },
     "formula": "",
     "save": {
@@ -296,26 +342,144 @@
     },
     "weaponType": "martialM",
     "baseItem": "warhammer",
-    "properties": {
-      "amm": false,
-      "fir": false,
-      "fin": false,
-      "hvy": false,
-      "lgt": false,
-      "lod": false,
-      "rch": false,
-      "rel": false,
-      "spc": false,
-      "thr": false,
-      "two": false,
-      "ver": false,
-      "ret": false,
-      "foc": false,
-      "ada": false,
-      "mgc": true,
-      "sil": false
+    "properties": [
+      "mgc"
+    ],
+    "proficient": 1,
+    "unidentified": {
+      "description": "Mace"
     },
-    "proficient": true
+    "type": {
+      "value": "martialM",
+      "baseItem": "warhammer"
+    },
+    "activities": {
+      "dnd5eactivity000": {
+        "_id": "dnd5eactivity000",
+        "type": "attack",
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": "",
+          "override": false
+        },
+        "consumption": {
+          "targets": [],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "concentration": false,
+          "value": "",
+          "units": "",
+          "special": "",
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "units": "ft",
+          "special": "",
+          "override": false
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "",
+            "size": "",
+            "width": "",
+            "height": "",
+            "units": ""
+          },
+          "affects": {
+            "count": "",
+            "type": "",
+            "choice": false,
+            "special": ""
+          },
+          "prompt": true,
+          "override": false
+        },
+        "uses": {
+          "spent": 0,
+          "max": "",
+          "recovery": []
+        },
+        "attack": {
+          "ability": "",
+          "bonus": "",
+          "critical": {
+            "threshold": null
+          },
+          "flat": false,
+          "type": {
+            "value": "melee",
+            "classification": "weapon"
+          }
+        },
+        "damage": {
+          "critical": {
+            "bonus": ""
+          },
+          "includeBase": true,
+          "parts": []
+        },
+        "sort": 0,
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        },
+        "otherActivityId": "",
+        "attackMode": "oneHanded",
+        "ammunition": "",
+        "otherActivityUuid": ""
+      }
+    },
+    "identifier": "lightbringer",
+    "container": null,
+    "attuned": false,
+    "ammunition": {},
+    "magicalBonus": null
   },
   "ownership": {
     "default": 0,
@@ -323,10 +487,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1684674601716,
-    "modifiedTime": 1730037697749,
+    "modifiedTime": 1750248835444,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Compendium.world.ddb-lost-mines-phandelver-items.XgOuxM0uNukfa3rC",
     "duplicateSource": null

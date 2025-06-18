@@ -9,7 +9,8 @@
       "chat": ""
     },
     "source": {
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "identified": true,
     "unidentified": {
@@ -42,7 +43,8 @@
     "capacity": {
       "type": "weight",
       "value": 2700
-    }
+    },
+    "identifier": "wagon"
   },
   "effects": [],
   "ownership": {
@@ -52,16 +54,21 @@
   "flags": {
     "stroud-dnd-helpers": {
       "IsHitchable": true
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "12.343",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.4.2",
     "createdTime": 1730652175716,
-    "modifiedTime": 1730652175716,
+    "modifiedTime": 1750248831420,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "Jv7TVaO6iGwHyuvt",

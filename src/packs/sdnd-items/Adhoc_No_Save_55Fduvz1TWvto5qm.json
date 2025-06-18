@@ -1,69 +1,16 @@
 {
-  "name": "Portent Die",
-  "type": "consumable",
-  "img": "icons/sundries/gaming/dice-runed-tan.webp",
+  "folder": "esDwRtmzzi3srcn2",
+  "name": "Adhoc No Save",
+  "type": "equipment",
+  "img": "systems/dnd5e/icons/svg/items/equipment.svg",
   "system": {
-    "description": {
-      "value": "<p>A magical die that can change the destiny of the possessor.</p>",
-      "chat": ""
-    },
-    "source": {
-      "custom": "",
-      "revision": 1,
-      "rules": "2024"
-    },
-    "quantity": 1,
-    "weight": {
-      "value": 0,
-      "units": "lb"
-    },
-    "price": {
-      "value": 0,
-      "denomination": "gp"
-    },
-    "attunement": "",
-    "rarity": "",
-    "identified": true,
-    "uses": {
-      "max": "1",
-      "autoDestroy": true,
-      "spent": 0,
-      "recovery": []
-    },
-    "damage": {
-      "base": {
-        "number": null,
-        "denomination": null,
-        "bonus": "",
-        "types": [
-          "midi-none"
-        ],
-        "custom": {
-          "enabled": false,
-          "formula": ""
-        },
-        "scaling": {
-          "mode": "",
-          "number": null,
-          "formula": ""
-        }
-      },
-      "replace": false
-    },
-    "unidentified": {
-      "description": ""
-    },
-    "type": {
-      "value": "trinket",
-      "subtype": ""
-    },
     "activities": {
-      "ZfthbHqdam1pmtIE": {
+      "4wa2LVFawU9Xwjpx": {
         "type": "damage",
-        "_id": "ZfthbHqdam1pmtIE",
+        "_id": "4wa2LVFawU9Xwjpx",
         "sort": 0,
         "activation": {
-          "type": "reaction",
+          "type": "special",
           "value": null,
           "override": false,
           "condition": ""
@@ -73,23 +20,10 @@
             "allowed": false
           },
           "spellSlot": true,
-          "targets": [
-            {
-              "type": "itemUses",
-              "value": "1",
-              "target": "aA9SN1VP3fWYW7fC",
-              "scaling": {}
-            },
-            {
-              "type": "itemUses",
-              "value": "1",
-              "target": "",
-              "scaling": {}
-            }
-          ]
+          "targets": []
         },
         "description": {
-          "chatFlavor": "The die flashes N and disappears..."
+          "chatFlavor": ""
         },
         "duration": {
           "units": "inst",
@@ -113,12 +47,12 @@
             "type": ""
           },
           "override": false,
-          "prompt": false
+          "prompt": true
         },
         "uses": {
           "spent": 0,
           "recovery": [],
-          "max": "1"
+          "max": ""
         },
         "damage": {
           "critical": {
@@ -132,10 +66,8 @@
               },
               "number": null,
               "denomination": 0,
-              "bonus": "15",
-              "types": [
-                "midi-none"
-              ],
+              "bonus": "",
+              "types": [],
               "scaling": {
                 "number": 1
               }
@@ -167,12 +99,12 @@
           "autoTargetAction": "default",
           "automationOnly": false,
           "otherActivityCompatible": true,
-          "identifier": "Portent Die",
+          "identifier": "",
           "displayActivityName": false,
           "rollMode": "default",
           "chooseEffects": false,
           "toggleEffect": false,
-          "ignoreFullCover": false
+          "ignoreFullCover": true
         },
         "isOverTimeFlag": false,
         "overTimeProperties": {
@@ -180,21 +112,59 @@
           "preRemoveConditionText": "",
           "postRemoveConditionText": ""
         },
-        "name": ""
+        "name": "Adhoc No Save"
       }
     },
-    "identifier": "portent-die",
+    "uses": {
+      "spent": 0,
+      "recovery": [],
+      "max": ""
+    },
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "identifier": "new-item",
+    "source": {
+      "revision": 1,
+      "rules": "2024"
+    },
+    "identified": true,
+    "unidentified": {
+      "description": ""
+    },
     "container": null,
-    "magicalBonus": null,
-    "properties": [],
+    "quantity": 1,
+    "weight": {
+      "value": 0,
+      "units": "lb"
+    },
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attunement": "",
     "attuned": false,
-    "equipped": false
+    "equipped": false,
+    "cover": null,
+    "crewed": false,
+    "armor": {
+      "value": null,
+      "magicalBonus": null,
+      "dex": null
+    },
+    "proficient": 1,
+    "properties": [],
+    "strength": null,
+    "type": {
+      "value": "wand",
+      "baseItem": ""
+    }
   },
   "effects": [],
   "flags": {
     "midi-qol": {
-      "effectActivation": false,
-      "onUseMacroName": "",
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
       "itemCondition": "",
@@ -203,62 +173,36 @@
       "effectCondition": ""
     },
     "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
       "autoFailFriendly": false,
       "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
       "magicdam": false,
       "magiceffect": false,
-      "concentration": false,
+      "noConcentrationCheck": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "noConcentrationCheck": false
-    },
-    "ddbimporter": {
-      "ignoreIcon": true,
-      "ignoreItemImport": true,
-      "retainResourceConsumption": false
-    },
-    "core": {
-      "sourceId": "Actor.6PgHCGOkartHJJ3U.Item.PCL3jCd4DrrkCEvz"
-    },
-    "cf": {
-      "id": "temp_ue1efz1iyo"
+      "ignoreTotalCover": false
     },
     "dnd5e": {
       "riders": {
         "activity": [],
         "effect": []
-      },
-      "last": {
-        "ZfthbHqdam1pmtIE": {
-          "damageType": {
-            "0": "none"
-          }
-        }
       }
     }
   },
   "_stats": {
-    "compendiumSource": "Actor.6PgHCGOkartHJJ3U.Item.PCL3jCd4DrrkCEvz",
+    "compendiumSource": null,
     "duplicateSource": null,
     "coreVersion": "12.343",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "createdTime": 1747838283605,
-    "modifiedTime": 1750248835386,
+    "createdTime": 1748439980687,
+    "modifiedTime": 1748439980730,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
-  "folder": "cwfO7DCwPmnA7K6r",
-  "_id": "qPDUimUxP92ffmWv",
+  "_id": "55Fduvz1TWvto5qm",
   "sort": 100000,
   "ownership": {
     "default": 0,
-    "7fjRA2MFQ2AgH0lw": 3
+    "6yhz13iFYYklKtgA": 3
   },
-  "_key": "!items!qPDUimUxP92ffmWv"
+  "_key": "!items!55Fduvz1TWvto5qm"
 }

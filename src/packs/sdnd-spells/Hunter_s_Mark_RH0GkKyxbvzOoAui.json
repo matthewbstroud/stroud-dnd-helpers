@@ -7,12 +7,18 @@
       "unidentified": ""
     },
     "source": {
-      "custom": "Basic Rules, Player's Handbook pg 251"
+      "custom": "Basic Rules, Player's Handbook pg 251",
+      "revision": 1,
+      "rules": "2014",
+      "book": "",
+      "page": "",
+      "license": ""
     },
     "activation": {
       "type": "bonus",
       "cost": 1,
-      "condition": ""
+      "condition": "",
+      "value": 1
     },
     "duration": {
       "value": "1",
@@ -26,14 +32,19 @@
       "type": "creature",
       "prompt": true,
       "affects": {
-        "special": ""
+        "special": "",
+        "type": "creature",
+        "count": "1",
+        "choice": false
       },
       "template": {
-        "type": ""
+        "type": "",
+        "units": "",
+        "contiguous": false
       }
     },
     "range": {
-      "value": 90,
+      "value": "90",
       "long": null,
       "units": "ft",
       "special": ""
@@ -42,8 +53,9 @@
       "value": null,
       "max": "",
       "per": null,
-      "recovery": "",
-      "prompt": true
+      "recovery": [],
+      "prompt": true,
+      "spent": 0
     },
     "consume": {
       "type": "",
@@ -102,7 +114,96 @@
       "vocal",
       "concentration"
     ],
-    "enchantment": null
+    "enchantment": null,
+    "activities": {
+      "NZ68pn2gqJyXCgcw": {
+        "type": "damage",
+        "_id": "NZ68pn2gqJyXCgcw",
+        "sort": 0,
+        "activation": {
+          "type": "action",
+          "value": null,
+          "override": false
+        },
+        "consumption": {
+          "scaling": {
+            "allowed": false
+          },
+          "spellSlot": true,
+          "targets": []
+        },
+        "description": {},
+        "duration": {
+          "units": "inst",
+          "concentration": false,
+          "override": false
+        },
+        "effects": [],
+        "range": {
+          "override": false
+        },
+        "target": {
+          "template": {
+            "contiguous": false,
+            "units": "ft"
+          },
+          "affects": {
+            "choice": false
+          },
+          "override": false,
+          "prompt": true
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": []
+        },
+        "damage": {
+          "critical": {
+            "allow": false
+          },
+          "parts": []
+        },
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        }
+      }
+    },
+    "identifier": ""
   },
   "name": "Hunter's Mark",
   "flags": {
@@ -236,7 +337,8 @@
     },
     "dnd5e": {
       "riders": {
-        "activity": []
+        "activity": [],
+        "effect": []
       }
     },
     "dae": {
@@ -275,7 +377,7 @@
     },
     "chris-premades": {
       "info": {
-        "source": "stroud-dnd-helpers.SDND-Features"
+        "source": "stroud-dnd-helpers.SDND-Spells"
       }
     }
   },
@@ -368,7 +470,7 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1683225374129,
-    "modifiedTime": 1748482927683,
+    "modifiedTime": 1750252965359,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Actor.jsFnmyL717S10ISa.Item.UVdRV3e0q27MizHs",
     "duplicateSource": null

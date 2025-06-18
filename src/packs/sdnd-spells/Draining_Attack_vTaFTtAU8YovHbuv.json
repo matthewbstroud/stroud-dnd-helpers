@@ -18,7 +18,7 @@
     },
     "duration": {
       "value": "",
-      "units": ""
+      "units": "inst"
     },
     "cover": null,
     "crewed": false,
@@ -27,12 +27,19 @@
       "width": null,
       "units": "",
       "type": "",
-      "prompt": true
+      "prompt": true,
+      "affects": {
+        "type": ""
+      },
+      "template": {
+        "type": ""
+      }
     },
     "range": {
       "value": null,
       "long": null,
-      "units": ""
+      "units": "self",
+      "special": ""
     },
     "uses": {
       "value": null,
@@ -194,20 +201,28 @@
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "effectCondition": "",
-      "onUseMacroName": "[postActiveEffects]stroudDnd.spells.DrainingAttack.itemMacro"
+      "onUseMacroName": "[postActiveEffects]stroudDnd.spells.DrainingAttack.itemMacro",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.331",
+    "coreVersion": "12.343",
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
+    "systemVersion": "4.4.2",
     "createdTime": 1747928118368,
-    "modifiedTime": 1747928118403,
+    "modifiedTime": 1748482926328,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "vTaFTtAU8YovHbuv",
-  "sort": 200000,
+  "sort": 600000,
   "_key": "!items!vTaFTtAU8YovHbuv"
 }

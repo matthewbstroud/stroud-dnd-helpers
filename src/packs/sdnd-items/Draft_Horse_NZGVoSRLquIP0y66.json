@@ -10,7 +10,8 @@
       "book": "Player’s Handbook",
       "page": "",
       "license": "",
-      "custom": ""
+      "custom": "",
+      "rules": "2014"
     },
     "identified": true,
     "unidentified": {
@@ -43,7 +44,8 @@
       "type": "weight",
       "value": 540
     },
-    "attuned": false
+    "attuned": false,
+    "identifier": "draft-horse"
   },
   "flags": {
     "ddbimporter": {
@@ -114,6 +116,11 @@
           "damage": 0,
           "pct": 100
         }
+      }
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
       }
     }
   },
@@ -214,10 +221,10 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1721268423483,
-    "modifiedTime": 1730037697742,
+    "modifiedTime": 1750248833914,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

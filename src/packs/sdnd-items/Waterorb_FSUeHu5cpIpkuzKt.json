@@ -7,7 +7,9 @@
       "value": "<p><span style=\"font-family:Arial\">A waterorb is a bulbous fungus that grows in shallow water. A mature waterorb can be squeezed like a sponge, yielding a gallon of drinkable water and two pounds of edible (if chewy and somewhat tasteless) food.</span></p>",
       "chat": ""
     },
-    "source": {},
+    "source": {
+      "rules": "2014"
+    },
     "identified": true,
     "unidentified": {
       "description": ""
@@ -24,7 +26,8 @@
     "type": {
       "value": "resource",
       "subtype": ""
-    }
+    },
+    "identifier": "waterorb"
   },
   "effects": [],
   "folder": "gUZYCDktNDjtQr59",
@@ -36,14 +39,19 @@
     },
     "core": {
       "sourceId": "Item.T7x63Mwb6rjBJMTy"
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
     }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1723338340157,
-    "modifiedTime": 1730037697740,
+    "modifiedTime": 1750248829505,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Item.T7x63Mwb6rjBJMTy",
     "duplicateSource": null

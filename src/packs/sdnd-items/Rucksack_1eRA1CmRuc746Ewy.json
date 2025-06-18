@@ -11,7 +11,8 @@
       "custom": "",
       "book": "SRD 5.1",
       "page": "",
-      "license": "CC-BY-4.0"
+      "license": "CC-BY-4.0",
+      "rules": "2014"
     },
     "quantity": 1,
     "weight": 5,
@@ -38,7 +39,8 @@
       "description": ""
     },
     "container": null,
-    "properties": []
+    "properties": [],
+    "identifier": "rucksack"
   },
   "effects": [],
   "folder": "XsJe5bQIATIIrYv5",
@@ -47,14 +49,19 @@
     "6yhz13iFYYklKtgA": 3
   },
   "flags": {
-    "core": {}
+    "core": {},
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
+    "systemVersion": "4.4.2",
+    "coreVersion": "12.343",
     "createdTime": 1661787233559,
-    "modifiedTime": 1730037697737,
+    "modifiedTime": 1750248821133,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

@@ -1,89 +1,94 @@
 {
-  "name": "Dagger of Venom",
+  "name": "Vampire Bite (Spawn)",
   "type": "weapon",
-  "img": "modules/stroud-dnd-helpers/images/items/dagger_of_venom.webp",
+  "flags": {
+    "ddbimporter": {
+      "dndbeyond": {}
+    },
+    "monsterMunch": {
+      "titleHTML": "<strong>Bite.</strong>",
+      "fullName": "Bite."
+    },
+    "midi-qol": {
+      "fumbleThreshold": null,
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "effectCondition": "",
+      "onUseMacroName": "[postCleanup]function.stroudDnD.spells.DrainingAttack.itemMacro,[preActiveEffects]function.stroudDnD.spells.DrainingAttack.itemMacro",
+      "reactionCondition": "",
+      "otherCondition": ""
+    },
+    "midiProperties": {
+      "confirmTargets": "default",
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
+    },
+    "stroud-dnd-helpers": {
+      "drainingAttack": {
+        "damageType": "necrotic"
+      }
+    },
+    "dnd5e": {
+      "persistSourceMigration": true,
+      "riders": {
+        "activity": []
+      }
+    }
+  },
+  "img": "icons/creatures/abilities/mouth-teeth-long-red.webp",
+  "effects": [],
+  "folder": null,
   "system": {
     "description": {
-      "value": "<p>You gain a +1 bonus to attack and damage rolls made with this magic weapon.</p>\n<p>You can use an action to cause thick, black poison to coat the blade. The poison remains for 1 minute or until an attack using this weapon hits a creature. That creature must succeed on a DC 15 Constitution saving throw or take 2d10 poison damage and become poisoned for 1 minute. The dagger can't be used this way again until the next dawn.</p>",
+      "value": "<p><em><strong></strong> Melee Weapon Attack:</em> +6 to hit, reach 5 ft., one willing creature, or a creature that is grappled by the vampire, incapacitated, or restrained. <em>Hit:</em> 6 (1d6 + 3) piercing damage plus 7 (2d6) necrotic damage. The target's hit point maximum is reduced by an amount equal to the necrotic damage taken, and the vampire regains hit points equal to that amount. The reduction lasts until the target finishes a long rest. The target dies if this effect reduces its hit point maximum to 0.</p>",
       "chat": ""
     },
     "source": {
-      "custom": "",
-      "book": "SRD 5.1",
-      "page": "",
-      "license": "CC-BY-4.0",
+      "custom": "Basic Rules pg 354",
       "revision": 1,
-      "rules": "2014"
+      "rules": "2014",
+      "book": "",
+      "page": "",
+      "license": ""
     },
     "quantity": 1,
     "weight": {
-      "value": 1,
+      "value": 0,
       "units": "lb"
     },
     "price": {
-      "value": 2500,
+      "value": 0,
       "denomination": "gp"
     },
     "attunement": "",
-    "equipped": false,
-    "rarity": "rare",
+    "rarity": "",
     "identified": true,
-    "activation": {
-      "type": "action",
-      "cost": 1,
-      "condition": ""
-    },
-    "duration": {
-      "value": "",
-      "units": ""
-    },
     "cover": null,
-    "target": {
-      "value": "",
-      "width": null,
-      "units": "",
-      "type": "",
-      "prompt": true
-    },
+    "crewed": false,
     "range": {
-      "value": 20,
-      "long": 60,
+      "value": 5,
+      "long": null,
       "units": "ft",
       "reach": null
     },
     "uses": {
-      "value": 1,
-      "max": "1",
-      "per": "day",
-      "recovery": [
-        {
-          "period": "day",
-          "type": "recoverAll"
-        }
-      ],
-      "prompt": false,
-      "spent": 0
-    },
-    "consume": {
-      "type": "",
-      "target": null,
-      "amount": null,
-      "scale": false
-    },
-    "ability": "",
-    "actionType": "mwak",
-    "chatFlavor": "",
-    "critical": {
-      "threshold": null,
-      "damage": ""
+      "max": "",
+      "spent": 0,
+      "recovery": []
     },
     "damage": {
-      "parts": [
-        [
-          "1d4 + @mod",
-          "piercing"
-        ]
-      ],
       "versatile": {
         "number": null,
         "denomination": null,
@@ -100,15 +105,15 @@
         }
       },
       "base": {
-        "number": 1,
-        "denomination": 4,
+        "number": null,
+        "denomination": null,
         "bonus": "",
         "types": [
           "piercing"
         ],
         "custom": {
-          "enabled": false,
-          "formula": ""
+          "enabled": true,
+          "formula": "1d6[piercing] + @mod"
         },
         "scaling": {
           "mode": "",
@@ -116,12 +121,6 @@
           "formula": ""
         }
       }
-    },
-    "formula": "",
-    "save": {
-      "ability": "",
-      "dc": null,
-      "scaling": "flat"
     },
     "armor": {
       "value": 10
@@ -133,51 +132,30 @@
       "conditions": ""
     },
     "properties": [
-      "fin",
-      "lgt",
-      "mgc",
-      "thr"
+      "rch"
     ],
-    "proficient": null,
-    "type": {
-      "value": "simpleM",
-      "baseItem": "dagger"
-    },
     "unidentified": {
       "description": ""
     },
-    "container": null,
-    "crewed": false,
-    "magicalBonus": 1,
-    "attack": {
-      "bonus": "",
-      "flat": false
+    "type": {
+      "value": "natural",
+      "baseItem": ""
     },
-    "summons": null,
-    "enchantment": null,
-    "attuned": false,
+    "container": null,
+    "magicalBonus": null,
+    "proficient": null,
     "activities": {
       "dnd5eactivity000": {
         "_id": "dnd5eactivity000",
         "type": "attack",
         "activation": {
-          "type": "action",
+          "type": "special",
           "value": 1,
           "condition": "",
           "override": false
         },
         "consumption": {
-          "targets": [
-            {
-              "type": "itemUses",
-              "target": "",
-              "value": "1",
-              "scaling": {
-                "mode": "",
-                "formula": ""
-              }
-            }
-          ],
+          "targets": [],
           "scaling": {
             "allowed": false,
             "max": ""
@@ -190,13 +168,13 @@
         "duration": {
           "concentration": false,
           "value": "",
-          "units": "",
+          "units": "inst",
           "special": "",
           "override": false
         },
         "effects": [],
         "range": {
-          "value": "20",
+          "value": "5",
           "units": "ft",
           "special": "",
           "override": false
@@ -226,7 +204,7 @@
           "recovery": []
         },
         "attack": {
-          "ability": "",
+          "ability": "str",
           "bonus": "",
           "critical": {
             "threshold": null
@@ -242,7 +220,25 @@
             "bonus": ""
           },
           "includeBase": true,
-          "parts": []
+          "parts": [
+            {
+              "number": null,
+              "denomination": null,
+              "bonus": "",
+              "types": [
+                "necrotic"
+              ],
+              "custom": {
+                "enabled": true,
+                "formula": "2d6[necrotic]"
+              },
+              "scaling": {
+                "mode": "whole",
+                "number": null,
+                "formula": ""
+              }
+            }
+          ]
         },
         "sort": 0,
         "useConditionText": "",
@@ -289,65 +285,11 @@
         "otherActivityUuid": ""
       }
     },
-    "identifier": "dagger-of-venom",
-    "ammunition": {}
-  },
-  "effects": [],
-  "folder": "BeLUfpJ0d2cACd5n",
-  "ownership": {
-    "default": 0,
-    "6yhz13iFYYklKtgA": 3
-  },
-  "flags": {
-    "midi-qol": {
-      "fumbleThreshold": null,
-      "rollAttackPerTarget": "default",
-      "removeAttackDamageButtons": "default",
-      "itemCondition": "",
-      "otherCondition": "",
-      "effectCondition": ""
-    },
-    "midiProperties": {
-      "confirmTargets": "default",
-      "saveDamage": "default",
-      "bonusSaveDamage": "default",
-      "otherSaveDamage": "default",
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "noConcentrationCheck": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "stroud-dnd-helpers": {
-      "PoisonType": {
-        "name": "Black Poison",
-        "dieFaces": 10,
-        "dieCount": 2,
-        "damageType": "poison",
-        "includeBonusDamage": true,
-        "charges": 10,
-        "duration": 1,
-        "dc": 15,
-        "effect": "BlackPoison",
-        "abilitySave": "con",
-        "halfDamageOnSave": false,
-        "applyEffectOnly": false
-      }
-    },
-    "dnd5e": {
-      "riders": {
-        "activity": [],
-        "effect": []
-      }
-    }
+    "identifier": "vampire-bite-spawn",
+    "ammunition": {},
+    "attuned": false,
+    "equipped": true,
+    "mastery": ""
   },
   "_stats": {
     "compendiumSource": null,
@@ -355,11 +297,15 @@
     "coreVersion": "12.343",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "createdTime": 1744807001336,
-    "modifiedTime": 1750248834671,
+    "createdTime": 1750248906808,
+    "modifiedTime": 1750253272834,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
-  "_id": "dNaBQvqrtFNZgKk9",
-  "sort": 0,
-  "_key": "!items!dNaBQvqrtFNZgKk9"
+  "_id": "1LCnqJDIRZTvCjL8",
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_key": "!items!1LCnqJDIRZTvCjL8"
 }

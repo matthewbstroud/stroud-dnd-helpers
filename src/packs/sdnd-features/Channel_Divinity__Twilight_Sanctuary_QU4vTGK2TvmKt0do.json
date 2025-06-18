@@ -4,70 +4,155 @@
   "system": {
     "description": {
       "value": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{incapacitated} or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:\n- You grant it [[/roll 1d6   + @classes.cleric.levels]] temporary hit points.\n- You end one effect on it causing it to be @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{charmed} or @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{frightened}.\n<details>\n  <summary>\n    More Details\n  </summary>\n  <p>\n    </p><p><em>2nd-level Twilight Domain feature</em></p>\n<p>You can use your Channel Divinity to refresh your allies with soothing twilight.</p>\n<p>As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-foot radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.TpkZgLfxCmSndmpb]{incapacitated} or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:</p>\n<ul>\n<li>You grant it temporary hit points equal to 1d6 plus your cleric level.</li>\n<li>You end one effect on it causing it to be @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.zZaEBrKkr66OWJvD]{charmed} or @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.oreoyaFKnvZCrgij]{frightened}.</li>\n</ul>\n  <p></p>\n</details>",
-      "chat": "",
-      "unidentified": ""
+      "chat": ""
     },
-    "source": "",
-    "activation": {
-      "type": "action",
-      "cost": 1,
-      "condition": ""
-    },
-    "duration": {
-      "value": "",
-      "units": ""
+    "source": {
+      "custom": "",
+      "revision": 1,
+      "rules": "2014"
     },
     "cover": null,
     "crewed": false,
-    "target": {
-      "value": 600,
-      "width": null,
-      "units": "ft",
-      "type": "ally"
-    },
-    "range": {
-      "value": null,
-      "long": null,
-      "units": "ft"
-    },
     "uses": {
-      "value": null,
       "max": "",
-      "per": "",
-      "recovery": ""
-    },
-    "consume": {
-      "type": "charges",
-      "target": "",
-      "amount": 1
-    },
-    "ability": "",
-    "actionType": "other",
-    "attackBonus": "",
-    "chatFlavor": "",
-    "critical": {
-      "threshold": null,
-      "damage": ""
-    },
-    "damage": {
-      "parts": [],
-      "versatile": ""
-    },
-    "formula": "",
-    "save": {
-      "ability": "",
-      "dc": null,
-      "scaling": "spell"
+      "spent": 0,
+      "recovery": []
     },
     "type": {
       "value": "class",
       "subtype": "channelDivinity"
     },
     "requirements": "",
-    "recharge": {
-      "value": null,
-      "charged": false
-    }
+    "prerequisites": {
+      "level": null,
+      "repeatable": false
+    },
+    "properties": [],
+    "activities": {
+      "dnd5eactivity000": {
+        "_id": "dnd5eactivity000",
+        "type": "utility",
+        "activation": {
+          "type": "action",
+          "value": 1,
+          "condition": "",
+          "override": false
+        },
+        "consumption": {
+          "targets": [
+            {
+              "type": "itemUses",
+              "value": "1",
+              "target": "jevMKYPCD3RtzGYd",
+              "scaling": {}
+            }
+          ],
+          "scaling": {
+            "allowed": false,
+            "max": ""
+          },
+          "spellSlot": true
+        },
+        "description": {
+          "chatFlavor": ""
+        },
+        "duration": {
+          "concentration": false,
+          "value": "",
+          "units": "inst",
+          "special": "",
+          "override": false
+        },
+        "effects": [
+          {
+            "_id": "yrXsRONV1kdSlkuW"
+          },
+          {
+            "_id": "HaKCcsmweDXk6ayn"
+          }
+        ],
+        "range": {
+          "units": "ft",
+          "special": "",
+          "override": false,
+          "value": "600"
+        },
+        "target": {
+          "template": {
+            "count": "",
+            "contiguous": false,
+            "type": "emanationNoTemplate",
+            "size": "100",
+            "width": "",
+            "height": "",
+            "units": "ft"
+          },
+          "affects": {
+            "count": "600",
+            "type": "ally",
+            "choice": false,
+            "special": ""
+          },
+          "prompt": true,
+          "override": false
+        },
+        "uses": {
+          "spent": 0,
+          "max": "",
+          "recovery": []
+        },
+        "roll": {
+          "formula": "",
+          "name": "",
+          "prompt": false,
+          "visible": false
+        },
+        "sort": 0,
+        "useConditionText": "",
+        "useConditionReason": "",
+        "effectConditionText": "",
+        "macroData": {
+          "name": "",
+          "command": ""
+        },
+        "ignoreTraits": {
+          "idi": false,
+          "idr": false,
+          "idv": false,
+          "ida": false
+        },
+        "midiProperties": {
+          "ignoreTraits": [],
+          "triggeredActivityId": "none",
+          "triggeredActivityConditionText": "",
+          "triggeredActivityTargets": "targets",
+          "triggeredActivityRollAs": "self",
+          "forceDialog": false,
+          "confirmTargets": "default",
+          "autoTargetType": "any",
+          "autoTargetAction": "default",
+          "automationOnly": false,
+          "otherActivityCompatible": true,
+          "identifier": "",
+          "displayActivityName": false,
+          "rollMode": "default",
+          "chooseEffects": false,
+          "toggleEffect": false,
+          "ignoreFullCover": false
+        },
+        "isOverTimeFlag": false,
+        "overTimeProperties": {
+          "saveRemoves": true,
+          "preRemoveConditionText": "",
+          "postRemoveConditionText": ""
+        },
+        "otherActivityId": "none",
+        "name": ""
+      }
+    },
+    "identifier": "channel-divinity-twilight-sanctuary",
+    "advancement": [],
+    "enchant": {}
   },
   "flags": {
     "ddbimporter": {
@@ -112,7 +197,10 @@
       "onUseMacroName": "[preItemRoll]function.stroudDnD.features.TwilightDomain.itemMacro,[postActiveEffects]function.stroudDnD.features.TwilightDomain.itemMacro",
       "rollAttackPerTarget": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "midiProperties": {
       "nodam": false,
@@ -170,6 +258,35 @@
       "info": {
         "source": "stroud-dnd-helpers.SDND-Features"
       }
+    },
+    "dnd5e": {
+      "dependents": [
+        {
+          "uuid": "Actor.QqaomANo6iwTBy1i.ActiveEffect.VV4HEhK8d3lq5m3Y"
+        },
+        {
+          "uuid": "Scene.bQfXSCiV74IBNR6q.Token.zK1majhDRcmCjvHk.Actor.xD3W92yllEWu4fo3.ActiveEffect.gJhXvbRNyG4lq67Z"
+        },
+        {
+          "uuid": "Actor.MmzIpQnHH4i1YsgR.ActiveEffect.hLupHkhYZrt4kBpr"
+        },
+        {
+          "uuid": "Actor.oPVFhNNpT9dAVClD.ActiveEffect.VnVI0ogo9ZQux727"
+        },
+        {
+          "uuid": "Actor.yvlRsNlUb5HyACAY.ActiveEffect.ZrqJGcJclhzlJElR"
+        },
+        {
+          "uuid": "Actor.jtBvVNZX2aUjWjCN.ActiveEffect.uqFEAj3sNAOVSUDz"
+        },
+        {
+          "uuid": "Actor.Rf8lOUbJ5tgx4oam.ActiveEffect.L5c6HHuxu5t5dSDV"
+        }
+      ],
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
     }
   },
   "effects": [
@@ -222,26 +339,48 @@
           "onTurnEnd": {
             "script": "await stroudDnD.features.TwilightDomain.turnEnd(origin.parent.uuid, actor.uuid);"
           }
+        },
+        "dnd5e": {
+          "dependents": [
+            {
+              "uuid": "Scene.bQfXSCiV74IBNR6q.Token.zK1majhDRcmCjvHk.Actor.xD3W92yllEWu4fo3.ActiveEffect.dKxtvJp25wieO4Y0"
+            },
+            {
+              "uuid": "Actor.QqaomANo6iwTBy1i.ActiveEffect.e6dA9ARMwWl7nlIu"
+            },
+            {
+              "uuid": "Actor.MmzIpQnHH4i1YsgR.ActiveEffect.5mO2OCAxzqyvsQ44"
+            },
+            {
+              "uuid": "Actor.yvlRsNlUb5HyACAY.ActiveEffect.Qg3TH1CLdTEDedlg"
+            },
+            {
+              "uuid": "Actor.jtBvVNZX2aUjWjCN.ActiveEffect.yi5nMBt3liJWuEpV"
+            },
+            {
+              "uuid": "Actor.FOFchNq2M2MM40gR.ActiveEffect.5bZhfjeWpKaNAxSR"
+            }
+          ]
         }
       },
       "name": "Twilight Sanctuary",
       "description": "",
       "statuses": [],
       "_stats": {
-        "coreVersion": "12.331",
-        "systemId": null,
-        "systemVersion": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null,
-        "compendiumSource": null,
-        "duplicateSource": null
+        "lastModifiedBy": null
       },
       "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "type": "base",
       "system": {},
       "sort": 0,
-      "_key": "!items.effects!0A0MbTdNEVsB2Epc.yrXsRONV1kdSlkuW"
+      "_key": "!items.effects!QU4vTGK2TvmKt0do.yrXsRONV1kdSlkuW"
     },
     {
       "changes": [
@@ -266,19 +405,13 @@
         {
           "key": "ATL.light.animation",
           "mode": 0,
-          "value": "{\n  'type': 'torch',\n  'speed': 1,\n  'intensity': 1\n}",
+          "value": "{\n  'type': 'dome',\n  'speed': 1,\n  'intensity': 1\n}",
           "priority": 20
         },
         {
           "key": "ATL.light.color",
           "mode": 0,
-          "value": "#000044",
-          "priority": 20
-        },
-        {
-          "key": "ATL.light.angle",
-          "mode": 0,
-          "value": "360",
+          "value": "#000055",
           "priority": 20
         }
       ],
@@ -494,40 +627,39 @@
       "description": "",
       "statuses": [],
       "_stats": {
-        "coreVersion": "12.331",
-        "systemId": null,
-        "systemVersion": null,
-        "createdTime": null,
-        "modifiedTime": 1747846838740,
-        "lastModifiedBy": "6yhz13iFYYklKtgA",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.2",
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null
       },
       "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "type": "base",
       "system": {},
       "sort": 0,
-      "_key": "!items.effects!0A0MbTdNEVsB2Epc.HaKCcsmweDXk6ayn"
+      "_key": "!items.effects!QU4vTGK2TvmKt0do.HaKCcsmweDXk6ayn"
     }
   ],
   "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
-  "ownership": {
-    "default": 0,
-    "6yhz13iFYYklKtgA": 3,
-    "GSK6ihyi0DFS1CDv": 3
-  },
   "_stats": {
-    "systemId": "dnd5e",
-    "systemVersion": "3.3.1",
-    "coreVersion": "12.331",
-    "createdTime": 1682167256793,
-    "modifiedTime": 1730037697677,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Actor.asd4WPupilrDVJZT.Item.G0HaalgqmTqNv9PE",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1750250758957,
+    "modifiedTime": 1750250759001,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "folder": "YcCwvZw8ou9MVGEF",
-  "sort": 0,
-  "_id": "0A0MbTdNEVsB2Epc",
-  "_key": "!items!0A0MbTdNEVsB2Epc"
+  "_id": "QU4vTGK2TvmKt0do",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_key": "!items!QU4vTGK2TvmKt0do"
 }
