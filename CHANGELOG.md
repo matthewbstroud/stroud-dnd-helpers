@@ -1,3 +1,6 @@
+# v12.4.6
+# Bug Fixes
+- Fix issue with DnD5e 4.x support
 # v12.4.5
 # New Features
 - Drop support of DnD5e version 3.x
