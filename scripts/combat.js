@@ -36,25 +36,50 @@ export let combat = {
     "getWeaponDamageTypes": getWeaponDamageTypes
 };
 
+const AUTO_TARGET = "autoTarget";
+const AUTO_TARGET_DEFAULT = "wallsBlockIgnoreDefeated";
+const AUTO_TARGET_OFF = "alwaysIgnoreDefeated";
 const WALLS_BLOCK_RANGE = "optionalRules.wallsBlockRange";
 async function toggleWallsBlockRanged() {
-
-    let midiConfig = game.settings.get("midi-qol", "ConfigSettings");
-    const currentSetting = foundry.utils.getProperty(midiConfig, WALLS_BLOCK_RANGE);
-    let wallsBlockRange = currentSetting != "none";
-    let messageContent = wallsBlockRange ? "Walls will not block range." : "Walls block range.";
-    if (wallsBlockRange) {
-        await game.user.setFlag(sdndConstants.MODULE_ID, WALLS_BLOCK_RANGE, currentSetting);
-    }
-    const newSetting = wallsBlockRange ?
-        "none" :
-        game.user.getFlag(sdndConstants.MODULE_ID, WALLS_BLOCK_RANGE) ?? "center";
-    foundry.utils.setProperty(midiConfig, WALLS_BLOCK_RANGE, newSetting);
-    await game.settings.set("midi-qol", "ConfigSettings", midiConfig);
+    const wallsBlockRange = await toggleMidiSetting(WALLS_BLOCK_RANGE, "none", "center");
+    await toggleMidiSetting(AUTO_TARGET, AUTO_TARGET_OFF, AUTO_TARGET_DEFAULT, wallsBlockRange);
+    const messageContent = wallsBlockRange ? "Walls block range." : "Walls will not block range.";
+    await toggleMacroIcon(
+        "toggleMidiWalls", 
+        wallsBlockRange, 
+        "modules/stroud-dnd-helpers/images/icons/walls_block_range.webp",
+        "modules/stroud-dnd-helpers/images/icons/walls_not_block.webp")
     await ChatMessage.create({
         content: messageContent,
         whisper: ChatMessage.getWhisperRecipients('GM'),
     });
+}
+
+async function toggleMacroIcon(sdndId, currentValue, onImg, offImg) {
+    let macros = game.macros.filter(m => m.getFlag(sdndConstants.MODULE_ID, "id") == sdndId);
+    const img = currentValue ? onImg : offImg;
+    for (let macro of macros) {
+        await macro.update({ "img": img });
+    }
+}
+
+async function toggleMidiSetting(settingName, offValue, defaultValue, enable) {
+    enable ??= false;
+    let midiConfig = game.settings.get("midi-qol", "ConfigSettings");
+    const currentSetting = foundry.utils.getProperty(midiConfig, settingName);
+    const isOn = currentSetting != offValue; 
+    if (isOn && enable) {
+        return true;
+    }
+    if (isOn) {
+        await game.user.setFlag(sdndConstants.MODULE_ID, settingName, currentSetting);
+    }
+    const newSetting = isOn ?
+        offValue :
+        game.user.getFlag(sdndConstants.MODULE_ID, settingName) ?? defaultValue;
+    foundry.utils.setProperty(midiConfig, settingName, newSetting);
+    await game.settings.set("midi-qol", "ConfigSettings", midiConfig);
+    return !isOn;
 }
 
 function getSortedNames(targets) {
