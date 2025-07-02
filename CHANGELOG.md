@@ -1,3 +1,11 @@
+# v12.4.7
+# New Features
+- Toggle Walls Macro will now also allowing targetting through walls.
+  - Macro icon will change to show current state.
+- Compendium Spell Overrides
+  - Fire Absorption
+  - Life Drain
+  - Magic Resistance
 # v12.4.6
 # Bug Fixes
 - Fix issue with DnD5e 4.x support

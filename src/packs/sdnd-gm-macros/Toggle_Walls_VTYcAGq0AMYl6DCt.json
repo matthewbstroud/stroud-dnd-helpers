@@ -4,6 +4,9 @@
   "flags": {
     "advanced-macros": {
       "runForSpecificUser": "GM"
+    },
+    "stroud-dnd-helpers": {
+      "id": "toggleMidiWalls"
     }
   },
   "command": "await stroudDnD.combat.toggleWallsBlockRange();",
@@ -22,7 +25,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1748358911949,
-    "modifiedTime": 1748358911986,
+    "modifiedTime": 1751460967360,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "VTYcAGq0AMYl6DCt",
