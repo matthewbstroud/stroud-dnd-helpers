@@ -1,3 +1,6 @@
+# v12.4.8
+# Bug Fixes
+- Dagger of Venom fixes.
 # v12.4.7
 # New Features
 - Toggle Walls Macro will now also allowing targetting through walls.

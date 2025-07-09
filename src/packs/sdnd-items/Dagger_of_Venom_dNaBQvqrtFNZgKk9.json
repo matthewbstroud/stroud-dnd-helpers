@@ -167,17 +167,7 @@
           "override": false
         },
         "consumption": {
-          "targets": [
-            {
-              "type": "itemUses",
-              "target": "",
-              "value": "1",
-              "scaling": {
-                "mode": "",
-                "formula": ""
-              }
-            }
-          ],
+          "targets": [],
           "scaling": {
             "allowed": false,
             "max": ""
@@ -290,7 +280,8 @@
       }
     },
     "identifier": "dagger-of-venom",
-    "ammunition": {}
+    "ammunition": {},
+    "mastery": ""
   },
   "effects": [],
   "folder": "BeLUfpJ0d2cACd5n",
@@ -305,7 +296,8 @@
       "removeAttackDamageButtons": "default",
       "itemCondition": "",
       "otherCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "reactionCondition": ""
     },
     "midiProperties": {
       "confirmTargets": "default",
@@ -356,7 +348,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1744807001336,
-    "modifiedTime": 1750248834671,
+    "modifiedTime": 1752040186418,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "dNaBQvqrtFNZgKk9",

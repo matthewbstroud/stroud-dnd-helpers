@@ -407,7 +407,7 @@ const POISON_EFFECTS = {
 
 export let poison = {
     "ApplyPoison": foundry.utils.debounce(applyPoison, 250),
-    "ApplyPoisonToItem": async function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, bonusDamage, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave) {
+    "ApplyPoisonToItem": async function _applyPoisonToItem(itemUuid, poisonName, dieFaces, dieCount, bonusDamage, damageType, durationMinutes, charges, dc, effect, ability, halfDamageOnSave, applyEffectOnly) {
         durationMinutes = durationMinutes ?? 0;
         dc = dc ?? 0;
         ability = ability ?? dnd5e.config.abilities.con.abbreviation;
@@ -435,6 +435,7 @@ export let poison = {
             "dc": dc,
             "effect": effect,
             "halfDamageOnSave": halfDamageOnSave,
+            "applyEffectOnly": applyEffectOnly,
             "priorData": {
                 "midiProperties": (item.flags["midiProperties"]),
                 "save": item.system?.save
@@ -731,9 +732,11 @@ async function applyPoison() {
         poisonType.dc,
         poisonType.effect,
         poisonType.ability,
-        poisonType.halfDamageOnSave);
-    let charges = (poison.system?.uses?.value ?? 0) - 1;
-    if (charges <= 0 && poisonType.name != "Black Poison") {
+        poisonType.halfDamageOnSave,
+        poisonType.applyEffectOnly);
+    let spent = (poison.system?.uses?.spent ?? 0) + 1;
+    let maxCharges = (poison.system?.uses?.max ?? 0);
+    if (spent >= maxCharges && poisonType.name != "Black Poison") {
         if (poison.system?.quantity == 1) {
             await poison.delete();
         }
@@ -742,7 +745,7 @@ async function applyPoison() {
         }
     }
     else {
-        await poison.update({ "system": { "uses": { "value": charges } } });
+        await poison.update({ "system": { "uses": { "spent": spent } } });
     }
     await ChatMessage.create({
         emote: true,
