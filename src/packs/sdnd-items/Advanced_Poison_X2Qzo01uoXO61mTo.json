@@ -247,7 +247,10 @@
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "stroud-dnd-helpers": {
       "PoisonType": {
@@ -277,7 +280,7 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1726417091317,
-    "modifiedTime": 1750248834397,
+    "modifiedTime": 1752039486191,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null
