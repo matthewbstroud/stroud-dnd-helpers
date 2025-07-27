@@ -13,6 +13,7 @@ import { versioning } from "./versioning.js";
 import { folders } from "./folders/folders.js";
 import { importFromCompedium } from "./gm/gmFunctions.js";
 import { items } from "./items/items.js";
+import { heroicManeuvers } from "./homebrew/heroicManeuvers.js";
 
 export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
@@ -33,7 +34,8 @@ export let combat = {
             }
         }
     },
-    "getWeaponDamageTypes": getWeaponDamageTypes
+    "getWeaponDamageTypes": getWeaponDamageTypes,
+    "executeHeroicManeuver": heroicManeuvers.execute,
 };
 
 const AUTO_TARGET = "autoTarget";

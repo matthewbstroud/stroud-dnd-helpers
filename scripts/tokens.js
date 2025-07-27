@@ -83,7 +83,7 @@ export let tokens = {
             return [];
         }
         console.log(scenesWithPlayerTokens);
-        if (preview) { 
+        if (preview) {
             return scenesWithPlayerTokens;
         }
         for (let scene of scenesWithPlayerTokens) {
@@ -109,6 +109,23 @@ export let tokens = {
         }
         let playerTokenIds = scene.tokens.filter((token) => token.actor && token.actor.folder?.id == playersFolder.id).map(t => t.id);
         await scene.deleteEmbeddedDocuments(Token.name, playerTokenIds);
+    },
+    "findNearby": function _findNearby(token, range, disposition, { includeIncapacitated = false, includeToken = false } = {}) {
+        let dispositionValue;
+        switch (disposition) {
+            case 'ally':
+                dispositionValue = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+                break;
+            case 'neutral':
+                dispositionValue = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+                break;
+            case 'enemy':
+                dispositionValue = CONST.TOKEN_DISPOSITIONS.HOSTILE;
+                break;
+            default:
+                dispositionValue = null;
+        }
+        return MidiQOL.findNearby(dispositionValue, token, range, { includeIncapacitated, includeToken }).filter(i => !i.document.hidden);
     }
 };
 

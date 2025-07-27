@@ -1,3 +1,6 @@
+# v12.4.9
+# New Features
+- Heroic Maneuvers.
 # v12.4.8
 # Bug Fixes
 - Dagger of Venom fixes.
