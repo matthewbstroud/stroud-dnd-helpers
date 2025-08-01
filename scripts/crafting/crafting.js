@@ -45,14 +45,15 @@ export let craftingHelpers = {
         const minPossible = bonus + 1;
         const maxPossible = bonus + 20;
         const averageRoll = Math.floor((minPossible + maxPossible) / 2);
+        const actualRoll = roll.total - bonus;
         return { 
             "isCritical": roll.isCritical, 
             "isSuccess": (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc)),
-            "isFumble": (roll.options?.fumble ?? roll.isFumble ?? (roll.total - bonus <= 1)),
+            "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
             "total": roll.total,
             "chanceOfSuccess": chanceOfSuccess,
             "averageRoll": averageRoll,
-            "actualRoll": roll.total - bonus,
+            "actualRoll": actualRoll,
         };
     }
 }
