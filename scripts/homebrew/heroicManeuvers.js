@@ -149,9 +149,9 @@ const punishments = {
         (new ModifierBuff("Armor Handicap", "Minor", 0, 1, -1))         // self only -1 AC for 1 round, crit doubles armor handicap
     ],
     [DC_INTERMEDIATE]: [
-        // (new MinorEffectOnlyBuff("Minor Disadvantage")),                // 10 range, 2 max targets, crit doubles range and max targets
-        // (new ModifierBuff("Hit Handicap", "Major", 10, 2, -2)),         // 10 range, 2 max targets, -2 next attack, crit doubles hit handicap, range and max targets
-        (new ModifierBuff("Armor Handicap", "Major", 10, 2, -2))           // 10 range, 2 max targets, -2 AC for 1 round, crit doubles armor handicap, range and max targets
+        (new MinorEffectOnlyBuff("Minor Disadvantage")),                // 10 range, 2 max targets, crit doubles range and max targets
+        (new ModifierBuff("Hit Handicap", "Major", 10, 2, -2)),         // 10 range, 2 max targets, -2 next attack, crit doubles hit handicap, range and max targets
+        (new ModifierBuff("Armor Handicap", "Major", 10, 2, -2))        // 10 range, 2 max targets, -2 AC for 1 round, crit doubles armor handicap, range and max targets
     ],
     [DC_HIGH]: [
         (new MajorEffectOnlyBuff("Major Disadvantage")),                // 20 range, unlimited targets, crit doubles range
@@ -302,16 +302,16 @@ function getRandomItems(arr, n) {
 }
 
 function stringIncludesAny(str, arr) {
-  // Ensure arr is an array
-  if (!Array.isArray(arr)) {
-    throw new TypeError('Second argument must be an array');
-  }
-  // Convert str to string in case it's not
-  str = String(str);
+    // Ensure arr is an array
+    if (!Array.isArray(arr)) {
+        throw new TypeError('Second argument must be an array');
+    }
+    // Convert str to string in case it's not
+    str = String(str);
 
-  return arr.some(function(substring) {
-    return str.includes(substring);
-  });
+    return arr.some(function (substring) {
+        return str.includes(substring);
+    });
 }
 
 function buffCannotBeReplaced(effect, sourceActorUuid, buff) {
