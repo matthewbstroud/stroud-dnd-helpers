@@ -4,13 +4,7 @@ import { gmFunctions } from "../gm/gmFunctions.js";
 import { numbers } from "../utility/numbers.js";
 import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
-
-const dcLevels = [
-    { "label": "15", "value": 15 },
-    { "label": "20", "value": 20 },
-    { "label": "25", "value": 25 },
-    { "label": "30", "value": 30 }
-];
+import { sdndConstants } from "../constants.js";
 
 const DC_LOW = 15;
 const DC_INTERMEDIATE = 17;
@@ -22,13 +16,101 @@ const difficultyLevels = [
     { "label": "High", "value": DC_HIGH }
 ];
 
+class Buff {
+    constructor(name, range, maxTargets, modifier, critialModification, effectApplicator) {
+        this.name = name;
+        this.range = range;
+        this.maxTargets = maxTargets;
+        this.modifier = modifier;
+        this.critialModification = critialModification ? critialModification : (buff) => { };
+        this.effectApplicator = effectApplicator;
+    }
+    copy() {
+        return new Buff(this.name, this.range, this.maxTargets, this.modifier, this.critialModification, this.effectApplicator);
+    }
+    getEffectData(isCritical) {
+        let buff = this.copy();
+        if (isCritical) {
+            buff.critialModification(buff);
+        }
+        const buffEffect = foundry.utils.duplicate(game.items.find(i => i.name == "Heroic Maneuver")?.effects.find(e => e.name == this.name));
+        if (buff.effectApplicator) {
+            buff.effectApplicator(buff, buffEffect);
+        }
+        return buffEffect;
+    }
+}
+
+class EffectOnlyBuff extends Buff {
+    constructor(name, range, maxTargets, critialModification, cancels) {
+        super(name, range, maxTargets, 0, critialModification, null, cancels);
+    }
+    copy() {
+        return new EffectOnlyBuff(this.name, this.range, this.maxTargets, this.critialModification);
+    }
+    getEffectData(isCritical) { return super.getEffectData(isCritical); }
+}
+
+class MinorEffectOnlyBuff extends EffectOnlyBuff {
+    constructor(name, range = 10, maxTargets = 2) {
+        super(name, range, maxTargets,
+            (buff) => {
+                buff.range = buff.range == 0 ? 10 : buff.range * 2;
+                buff.maxTargets *= 2;
+            },
+            null
+        );
+    }
+    copy() {
+        return new MinorEffectOnlyBuff(this.name);
+    }
+    getEffectData(isCritical) { return super.getEffectData(isCritical); }
+}
+
+class MajorEffectOnlyBuff extends EffectOnlyBuff {
+    constructor(name) {
+        super(name, 20, -1,
+            (buff) => {
+                buff.range *= 2;
+            },
+            null
+        );
+    }
+    copy() {
+        return new MajorEffectOnlyBuff(this.name);
+    }
+    getEffectData(isCritical) { return super.getEffectData(isCritical); }
+}
+
+class ModifierBuff extends Buff {
+    constructor(baseEffect, prefix, range, maxTargets, modifier) {
+        super(baseEffect, range, maxTargets, modifier,
+            (buff) => { buff.modifier *= 2; },
+            (buff, buffEffect) => {
+                let modifierText = buff.modifier > 0 ? `+${buff.modifier}` : `${buff.modifier}`;
+                buffEffect.description = buffEffect.description.replace("sdnd.modifier", modifierText);
+                buffEffect.changes[0].value = modifierText;
+            }
+        )
+        this.prefix = prefix;
+    }
+    copy() {
+        return new ModifierBuff(this.name, this.prefix, this.range, this.maxTargets, this.modifier);
+    }
+    getEffectData(isCritical) {
+        let buff = super.getEffectData(isCritical);
+        buff.name = `${this.prefix ? this.prefix + " " : ""}${buff.name}`;
+        return buff;
+    }
+}
+
 function CreateBuff(name, range, maxTargets, modifier, critialModification, effectApplicator) {
     return {
         "name": name,
         "range": range,
         "maxTargets": maxTargets,
         "modifier": modifier,
-        "critialModification": critialModification ? critialModification : (buff) => {},
+        "critialModification": critialModification ? critialModification : (buff) => { },
         "effectApplicator": effectApplicator,
         "getEffectData": function (isCritical) {
             if (isCritical) {
@@ -39,56 +121,56 @@ function CreateBuff(name, range, maxTargets, modifier, critialModification, effe
                 this.effectApplicator(this, buffEffect);
             }
             return buffEffect;
-        }   
+        }
     };
 }
 // ensure the folling arrays are executed once
 const rewards = {
     [DC_LOW]: [
-        CreateBuff("Minor Hit Bonus", 0, 1, 1, 
-            (buff) => { 
-                buff.modifier *= 2; 
-            }, 
-            (buff, buffEffect) => {
-                let modifierText = buff.modifier > 0 ? `+${buff.modifier}` : `${buff.modifier}`;
-                buffEffect.description = buffEffect.description.replace("sdnd.modifier", modifierText);
-                buffEffect.changes[0].value = modifierText;
-            }
-        )
+        (new MinorEffectOnlyBuff("Minor Advantage", 0, 1)),             // self only, crit upgrades to Intermediate effects
+        (new ModifierBuff("Hit Bonus", "Minor", 0, 1, 1)),              // self only +1 next attack, crit doubles hit bonus
+        (new ModifierBuff("Armor Bonus", "Minor", 0, 1, 1))             // self only +1 AC for 1 round, crit doubles armor bonus
     ],
     [DC_INTERMEDIATE]: [
-        CreateBuff("Minor Advantage", 10, 1, 0, (buff) => { buff.range = 15; buff.maxTargets = 2 })
+        (new MinorEffectOnlyBuff("Minor Advantage")),                   // 10 range, 2 max targets, crit doubles range and max targets    
+        (new ModifierBuff("Hit Bonus", "Major", 10, 2, 2)),             // 10 range, 2 max targets, +2 next attack, crit doubles bonus, range and max targets
+        (new ModifierBuff("Armor Bonus", "Major", 10, 2, 2))            // 10 range, 2 max targets, +2 AC for 1 round, crit doubles armor bonus, range and max targets
     ],
     [DC_HIGH]: [
-        CreateBuff("Major Advantage", 20, -1, 0, (buff) => { buff.range = 40;})
+        (new MajorEffectOnlyBuff("Major Advantage")),                   // 20 range, unlimited targets, crit doubles range 
+        (new ModifierBuff("Hit Bonus", "Exceptional", 20, -1, 4)),      // 20 range, unlimited targets, +4 next attack, crit doubles bonus and range
+        (new ModifierBuff("Armor Bonus", "Exceptional", 20, -1, 4))     // 20 range, unlimited targets, +4 AC for 1 round, crit doubles armor bonus and range
     ]
 }
 const punishments = {
     [DC_LOW]: [
-        CreateBuff("Minor Hit Handicap", 0, 1, -1, 
-            (buff) => { 
-                buff.modifier *= 2; 
-            }, 
-            (buff, buffEffect) => {
-                let modifierText = buff.modifier > 0 ? `+${buff.modifier}` : `${buff.modifier}`;
-                buffEffect.description = buffEffect.description.replace("sdnd.modifier", modifierText);
-                buffEffect.changes[0].value = modifierText;
-            }
-        )
+        (new MinorEffectOnlyBuff("Minor Disadvantage", 0, 1)),          // self only, crit upgrades to Intermediate effects
+        (new ModifierBuff("Hit Handicap", "Minor", 0, 1, -1)),          // self only -1 next attack, crit doubles hit handicap
+        (new ModifierBuff("Armor Handicap", "Minor", 0, 1, -1))         // self only -1 AC for 1 round, crit doubles armor handicap
     ],
-    "intermediate": [
-        "Minor Disadvantage"
+    [DC_INTERMEDIATE]: [
+        // (new MinorEffectOnlyBuff("Minor Disadvantage")),                // 10 range, 2 max targets, crit doubles range and max targets
+        // (new ModifierBuff("Hit Handicap", "Major", 10, 2, -2)),         // 10 range, 2 max targets, -2 next attack, crit doubles hit handicap, range and max targets
+        (new ModifierBuff("Armor Handicap", "Major", 10, 2, -2))           // 10 range, 2 max targets, -2 AC for 1 round, crit doubles armor handicap, range and max targets
     ],
-    "high": [
-        "Major Disadvantage"
+    [DC_HIGH]: [
+        (new MajorEffectOnlyBuff("Major Disadvantage")),                // 20 range, unlimited targets, crit doubles range
+        (new ModifierBuff("Hit Handicap", "Exceptional", 20, -1, -4)),  // 20 range, unlimited targets, -4 next attack, crit doubles hit handicap and range
+        (new ModifierBuff("Armor Handicap", "Major", 20, -1, -4))          // 20 range, unlimited targets, -4 AC for 1 round, crit doubles armor handicap and range
     ]
 }
 
+const doNotReplaceOnMinMax = [
+    "Armor Bonus",
+    "Hit Bonus",
+    "Armor Handicap",
+    "Hit Handicap"
+];
 
 let heroicManeuversImp = {
     getSkillType: async function _getSkillType() {
         const skillButtons = Object.entries(CONFIG.DND5E.skills)
-            .filter(([key, value]) => ['acr', 'ath', 'inv', 'per'].includes(key))
+            .filter(([key, value]) => ['acr', 'ath', 'inv', 'prc'].includes(key))
             .map(([key, value]) => ({ "label": value?.label, "value": key }));
         return await dialog.createButtonDialog("Select a Skill", skillButtons, 'column');
     },
@@ -107,7 +189,11 @@ let heroicManeuversImp = {
 
 export let heroicManeuvers = {
     execute: async function _execute() {
+        if (!ensureMidiSettings()) {
+            return;
+        }
         let controlledToken = utility.getControlledToken();
+
         if (!controlledToken) {
             return;
         }
@@ -131,10 +217,27 @@ export let heroicManeuvers = {
                         <strong>Result:</strong> ${skillCheck.isSuccess ? "Success" : "Failure"}<br>
                         <strong>Total:</strong> ${skillCheck.total}<br>
                         <strong>Buff/Punishment:</strong> ${buff ? buff.name : "None"}
-                        <strong>Additional Targets:</strong> ${additionTargets.length > 0 ? additionTargets.map(t => t.name).join(", ") : "None"}<br>
+                        <strong>Additional Targets:</strong> ${(additionTargets?.length ?? 0) > 0 ? additionTargets.map(t => t.name).join(", ") : "None"}<br>
                         <strong>Critical:</strong> ${skillCheck.isCritical ? "Yes" : "No"}<br>`
         });
     }
+}
+
+async function ensureMidiSettings() {
+    if (!game.modules.get("midi-qol")?.active) {
+        ui.notifications.error("Midi-QOL module is not active. Please enable it to use this feature.");
+        return false;
+    }
+    const settings = game.settings.get('midi-qol', 'ConfigSettings');
+    if (!settings.optionalRules?.actionSpecialDurationImmediate) {
+        await ChatMessage.create({
+            "content": "Midi must process next attack immediately for heroic maneuvers to function properly.  This setting has been turned on automatically...",
+            "speaker": { "alias": "Stroud's DnD Helpers" }
+        });
+    }
+    settings.optionalRules.actionSpecialDurationImmediate = true;
+    await game.settings.set('midi-qol', 'ConfigSettings', settings);
+    return true;
 }
 
 async function applyGroupBuff(token, buff, skillCheck) {
@@ -150,36 +253,80 @@ async function applyGroupBuff(token, buff, skillCheck) {
         ui.notifications.error(`Buff ${buff.name} not found.`);
         return;
     }
-    await applyBuff(token, buffEffect);
+    buffEffect.origin = token.actor.uuid;
+    buffEffect.flags[sdndConstants.MODULE_ID] = {
+        "minmax": (skillCheck.isCritical || skillCheck.isFumble)
+    };
+    await applyBuff(token.actor, token, buffEffect);
     if (!buff.range || buff.range <= 0) {
         console.log("No range specified for buff, applying to token only.");
         return [];
+    }
+    if (buff.maxTargets == 1) {
+        console.log("Buff cannot affect additional targets.");
     }
     const allies = tokens.findNearby(token, buff.range, "ally");
     if (!allies || allies.length === 0) {
         console.log("No allies found within range.");
         return [];
     }
-    let count = 0;
-    let additionTargets = [];
-    for (const ally of allies) {
-        if (await applyBuff(ally, buffEffect)) {
-            count++;
-            additionTargets.push(ally);
-        }
-        if (count >= buff.maxTargets && buff.maxTargets > 0) {
-            console.log(`Reached maximum targets for buff ${buff.name}.`);
-            break;
-        }
+    const allyCount = buff.maxTargets == -1 ? allies.length : buff.maxTargets - 1;
+    let additionTargets = getRandomItems(allies, allyCount);
+    for (const target of additionTargets) {
+        await applyBuff(token.actor, target, buffEffect);
     }
     return additionTargets;
 }
 
-async function applyBuff(token, buff) {
+/**
+ * Returns N random unique items from an array.
+ * If N is greater than array.length, returns a shuffled copy of the array.
+ * @param {Array} arr - The original array.
+ * @param {number} n - The number of random items to return.
+ * @returns {Array} An array of N random items.
+ */
+function getRandomItems(arr, n) {
+    if (!Array.isArray(arr)) throw new TypeError('First argument must be an array');
+    if (typeof n !== 'number' || n < 0) throw new TypeError('Second argument must be a non-negative number');
+    if (n >= arr.length) {
+        return arr;
+    }
+    // Create a copy to avoid mutating the original array
+    const arrCopy = arr.slice();
+    // Shuffle using Fisher-Yates
+    for (let i = arrCopy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arrCopy[i], arrCopy[j]] = [arrCopy[j], arrCopy[i]];
+    }
+    return arrCopy.slice(0, n);
+}
+
+function stringIncludesAny(str, arr) {
+  // Ensure arr is an array
+  if (!Array.isArray(arr)) {
+    throw new TypeError('Second argument must be an array');
+  }
+  // Convert str to string in case it's not
+  str = String(str);
+
+  return arr.some(function(substring) {
+    return str.includes(substring);
+  });
+}
+
+function buffCannotBeReplaced(effect, sourceActorUuid, buff) {
+    const minMax = buff.flags?.[sdndConstants.MODULE_ID]?.minmax ?? false;
+    if (stringIncludesAny(effect.name, doNotReplaceOnMinMax) && effect.getFlag(sdndConstants.MODULE_ID, "minmax") == true && !minMax) {
+        return true;
+    }
+    return effect.origin === sourceActorUuid;
+}
+
+async function applyBuff(sourceActor, token, buff) {
     if (!token || !token.actor) {
         return false;
     }
-    if (token.actor.effects.filter(e => e.name === buff.name).length > 0) {
+    if (token.actor.effects.filter(e => e.name === buff.name && buffCannotBeReplaced(e, sourceActor.uuid, buff)).length > 0) {
         console.log(`Target ${token.name} already has the effect ${buff.name}.`);
         return false;
     }

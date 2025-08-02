@@ -48,7 +48,7 @@ export let craftingHelpers = {
         const actualRoll = roll.total - bonus;
         return { 
             "isCritical": roll.isCritical, 
-            "isSuccess": (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc)),
+            "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
             "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
             "total": roll.total,
             "chanceOfSuccess": chanceOfSuccess,
