@@ -1,11 +1,13 @@
 import { dialog } from "../dialog/dialog.js";
 import { craftingHelpers } from "../crafting/crafting.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { items } from "../items/items.js";
 import { numbers } from "../utility/numbers.js";
 import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
 import { sdndConstants } from "../constants.js";
 
+const HEROIC_MANEUVER = 'Heroic Maneuver';
 const DC_LOW = 15;
 const DC_INTERMEDIATE = 17;
 const DC_HIGH = 20;
@@ -28,12 +30,21 @@ class Buff {
     copy() {
         return new Buff(this.name, this.range, this.maxTargets, this.modifier, this.critialModification, this.effectApplicator);
     }
-    getEffectData(isCritical) {
+    async getEffect(effectName) {
+        let heroicManeuver = (await items.getItemFromCompendium(
+                sdndConstants.PACKS.COMPENDIUMS.ITEM.SPELLS,
+                HEROIC_MANEUVER, true, null)) ?? game.items.find(i => i.name == "Heroic Maneuver");
+        if (!heroicManeuver) {
+            throw new Error(`Heroic Maneuver item not found in compendium.`);
+        }
+        return foundry.utils.duplicate(heroicManeuver.effects.find(e => e.name == effectName));
+    }
+    async getEffectData(isCritical) {
         let buff = this.copy();
         if (isCritical) {
             buff.critialModification(buff);
         }
-        const buffEffect = foundry.utils.duplicate(game.items.find(i => i.name == "Heroic Maneuver")?.effects.find(e => e.name == this.name));
+        const buffEffect = await this.getEffect(this.name);
         if (buff.effectApplicator) {
             buff.effectApplicator(buff, buffEffect);
         }
@@ -48,7 +59,7 @@ class EffectOnlyBuff extends Buff {
     copy() {
         return new EffectOnlyBuff(this.name, this.range, this.maxTargets, this.critialModification);
     }
-    getEffectData(isCritical) { return super.getEffectData(isCritical); }
+    async getEffectData(isCritical) { return super.getEffectData(isCritical); }
 }
 
 class MinorEffectOnlyBuff extends EffectOnlyBuff {
@@ -64,7 +75,7 @@ class MinorEffectOnlyBuff extends EffectOnlyBuff {
     copy() {
         return new MinorEffectOnlyBuff(this.name);
     }
-    getEffectData(isCritical) { return super.getEffectData(isCritical); }
+    async getEffectData(isCritical) { return super.getEffectData(isCritical); }
 }
 
 class MajorEffectOnlyBuff extends EffectOnlyBuff {
@@ -79,7 +90,7 @@ class MajorEffectOnlyBuff extends EffectOnlyBuff {
     copy() {
         return new MajorEffectOnlyBuff(this.name);
     }
-    getEffectData(isCritical) { return super.getEffectData(isCritical); }
+    async getEffectData(isCritical) { return super.getEffectData(isCritical); }
 }
 
 class ModifierBuff extends Buff {
@@ -97,34 +108,13 @@ class ModifierBuff extends Buff {
     copy() {
         return new ModifierBuff(this.name, this.prefix, this.range, this.maxTargets, this.modifier);
     }
-    getEffectData(isCritical) {
+    async getEffectData(isCritical) {
         let buff = super.getEffectData(isCritical);
         buff.name = `${this.prefix ? this.prefix + " " : ""}${buff.name}`;
         return buff;
     }
 }
 
-function CreateBuff(name, range, maxTargets, modifier, critialModification, effectApplicator) {
-    return {
-        "name": name,
-        "range": range,
-        "maxTargets": maxTargets,
-        "modifier": modifier,
-        "critialModification": critialModification ? critialModification : (buff) => { },
-        "effectApplicator": effectApplicator,
-        "getEffectData": function (isCritical) {
-            if (isCritical) {
-                this.critialModification(this);
-            }
-            const buffEffect = foundry.utils.duplicate(game.items.find(i => i.name == "Heroic Maneuver")?.effects.find(e => e.name == this.name));
-            if (this.effectApplicator) {
-                this.effectApplicator(this, buffEffect);
-            }
-            return buffEffect;
-        }
-    };
-}
-// ensure the folling arrays are executed once
 const rewards = {
     [DC_LOW]: [
         (new MinorEffectOnlyBuff("Minor Advantage", 0, 1)),             // self only, crit upgrades to Intermediate effects
@@ -248,7 +238,7 @@ async function applyGroupBuff(token, buff, skillCheck) {
         return;
     }
 
-    const buffEffect = buff.getEffectData(skillCheck.isCritical);
+    const buffEffect = await buff.getEffectData(skillCheck.isCritical);
     if (!buffEffect) {
         ui.notifications.error(`Buff ${buff.name} not found.`);
         return;
