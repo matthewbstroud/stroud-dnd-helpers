@@ -1,16 +1,16 @@
 import { dialog } from "../dialog/dialog.js";
-import { craftingHelpers } from "../crafting/crafting.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { items } from "../items/items.js";
 import { numbers } from "../utility/numbers.js";
 import { tokens } from "../tokens.js";
 import { utility } from "../utility/utility.js";
 import { sdndConstants } from "../constants.js";
+import { sdndSettings } from "../settings.js";
 
 const HEROIC_MANEUVER = 'Heroic Maneuver';
-const DC_LOW = 15;
-const DC_INTERMEDIATE = 17;
-const DC_HIGH = 20;
+const DC_LOW = 'HM_LowDC';
+const DC_INTERMEDIATE = 'HM_IntermediatehDC';
+const DC_HIGH = 'HM_HighDC';
 
 const difficultyLevels = [
     { "label": "Low", "value": DC_LOW },
@@ -165,8 +165,25 @@ let heroicManeuversImp = {
             .map(([key, value]) => ({ "label": value?.label, "value": key }));
         return await dialog.createButtonDialog("Select a Skill", skillButtons, 'column');
     },
-    getDC: async function _getDC() {
+    getChallengeRating: async function _getChallengeRating() {
         return await dialog.createButtonDialog("Select a Challenge Rating", difficultyLevels, 'column');
+    },
+    getDC: async function _getDC(challengeRating) {
+        let dc = null;
+        switch (challengeRating) {
+            case DC_LOW:
+                dc = sdndSettings[DC_LOW].getValue() ?? 15; // Default to 15 if not set
+                break;
+            case DC_INTERMEDIATE:
+                dc = sdndSettings[DC_INTERMEDIATE].getValue() ?? 17; // Default to 17 if not set
+                break;
+            case DC_HIGH:
+                dc = sdndSettings[DC_HIGH].getValue() ?? 19; // Default to 20 if not set
+                break;
+            default:
+                return null;
+        }
+        return numbers.toNumber(dc);   
     },
     getRandomPunishment: function _getRandomPunishment(difficulty) {
         const punishmentsForDifficulty = punishments[difficulty];
@@ -195,27 +212,29 @@ export let heroicManeuvers = {
         }
         const skill = await heroicManeuversImp.getSkillType();
         if (!skill) return;
-        const dc = await heroicManeuversImp.getDC();
+        const challengeRating = await heroicManeuversImp.getChallengeRating();
+        if (!challengeRating) return;
+        const dc = await heroicManeuversImp.getDC(challengeRating);
         if (!dc) return;
         const skillCheck = await tokens.rollSkillCheck(controlledToken, skill, dc, `Heroic Maneuver: ${CONFIG.DND5E.skills[skill].label} (DC${dc})`, false);
         if (!skillCheck) {
             return;
         }
-        let buff = skillCheck.isSuccess ? heroicManeuversImp.getRandomReward(dc) : heroicManeuversImp.getRandomPunishment(dc);
+        let buff = skillCheck.isSuccess ? heroicManeuversImp.getRandomReward(challengeRating) : heroicManeuversImp.getRandomPunishment(challengeRating);
         if (!buff) {
             ui.notifications.error("No buff or punishment available for this challenge rating.");
             return;
         }
         let additionTargets = await applyGroupBuff(controlledToken, buff, skillCheck);
         const isCritical = (skillCheck.isCritical || skillCheck.isFumble);
+        const result = `<span style='color:${skillCheck.isSuccess ? 'green' : 'red'} '>${isCritical ? "Critical " : ""} ${skillCheck.isSuccess ? "Success" : "Failure"}</span> (${skillCheck.total})`;
         await ChatMessage.create({
             "speaker": ChatMessage.getSpeaker({ actor: controlledActor }),
             "content": `<strong>Heroic Maneuver</strong><br>
                         <strong>Skill:</strong> ${CONFIG.DND5E.skills[skill].label}<br>
                         <strong>DC:</strong> ${dc}<br>
-                        <strong>Result:</strong> ${isCritical ? "Critical " : ""} ${skillCheck.isSuccess ? "Success" : "Failure"}<br>
-                        <strong>Total:</strong> ${skillCheck.total}<br>
-                        <strong>${skillCheck.isSuccess ? "Reward" : "Punishment"}:</strong> ${buff ? buff.name : "None"} ${buff.effect.description}
+                        <strong>Result:</strong> ${result}<br>
+                        <strong>${skillCheck.isSuccess ? "Reward" : "Punishment"}:</strong> ${buff.effect.name} ${buff.effect.description}
                         <strong>Additional Targets:</strong> ${(additionTargets?.length ?? 0) > 0 ? additionTargets.map(t => t.name).join(", ") : "None"}<br>`
         });
     }

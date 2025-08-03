@@ -127,8 +127,35 @@ export let tokens = {
         }
         return MidiQOL.findNearby(dispositionValue, token, range, { includeIncapacitated, includeToken }).filter(i => !i.document.hidden);
     },
+    "gmID": function _gmID() {
+        let gmID = game.users.activeGM?.id ?? game.users.find(u => u.isTheGM)?.id;
+        let preferredGMName = game.settings.get('midi-qol', "PreferredGM");
+        if (preferredGMName !== 'none') {
+            let preferredGM = game.users.getName(preferredGMName);
+            if (preferredGM?.active) {
+                gmID = preferredGM.id;
+            }
+        }
+        return gmID;
+    },
+    "isTheGM": function _isTheGM() {
+        return this.gmID() === game.user.id;
+    },
+    "hasPermission": function _hasPermission(entity, userId) {
+        let user = game.users.get(userId);
+        if (!user) return false;
+        return entity.testUserPermission(user, 'OWNER');
+    },
+    "firstOwner": function _firstOwner(document, useId) {
+        if (!document) return;
+        let corrected = document instanceof TokenDocument ? document.actor : document instanceof Token ? document.document.actor : document;
+        let permissions = foundry.utils.getProperty(corrected ?? {}, 'ownership') ?? {};
+        let playerOwners = Object.entries(permissions).filter(([id, level]) => !game.users.get(id)?.isGM && game.users.get(id)?.active && level === 3).map(([id]) => id);
+        if (playerOwners.length > 0) return useId ? playerOwners[0] : game.users.get(playerOwners[0]);
+        return useId ? this.gmID() : game.users.get(this.gmID());
+    },
     "rollSkillCheck": async function _rollSkillCheck(token, skill, dc, flavor, fastForward) {
-        let userID = chrisPremades.utils.socketUtils.firstOwner(token, true);
+        let userID = this.firstOwner(token, true);
         let skill5e = dnd5e.config.skills[skill];
         flavor == flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
         fastForward = fastForward ?? true;
@@ -144,16 +171,19 @@ export let tokens = {
             ability: skill,
             options
         };
-        
+
         let roll = await MidiQOL.socket().executeAsUser('rollAbility', userID, data);
+        if (!roll) {
+            return null;
+        }
         const bonus = (roll?.data?.skills?.[skill]?.total ?? 0);
         const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
         const minPossible = bonus + 1;
         const maxPossible = bonus + 20;
         const averageRoll = Math.floor((minPossible + maxPossible) / 2);
         const actualRoll = roll.total - bonus;
-        return { 
-            "isCritical": roll.isCritical, 
+        return {
+            "isCritical": roll.isCritical,
             "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
             "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
             "total": roll.total,

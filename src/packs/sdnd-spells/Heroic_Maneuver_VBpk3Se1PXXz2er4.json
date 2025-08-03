@@ -60,7 +60,7 @@
     {
       "name": "Minor Advantage",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_maneuver.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "_id": "yOOlSe0XZt4mEG1O",
       "type": "base",
       "system": {},
@@ -82,7 +82,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>Grants advantage on your next spell or weapon attack.</p>",
+      "description": "<p>Grants <span style=\"color:green\"><strong>advantage</strong></span> on your next spell or weapon attack.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -135,15 +135,15 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253394889,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_key": "!items.effects!VBpk3Se1PXXz2er4.yOOlSe0XZt4mEG1O"
     },
     {
       "name": "Major Advantage",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_maneuver.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -164,7 +164,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>Grants advantage on spell or weapon attacks until the end of your next turn.</p>",
+      "description": "<p>Grants <span style=\"color:green\"><strong>advantage</strong></span> on spell or weapon attacks for a round.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -214,8 +214,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253386281,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "w3ADdlBCtfSctlWl",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.w3ADdlBCtfSctlWl"
@@ -223,7 +223,7 @@
     {
       "name": "Minor Disadvantage",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_facepalm.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -244,7 +244,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>Grants disadvantage on your next spell or weapon attack.</p>",
+      "description": "<p>Grants <span style=\"color:red\"><strong>disadvantage</strong></span> on your next spell or weapon attack.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -297,8 +297,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253417817,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "bFyVs4daRz46jViH",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.bFyVs4daRz46jViH"
@@ -306,7 +306,7 @@
     {
       "name": "Major Disadvantage",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_facepalm.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -327,7 +327,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>Grants disadvantage on spell or weapon attacks until the end of your next turn.</p>",
+      "description": "<p>Grants <span style=\"color:red\"><strong>disadvantage</strong></span> on spell or weapon attacks for a round.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -377,8 +377,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253412491,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "uoMwe4qnhUWSPsgB",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.uoMwe4qnhUWSPsgB"
@@ -386,7 +386,7 @@
     {
       "name": "Hit Bonus",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_maneuver.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -407,7 +407,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>Grants a sdnd.modifier bonus to hit on your next spell or weapon attack.</p>",
+      "description": "<p>Grants a <span style=\"color:green\"><strong>sdnd.modifier</strong></span> bonus to hit on your next spell or weapon attack.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -460,8 +460,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253349010,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "jhwQBcGdaLHDBQFj",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.jhwQBcGdaLHDBQFj"
@@ -469,7 +469,7 @@
     {
       "name": "Hit Handicap",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_facepalm.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -490,7 +490,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>You take sdnd.modifier on your next spell or weapon attack.</p>",
+      "description": "<p>You suffer a <span style=\"color:red\"><strong>sdnd.modifier</strong></span> penalty on your next spell or weapon attack.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -543,8 +543,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253299986,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "9uCgCWDbr9DBYgpY",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.9uCgCWDbr9DBYgpY"
@@ -552,7 +552,7 @@
     {
       "name": "Armor Bonus",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_maneuver.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -573,7 +573,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>Grants a sdnd.modifier bonus to your armor class until the end of your.</p>",
+      "description": "<p>Grants a <span style=\"color:green\"><strong>sdnd.modifier</strong></span> bonus to your armor class for a round.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -626,8 +626,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253326926,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "6lwMHG7db6o33KvG",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.6lwMHG7db6o33KvG"
@@ -635,7 +635,7 @@
     {
       "name": "Armor Handicap",
       "img": "modules/stroud-dnd-helpers/images/icons/heroic_facepalm.webp",
-      "origin": "Item.vTPSMDD3iRy19isj",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.VBpk3Se1PXXz2er4",
       "type": "base",
       "system": {},
       "changes": [
@@ -656,7 +656,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>You take sdnd.modifier off your amor class for a round.</p>",
+      "description": "<p>You suffer a <span style=\"color:red\"><strong>sdnd.modifier</strong></span> penalty to your amor class for a round.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -709,8 +709,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754253268741,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "wOs7m3zGqczbAA10",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.wOs7m3zGqczbAA10"
