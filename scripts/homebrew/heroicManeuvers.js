@@ -215,8 +215,7 @@ export let heroicManeuvers = {
                         <strong>DC:</strong> ${dc}<br>
                         <strong>Result:</strong> ${isCritical ? "Critical " : ""} ${skillCheck.isSuccess ? "Success" : "Failure"}<br>
                         <strong>Total:</strong> ${skillCheck.total}<br>
-                        <strong>Buff/Punishment:</strong> ${buff ? buff.name : "None"} <br>
-                        <strong>Description:</strong> ${buff.effect.description}
+                        <strong>${skillCheck.isSuccess ? "Reward" : "Punishment"}:</strong> ${buff ? buff.name : "None"} ${buff.effect.description}
                         <strong>Additional Targets:</strong> ${(additionTargets?.length ?? 0) > 0 ? additionTargets.map(t => t.name).join(", ") : "None"}<br>`
         });
     }
