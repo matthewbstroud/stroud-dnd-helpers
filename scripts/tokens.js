@@ -126,6 +126,41 @@ export let tokens = {
                 dispositionValue = null;
         }
         return MidiQOL.findNearby(dispositionValue, token, range, { includeIncapacitated, includeToken }).filter(i => !i.document.hidden);
+    },
+    "rollSkillCheck": async function _rollSkillCheck(token, skill, dc, flavor, fastForward) {
+        let userID = chrisPremades.utils.socketUtils.firstOwner(token, true);
+        let skill5e = dnd5e.config.skills[skill];
+        flavor == flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
+        fastForward = fastForward ?? true;
+        let options = {
+            targetValue: dc,
+            fastForward: fastForward,
+            chatMessage: true,
+            flavor: flavor
+        };
+        let data = {
+            targetUuid: token.document.uuid,
+            request: 'skill',
+            ability: skill,
+            options
+        };
+        
+        let roll = await MidiQOL.socket().executeAsUser('rollAbility', userID, data);
+        const bonus = (roll?.data?.skills?.[skill]?.total ?? 0);
+        const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
+        const minPossible = bonus + 1;
+        const maxPossible = bonus + 20;
+        const averageRoll = Math.floor((minPossible + maxPossible) / 2);
+        const actualRoll = roll.total - bonus;
+        return { 
+            "isCritical": roll.isCritical, 
+            "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
+            "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
+            "total": roll.total,
+            "chanceOfSuccess": chanceOfSuccess,
+            "averageRoll": averageRoll,
+            "actualRoll": actualRoll,
+        };
     }
 };
 

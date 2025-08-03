@@ -33,7 +33,7 @@ class Buff {
     async getEffect(effectName) {
         let heroicManeuver = (await items.getItemFromCompendium(
                 sdndConstants.PACKS.COMPENDIUMS.ITEM.SPELLS,
-                HEROIC_MANEUVER, true, null)) ?? game.items.find(i => i.name == "Heroic Maneuver");
+                HEROIC_MANEUVER, true, null)) ?? game.items.find(i => i.name == HEROIC_MANEUVER);
         if (!heroicManeuver) {
             throw new Error(`Heroic Maneuver item not found in compendium.`);
         }
@@ -48,6 +48,7 @@ class Buff {
         if (buff.effectApplicator) {
             buff.effectApplicator(buff, buffEffect);
         }
+        this.effect = buffEffect;
         return buffEffect;
     }
 }
@@ -59,7 +60,7 @@ class EffectOnlyBuff extends Buff {
     copy() {
         return new EffectOnlyBuff(this.name, this.range, this.maxTargets, this.critialModification);
     }
-    async getEffectData(isCritical) { return super.getEffectData(isCritical); }
+    async getEffectData(isCritical) { return await super.getEffectData(isCritical); }
 }
 
 class MinorEffectOnlyBuff extends EffectOnlyBuff {
@@ -75,7 +76,7 @@ class MinorEffectOnlyBuff extends EffectOnlyBuff {
     copy() {
         return new MinorEffectOnlyBuff(this.name);
     }
-    async getEffectData(isCritical) { return super.getEffectData(isCritical); }
+    async getEffectData(isCritical) { return await super.getEffectData(isCritical); }
 }
 
 class MajorEffectOnlyBuff extends EffectOnlyBuff {
@@ -90,7 +91,7 @@ class MajorEffectOnlyBuff extends EffectOnlyBuff {
     copy() {
         return new MajorEffectOnlyBuff(this.name);
     }
-    async getEffectData(isCritical) { return super.getEffectData(isCritical); }
+    async getEffectData(isCritical) { return await super.getEffectData(isCritical); }
 }
 
 class ModifierBuff extends Buff {
@@ -109,7 +110,7 @@ class ModifierBuff extends Buff {
         return new ModifierBuff(this.name, this.prefix, this.range, this.maxTargets, this.modifier);
     }
     async getEffectData(isCritical) {
-        let buff = super.getEffectData(isCritical);
+        let buff = await super.getEffectData(isCritical);
         buff.name = `${this.prefix ? this.prefix + " " : ""}${buff.name}`;
         return buff;
     }
@@ -196,19 +197,27 @@ export let heroicManeuvers = {
         if (!skill) return;
         const dc = await heroicManeuversImp.getDC();
         if (!dc) return;
-        const skillCheck = await craftingHelpers.rollSkillCheck(controlledActor, skill, dc, `Heroic Maneuver: ${CONFIG.DND5E.skills[skill].label} (DC${dc})`, false);
+        const skillCheck = await tokens.rollSkillCheck(controlledToken, skill, dc, `Heroic Maneuver: ${CONFIG.DND5E.skills[skill].label} (DC${dc})`, false);
+        if (!skillCheck) {
+            return;
+        }
         let buff = skillCheck.isSuccess ? heroicManeuversImp.getRandomReward(dc) : heroicManeuversImp.getRandomPunishment(dc);
+        if (!buff) {
+            ui.notifications.error("No buff or punishment available for this challenge rating.");
+            return;
+        }
         let additionTargets = await applyGroupBuff(controlledToken, buff, skillCheck);
+        const isCritical = (skillCheck.isCritical || skillCheck.isFumble);
         await ChatMessage.create({
             "speaker": ChatMessage.getSpeaker({ actor: controlledActor }),
             "content": `<strong>Heroic Maneuver</strong><br>
                         <strong>Skill:</strong> ${CONFIG.DND5E.skills[skill].label}<br>
                         <strong>DC:</strong> ${dc}<br>
-                        <strong>Result:</strong> ${skillCheck.isSuccess ? "Success" : "Failure"}<br>
+                        <strong>Result:</strong> ${isCritical ? "Critical " : ""} ${skillCheck.isSuccess ? "Success" : "Failure"}<br>
                         <strong>Total:</strong> ${skillCheck.total}<br>
-                        <strong>Buff/Punishment:</strong> ${buff ? buff.name : "None"}
-                        <strong>Additional Targets:</strong> ${(additionTargets?.length ?? 0) > 0 ? additionTargets.map(t => t.name).join(", ") : "None"}<br>
-                        <strong>Critical:</strong> ${skillCheck.isCritical ? "Yes" : "No"}<br>`
+                        <strong>Buff/Punishment:</strong> ${buff ? buff.name : "None"} <br>
+                        <strong>Description:</strong> ${buff.effect.description}
+                        <strong>Additional Targets:</strong> ${(additionTargets?.length ?? 0) > 0 ? additionTargets.map(t => t.name).join(", ") : "None"}<br>`
         });
     }
 }
