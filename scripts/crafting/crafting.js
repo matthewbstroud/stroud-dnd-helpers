@@ -30,7 +30,7 @@ export let craftingHelpers = {
     },
     "rollSkillCheck": async function _rollSkillCheck(actor, skill, dc, flavor, fastForward) {
         let skill5e = dnd5e.config.skills[skill];
-        flavor == flavor ?? `(DC ${dc}) ${skill5e.label} check against ${flavor}`;
+        flavor == flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
         fastForward = fastForward ?? true;
         let rollOptions = {
             targetValue: dc,
@@ -40,10 +40,20 @@ export let craftingHelpers = {
         };
 
         let roll = await actor.rollSkill(skill, rollOptions);
+        const bonus = (roll?.data?.skills?.[skill]?.total ?? 0);
+        const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
+        const minPossible = bonus + 1;
+        const maxPossible = bonus + 20;
+        const averageRoll = Math.floor((minPossible + maxPossible) / 2);
+        const actualRoll = roll.total - bonus;
         return { 
             "isCritical": roll.isCritical, 
-            "isSuccess": (roll.options?.success ?? roll.isSuccess ?? roll.total >= dc),
-            "total": roll.total
+            "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
+            "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
+            "total": roll.total,
+            "chanceOfSuccess": chanceOfSuccess,
+            "averageRoll": averageRoll,
+            "actualRoll": actualRoll,
         };
     }
 }

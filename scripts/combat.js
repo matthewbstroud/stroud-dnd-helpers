@@ -12,7 +12,7 @@ import { tagging } from "./utility/tagging.js";
 import { versioning } from "./versioning.js";
 import { folders } from "./folders/folders.js";
 import { importFromCompedium } from "./gm/gmFunctions.js";
-import { items } from "./items/items.js";
+import { heroicManeuvers } from "./homebrew/heroicManeuvers.js";
 
 export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
@@ -33,7 +33,8 @@ export let combat = {
             }
         }
     },
-    "getWeaponDamageTypes": getWeaponDamageTypes
+    "getWeaponDamageTypes": getWeaponDamageTypes,
+    "executeHeroicManeuver": heroicManeuvers.execute,
 };
 
 const AUTO_TARGET = "autoTarget";
@@ -45,8 +46,8 @@ async function toggleWallsBlockRanged() {
     await toggleMidiSetting(AUTO_TARGET, AUTO_TARGET_OFF, AUTO_TARGET_DEFAULT, wallsBlockRange);
     const messageContent = wallsBlockRange ? "Walls block range." : "Walls will not block range.";
     await toggleMacroIcon(
-        "toggleMidiWalls", 
-        wallsBlockRange, 
+        "toggleMidiWalls",
+        wallsBlockRange,
         "modules/stroud-dnd-helpers/images/icons/walls_block_range.webp",
         "modules/stroud-dnd-helpers/images/icons/walls_not_block.webp")
     await ChatMessage.create({
@@ -67,7 +68,7 @@ async function toggleMidiSetting(settingName, offValue, defaultValue, enable) {
     enable ??= false;
     let midiConfig = game.settings.get("midi-qol", "ConfigSettings");
     const currentSetting = foundry.utils.getProperty(midiConfig, settingName);
-    const isOn = currentSetting != offValue; 
+    const isOn = currentSetting != offValue;
     if (isOn && enable) {
         return true;
     }
@@ -332,9 +333,58 @@ async function applyAdhocDamage() {
     );
 }
 
+// borrowed from chrisPremades.utils.workflowUtils
+async function completeItemUse(item, config = {}, options = {}) {
+    let fixSets = false;
+    if (!options.asUser && !tokens.hasPermission(item.actor, game.userId)) {
+        options.asUser = tokens.firstOwner(item.actor, true);
+        options.checkGMStatus = true;
+        options.workflowData = true;
+        fixSets = true;
+    } else if (options.asUser && options.asUser !== game.userId) {
+        options.workflowData = true;
+        fixSets = true;
+    }
+    // TODO: Make use completeItemUseV2 instead, once everything's ready
+    let workflow = await MidiQOL.completeItemUse(item, config, options);
+    if (fixSets) {
+        if (workflow.failedSaves) workflow.failedSaves = new Set(workflow.failedSaves);
+        if (workflow.hitTargets) workflow.hitTargets = new Set(workflow.hitTargets);
+        if (workflow.targets) workflow.targets = new Set(workflow.targets);
+    }
+    return workflow;
+}
+
+// borrowed from chrisPremades.utils.workflowUtils
+async function syntheticItemRoll(item, targets, { options = {}, config = {}, userId, consumeUsage = false, consumeResources = false } = {}) {
+    let defaultConfig = {
+        consumeUsage,
+        consumeSpellSlot: false,
+        consume: {
+            resources: consumeResources
+        }
+    };
+    let autoRollDamage = MidiQOL.configSettings().autoRollDamage;
+    if (!['always', 'onHit'].includes(autoRollDamage)) autoRollDamage = 'onHit';
+    let defaultOptions = {
+        targetUuids: targets.map(i => i.document.uuid),
+        configureDialog: false,
+        ignoreUserTargets: true,
+        workflowOptions: {
+            autoRollDamage,
+            autoFastDamage: true,
+            autoRollAttack: true
+        }
+    };
+    options = foundry.utils.mergeObject(defaultOptions, options);
+    config = foundry.utils.mergeObject(defaultConfig, config);
+    if (userId) foundry.utils.setProperty(options, 'asUser', userId);
+    return await completeItemUse(item, config, options);
+}
+
 async function applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets) {
     const item = await createAdhocItem(adhocDamageType, damageType, damageDice, diceCount, saveData, targets);
-    return await chrisPremades.utils.workflowUtils.syntheticItemRoll(item, targets, { userId: game.userId });
+    return await syntheticItemRoll(item, targets, { userId: game.userId });
 }
 
 async function applyDamageLegacyMode(damageType, damageDice, diceCount, targets) {

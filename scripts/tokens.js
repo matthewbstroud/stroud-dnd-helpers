@@ -83,7 +83,7 @@ export let tokens = {
             return [];
         }
         console.log(scenesWithPlayerTokens);
-        if (preview) { 
+        if (preview) {
             return scenesWithPlayerTokens;
         }
         for (let scene of scenesWithPlayerTokens) {
@@ -109,6 +109,88 @@ export let tokens = {
         }
         let playerTokenIds = scene.tokens.filter((token) => token.actor && token.actor.folder?.id == playersFolder.id).map(t => t.id);
         await scene.deleteEmbeddedDocuments(Token.name, playerTokenIds);
+    },
+    "findNearby": function _findNearby(token, range, disposition, { includeIncapacitated = false, includeToken = false } = {}) {
+        let dispositionValue;
+        switch (disposition) {
+            case 'ally':
+                dispositionValue = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+                break;
+            case 'neutral':
+                dispositionValue = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+                break;
+            case 'enemy':
+                dispositionValue = CONST.TOKEN_DISPOSITIONS.HOSTILE;
+                break;
+            default:
+                dispositionValue = null;
+        }
+        return MidiQOL.findNearby(dispositionValue, token, range, { includeIncapacitated, includeToken }).filter(i => !i.document.hidden);
+    },
+    "gmID": function _gmID() {
+        let gmID = game.users.activeGM?.id ?? game.users.find(u => u.isTheGM)?.id;
+        let preferredGMName = game.settings.get('midi-qol', "PreferredGM");
+        if (preferredGMName !== 'none') {
+            let preferredGM = game.users.getName(preferredGMName);
+            if (preferredGM?.active) {
+                gmID = preferredGM.id;
+            }
+        }
+        return gmID;
+    },
+    "isTheGM": function _isTheGM() {
+        return this.gmID() === game.user.id;
+    },
+    "hasPermission": function _hasPermission(entity, userId) {
+        let user = game.users.get(userId);
+        if (!user) return false;
+        return entity.testUserPermission(user, 'OWNER');
+    },
+    "firstOwner": function _firstOwner(document, useId) {
+        if (!document) return;
+        let corrected = document instanceof TokenDocument ? document.actor : document instanceof Token ? document.document.actor : document;
+        let permissions = foundry.utils.getProperty(corrected ?? {}, 'ownership') ?? {};
+        let playerOwners = Object.entries(permissions).filter(([id, level]) => !game.users.get(id)?.isGM && game.users.get(id)?.active && level === 3).map(([id]) => id);
+        if (playerOwners.length > 0) return useId ? playerOwners[0] : game.users.get(playerOwners[0]);
+        return useId ? this.gmID() : game.users.get(this.gmID());
+    },
+    "rollSkillCheck": async function _rollSkillCheck(token, skill, dc, flavor, fastForward) {
+        let userID = this.firstOwner(token, true);
+        let skill5e = dnd5e.config.skills[skill];
+        flavor == flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
+        fastForward = fastForward ?? true;
+        let options = {
+            targetValue: dc,
+            fastForward: fastForward,
+            chatMessage: true,
+            flavor: flavor
+        };
+        let data = {
+            targetUuid: token.document.uuid,
+            request: 'skill',
+            ability: skill,
+            options
+        };
+
+        let roll = await MidiQOL.socket().executeAsUser('rollAbility', userID, data);
+        if (!roll) {
+            return null;
+        }
+        const bonus = (roll?.data?.skills?.[skill]?.total ?? 0);
+        const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
+        const minPossible = bonus + 1;
+        const maxPossible = bonus + 20;
+        const averageRoll = Math.floor((minPossible + maxPossible) / 2);
+        const actualRoll = roll.total - bonus;
+        return {
+            "isCritical": roll.isCritical,
+            "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
+            "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
+            "total": roll.total,
+            "chanceOfSuccess": chanceOfSuccess,
+            "averageRoll": averageRoll,
+            "actualRoll": actualRoll,
+        };
     }
 };
 

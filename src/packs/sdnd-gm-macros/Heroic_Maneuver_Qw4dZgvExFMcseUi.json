@@ -1,0 +1,31 @@
+{
+  "name": "Heroic Maneuver",
+  "type": "script",
+  "flags": {
+    "advanced-macros": {
+      "runForSpecificUser": ""
+    }
+  },
+  "command": "await stroudDnD.combat.executeHeroicManeuver()",
+  "img": "modules/stroud-dnd-helpers/images/icons/heroic_maneuver.webp",
+  "author": "6yhz13iFYYklKtgA",
+  "scope": "global",
+  "folder": "gI24D8dwAmCgrhfH",
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1754194768197,
+    "modifiedTime": 1754194768197,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "Qw4dZgvExFMcseUi",
+  "sort": 0,
+  "_key": "!macros!Qw4dZgvExFMcseUi"
+}

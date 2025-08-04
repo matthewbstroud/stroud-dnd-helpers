@@ -1,0 +1,22 @@
+{
+  "name": "Stroud's DnD Helpers",
+  "sorting": "a",
+  "folder": null,
+  "type": "JournalEntry",
+  "_id": "SmX4olY04qPgkdCZ",
+  "description": "",
+  "sort": 0,
+  "color": "#2891fa",
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1754310276891,
+    "modifiedTime": 1754310287997,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!SmX4olY04qPgkdCZ"
+}

@@ -63,6 +63,18 @@ export let actors = {
         }
         await Actor.updateDocuments(updates);
         return updates;
+    },
+    "removeEffect": async function _removeEffects(actorUuid, effectId) {
+        if (!actorUuid || !effectId) {
+            return;
+        }
+        await this.removeEffects(actorUuid, [effectId]);
+    },
+    "removeEffects": async function _removeEffects(actorUuid, effectIds) {
+        if (!actorUuid || !effectIds || effectIds.length == 0) {
+            return;
+        }
+        await gmFunctions.removeActorEffects(actorUuid, effectIds);
     }
 }
 

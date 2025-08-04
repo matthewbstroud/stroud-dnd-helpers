@@ -151,6 +151,39 @@ At 75% max carried weight you will have: (-4 to AC and Disadvantage on Attack ro
 			'requiresReload': true
 		},
 		'getValue': () =>  getModuleSettingValue('OnDamageEvents')
+	},
+	'HM_LowDC': {
+		'config': {
+			'name': 'Heroic Maneuver Low Difficulty DC',
+			'hint': 'Sets the DC for low difficulty manuevers.',
+			'scope': 'world',
+			'config': true,
+			'type': Number,
+			'default': 15
+		},
+		'getValue': () =>  getModuleSettingValue('HM_LowDC')
+	},
+	'HM_IntermediatehDC': {
+		'config': {
+			'name': 'Heroic Maneuver Intermediate Difficulty DC',
+			'hint': 'Sets the DC for intermediate difficulty manuevers.',
+			'scope': 'world',
+			'config': true,
+			'type': Number,
+			'default': 17
+		},
+		'getValue': () =>  getModuleSettingValue('HM_IntermediatehDC')
+	},
+	'HM_HighDC': {
+		'config': {
+			'name': 'Heroic Maneuver High Difficulty DC',
+			'hint': 'Sets the DC high low difficulty manuevers.',
+			'scope': 'world',
+			'config': true,
+			'type': Number,
+			'default': 19
+		},
+		'getValue': () =>  getModuleSettingValue('HM_HighDC')
 	}
 };
 
