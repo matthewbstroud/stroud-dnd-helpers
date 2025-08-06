@@ -20,6 +20,9 @@ export let tokens = {
             if (token.actor.effects.filter(e => e.name == "Dead").length > 0) {
                 return true;
             }
+            if (token.document?.hidden ?? false) {
+                return true;
+            }
 
             return false;
         }

@@ -1,3 +1,10 @@
+# v12.4.10
+# New Features
+- Add new feature description here.
+# Bug Fixes
+- Update FoundryVtt release automation.
+- Fix Twilight Domain
+- Add to combat should ignore hidden targets.
 # v12.4.9
 # New Features
 - Heroic Maneuvers [See README for details](documentation\heroic_maneuvers.md). 
@@ -632,4 +639,5 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
