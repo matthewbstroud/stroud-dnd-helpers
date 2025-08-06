@@ -1,33 +1,9 @@
 {
+  "folder": "YcCwvZw8ou9MVGEF",
   "name": "Channel Divinity: Twilight Sanctuary",
   "type": "feat",
+  "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
   "system": {
-    "description": {
-      "value": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{incapacitated} or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:\n- You grant it [[/roll 1d6   + @classes.cleric.levels]] temporary hit points.\n- You end one effect on it causing it to be @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{charmed} or @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{frightened}.\n<details>\n  <summary>\n    More Details\n  </summary>\n  <p>\n    </p><p><em>2nd-level Twilight Domain feature</em></p>\n<p>You can use your Channel Divinity to refresh your allies with soothing twilight.</p>\n<p>As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-foot radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.TpkZgLfxCmSndmpb]{incapacitated} or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:</p>\n<ul>\n<li>You grant it temporary hit points equal to 1d6 plus your cleric level.</li>\n<li>You end one effect on it causing it to be @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.zZaEBrKkr66OWJvD]{charmed} or @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.oreoyaFKnvZCrgij]{frightened}.</li>\n</ul>\n  <p></p>\n</details>",
-      "chat": ""
-    },
-    "source": {
-      "custom": "",
-      "revision": 1,
-      "rules": "2014"
-    },
-    "cover": null,
-    "crewed": false,
-    "uses": {
-      "max": "",
-      "spent": 0,
-      "recovery": []
-    },
-    "type": {
-      "value": "class",
-      "subtype": "channelDivinity"
-    },
-    "requirements": "",
-    "prerequisites": {
-      "level": null,
-      "repeatable": false
-    },
-    "properties": [],
     "activities": {
       "dnd5eactivity000": {
         "_id": "dnd5eactivity000",
@@ -43,7 +19,7 @@
             {
               "type": "itemUses",
               "value": "1",
-              "target": "jevMKYPCD3RtzGYd",
+              "target": "HLYTuB2njBo9rDva",
               "scaling": {}
             }
           ],
@@ -150,143 +126,34 @@
         "name": ""
       }
     },
+    "uses": {
+      "spent": 0,
+      "recovery": [],
+      "max": ""
+    },
+    "description": {
+      "value": "As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-ft. radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{incapacitated} or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:\n- You grant it [[/roll 1d6   + @classes.cleric.levels]] temporary hit points.\n- You end one effect on it causing it to be @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{charmed} or @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0]{frightened}.\n<details>\n  <summary>\n    More Details\n  </summary>\n  <p>\n    </p><p><em>2nd-level Twilight Domain feature</em></p>\n<p>You can use your Channel Divinity to refresh your allies with soothing twilight.</p>\n<p>As an action, you present your holy symbol, and a sphere of twilight emanates from you. The sphere is centered on you, has a 30-foot radius, and is filled with dim light. The sphere moves with you, and it lasts for 1 minute or until you are @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.TpkZgLfxCmSndmpb]{incapacitated} or die. Whenever a creature (including you) ends its turn in the sphere, you can grant that creature one of these benefits:</p>\n<ul>\n<li>You grant it temporary hit points equal to 1d6 plus your cleric level.</li>\n<li>You end one effect on it causing it to be @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.zZaEBrKkr66OWJvD]{charmed} or @Compendium[dnd5e.rules.w7eitkpD7QQTB6j0.JournalEntryPage.oreoyaFKnvZCrgij]{frightened}.</li>\n</ul>\n  <p></p>\n</details>",
+      "chat": ""
+    },
     "identifier": "channel-divinity-twilight-sanctuary",
+    "source": {
+      "revision": 1,
+      "rules": "2014",
+      "custom": ""
+    },
     "advancement": [],
-    "enchant": {}
-  },
-  "flags": {
-    "ddbimporter": {
-      "id": "2409733",
-      "entityTypeId": "222216831",
-      "componentId": 2996560,
-      "componentTypeId": 12168134,
-      "type": "class",
-      "class": "Cleric",
-      "subclass": "Twilight Domain",
-      "dndbeyond": {
-        "levelScale": null,
-        "levelScales": [],
-        "limitedUse": [
-          {
-            "level": null,
-            "uses": 1
-          }
-        ]
-      },
-      "importId": "8DPcDRD31AqyJXSh",
-      "overrideId": "NONE",
-      "ignoreIcon": false,
-      "ignoreItemImport": true,
-      "ignoreItemForChrisPremades": true,
-      "retainResourceConsumption": false
+    "cover": null,
+    "crewed": false,
+    "enchant": {},
+    "prerequisites": {
+      "level": null,
+      "repeatable": false
     },
-    "infusions": {
-      "infused": false
-    },
-    "obsidian": {
-      "source": {
-        "type": "class",
-        "text": "Cleric"
-      }
-    },
-    "core": {
-      "sourceId": "Actor.asd4WPupilrDVJZT.Item.G0HaalgqmTqNv9PE"
-    },
-    "midi-qol": {
-      "effectActivation": false,
-      "onUseMacroName": "[preItemRoll]function.stroudDnD.features.TwilightDomain.itemMacro,[postActiveEffects]function.stroudDnD.features.TwilightDomain.itemMacro",
-      "rollAttackPerTarget": "default",
-      "itemCondition": "",
-      "effectCondition": "",
-      "removeAttackDamageButtons": "default",
-      "reactionCondition": "",
-      "otherCondition": ""
-    },
-    "midiProperties": {
-      "nodam": false,
-      "fulldam": false,
-      "halfdam": false,
-      "autoFailFriendly": false,
-      "autoSaveFriendly": false,
-      "rollOther": false,
-      "critOther": false,
-      "offHandWeapon": false,
-      "magicdam": false,
-      "magiceffect": false,
-      "concentration": false,
-      "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "confirmTargets": "default",
-      "noConcentrationCheck": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "cf": {
-      "id": "temp_81rnc31mf7e"
-    },
-    "itemacro": {
-      "macro": {
-        "name": "Twilight Sanctuary (SDND)",
-        "type": "script",
-        "scope": "global",
-        "command": "",
-        "author": "6yhz13iFYYklKtgA",
-        "_id": null,
-        "img": "icons/svg/dice-target.svg",
-        "folder": null,
-        "sort": 0,
-        "ownership": {
-          "default": 0
-        },
-        "flags": {},
-        "_stats": {
-          "systemId": null,
-          "systemVersion": null,
-          "coreVersion": null,
-          "createdTime": null,
-          "modifiedTime": null,
-          "lastModifiedBy": null
-        }
-      }
-    },
-    "stroud-dnd-helpers": {
-      "importedItem": true
-    },
-    "chris-premades": {
-      "info": {
-        "source": "stroud-dnd-helpers.SDND-Features"
-      }
-    },
-    "dnd5e": {
-      "dependents": [
-        {
-          "uuid": "Actor.QqaomANo6iwTBy1i.ActiveEffect.VV4HEhK8d3lq5m3Y"
-        },
-        {
-          "uuid": "Scene.bQfXSCiV74IBNR6q.Token.zK1majhDRcmCjvHk.Actor.xD3W92yllEWu4fo3.ActiveEffect.gJhXvbRNyG4lq67Z"
-        },
-        {
-          "uuid": "Actor.MmzIpQnHH4i1YsgR.ActiveEffect.hLupHkhYZrt4kBpr"
-        },
-        {
-          "uuid": "Actor.oPVFhNNpT9dAVClD.ActiveEffect.VnVI0ogo9ZQux727"
-        },
-        {
-          "uuid": "Actor.yvlRsNlUb5HyACAY.ActiveEffect.ZrqJGcJclhzlJElR"
-        },
-        {
-          "uuid": "Actor.jtBvVNZX2aUjWjCN.ActiveEffect.uqFEAj3sNAOVSUDz"
-        },
-        {
-          "uuid": "Actor.Rf8lOUbJ5tgx4oam.ActiveEffect.L5c6HHuxu5t5dSDV"
-        }
-      ],
-      "riders": {
-        "activity": [],
-        "effect": []
-      }
+    "properties": [],
+    "requirements": "",
+    "type": {
+      "value": "class",
+      "subtype": "channelDivinity"
     }
   },
   "effects": [
@@ -343,22 +210,19 @@
         "dnd5e": {
           "dependents": [
             {
-              "uuid": "Scene.bQfXSCiV74IBNR6q.Token.zK1majhDRcmCjvHk.Actor.xD3W92yllEWu4fo3.ActiveEffect.dKxtvJp25wieO4Y0"
+              "uuid": "Actor.RmqlHsEZAE62uZKY.ActiveEffect.nfiKKNS9Fr7HsQR7"
             },
             {
-              "uuid": "Actor.QqaomANo6iwTBy1i.ActiveEffect.e6dA9ARMwWl7nlIu"
+              "uuid": "Actor.zQvXFLydFdBTEOe6.ActiveEffect.9ovlVPMBZwNRstlS"
             },
             {
-              "uuid": "Actor.MmzIpQnHH4i1YsgR.ActiveEffect.5mO2OCAxzqyvsQ44"
+              "uuid": "Actor.uLsfn9Be4N1bYoa4.ActiveEffect.lNQZEAu7aHV1H4Xf"
             },
             {
-              "uuid": "Actor.yvlRsNlUb5HyACAY.ActiveEffect.Qg3TH1CLdTEDedlg"
+              "uuid": "Actor.9R5AxHttkXnpAqVO.ActiveEffect.65Fgd92aUtdm9Llf"
             },
             {
-              "uuid": "Actor.jtBvVNZX2aUjWjCN.ActiveEffect.yi5nMBt3liJWuEpV"
-            },
-            {
-              "uuid": "Actor.FOFchNq2M2MM40gR.ActiveEffect.5bZhfjeWpKaNAxSR"
+              "uuid": "Actor.r7cQDbZaXo8g5dvk.ActiveEffect.je3DQaFPrVQHDjI6"
             }
           ]
         }
@@ -380,7 +244,7 @@
       "type": "base",
       "system": {},
       "sort": 0,
-      "_key": "!items.effects!QU4vTGK2TvmKt0do.yrXsRONV1kdSlkuW"
+      "_key": "!items.effects!pGHuMWHWrKYsutrE.yrXsRONV1kdSlkuW"
     },
     {
       "changes": [
@@ -463,14 +327,15 @@
           "onlyOnce": false,
           "nameOverride": "",
           "customCheck": "",
-          "wallsBlock": "system"
+          "wallsBlock": "system",
+          "statuses": []
         },
         "effectmacro": {
           "onDelete": {
-            "script": "await stroudDnD.features.TwilightDomain.finalTurn(origin.parent.uuid, actor.uuid, effect?.name);\nawait stroudDnD.features.TwilightDomain.removeTwilightEffects(origin.parent.uuid);"
+            "script": "const originActorUuid = origin.actor?.uuid ?? origin.parent.uuid;\nawait stroudDnD.features.TwilightDomain.finalTurn(originActorUuid, actor.uuid, effect?.name);\nawait stroudDnD.features.TwilightDomain.removeTwilightEffects(originActorUuid);"
           },
           "onTurnEnd": {
-            "script": "await stroudDnD.features.TwilightDomain.turnEnd(origin.parent.uuid, actor.uuid);"
+            "script": "const originActorUuid = origin.actor?.uuid ?? origin.parent.uuid;\nawait stroudDnD.features.TwilightDomain.turnEnd(originActorUuid, actor.uuid);"
           }
         },
         "autoanimations": {
@@ -621,6 +486,11 @@
           "isEnabled": true,
           "isCustomized": true,
           "version": 5
+        },
+        "dnd5e": {
+          "riders": {
+            "statuses": []
+          }
         }
       },
       "name": "TSAura",
@@ -640,26 +510,165 @@
       "type": "base",
       "system": {},
       "sort": 0,
-      "_key": "!items.effects!QU4vTGK2TvmKt0do.HaKCcsmweDXk6ayn"
+      "_key": "!items.effects!pGHuMWHWrKYsutrE.HaKCcsmweDXk6ayn"
     }
   ],
-  "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
+  "flags": {
+    "ddbimporter": {
+      "id": "2409733",
+      "entityTypeId": "222216831",
+      "componentId": 2996560,
+      "componentTypeId": 12168134,
+      "type": "class",
+      "class": "Cleric",
+      "subclass": "Twilight Domain",
+      "dndbeyond": {
+        "levelScale": null,
+        "levelScales": [],
+        "limitedUse": [
+          {
+            "level": null,
+            "uses": 1
+          }
+        ]
+      },
+      "importId": "8DPcDRD31AqyJXSh",
+      "overrideId": "NONE",
+      "ignoreIcon": false,
+      "ignoreItemImport": true,
+      "ignoreItemForChrisPremades": true,
+      "retainResourceConsumption": false
+    },
+    "infusions": {
+      "infused": false
+    },
+    "obsidian": {
+      "source": {
+        "type": "class",
+        "text": "Cleric"
+      }
+    },
+    "core": {
+      "sourceId": "Actor.asd4WPupilrDVJZT.Item.G0HaalgqmTqNv9PE"
+    },
+    "midi-qol": {
+      "effectActivation": false,
+      "onUseMacroName": "[preItemRoll]function.stroudDnD.features.TwilightDomain.itemMacro,[postActiveEffects]function.stroudDnD.features.TwilightDomain.itemMacro",
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
+    },
+    "midiProperties": {
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "rollOther": false,
+      "critOther": false,
+      "offHandWeapon": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "concentration": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false,
+      "confirmTargets": "default",
+      "noConcentrationCheck": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
+    },
+    "cf": {
+      "id": "temp_81rnc31mf7e"
+    },
+    "itemacro": {
+      "macro": {
+        "name": "Twilight Sanctuary (SDND)",
+        "type": "script",
+        "scope": "global",
+        "command": "",
+        "author": "6yhz13iFYYklKtgA",
+        "_id": null,
+        "img": "icons/svg/dice-target.svg",
+        "folder": null,
+        "sort": 0,
+        "ownership": {
+          "default": 0
+        },
+        "flags": {},
+        "_stats": {
+          "systemId": null,
+          "systemVersion": null,
+          "coreVersion": null,
+          "createdTime": null,
+          "modifiedTime": null,
+          "lastModifiedBy": null
+        }
+      }
+    },
+    "stroud-dnd-helpers": {
+      "importedItem": true
+    },
+    "chris-premades": {
+      "info": {
+        "source": "stroud-dnd-helpers.SDND-Features"
+      }
+    },
+    "dnd5e": {
+      "dependents": [
+        {
+          "uuid": "Actor.QqaomANo6iwTBy1i.ActiveEffect.VV4HEhK8d3lq5m3Y"
+        },
+        {
+          "uuid": "Scene.bQfXSCiV74IBNR6q.Token.zK1majhDRcmCjvHk.Actor.xD3W92yllEWu4fo3.ActiveEffect.gJhXvbRNyG4lq67Z"
+        },
+        {
+          "uuid": "Actor.MmzIpQnHH4i1YsgR.ActiveEffect.hLupHkhYZrt4kBpr"
+        },
+        {
+          "uuid": "Actor.oPVFhNNpT9dAVClD.ActiveEffect.VnVI0ogo9ZQux727"
+        },
+        {
+          "uuid": "Actor.yvlRsNlUb5HyACAY.ActiveEffect.ZrqJGcJclhzlJElR"
+        },
+        {
+          "uuid": "Actor.jtBvVNZX2aUjWjCN.ActiveEffect.uqFEAj3sNAOVSUDz"
+        },
+        {
+          "uuid": "Actor.Rf8lOUbJ5tgx4oam.ActiveEffect.L5c6HHuxu5t5dSDV"
+        }
+      ],
+      "riders": {
+        "activity": [],
+        "effect": []
+      }
+    },
+    "exportSource": {
+      "world": "sdnd-cos-tuesday",
+      "system": "dnd5e",
+      "coreVersion": "12.343",
+      "systemVersion": "4.4.2"
+    }
+  },
   "_stats": {
     "compendiumSource": "Actor.asd4WPupilrDVJZT.Item.G0HaalgqmTqNv9PE",
     "duplicateSource": null,
     "coreVersion": "12.343",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "createdTime": 1750250758957,
-    "modifiedTime": 1750250759001,
+    "createdTime": 1754454729897,
+    "modifiedTime": 1754454729965,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
-  "folder": "YcCwvZw8ou9MVGEF",
-  "_id": "QU4vTGK2TvmKt0do",
+  "_id": "pGHuMWHWrKYsutrE",
   "sort": 100000,
   "ownership": {
     "default": 0,
     "6yhz13iFYYklKtgA": 3
   },
-  "_key": "!items!QU4vTGK2TvmKt0do"
+  "_key": "!items!pGHuMWHWrKYsutrE"
 }

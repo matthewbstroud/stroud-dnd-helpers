@@ -118,6 +118,9 @@ export let twilightDomain = {
         }
 
         let choice = await twilightUtil.getUserChoice(actor);
+        if (!choice) {
+            return;
+        }
         switch (choice) {
             case "heal":
                 await twilightUtil.applyTempHP(caster, actor);

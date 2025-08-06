@@ -133,6 +133,7 @@ async function startFilteredCombat() {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
     }
+    SimpleCalendar?.api?.pauseClock();
     tokens.releaseInvalidTokens(false);
     await TokenDocument.createCombatants(canvas.tokens.controlled);
     await game.combat.rollNPC();
