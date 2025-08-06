@@ -154,8 +154,38 @@ function itemHandler(item, scope, action) {
     action(item, scope);
 }
 
+async function resolveConsumption(item) {
+    let actor = item.parent;
+    let itemData = foundry.utils.duplicate(item.toObject());
+    
+    let activities = Object.values(itemData.system?.activities ?? {})
+        .filter(a => a.consumption?.targets.find(t => t.type == "itemUses" && t.target.includes("wireup:")));
+    if (!activities || activities.length === 0) {
+        return;
+    }
+    for (let activity of activities) {
+        for (let target of activity.consumption.targets) {
+            if (target.type == "itemUses" && target.target.includes("wireup:")) {
+                const identifier = target.target.split(":").pop();
+                const item = actor.items.find(i => i.system?.identifier === identifier);
+                if (!item) {
+                    ui.notifications.error(`Couldn't find item with identifier ${identifier} trying to resolve ${target.target}`);
+                    continue;
+                }
+                target.target = item.id;
+            }
+        }
+        let path = 'system.activities.' + activity._id + '.consumption.targets';
+        await item.update({[path]: itemData.system.activities[activity._id].consumption.targets});
+    }
+}
 
 function createItemHandler(item, options, id) {
+    Promise.resolve(resolveConsumption(item))
+        .catch(error => {
+            ui.notifications.error(`Error resolving consumption for item ${item.name}: ${error.message}`);
+        }
+    );
     mounts.hooks.onCreateItem(item, options, id);
     itemHandler(item, 'createItemHandler', dbCheckItemParentWeight);
 }

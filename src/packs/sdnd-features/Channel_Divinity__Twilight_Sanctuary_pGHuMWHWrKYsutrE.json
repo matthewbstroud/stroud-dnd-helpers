@@ -19,8 +19,7 @@
             {
               "type": "itemUses",
               "value": "1",
-              "target": "HLYTuB2njBo9rDva",
-              "scaling": {}
+              "target": "wireup:channel-divinity"
             }
           ],
           "scaling": {
@@ -123,7 +122,12 @@
           "postRemoveConditionText": ""
         },
         "otherActivityId": "none",
-        "name": ""
+        "name": "",
+        "img": "",
+        "appliedEffects": [
+          "yrXsRONV1kdSlkuW",
+          "HaKCcsmweDXk6ayn"
+        ]
       }
     },
     "uses": {
@@ -338,6 +342,11 @@
             "script": "const originActorUuid = origin.actor?.uuid ?? origin.parent.uuid;\nawait stroudDnD.features.TwilightDomain.turnEnd(originActorUuid, actor.uuid);"
           }
         },
+        "dnd5e": {
+          "riders": {
+            "statuses": []
+          }
+        },
         "autoanimations": {
           "id": "2b71406a-f03f-4619-9f0a-fb741e2fd731",
           "label": "TSAura",
@@ -376,7 +385,7 @@
               "opacity": 0.25,
               "playbackRate": 1,
               "playOn": "source",
-              "size": 12,
+              "size": 16,
               "tint": false,
               "tintColor": "#FFFFFF",
               "tintSaturate": 0,
@@ -486,11 +495,6 @@
           "isEnabled": true,
           "isCustomized": true,
           "version": 5
-        },
-        "dnd5e": {
-          "riders": {
-            "statuses": []
-          }
         }
       },
       "name": "TSAura",
@@ -503,8 +507,8 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": null,
-        "lastModifiedBy": null
+        "modifiedTime": 1754492979980,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "type": "base",
@@ -661,7 +665,7 @@
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1754454729897,
-    "modifiedTime": 1754454729965,
+    "modifiedTime": 1754483898659,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "_id": "pGHuMWHWrKYsutrE",
