@@ -52,7 +52,7 @@
     },
     "uses": {
       "value": null,
-      "max": "",
+      "max": "10",
       "per": null,
       "recovery": [],
       "prompt": true,
@@ -269,7 +269,8 @@
     },
     "identifier": "staff-of-defense",
     "attuned": false,
-    "ammunition": {}
+    "ammunition": {},
+    "mastery": ""
   },
   "effects": [
     {
@@ -464,7 +465,7 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1720384789643,
-    "modifiedTime": 1750248822340,
+    "modifiedTime": 1754754166791,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

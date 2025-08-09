@@ -1,3 +1,8 @@
+# v12.4.11
+# New Features
+- Auto wireup for Activity Consumption
+# Bugg Fixes
+- Fix Staff of Defense Spell Consumption
 # v12.4.10
 # New Features
 - Add new feature description here.
@@ -639,5 +644,6 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
