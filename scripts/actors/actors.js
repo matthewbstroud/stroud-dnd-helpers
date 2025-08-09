@@ -116,23 +116,22 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
 }
 
 function anyDifferences(actor, hp, acBonus, hitBonus, dcBonus) {
-    if (!actor || !hp || !hp.max || !hp.value) {
+    if (!actor) {
         return false;
     }
-    if (hp.value != hp.max) {
-        return true;
-    }
-    if (actor.system.attributes.ac.bonus != acBonus) {
+    if (actor.system?.attributes?.hp?.max != hp) {
         return true;
     }
     if (actor.system?.attributes?.ac?.calc == "flat") {
         return true;
     }
-    if (actor.system.bonuses.msak != hitBonus ||
-        actor.system.bonuses.mwak != hitBonus ||
-        actor.system.bonuses.rsak != hitBonus ||
-        actor.system.bonuses.rwak != hitBonus ||
-        actor.system.bonuses.spell.dc != dcBonus) {
+    let effect = actor.effects.find(e => e.name === BUFF_NPC);
+    if (effect && (effect.changes[0].value != acBonus ||
+        effect.changes[1].value != hitBonus ||
+        effect.changes[2].value != dcBonus)) {
+        return true;
+    }
+    if (!effect && (acBonus != 0 || hitBonus != 0 || dcBonus != 0)) {
         return true;
     }
     return false;
@@ -161,7 +160,6 @@ async function applyBuff(actor, buff) {
     }
     let existingEffect = actor.effects.find(e => e.name === buff.name);
     if (existingEffect) {
-        console.log(`Updating ${buff.name} on  ${actor.name}.`);
         await actor.updateEmbeddedDocuments(ActiveEffect.name, [
             {
                 "_id": existingEffect._id,
@@ -190,7 +188,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBo
     }
     for (let npc of npcs) {
         const hp = npc.system?.attributes?.hp;
-
+        let actorUpdateRequired = false;
         const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
         let maxHp = Math.floor(eval(rollFormula));
         if (isNaN(maxHp)) {
@@ -199,38 +197,46 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBo
         if (mod > 0) {
             maxHp = Math.floor(maxHp * mod);
         }
-        if (!anyDifferences(npc, hp, acBonus, hitBonus, dcBonus)) {
+        if (!anyDifferences(npc, maxHp, acBonus, hitBonus, dcBonus)) {
             continue;
         }
-        console.log(`Updating ${npc.name}: hp from ${hp.max} to ${maxHp}...`);
+        console.log(`Applying changes to ${npc.name}`);
+        if (npc.system?.attributes?.hp?.max != maxHp) {
+            console.log(`   Updating ${npc.name}: hp from ${hp.max} to ${maxHp}...`);
+            actorUpdateRequired = true;
+        }
         let acCalc = npc.system?.attributes?.ac?.calc ?? "flat";
         if (acCalc === "flat") {
-            console.log(`Updating ${npc.name}: ac type from ${acCalc} to natural...`);
+            console.log(`   Updating ${npc.name}: ac type from ${acCalc} to natural...`);
             acCalc = "natural";
+            actorUpdateRequired = true;
         }
-
-        await npc.update({
-            "system": {
-                "attributes": {
-                    "ac": {
-                        "calc": acCalc
-                    },
-                    "hp": {
-                        "max": maxHp,
-                        "value": maxHp
+        if (actorUpdateRequired) {
+            await npc.update({
+                "system": {
+                    "attributes": {
+                        "ac": {
+                            "calc": acCalc
+                        },
+                        "hp": {
+                            "max": maxHp,
+                            "value": maxHp
+                        }
                     }
                 }
-            }
-        });
-        if (acBonus === 0 &&  hitBonus === 0 && dcBonus == 0) {
+            });
+        }
+        if (acBonus === 0 && hitBonus === 0 && dcBonus == 0) {
             let effect = npc.effects?.find(e => e.name == BUFF_NPC);
             if (effect) {
+                console.log(`   Removing ${BUFF_NPC} effect...`);
                 await gmFunctions.removeActorEffects(npc.uuid, [effect.id]);
             }
         }
         else {
             let buff = await getBuffEffect(hitBonus, acBonus, dcBonus);
             await applyBuff(npc, buff);
+            console.log(`   Applying ${BUFF_NPC} with acBonus=${acBonus}, hitBonus=${hitBonus}, spellDC=${dcBonus}`);
         }
 
     }
@@ -522,6 +528,8 @@ function renderSheet(sheet, form, data) {
     }
 }
 
+const allowPrepModes = ['innate', 'atwill'];
+
 function applyUsableFilter(actor, enabled) {
     if (!enabled) {
         $("section.spells-list li.item").removeAttr("hidden", "hidden");
@@ -529,7 +537,7 @@ function applyUsableFilter(actor, enabled) {
     }
     let usableSpellIds = actor.items
         .filter(
-            i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || i.system.preparation?.mode == "innate" ||
+            i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || allowPrepModes.includes(i.system.preparation?.mode) ||
                 (i.system.properties.has("ritual") && actor.classes?.wizard))
         ).map(i => `li[data-item-id='${i._id}']`)
         ?.join(", ") ?? "";
@@ -584,54 +592,75 @@ async function promptForBuff(callback) {
     padding: 5px 0;
     margin-left: 10px;
     border-radius: 6px;
-    
-    /* Position the tooltip text - see examples below! */
     position: absolute;
     z-index: 1;
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
+
+/* Grid layout for form */
+.form-grid {
+    display: grid;
+    grid-template-columns: 120px 60px 40px;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+}
+
+.form-label {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.form-input {
+    width: 100%;
+}
+
+.form-tooltip {
+    justify-self: start;
+}
 </style>    
-<div style="display: flex; flex-wrap: wrap; width: 100%; margin: 10px 0px 10px 0px">
-    <label for="buffUseMax" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Use Max:</label>
-    <select name="buffUseMax" id="buffUseMax">
+
+<div class="form-grid">
+    <label for="buffUseMax" class="form-label">Use Max:</label>
+    <select name="buffUseMax" id="buffUseMax" class="form-input">
         <option value="True" selected>Yes</option>
         <option value="False">No</option>
     </select>
-    <div class="tooltip">
+    <div class="tooltip form-tooltip">
+        <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">No will use the average HP as the starting number.</span>
-        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
     </div>
-    <div style="flex-basis: 100%; height: 10px;"></div>
-    <label for="buffMultiplier" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Multiplier:</label>
-    <input type="number" id="buffMultiplier" name="buffMultiplier" value="1.0" min="0.1" style="width: 40px;" />
-    <div class="tooltip">
+
+    <label for="buffMultiplier" class="form-label">Multiplier:</label>
+    <input type="number" id="buffMultiplier" name="buffMultiplier" value="1.0" min="0.1" class="form-input" />
+    <div class="tooltip form-tooltip">
+        <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">1.5 would increase by 50%<br/>0.5 would decrease by 50%</span>
-        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
     </div>
-    <div style="flex-basis: 100%; height: 10px;"></div>
-    <label for="buffHitBonus" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Hit Bonus:</label>
-    <input type="number" id="buffHitBonus" name="buffHitBonus" value="0" style="width: 40px;" />
-    <div class="tooltip">
+
+    <label for="buffHitBonus" class="form-label">Hit Bonus:</label>
+    <input type="number" id="buffHitBonus" name="buffHitBonus" value="0" class="form-input" />
+    <div class="tooltip form-tooltip">
+        <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to hit.</span>
-        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
     </div>
-    <div style="flex-basis: 100%; height: 10px;"></div>
-    <label for="buffAcBonus" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Armor Bonus:</label>
-    <input type="number" id="buffAcBonus" name="buffAcBonus" value="0" style="width: 40px;" />
-    <div class="tooltip">
+
+    <label for="buffAcBonus" class="form-label">Armor Bonus:</label>
+    <input type="number" id="buffAcBonus" name="buffAcBonus" value="0" class="form-input" />
+    <div class="tooltip form-tooltip">
+        <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to armor class.</span>
-        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
     </div>
-    <div style="flex-basis: 100%; height: 10px;"></div>
-    <label for="buffDcBonus" style="white-space: nowrap; margin: 4px 10px 0px 10px;">DC Bonus:</label>
-    <input type="number" id="buffDcBonus" name="buffDcBonus" value="0" style="width: 40px;" />
-    <div class="tooltip">
+
+    <label for="buffDcBonus" class="form-label">DC Bonus:</label>
+    <input type="number" id="buffDcBonus" name="buffDcBonus" value="0" class="form-input" />
+    <div class="tooltip form-tooltip">
+        <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to spell DC.</span>
-        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
     </div>
 </div>
 `;

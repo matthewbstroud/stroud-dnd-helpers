@@ -32,17 +32,20 @@
       "type": "",
       "prompt": true,
       "affects": {
-        "choice": false
+        "choice": false,
+        "type": ""
       },
       "template": {
         "units": "ft",
-        "contiguous": false
+        "contiguous": false,
+        "type": ""
       }
     },
     "range": {
       "value": null,
       "long": null,
-      "units": "touch"
+      "units": "touch",
+      "special": ""
     },
     "uses": {
       "value": null,
@@ -116,11 +119,10 @@
           "targets": [
             {
               "type": "itemUses",
-              "target": "",
               "value": "1",
+              "target": "Compendium.stroud-dnd-helpers.SDND-Items.Item.2AecB30cLjnbeuuk",
               "scaling": {
-                "mode": "",
-                "formula": ""
+                "mode": ""
               }
             }
           ],
@@ -207,7 +209,12 @@
           "preRemoveConditionText": "",
           "postRemoveConditionText": ""
         },
-        "otherActivityId": "none"
+        "otherActivityId": "none",
+        "name": "",
+        "img": "",
+        "appliedEffects": [
+          "4z9i1uv6rbf29dmk"
+        ]
       }
     },
     "identifier": "mage-armor-staff-of-defense"
@@ -336,7 +343,10 @@
       "onUseMacroName": "",
       "rollAttackPerTarget": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "midiProperties": {
       "nodam": false,
@@ -377,7 +387,7 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1685293916997,
-    "modifiedTime": 1750248834307,
+    "modifiedTime": 1754753474621,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null
