@@ -1,8 +1,6 @@
 # v12.4.11
 # New Features
-- Add new feature description here.
-# Bug Fixes
-- Fix bug description here.
+- Auto wireup for Activity Consumption
 # v12.4.10
 # New Features
 - Add new feature description here.

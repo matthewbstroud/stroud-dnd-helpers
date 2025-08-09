@@ -8,6 +8,7 @@ import { numbers } from "../utility/numbers.js";
 import { mounts } from "../mounts/mounts.js";
 import { versioning } from "../versioning.js";
 
+const BUFF_NPC = "Buff NPC";
 const DIE_MATCH = /(\d+)d(\d+)/g;
 export let actors = {
     "ensureActor": ensureActor,
@@ -114,7 +115,70 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
     }
 }
 
-async function buffActors(actorType, useMax, multiplier) {
+function anyDifferences(actor, hp, acBonus, hitBonus, dcBonus) {
+    if (!actor || !hp || !hp.max || !hp.value) {
+        return false;
+    }
+    if (hp.value != hp.max) {
+        return true;
+    }
+    if (actor.system.attributes.ac.bonus != acBonus) {
+        return true;
+    }
+    if (actor.system?.attributes?.ac?.calc == "flat") {
+        return true;
+    }
+    if (actor.system.bonuses.msak != hitBonus ||
+        actor.system.bonuses.mwak != hitBonus ||
+        actor.system.bonuses.rsak != hitBonus ||
+        actor.system.bonuses.rwak != hitBonus ||
+        actor.system.bonuses.spell.dc != dcBonus) {
+        return true;
+    }
+    return false;
+}
+
+async function getBuffEffect(hitBonus, acBonus, dcBonus) {
+    let buffNpc = await items.getItemFromCompendium(
+        sdndConstants.PACKS.COMPENDIUMS.ITEM.SPELLS,
+        BUFF_NPC, true, null);
+    if (!buffNpc) {
+        buffNpc = game.items.find(i => i.name == BUFF_NPC);
+    }
+    if (!buffNpc) {
+        throw new Error(`${BUFF_NPC} item not found in compendium.`);
+    }
+    let buffEffect = foundry.utils.duplicate(buffNpc.effects.find(e => e.name == BUFF_NPC));
+    buffEffect.changes[0].value = buffEffect.changes[0].value.replace("sdnd.modifier", acBonus);
+    buffEffect.changes[1].value = buffEffect.changes[1].value.replace("sdnd.modifier", hitBonus);
+    buffEffect.changes[2].value = buffEffect.changes[2].value.replace("sdnd.modifier", dcBonus);
+    return buffEffect;
+}
+
+async function applyBuff(actor, buff) {
+    if (!actor || !buff) {
+        return;
+    }
+    let existingEffect = actor.effects.find(e => e.name === buff.name);
+    if (existingEffect) {
+        console.log(`Updating ${buff.name} on  ${actor.name}.`);
+        await actor.updateEmbeddedDocuments(ActiveEffect.name, [
+            {
+                "_id": existingEffect._id,
+                "changes": (buff.changes)
+            }
+        ]);
+        return true;
+    }
+    await gmFunctions.createEffects(actor.uuid, [buff]);
+    return true;
+}
+
+async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBonus) {
+    hitBonus ??= 0;
+    acBonus ??= 0;
+    dcBonus ??= 0;
+
     await mounts.buffMounts(useMax, multiplier);
     let mod = Number.parseFloat(multiplier);
     if (!mod) {
@@ -135,13 +199,22 @@ async function buffActors(actorType, useMax, multiplier) {
         if (mod > 0) {
             maxHp = Math.floor(maxHp * mod);
         }
-        if (hp.value == maxHp) {
+        if (!anyDifferences(npc, hp, acBonus, hitBonus, dcBonus)) {
             continue;
         }
         console.log(`Updating ${npc.name}: hp from ${hp.max} to ${maxHp}...`);
+        let acCalc = npc.system?.attributes?.ac?.calc ?? "flat";
+        if (acCalc === "flat") {
+            console.log(`Updating ${npc.name}: ac type from ${acCalc} to natural...`);
+            acCalc = "natural";
+        }
+
         await npc.update({
             "system": {
                 "attributes": {
+                    "ac": {
+                        "calc": acCalc
+                    },
                     "hp": {
                         "max": maxHp,
                         "value": maxHp
@@ -149,6 +222,17 @@ async function buffActors(actorType, useMax, multiplier) {
                 }
             }
         });
+        if (acBonus === 0 &&  hitBonus === 0 && dcBonus == 0) {
+            let effect = npc.effects?.find(e => e.name == BUFF_NPC);
+            if (effect) {
+                await gmFunctions.removeActorEffects(npc.uuid, [effect.id]);
+            }
+        }
+        else {
+            let buff = await getBuffEffect(hitBonus, acBonus, dcBonus);
+            await applyBuff(npc, buff);
+        }
+
     }
 }
 
@@ -481,6 +565,7 @@ function clearFilters(event) {
 async function promptForBuff(callback) {
     let title = `Buff NPCs`;
     let label = 'Save';
+    // ensure that the inputs in diaglogHtml align with each other
     const dialogHtml = `
 <style>
 /* Tooltip container */
@@ -509,8 +594,7 @@ async function promptForBuff(callback) {
 .tooltip:hover .tooltiptext {
     visibility: visible;
 }
-</style>
-    
+</style>    
 <div style="display: flex; flex-wrap: wrap; width: 100%; margin: 10px 0px 10px 0px">
     <label for="buffUseMax" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Use Max:</label>
     <select name="buffUseMax" id="buffUseMax">
@@ -526,6 +610,27 @@ async function promptForBuff(callback) {
     <input type="number" id="buffMultiplier" name="buffMultiplier" value="1.0" min="0.1" style="width: 40px;" />
     <div class="tooltip">
         <span class="tooltiptext">1.5 would increase by 50%<br/>0.5 would decrease by 50%</span>
+        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
+    </div>
+    <div style="flex-basis: 100%; height: 10px;"></div>
+    <label for="buffHitBonus" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Hit Bonus:</label>
+    <input type="number" id="buffHitBonus" name="buffHitBonus" value="0" style="width: 40px;" />
+    <div class="tooltip">
+        <span class="tooltiptext">Bonus to hit.</span>
+        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
+    </div>
+    <div style="flex-basis: 100%; height: 10px;"></div>
+    <label for="buffAcBonus" style="white-space: nowrap; margin: 4px 10px 0px 10px;">Armor Bonus:</label>
+    <input type="number" id="buffAcBonus" name="buffAcBonus" value="0" style="width: 40px;" />
+    <div class="tooltip">
+        <span class="tooltiptext">Bonus to armor class.</span>
+        <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
+    </div>
+    <div style="flex-basis: 100%; height: 10px;"></div>
+    <label for="buffDcBonus" style="white-space: nowrap; margin: 4px 10px 0px 10px;">DC Bonus:</label>
+    <input type="number" id="buffDcBonus" name="buffDcBonus" value="0" style="width: 40px;" />
+    <div class="tooltip">
+        <span class="tooltiptext">Bonus to spell DC.</span>
         <i class="fa-solid fa-circle-info" style="padding-left: 10px; padding-top: 5px;"></i>
     </div>
 </div>
@@ -545,7 +650,10 @@ async function promptForBuff(callback) {
                 callback: (html) => {
                     let useMax = html.find('#buffUseMax').val() == "True";
                     let buffMultiplier = numbers.toNumber(html.find('#buffMultiplier').val());
-                    callback("npc", useMax, buffMultiplier);
+                    let hitBonus = numbers.toNumber(html.find('#buffHitBonus').val());
+                    let acBonus = numbers.toNumber(html.find('#buffAcBonus').val());
+                    let dcBonus = numbers.toNumber(html.find('#buffDcBonus').val());
+                    callback("npc", useMax, buffMultiplier, hitBonus, acBonus, dcBonus);
                 }
             },
             no: {
