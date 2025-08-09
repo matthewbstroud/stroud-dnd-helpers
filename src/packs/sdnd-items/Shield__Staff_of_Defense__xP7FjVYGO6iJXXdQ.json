@@ -34,17 +34,20 @@
       "affects": {
         "type": "self",
         "count": "",
-        "choice": false
+        "choice": false,
+        "special": ""
       },
       "template": {
         "units": "ft",
-        "contiguous": false
+        "contiguous": false,
+        "type": ""
       }
     },
     "range": {
       "value": null,
       "long": null,
-      "units": "self"
+      "units": "self",
+      "special": ""
     },
     "uses": {
       "value": null,
@@ -117,11 +120,10 @@
           "targets": [
             {
               "type": "itemUses",
-              "target": "",
               "value": "2",
+              "target": "Compendium.stroud-dnd-helpers.SDND-Items.Item.2AecB30cLjnbeuuk",
               "scaling": {
-                "mode": "",
-                "formula": ""
+                "mode": ""
               }
             }
           ],
@@ -208,7 +210,12 @@
           "preRemoveConditionText": "",
           "postRemoveConditionText": ""
         },
-        "otherActivityId": "none"
+        "otherActivityId": "none",
+        "name": "",
+        "img": "",
+        "appliedEffects": [
+          "wd1jwpvty11zn5l8"
+        ]
       }
     },
     "identifier": "shield-staff-of-defense"
@@ -375,7 +382,9 @@
       "rollAttackPerTarget": "default",
       "itemCondition": "",
       "reactionCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "removeAttackDamageButtons": "default",
+      "otherCondition": ""
     },
     "midiProperties": {
       "nodam": false,
@@ -467,7 +476,7 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1685293919611,
-    "modifiedTime": 1750248835694,
+    "modifiedTime": 1754753557849,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null

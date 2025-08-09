@@ -1,0 +1,198 @@
+{
+  "folder": null,
+  "name": "Buff NPC",
+  "type": "spell",
+  "img": "modules/stroud-dnd-helpers/images/icons/buff.webp",
+  "system": {
+    "activities": {},
+    "uses": {
+      "spent": 0,
+      "recovery": [],
+      "max": ""
+    },
+    "description": {
+      "value": "",
+      "chat": ""
+    },
+    "identifier": "new-item",
+    "source": {
+      "revision": 1,
+      "rules": "2024"
+    },
+    "activation": {
+      "type": "action",
+      "value": null,
+      "condition": ""
+    },
+    "duration": {
+      "units": "inst"
+    },
+    "level": 1,
+    "materials": {
+      "value": "",
+      "consumed": false,
+      "cost": 0,
+      "supply": 0
+    },
+    "preparation": {
+      "mode": "prepared",
+      "prepared": false
+    },
+    "properties": [],
+    "range": {
+      "units": "self",
+      "special": ""
+    },
+    "school": "",
+    "target": {
+      "template": {
+        "contiguous": false,
+        "units": "ft",
+        "type": ""
+      },
+      "affects": {
+        "choice": false,
+        "type": ""
+      }
+    }
+  },
+  "effects": [
+    {
+      "name": "Buff NPC",
+      "img": "modules/stroud-dnd-helpers/images/icons/buff.webp",
+      "origin": "Compendium.stroud-dnd-helpers.SDND-Spells.Item.O0DP0eKBI9sgj75n",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.attributes.ac.bonus",
+          "mode": 2,
+          "value": "sdnd.modifier",
+          "priority": 20
+        },
+        {
+          "key": "system.bonuses.All-Attacks",
+          "mode": 2,
+          "value": "sdnd.modifier",
+          "priority": 20
+        },
+        {
+          "key": "system.bonuses.spell.dc",
+          "mode": 2,
+          "value": "sdnd.modifier",
+          "priority": 20
+        },
+        {
+          "key": "system.bonuses.All-Damage",
+          "mode": 2,
+          "value": "sdnd.modifier",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "seconds": null,
+        "combat": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "dae": {
+          "disableCondition": "",
+          "disableIncapacitated": false,
+          "stackable": "noneNameOnly",
+          "showIcon": false,
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": []
+        },
+        "dnd5e": {
+          "riders": {
+            "statuses": []
+          }
+        },
+        "core": {
+          "overlay": false
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "None",
+          "nameOverride": "",
+          "radius": "",
+          "alignment": "",
+          "type": "",
+          "customCheck": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false,
+          "wallsBlock": "system",
+          "statuses": []
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "coreVersion": "12.343",
+        "systemId": "dnd5e",
+        "systemVersion": "4.4.2",
+        "createdTime": 1754750153808,
+        "modifiedTime": 1754770845644,
+        "lastModifiedBy": "6yhz13iFYYklKtgA"
+      },
+      "_id": "0kCuetVnSmiPGOLs",
+      "_key": "!items.effects!O0DP0eKBI9sgj75n.0kCuetVnSmiPGOLs"
+    }
+  ],
+  "flags": {
+    "midi-qol": {
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "effectCondition": ""
+    },
+    "midiProperties": {
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1754748939923,
+    "modifiedTime": 1754748939946,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_id": "O0DP0eKBI9sgj75n",
+  "sort": 125782,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_key": "!items!O0DP0eKBI9sgj75n"
+}
