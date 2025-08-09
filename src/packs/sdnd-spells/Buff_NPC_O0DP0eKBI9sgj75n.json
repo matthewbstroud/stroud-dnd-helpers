@@ -81,6 +81,12 @@
           "mode": 2,
           "value": "sdnd.modifier",
           "priority": 20
+        },
+        {
+          "key": "system.bonuses.All-Damage",
+          "mode": 2,
+          "value": "sdnd.modifier",
+          "priority": 20
         }
       ],
       "disabled": false,
@@ -141,7 +147,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": 1754750153808,
-        "modifiedTime": 1754750168408,
+        "modifiedTime": 1754770845644,
         "lastModifiedBy": "6yhz13iFYYklKtgA"
       },
       "_id": "0kCuetVnSmiPGOLs",

@@ -180,7 +180,35 @@ async function resolveConsumption(item) {
     }
 }
 
+async function resolvePreparation(item) {
+    if (!item) {
+        return;
+    }
+    const comendiumUuid = item?._source?._stats?.compendiumSource;
+    if (!comendiumUuid) {
+        return;
+    }
+    const compendiumItem = await fromUuid(comendiumUuid);
+    if (!comendiumUuid) {
+        return;
+    }
+    const currentPrepMode = item.system?.preparation?.mode;
+    const originalPrepMode = compendiumItem.system?.preparation?.mode;
+    if (currentPrepMode == originalPrepMode) {
+        return;
+    }
+    console.log(`${item.name}: Reverting preparation mode to original value of ${originalPrepMode}...`)
+    await item.update({
+        "system.preparation.mode": originalPrepMode
+    });
+}
+
 function createItemHandler(item, options, id) {
+    Promise.resolve(resolvePreparation(item))
+        .catch(error => {
+            ui.notifications.error(`Error resolving preparation for item ${item.name}: ${error.message}`);
+        }
+    );
     Promise.resolve(resolveConsumption(item))
         .catch(error => {
             ui.notifications.error(`Error resolving consumption for item ${item.name}: ${error.message}`);

@@ -115,7 +115,7 @@ async function setTokenBarsVisibility(scenes, tokenDisplayMode) {
     }
 }
 
-function anyDifferences(actor, hp, acBonus, hitBonus, dcBonus) {
+function anyDifferences(actor, hp, acBonus, hitBonus, dcBonus, damageBonus) {
     if (!actor) {
         return false;
     }
@@ -128,16 +128,17 @@ function anyDifferences(actor, hp, acBonus, hitBonus, dcBonus) {
     let effect = actor.effects.find(e => e.name === BUFF_NPC);
     if (effect && (effect.changes[0].value != acBonus ||
         effect.changes[1].value != hitBonus ||
-        effect.changes[2].value != dcBonus)) {
+        effect.changes[2].value != dcBonus ||
+        effect.changes[3].value != damageBonus)) {
         return true;
     }
-    if (!effect && (acBonus != 0 || hitBonus != 0 || dcBonus != 0)) {
+    if (!effect && (acBonus != 0 || hitBonus != 0 || dcBonus != 0 || damageBonus != 0)) {
         return true;
     }
     return false;
 }
 
-async function getBuffEffect(hitBonus, acBonus, dcBonus) {
+async function getBuffEffect(hitBonus, acBonus, dcBonus, damageBonus) {
     let buffNpc = await items.getItemFromCompendium(
         sdndConstants.PACKS.COMPENDIUMS.ITEM.SPELLS,
         BUFF_NPC, true, null);
@@ -151,6 +152,7 @@ async function getBuffEffect(hitBonus, acBonus, dcBonus) {
     buffEffect.changes[0].value = buffEffect.changes[0].value.replace("sdnd.modifier", acBonus);
     buffEffect.changes[1].value = buffEffect.changes[1].value.replace("sdnd.modifier", hitBonus);
     buffEffect.changes[2].value = buffEffect.changes[2].value.replace("sdnd.modifier", dcBonus);
+    buffEffect.changes[3].value = buffEffect.changes[2].value.replace("sdnd.modifier", damageBonus);
     return buffEffect;
 }
 
@@ -172,8 +174,9 @@ async function applyBuff(actor, buff) {
     return true;
 }
 
-async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBonus) {
+async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, acBonus, dcBonus) {
     hitBonus ??= 0;
+    damageBonus ??= 0;
     acBonus ??= 0;
     dcBonus ??= 0;
 
@@ -186,7 +189,10 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBo
     if (!npcs) {
         return;
     }
-    for (let npc of npcs) {
+    const totalNpcs = npcs.length;
+    for (let i = 0; i < npcs.length; i++) {
+        SceneNavigation.displayProgressBar({label: `${BUFF_NPC}s: ${i+1} of ${npcs.length}`, pct: Math.floor((i / totalNpcs) * 100)});
+        let npc = npcs[i];
         const hp = npc.system?.attributes?.hp;
         let actorUpdateRequired = false;
         const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
@@ -197,7 +203,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBo
         if (mod > 0) {
             maxHp = Math.floor(maxHp * mod);
         }
-        if (!anyDifferences(npc, maxHp, acBonus, hitBonus, dcBonus)) {
+        if (!anyDifferences(npc, maxHp, acBonus, hitBonus, dcBonus, damageBonus)) {
             continue;
         }
         console.log(`Applying changes to ${npc.name}`);
@@ -234,12 +240,13 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, acBonus, dcBo
             }
         }
         else {
-            let buff = await getBuffEffect(hitBonus, acBonus, dcBonus);
+            let buff = await getBuffEffect(hitBonus, acBonus, dcBonus, damageBonus);
             await applyBuff(npc, buff);
-            console.log(`   Applying ${BUFF_NPC} with acBonus=${acBonus}, hitBonus=${hitBonus}, spellDC=${dcBonus}`);
+            console.log(`   Applying ${BUFF_NPC} with acBonus=${acBonus}, hitBonus=${hitBonus}, damageBonus=${damageBonus}, spellDC=${dcBonus}`);
         }
 
     }
+    SceneNavigation.displayProgressBar({label: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs}`, pct: 100});
 }
 
 export function getAverageHpFormula(formula) {
@@ -649,6 +656,13 @@ async function promptForBuff(callback) {
         <span class="tooltiptext">Bonus to hit.</span>
     </div>
 
+    <label for="buffDamageBonus" class="form-label">Damage Bonus:</label>
+    <input type="number" id="buffDamageBonus" name="buffDamageBonus" value="0" class="form-input" />
+    <div class="tooltip form-tooltip">
+        <i class="fa-solid fa-circle-info"></i>
+        <span class="tooltiptext">Bonus to damage.</span>
+    </div>
+
     <label for="buffAcBonus" class="form-label">Armor Bonus:</label>
     <input type="number" id="buffAcBonus" name="buffAcBonus" value="0" class="form-input" />
     <div class="tooltip form-tooltip">
@@ -680,9 +694,10 @@ async function promptForBuff(callback) {
                     let useMax = html.find('#buffUseMax').val() == "True";
                     let buffMultiplier = numbers.toNumber(html.find('#buffMultiplier').val());
                     let hitBonus = numbers.toNumber(html.find('#buffHitBonus').val());
+                    let damageBonus = numbers.toNumber(html.find('#buffDamageBonus').val());
                     let acBonus = numbers.toNumber(html.find('#buffAcBonus').val());
                     let dcBonus = numbers.toNumber(html.find('#buffDcBonus').val());
-                    callback("npc", useMax, buffMultiplier, hitBonus, acBonus, dcBonus);
+                    callback("npc", useMax, buffMultiplier, hitBonus, damageBonus, acBonus, dcBonus);
                 }
             },
             no: {
