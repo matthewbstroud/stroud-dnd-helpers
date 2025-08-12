@@ -5,6 +5,6 @@
     "sdnd.scenes.folder.context.regenerateThumbs":  "Regenerate Thumbnails",
     "sdnd.scenes.folder.context.removePlayerTokens":  "Remove Player Tokens",
     "sdnd.compendium.entry.context.exportThumbnails":  "Export Thumbnails",
-    "sdnd.compendium.entry.context.removeUnused":  "Remove Unused From World",
+    "sdnd.compendium.entry.context.removeUnusedActors":  "Remove Unused Actors From World",
     "sdnd.primary":  "Primary"
 }
