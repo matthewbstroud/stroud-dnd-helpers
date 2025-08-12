@@ -23,6 +23,7 @@ export let actors = {
     "getActorsByFolderId": function _getActorsByFolderId(folderId) {
         return game.actors.filter(a => folders.childOfFolder(a, folderId));
     },
+    "removeUnusedActors": removeUnusedActors,
     "setAnonymous": async function _setAnonymous(actors, anonymous) {
         const anonActive = game.modules.get("anonymous")?.active ?? false;
         for (let actor of actors) {
@@ -81,6 +82,34 @@ export let actors = {
 
 function actorMatchesPattern(actor, searchPattern) {
     return actor.img?.includes(searchPattern) || actor.prototypeToken?.texture?.src?.includes(searchPattern);
+}
+
+async function removeUnusedActors(actorIds, source) {
+    let gameActors = game.actors.filter(a => actorIds.includes(a._id));
+    if (!gameActors || gameActors.length === 0) {
+        ui.notifications.info(`No actors from ${source} exist in this world...`);
+        return;
+    }
+    let orphaned = gameActors
+        .filter(a => !game.scenes.find(s => s.tokens.find(t => t.actor?._id == a._id)))
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+    if (!orphaned || orphaned.length === 0) {
+        ui.notifications.info(`No actors from ${source} are unused in this world...`);
+        return;
+    }
+    const confirmation = await dialog.confirmation("Remove Unused Actors", `This operation will remove <b>${orphaned.length}</b> unused actor${orphaned.length === 0 ? '': 's'} from this world.<br/><br/>Continue?`);
+    if (!confirmation || confirmation === "False") {
+        return;
+    }
+    console.log(orphaned.map(o => o.name).join(","));
+    const totalOrphans = orphaned.length;
+    for (let i=0; i < orphaned.length; i++) {
+        console.log(`Deleting ${orphaned[i].name} from world...`);
+        SceneNavigation.displayProgressBar({label: `Removing '${orphaned[i].name}' ${i+1} of ${totalOrphans}`, pct: Math.floor((i / totalOrphans) * 100)});
+        await orphaned[i].delete();
+    }
+    SceneNavigation.displayProgressBar({label: ``, pct: 100 });
 }
 
 async function buffNpcsWithPrompt() {

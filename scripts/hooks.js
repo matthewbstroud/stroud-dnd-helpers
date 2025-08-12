@@ -10,7 +10,7 @@ import { tokens } from './tokens.js';
 
 export let hooks = {
     "init": function _init() {
-        Hooks.on("getCompendiumDirectoryEntryContext", (html, options) => {
+        Hooks.on("getCompendiumDirectoryEntryContext", (app, options) => {
             options.push({
                 name: game.i18n.localize("sdnd.compendium.entry.context.exportThumbnails"),
                 icon: '<i class="fa-solid fa-camera-retro"></i>',
@@ -35,6 +35,74 @@ export let hooks = {
                         return;
                     }
                     if (moduleId.startsWith('sdnd-') || moduleId.startsWith('stroud-')) {
+                        return true;
+                    }
+                    return false;
+                },
+            });
+            options.push({
+                name: game.i18n.localize("sdnd.compendium.entry.context.removeUnusedActors"),
+                icon: '<i class="fa-regular fa-broom"></i>',
+                callback: async function (li) {
+                    const fullyQualifiedPack = $(li).data("pack");
+                    if (!fullyQualifiedPack) {
+                        return;
+                    }
+                    const pack = game.packs.get(fullyQualifiedPack);
+                    const actorIds = Array.from(pack.index?.values() ?? []).map(v => v._id);
+                    await actors.removeUnusedActors(actorIds, pack.metadata.label);
+                },
+                condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
+                    const fullyQualifiedPack = $(li).data("pack");
+                    if (!fullyQualifiedPack) {
+                        return false;
+                    }
+                    const pack = game.packs.get(fullyQualifiedPack);
+                    if (pack.metadata.type === "Actor"){
+                        return true;
+                    }
+                    return false;
+                },
+            });
+        });
+        Hooks.on("getCompendiumEntryContext", (app, options) => {
+            options.push({
+                name: game.i18n.localize("sdnd.compendium.entry.context.removeUnusedActors"),
+                icon: '<i class="fa-regular fa-broom"></i>',
+                callback: async function (li) {
+                    const collection = app.collection;
+                    if (!collection) {
+                        return false;
+                    }
+                    const fullyQualifiedPack = $(li).parents('[data-pack]').data("pack");
+                    if (!fullyQualifiedPack) {
+                        return false;
+                    }
+                    const documentId = li.data("document-id");
+                    if (!documentId) {
+                        return false;
+                    }
+
+                    const entryUuid = collection.index.get(documentId)?.uuid;
+                    if (!entryUuid) {
+                        return false;
+                    }
+                    const entry = await fromUuid(entryUuid);
+                    if (!entry) {
+                        return false;
+                    }
+
+                    const actorIds = Array.from(entry.actors?.values() ?? []).map(a => a._id);
+                    await actors.removeUnusedActors(actorIds, `adventure '${entry.name}'`);
+                },
+                condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
+                    if (app.metadata?.type === "Adventure") {
                         return true;
                     }
                     return false;
@@ -114,18 +182,16 @@ export let hooks = {
         });
         Hooks.on("getActorDirectoryFolderContext", (html, options) => {
             options.push({
-                name: game.i18n.localize("sdnd.actor.folder.context.togglePlayer"),
-                icon: '<i class="fa fa-star" aria-hidden="true"></i>',
+                name: game.i18n.localize("sdnd.actor.folder.context.removeUnused"),
+                icon: '<i class="fa-regular fa-broom"></i>',
                 callback: async function (li) {
-                    // let folderID = $(li).closest("li").data("folderId");
-                    // if (!folderID){
-                    // 	return;
-                    // }
-                    // let folder = await game.folders.get(folderID);
-                    // let thumbCount = await scene.regenerateThumbnails(folder);
-                    // if (thumbCount > 0) {
-                    // 	ui.notifications.notify(`Regenerated ${thumbCount} thumbnail image${(thumbCount > 0 ? 's' : '')}.`);
-                    // }
+                    let folderID = $(li).closest("li").data("folderId");
+                    if (!folderID){
+                    	return;
+                    }
+                    let folder = game.folders.get(folderID);
+                    const actorIds = actors.getActorsByFolderId(folderID).map(a => a._id);
+                    await actors.removeUnusedActors(actorIds, folder.name);
                 },
                 condition: li => {
                     if (!game.user?.isGM) {
@@ -139,13 +205,6 @@ export let hooks = {
                     if (!folder) {
                         return false;
                     }
-                    // let sceneCount = game.scenes.filter(s => s.folder?.id == folder.id)?.length ?? 0;
-                    // if (sceneCount == 0 && folder.children?.length == 0) {
-                    // 	return false;
-                    // }
-                    // if (sceneCount?.length > 10 || folder.children?.length > 10){
-                    // 	return false;
-                    // }
                     return true;
                 },
             });
