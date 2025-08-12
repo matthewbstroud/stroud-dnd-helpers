@@ -35,6 +35,7 @@ export let combat = {
     },
     "getWeaponDamageTypes": getWeaponDamageTypes,
     "executeHeroicManeuver": heroicManeuvers.execute,
+    "autoConsumeUse": autoConsumeUse
 };
 
 const AUTO_TARGET = "autoTarget";
@@ -54,6 +55,31 @@ async function toggleWallsBlockRanged() {
         content: messageContent,
         whisper: ChatMessage.getWhisperRecipients('GM'),
     });
+}
+
+async function autoConsumeUse({ speaker, actor, token, character, item, args }) {
+    if (!item) {
+        return;
+    }
+    let uses = item.system.uses;
+    if (!uses) {
+        return;
+    }
+    if (uses.max == uses.spent) {
+        return;
+    }
+
+    const newValue = uses.spent + 1;
+    await actor.updateEmbeddedDocuments("Item", [
+        {
+            "_id": item._id,
+            "system": {
+                "uses": {
+                    "spent": newValue
+                }
+            }
+        }
+    ]);
 }
 
 async function toggleMacroIcon(sdndId, currentValue, onImg, offImg) {

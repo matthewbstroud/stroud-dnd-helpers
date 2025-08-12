@@ -10,7 +10,7 @@ import { tokens } from './tokens.js';
 
 export let hooks = {
     "init": function _init() {
-        Hooks.on("getCompendiumDirectoryEntryContext", (html, options) => {
+        Hooks.on("getCompendiumDirectoryEntryContext", (app, options) => {
             options.push({
                 name: game.i18n.localize("sdnd.compendium.entry.context.exportThumbnails"),
                 icon: '<i class="fa-solid fa-camera-retro"></i>',
@@ -38,6 +38,84 @@ export let hooks = {
                         return true;
                     }
                     return false;
+                },
+            });
+            options.push({
+                name: game.i18n.localize("sdnd.compendium.entry.context.removeUnused"),
+                icon: '<i class="fa-regular fa-broom"></i>',
+                callback: async function (li) {
+                    const fullyQualifiedPack = $(li).data("pack");
+                    if (!fullyQualifiedPack) {
+                        return;
+                    }
+                    debugger;
+                    // const moduleId = fullyQualifiedPack.split('.').shift();
+                    // await scene.packModuleThumbnails(moduleId);
+                },
+                condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
+                    const fullyQualifiedPack = $(li).data("pack");
+                    if (!fullyQualifiedPack) {
+                        return false;
+                    }
+                    const pack = game.packs.get(fullyQualifiedPack);
+                    if (pack.metadata.type === "Actor"){
+                        return true;
+                    }
+                    return false;
+                },
+            });
+        });
+        Hooks.on("getCompendiumEntryContext", (app, options) => {
+            options.push({
+                name: game.i18n.localize("sdnd.compendium.entry.context.removeUnused"),
+                icon: '<i class="fa-regular fa-broom"></i>',
+                callback: async function (li) {
+                    const collection = app.collection;
+                    const fullyQualifiedPack = $(li).parents('[data-pack]').data("pack");
+                    if (!fullyQualifiedPack) {
+                        return;
+                    }
+                    const documentId = li.data("document-id");
+                    if (!documentId) {
+                        return;
+                    }
+
+                    const entryUuid = collection.index.get(documentId)?.uuid;
+                    if (!entryUuid) {
+                        return;
+                    }
+                    const entry = await fromUuid(entryUuid);
+                    if (!entry) {
+                        return;
+                    }
+
+                    const actorIds = Array.from(entry.actors.values()).map(a => a.id);
+                    console.log(actorIds.join(","));
+
+                    debugger;
+                    // const moduleId = fullyQualifiedPack.split('.').shift();
+                    // await scene.packModuleThumbnails(moduleId);
+                },
+                condition: li => {
+                    if (!game.user?.isGM) {
+                        return false;
+                    }
+                    if (app.metadata.type === "Adventure") {
+                        return true;
+                    }
+                    return false;
+                    const fullyQualifiedPack = $(li).data("pack");
+                    if (!fullyQualifiedPack) {
+                        return false;
+                    }
+                    const moduleId = fullyQualifiedPack.split('.').shift();
+                    if (!moduleId) {
+                        return;
+                    }
+                    return true;
                 },
             });
         });
@@ -113,42 +191,79 @@ export let hooks = {
             });
         });
         Hooks.on("getActorDirectoryFolderContext", (html, options) => {
-            options.push({
-                name: game.i18n.localize("sdnd.actor.folder.context.togglePlayer"),
-                icon: '<i class="fa fa-star" aria-hidden="true"></i>',
-                callback: async function (li) {
-                    // let folderID = $(li).closest("li").data("folderId");
-                    // if (!folderID){
-                    // 	return;
-                    // }
-                    // let folder = await game.folders.get(folderID);
-                    // let thumbCount = await scene.regenerateThumbnails(folder);
-                    // if (thumbCount > 0) {
-                    // 	ui.notifications.notify(`Regenerated ${thumbCount} thumbnail image${(thumbCount > 0 ? 's' : '')}.`);
-                    // }
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID) {
-                        return false;
-                    }
-                    let folder = game.folders.get(folderID);
-                    if (!folder) {
-                        return false;
-                    }
-                    // let sceneCount = game.scenes.filter(s => s.folder?.id == folder.id)?.length ?? 0;
-                    // if (sceneCount == 0 && folder.children?.length == 0) {
-                    // 	return false;
-                    // }
-                    // if (sceneCount?.length > 10 || folder.children?.length > 10){
-                    // 	return false;
-                    // }
-                    return true;
-                },
-            });
+            // options.push({
+            //     name: game.i18n.localize("sdnd.actor.folder.context.togglePlayer"),
+            //     icon: '<i class="fa fa-star" aria-hidden="true"></i>',
+            //     callback: async function (li) {
+            //         // let folderID = $(li).closest("li").data("folderId");
+            //         // if (!folderID){
+            //         // 	return;
+            //         // }
+            //         // let folder = await game.folders.get(folderID);
+            //         // let thumbCount = await scene.regenerateThumbnails(folder);
+            //         // if (thumbCount > 0) {
+            //         // 	ui.notifications.notify(`Regenerated ${thumbCount} thumbnail image${(thumbCount > 0 ? 's' : '')}.`);
+            //         // }
+            //     },
+            //     condition: li => {
+            //         if (!game.user?.isGM) {
+            //             return false;
+            //         }
+            //         let folderID = $(li).closest("li").data("folderId");
+            //         if (!folderID) {
+            //             return false;
+            //         }
+            //         let folder = game.folders.get(folderID);
+            //         if (!folder) {
+            //             return false;
+            //         }
+            //         // let sceneCount = game.scenes.filter(s => s.folder?.id == folder.id)?.length ?? 0;
+            //         // if (sceneCount == 0 && folder.children?.length == 0) {
+            //         // 	return false;
+            //         // }
+            //         // if (sceneCount?.length > 10 || folder.children?.length > 10){
+            //         // 	return false;
+            //         // }
+            //         return true;
+            //     },
+            // });
+            // options.push({
+            //     name: game.i18n.localize("sdnd.actor.folder.context.removeUnused"),
+            //     icon: '<i class="fa-solid fa-user-minus"></i>',
+            //     callback: async function (li) {
+            //         let folderID = $(li).closest("li").data("folderId");
+            //         if (!folderID){
+            //         	return;
+            //         }
+            //         actors.removeUnusedActors(folderID);
+            //         // let folder = await game.folders.get(folderID);
+            //         // let thumbCount = await scene.regenerateThumbnails(folder);
+            //         // if (thumbCount > 0) {
+            //         // 	ui.notifications.notify(`Regenerated ${thumbCount} thumbnail image${(thumbCount > 0 ? 's' : '')}.`);
+            //         // }
+            //     },
+            //     condition: li => {
+            //         if (!game.user?.isGM) {
+            //             return false;
+            //         }
+            //         let folderID = $(li).closest("li").data("folderId");
+            //         if (!folderID) {
+            //             return false;
+            //         }
+            //         let folder = game.folders.get(folderID);
+            //         if (!folder) {
+            //             return false;
+            //         }
+            //         // let sceneCount = game.scenes.filter(s => s.folder?.id == folder.id)?.length ?? 0;
+            //         // if (sceneCount == 0 && folder.children?.length == 0) {
+            //         // 	return false;
+            //         // }
+            //         // if (sceneCount?.length > 10 || folder.children?.length > 10){
+            //         // 	return false;
+            //         // }
+            //         return true;
+            //     },
+            // });
         });
     },
     "ready": async function _ready() {

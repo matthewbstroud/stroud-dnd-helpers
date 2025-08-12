@@ -1,6 +1,15 @@
+# v12.4.12
+# New Features
+- Added item macro to auto consume item use.  (function.stroudDnD.combat.autoConsumeUse)
+- Added the ability to remove unused actors from a compendium.
 # v12.4.11
 # New Features
 - Auto wireup for Activity Consumption
+- Buff NPCs now also allows buffing the following
+  - Hit Bonus
+  - Damage Bonus
+  - AC Bonus
+  - Spell DC Bonus
 # Bugg Fixes
 - Fix Staff of Defense Spell Consumption
 # v12.4.10
@@ -644,6 +653,7 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

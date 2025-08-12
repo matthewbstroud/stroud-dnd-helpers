@@ -23,6 +23,7 @@ export let actors = {
     "getActorsByFolderId": function _getActorsByFolderId(folderId) {
         return game.actors.filter(a => folders.childOfFolder(a, folderId));
     },
+    "removeUnusedActors": removeUnusedActors,
     "setAnonymous": async function _setAnonymous(actors, anonymous) {
         const anonActive = game.modules.get("anonymous")?.active ?? false;
         for (let actor of actors) {
@@ -81,6 +82,15 @@ export let actors = {
 
 function actorMatchesPattern(actor, searchPattern) {
     return actor.img?.includes(searchPattern) || actor.prototypeToken?.texture?.src?.includes(searchPattern);
+}
+
+async function removeUnusedActors(folderID) {
+    let folderActors = actors.getActorsByFolderId(folderID);
+    if (!folderActors || folderActors.length === 0) {
+        return;
+    }
+    let orphaned = folderActors.filter(a => !game.scenes.find(s => s.tokens.find(t => t.actor?.id == a.id)));
+    console.log(orphaned.map(o => o.name).join(","));
 }
 
 async function buffNpcsWithPrompt() {
