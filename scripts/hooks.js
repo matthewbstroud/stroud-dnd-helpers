@@ -1,6 +1,7 @@
 import { backpacks } from './backpacks/backpacks.js';
 import { scene } from './utility/scene.js';
 import { createActorHeaderButton } from './actors/actors.js';
+import { CompendiumHooks } from './hookHandlers/compendiumHandlers.js';
 import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
@@ -10,105 +11,7 @@ import { tokens } from './tokens.js';
 
 export let hooks = {
     "init": function _init() {
-        Hooks.on("getCompendiumDirectoryEntryContext", (app, options) => {
-            options.push({
-                name: game.i18n.localize("sdnd.compendium.entry.context.exportThumbnails"),
-                icon: '<i class="fa-solid fa-camera-retro"></i>',
-                callback: async function (li) {
-                    const fullyQualifiedPack = $(li).data("pack");
-                    if (!fullyQualifiedPack) {
-                        return;
-                    }
-                    const moduleId = fullyQualifiedPack.split('.').shift();
-                    await scene.packModuleThumbnails(moduleId);
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    const fullyQualifiedPack = $(li).data("pack");
-                    if (!fullyQualifiedPack) {
-                        return false;
-                    }
-                    const moduleId = fullyQualifiedPack.split('.').shift();
-                    if (!moduleId) {
-                        return;
-                    }
-                    if (moduleId.startsWith('sdnd-') || moduleId.startsWith('stroud-')) {
-                        return true;
-                    }
-                    return false;
-                },
-            });
-            options.push({
-                name: game.i18n.localize("sdnd.compendium.entry.context.removeUnusedActors"),
-                icon: '<i class="fa-regular fa-broom"></i>',
-                callback: async function (li) {
-                    const fullyQualifiedPack = $(li).data("pack");
-                    if (!fullyQualifiedPack) {
-                        return;
-                    }
-                    const pack = game.packs.get(fullyQualifiedPack);
-                    const actorIds = Array.from(pack.index?.values() ?? []).map(v => v._id);
-                    await actors.removeUnusedActors(actorIds, pack.metadata.label);
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    const fullyQualifiedPack = $(li).data("pack");
-                    if (!fullyQualifiedPack) {
-                        return false;
-                    }
-                    const pack = game.packs.get(fullyQualifiedPack);
-                    if (pack.metadata.type === "Actor"){
-                        return true;
-                    }
-                    return false;
-                },
-            });
-        });
-        Hooks.on("getCompendiumEntryContext", (app, options) => {
-            options.push({
-                name: game.i18n.localize("sdnd.compendium.entry.context.removeUnusedActors"),
-                icon: '<i class="fa-regular fa-broom"></i>',
-                callback: async function (li) {
-                    const collection = app.collection;
-                    if (!collection) {
-                        return false;
-                    }
-                    const fullyQualifiedPack = $(li).parents('[data-pack]').data("pack");
-                    if (!fullyQualifiedPack) {
-                        return false;
-                    }
-                    const documentId = li.data("document-id");
-                    if (!documentId) {
-                        return false;
-                    }
-
-                    const entryUuid = collection.index.get(documentId)?.uuid;
-                    if (!entryUuid) {
-                        return false;
-                    }
-                    const entry = await fromUuid(entryUuid);
-                    if (!entry) {
-                        return false;
-                    }
-
-                    const actorIds = Array.from(entry.actors?.values() ?? []).map(a => a._id);
-                    await actors.removeUnusedActors(actorIds, `adventure '${entry.name}'`);
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    if (app.metadata?.type === "Adventure") {
-                        return true;
-                    }
-                    return false;
-                },
-            });
-        });
+        CompendiumHooks.init();
         Hooks.on("getSceneDirectoryFolderContext", (html, options) => {
             options.push({
                 name: game.i18n.localize("sdnd.scenes.folder.context.regenerateThumbs"),
