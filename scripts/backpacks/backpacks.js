@@ -181,9 +181,10 @@ async function resolveConsumption(item) {
 }
 
 async function resolvePreparation(item) {
-    if (!item) {
+    if (!item || item.type != "spell" || item.getFlag(sdndConstants.MODULE_ID, "PreRewired")) {
         return;
     }
+    await item.setFlag(sdndConstants.MODULE_ID, "PrepRewired", true);
     const comendiumUuid = item?._source?._stats?.compendiumSource;
     if (!comendiumUuid) {
         return;
@@ -194,6 +195,9 @@ async function resolvePreparation(item) {
     }
     const currentPrepMode = item.system?.preparation?.mode;
     const originalPrepMode = compendiumItem.system?.preparation?.mode;
+    if (!currentPrepMode || !originalPrepMode) {
+        return;
+    }
     if (currentPrepMode == originalPrepMode) {
         return;
     }

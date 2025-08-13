@@ -6,6 +6,7 @@ import { folders } from "../folders/folders.js";
 import { dialog } from "../dialog/dialog.js";
 import { numbers } from "../utility/numbers.js";
 import { mounts } from "../mounts/mounts.js";
+import { utility } from "../utility/utility.js";
 import { versioning } from "../versioning.js";
 
 const BUFF_NPC = "Buff NPC";
@@ -85,6 +86,9 @@ function actorMatchesPattern(actor, searchPattern) {
 }
 
 async function removeUnusedActors(actorIds, source) {
+    if (!game.user?.isGM){
+		console.log("gm only function!");
+	}
     let gameActors = game.actors.filter(a => actorIds.includes(a._id));
     if (!gameActors || gameActors.length === 0) {
         ui.notifications.info(`No actors from ${source} exist in this world...`);
@@ -110,6 +114,7 @@ async function removeUnusedActors(actorIds, source) {
         await orphaned[i].delete();
     }
     SceneNavigation.displayProgressBar({label: ``, pct: 100 });
+    await utility.removeEmptyFolders("Actor");
 }
 
 async function buffNpcsWithPrompt() {
@@ -564,7 +569,7 @@ function renderSheet(sheet, form, data) {
     }
 }
 
-const allowPrepModes = ['innate', 'atwill'];
+const allowPrepModes = ['innate', 'atwill', 'always'];
 
 function applyUsableFilter(actor, enabled) {
     if (!enabled) {

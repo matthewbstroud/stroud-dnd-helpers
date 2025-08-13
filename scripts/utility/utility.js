@@ -60,5 +60,58 @@ export let utility = {
     },
     "setLegacyTestMode": function _setLegacyTestMode(enabled) {
         versioning.setTestMode(enabled);
+    },
+    "removeEmptyFolders": async function _removeEmptyFolders(type) {
+        const folders = type ? game.folders.filter(f => f.type === type) : game.folders;
+        await removeEmptyFolders(folders);
     }
 };
+
+async function removeEmptyFolders(folders) {
+    if (!folders || folders.length === 0) {
+        return;
+    }
+
+    const deletedFolderIds = new Set();
+
+    async function deleteIfEmpty(folder) {
+        // Skip if already deleted
+        if (deletedFolderIds.has(folder.id)) {
+            return true;
+        }
+
+        // Check if folder still exists in game
+        if (!game.folders.get(folder.id)) {
+            deletedFolderIds.add(folder.id);
+            return true;
+        }
+
+        // First check all children recursively
+        let hasNonEmptyChildren = false;
+        for (const child of folder.children) {
+            const childIsEmpty = await deleteIfEmpty(child.folder);
+            if (!childIsEmpty) {
+                hasNonEmptyChildren = true;
+            }
+        }
+
+        // If any children are non-empty OR folder has contents, this folder is non-empty
+        if (hasNonEmptyChildren || (folder.contents?.length ?? 0) > 0) {
+            return false;
+        }
+
+        // If we get here, folder and all children are empty
+        console.log(`Deleting empty folder: ${folder.name}`);
+        await folder.delete();
+        deletedFolderIds.add(folder.id);
+        return true;
+    }
+
+    // Process each root folder
+    for (const folder of folders) {
+        if(folder.name.includes("SDND")){
+            debugger;
+        }
+        await deleteIfEmpty(folder);
+    }
+}

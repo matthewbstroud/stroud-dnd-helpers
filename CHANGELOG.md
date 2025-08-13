@@ -1,3 +1,6 @@
+# v12.4.13
+# Bug Fixes
+- Fix issues with wireups.
 # v12.4.12
 # New Features
 - Added item macro to auto consume item use.  (function.stroudDnD.combat.autoConsumeUse)
@@ -653,6 +656,7 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

@@ -1,5 +1,7 @@
 import { lightBringer } from "./weapons/lightBringer.js"
 import { devoteesCenser } from "./weapons/devoteesCenser.js";
+import { dialog } from "../dialog/dialog.js";
+import { utility } from "../utility/utility.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 
@@ -48,8 +50,52 @@ export let items = {
 		}
 		return 0;
 	},
-	"convertConsumableToLoot": convertConsumableToLoot
+	"convertConsumableToLoot": convertConsumableToLoot,
+	"removeUnusedItems": removeUnusedItems
 }
+
+function itemIsUnused(item){
+	if (game.actors.find(a => a.items.find(i => i._id == item._id || i.system?.identifier == item.system?.identifier))) {
+		return false;
+	}
+	if (game.scenes.find(s => s.tokens?.find(t => t.actor?.items.find(i => i._id == item._id || i.system?.identifier == item.system?.identifier)))){
+		return false;
+	}
+	return true;
+}
+
+async function removeUnusedItems(itemIds, source) {
+	if (!game.user?.isGM) {
+		console.log("gm only function!");
+	}
+	let gameItems = game.items.filter(i => itemIds.includes(i._id));
+	if (!gameItems || gameItems.length === 0) {
+		ui.notifications.info(`No items from ${source} exist in this world...`);
+		return;
+	}
+	let orphaned = gameItems
+		.filter(o => itemIsUnused(o))
+		.sort((a, b) => a.name.localeCompare(b.name));
+
+	if (!orphaned || orphaned.length === 0) {
+		ui.notifications.info(`No items from ${source} are unused in this world...`);
+		return;
+	}
+	const confirmation = await dialog.confirmation("Remove Unused Items", `This operation will remove <b>${orphaned.length}</b> unused item${orphaned.length === 0 ? '' : 's'} from this world.<br/><br/>Continue?`);
+	if (!confirmation || confirmation === "False") {
+		return;
+	}
+	console.log(orphaned.map(o => o.name).join(","));
+	const totalOrphans = orphaned.length;
+	for (let i = 0; i < orphaned.length; i++) {
+		console.log(`Deleting ${orphaned[i].name} from world...`);
+		SceneNavigation.displayProgressBar({ label: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`, pct: Math.floor((i / totalOrphans) * 100) });
+		await orphaned[i].delete();
+	}
+	SceneNavigation.displayProgressBar({ label: ``, pct: 100 });
+	await utility.removeEmptyFolders("Item");
+}
+
 
 async function addMidiOnUseMacro(item, triggerName, script) {
 	let onUseMacro = await item.getFlag("midi-qol", "onUseMacroName") ?? "";
@@ -87,7 +133,7 @@ async function addBonusDamageSave(item, ability, dc, halfOnSave) {
 				"dc": dc,
 				"scaling": 'flat'
 			}
-		}		
+		}
 	});
 }
 
