@@ -1,3 +1,8 @@
+# v12.4.14
+# New Features
+- System Identifier Normalization fuction
+# Bug Fixes
+- Remove Unsused Actors will no consider actors that are set to be alternates with morph data.
 # v12.4.13
 # Bug Fixes
 - Fix issues with wireups.
@@ -16,8 +21,6 @@
 # Bugg Fixes
 - Fix Staff of Defense Spell Consumption
 # v12.4.10
-# New Features
-- Add new feature description here.
 # Bug Fixes
 - Update FoundryVtt release automation.
 - Fix Twilight Domain
@@ -656,6 +659,7 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
