@@ -131,8 +131,8 @@
     "baseItem": "maul",
     "properties": [
       "hvy",
-      "two",
-      "mgc"
+      "mgc",
+      "two"
     ],
     "proficient": 0,
     "unidentified": {
@@ -268,7 +268,8 @@
     "container": null,
     "attuned": false,
     "ammunition": {},
-    "magicalBonus": null
+    "magicalBonus": null,
+    "mastery": ""
   },
   "effects": [
     {
@@ -357,7 +358,12 @@
     "midi-qol": {
       "fumbleThreshold": null,
       "effectActivation": false,
-      "removeAttackDamageButtons": "default"
+      "removeAttackDamageButtons": "default",
+      "rollAttackPerTarget": "default",
+      "itemCondition": "",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "effectCondition": ""
     },
     "midiProperties": {
       "autoFailFriendly": false,
@@ -391,8 +397,8 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1661787233442,
-    "modifiedTime": 1750248835111,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "modifiedTime": 1755187885011,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ",
     "compendiumSource": null,
     "duplicateSource": null
   },

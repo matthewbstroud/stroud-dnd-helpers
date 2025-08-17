@@ -85,12 +85,7 @@ class CompendiumHookHandler {
             return false;
         }
         for (let contextOption of this.#contextOptions) {
-            contextOption.updateOptions(app, options,
-                async (compendium) => {
-                    const actorIds = Array.from(compendium.index?.values() ?? []).map(v => v._id);
-                    await actors.removeUnusedActors(actorIds, compendium.metadata.label);
-                }
-            )
+            contextOption.updateOptions(app, options);
         }
     }
 }
@@ -123,15 +118,6 @@ getCompendiumDirectoryEntryContext.AddContextOption(
         await actors.removeUnusedActors(actorIds, compendium.metadata.label);
     }
 );
-// getCompendiumDirectoryEntryContext.AddContextOption(
-//     "sdnd.compendium.entry.context.removeUnusedItems",
-//     '<i class="fa-regular fa-broom"></i>',
-//     ['Item'],
-//     async (compendium, li) => {
-//         const itemIds = Array.from(compendium.index?.values() ?? []).map(v => v._id);
-//         await items.removeUnusedItems(itemIds, compendium.metadata.label);
-//     }
-// );
 
 const getCompendiumEntryContext = new CompendiumHookHandler("getCompendiumEntryContext");
 getCompendiumEntryContext.AddContextOption(
@@ -154,33 +140,36 @@ getCompendiumEntryContext.AddContextOption(
         }
 
         const actorIds = Array.from(entry.actors?.values() ?? []).map(a => a._id);
+        if (!actorIds || actorIds.length === 0) {
+            ui.notifications.warn(`No actors exist in adventure '${entry.name}!`);
+            return;
+        }
         await actors.removeUnusedActors(actorIds, `adventure '${entry.name}'`);
     }
 );
-// getCompendiumEntryContext.AddContextOption(
-//     "sdnd.compendium.entry.context.removeUnusedItems",
-//     '<i class="fa-regular fa-broom"></i>',
-//     ['Adventure'],
-//     async (compendium, li) => {
-//         const documentId = li.data("document-id");
-//         if (!documentId) {
-//             return false;
-//         }
+getCompendiumEntryContext.AddContextOption(
+    "sdnd.compendium.entry.context.normalizeSystemIdentifier",
+    '<i class="fa-solid fa-wrench"></i>',
+    ['Adventure'],
+    async (compendium, li) => {
+        const documentId = li.data("document-id");
+        if (!documentId) {
+            return false;
+        }
 
-//         const entryUuid = compendium.index.get(documentId)?.uuid;
-//         if (!entryUuid) {
-//             return false;
-//         }
-//         const entry = await fromUuid(entryUuid);
-//         if (!entry) {
-//             return false;
-//         }
+        const entryUuid = compendium.index.get(documentId)?.uuid;
+        if (!entryUuid) {
+            return false;
+        }
+        const entry = await fromUuid(entryUuid);
+        if (!entry) {
+            return false;
+        }
 
-//         const itemIds = Array.from(entry.items?.values() ?? []).map(i => i._id);
-//         await items.removeUnusedItems(itemIds, `adventure '${entry.name}'`);
-//     }
-// );
-
+        const itemIds = Array.from(entry.items?.values() ?? []).map(i => i._id);
+        await items.normalizeSystemIdentifiers(itemIds, entry.uuid);
+    }
+);
 
 export let CompendiumHooks = {
     "init": async function _init() {

@@ -268,7 +268,8 @@
       }
     },
     "identifier": "bold-axe",
-    "ammunition": {}
+    "ammunition": {},
+    "mastery": ""
   },
   "flags": {
     "ddbimporter": {
@@ -474,8 +475,8 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1685289785930,
-    "modifiedTime": 1750248834941,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "modifiedTime": 1755187862387,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ",
     "compendiumSource": null,
     "duplicateSource": null
   },

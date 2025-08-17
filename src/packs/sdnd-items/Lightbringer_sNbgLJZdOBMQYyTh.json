@@ -140,7 +140,9 @@
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
       "itemCondition": "",
-      "effectCondition": ""
+      "effectCondition": "",
+      "reactionCondition": "",
+      "otherCondition": ""
     },
     "core": {
       "sourceId": "Compendium.world.ddb-lost-mines-phandelver-items.XgOuxM0uNukfa3rC"
@@ -479,7 +481,8 @@
     "container": null,
     "attuned": false,
     "ammunition": {},
-    "magicalBonus": null
+    "magicalBonus": null,
+    "mastery": ""
   },
   "ownership": {
     "default": 0,
@@ -490,8 +493,8 @@
     "systemVersion": "4.4.2",
     "coreVersion": "12.343",
     "createdTime": 1684674601716,
-    "modifiedTime": 1750248835444,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "modifiedTime": 1755187877881,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ",
     "compendiumSource": "Compendium.world.ddb-lost-mines-phandelver-items.XgOuxM0uNukfa3rC",
     "duplicateSource": null
   },

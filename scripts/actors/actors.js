@@ -85,6 +85,20 @@ function actorMatchesPattern(actor, searchPattern) {
     return actor.img?.includes(searchPattern) || actor.prototypeToken?.texture?.src?.includes(searchPattern);
 }
 
+function isInMorphData(actor, id){
+    if (!actor) {
+        return false;
+    }
+    const morphData = actor?.getFlag(sdndConstants.MODULE_ID, "morphData");
+    if (!morphData) {
+        return false;
+    }
+    const isPrimary = morphData.actorUuid?.endsWith(id) ?? false;
+    const isAlt = morphData.altActorUuid?.endsWith(id) ?? false;
+    return isPrimary || isAlt;
+
+}
+
 async function removeUnusedActors(actorIds, source) {
     if (!game.user?.isGM){
 		console.log("gm only function!");
@@ -95,7 +109,9 @@ async function removeUnusedActors(actorIds, source) {
         return;
     }
     let orphaned = gameActors
-        .filter(a => !game.scenes.find(s => s.tokens.find(t => t.actor?._id == a._id)))
+        .filter(a => !game.scenes.find(s => 
+            s.tokens.find(t => t.actor?._id == a._id || isInMorphData(t.actor, a._id)))
+        )
         .sort((a, b) => a.name.localeCompare(b.name));
 
     if (!orphaned || orphaned.length === 0) {

@@ -64,6 +64,15 @@ export let utility = {
     "removeEmptyFolders": async function _removeEmptyFolders(type) {
         const folders = type ? game.folders.filter(f => f.type === type) : game.folders;
         await removeEmptyFolders(folders);
+    },
+    "createIdentifierString": function _createIdentifierString(input) {
+        if (!input) return '';
+
+        return input
+            .toLowerCase()                     // Convert to lowercase
+            .trim()                           // Remove leading/trailing whitespace
+            .replace(/\s+/g, '-')             // Replace multiple spaces with single dash
+            .replace(/[^a-z0-9\-]/g, '');      // Remove all special chars except dash
     }
 };
 
@@ -71,9 +80,7 @@ async function removeEmptyFolders(folders) {
     if (!folders || folders.length === 0) {
         return;
     }
-
     const deletedFolderIds = new Set();
-
     async function deleteIfEmpty(folder) {
         // Skip if already deleted
         if (deletedFolderIds.has(folder.id)) {
@@ -109,9 +116,6 @@ async function removeEmptyFolders(folders) {
 
     // Process each root folder
     for (const folder of folders) {
-        if(folder.name.includes("SDND")){
-            debugger;
-        }
         await deleteIfEmpty(folder);
     }
 }

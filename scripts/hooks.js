@@ -2,6 +2,7 @@ import { backpacks } from './backpacks/backpacks.js';
 import { scene } from './utility/scene.js';
 import { createActorHeaderButton } from './actors/actors.js';
 import { CompendiumHooks } from './hookHandlers/compendiumHandlers.js';
+import { FolderHooks } from './hookHandlers/folderHandlers.js';
 import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
@@ -12,106 +13,7 @@ import { tokens } from './tokens.js';
 export let hooks = {
     "init": function _init() {
         CompendiumHooks.init();
-        Hooks.on("getSceneDirectoryFolderContext", (html, options) => {
-            options.push({
-                name: game.i18n.localize("sdnd.scenes.folder.context.regenerateThumbs"),
-                icon: '<i class="fas fa-sync"></i>',
-                callback: async function (li) {
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID) {
-                        return;
-                    }
-                    let folder = await game.folders.get(folderID);
-                    let thumbCount = await scene.regenerateThumbnails(folder);
-                    if (thumbCount > 0) {
-                        ui.notifications.notify(`Regenerated ${thumbCount} thumbnail image${(thumbCount > 0 ? 's' : '')}.`);
-                    }
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID) {
-                        return false;
-                    }
-                    let folder = game.folders.get(folderID);
-                    if (!folder) {
-                        return false;
-                    }
-                    let sceneCount = game.scenes.filter(s => s.folder?.id == folder.id)?.length ?? 0;
-                    if (sceneCount == 0 && folder.children?.length == 0) {
-                        return false;
-                    }
-                    if (sceneCount?.length > 10 || folder.children?.length > 10) {
-                        return false;
-                    }
-                    return true;
-                },
-            });
-            options.push({
-                name: game.i18n.localize("sdnd.scenes.folder.context.removePlayerTokens"),
-                icon: '<i class="fa-regular fa-chess-knight"></i>',
-                callback: async function (li) {
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID) {
-                        return;
-                    }
-                    let folder = game.folders.get(folderID);
-                    let scenes = await tokens.removePlayerTokensFromSceneFolder(folderID);
-                    let content = (scenes.length == 0) ? `No scenes under ${folder.name} contain actor tokens...` :
-                        `Removed Player Tokens from the following scenes:<br/>${scenes.map(s => s.name).sort().join("<br/>")}`;
-                    await ChatMessage.create({
-                        content: content,
-                        whisper: ChatMessage.getWhisperRecipients('GM'),
-                    });
-                    ui.notifications.notify(`Removed player tokens from  ${scenes.length} scene${(scenes.length == 1 ? '' : 's')}.`);
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID) {
-                        return false;
-                    }
-                    let folder = game.folders.get(folderID);
-                    if (!folder) {
-                        return false;
-                    }
-                    return true;
-                },
-            });
-        });
-        Hooks.on("getActorDirectoryFolderContext", (html, options) => {
-            options.push({
-                name: game.i18n.localize("sdnd.actor.folder.context.removeUnused"),
-                icon: '<i class="fa-regular fa-broom"></i>',
-                callback: async function (li) {
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID){
-                    	return;
-                    }
-                    let folder = game.folders.get(folderID);
-                    const actorIds = actors.getActorsByFolderId(folderID).map(a => a._id);
-                    await actors.removeUnusedActors(actorIds, folder.name);
-                },
-                condition: li => {
-                    if (!game.user?.isGM) {
-                        return false;
-                    }
-                    let folderID = $(li).closest("li").data("folderId");
-                    if (!folderID) {
-                        return false;
-                    }
-                    let folder = game.folders.get(folderID);
-                    if (!folder) {
-                        return false;
-                    }
-                    return true;
-                },
-            });
-        });
+        FolderHooks.init();
     },
     "ready": async function _ready() {
         if (game.user?.isGM) {
