@@ -1,7 +1,8 @@
 # v12.4.15
 # New Features
-- Actor folders
-  - Find in Scenes.
+- *Find Actor in Scenes*: You can now get a report of all scenes in your world that contain a reference to the selected actor.
+  - Right-click an actor to find all scenes for that single actor.
+  - Right-click an actor folder to generate a report for all contained actors. (recursive)
 # v12.4.14
 # New Features
 - System Identifier Normalization fuction
