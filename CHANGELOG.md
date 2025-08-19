@@ -1,3 +1,7 @@
+# v12.4.15
+# New Features
+- Actor folders
+  - Find in Scenes.
 # v12.4.14
 # New Features
 - System Identifier Normalization fuction
@@ -659,6 +663,7 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

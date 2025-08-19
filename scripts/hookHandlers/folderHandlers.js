@@ -125,7 +125,20 @@ getActorDirectoryFolderContext.AddContextOption(
         return actorCount > 0;
     }
 );
+getActorDirectoryFolderContext.AddContextOption(
+    "sdnd.actor.folder.context.findInScenes",
+    '<i class="fa-solid fa-magnifying-glass"></i>',
+    async (folder, li) => {
+        const actorIds = actors.getActorsByFolderId(folder.id).map(a => a._id);
+        actors.findInScenes(actorIds);
+    },
+    (folder, li) => {
+        const actorCount = actors.getActorsByFolderId(folder.id).length;
+        return actorCount > 0;
+    }
+);
 
+// <i class="fa-solid fa-magnifying-glass"></i>
 export let FolderHooks = {
     "init": async function _init() {
         const handlers = [
