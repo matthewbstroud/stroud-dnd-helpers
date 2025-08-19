@@ -1,4 +1,5 @@
 import { sdndConstants } from "../constants.js";
+import { chat } from "../chat/chat.js";
 import { items } from "../items/items.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
@@ -7,7 +8,7 @@ import { dialog } from "../dialog/dialog.js";
 import { numbers } from "../utility/numbers.js";
 import { mounts } from "../mounts/mounts.js";
 import { utility } from "../utility/utility.js";
-import { versioning } from "../versioning.js";
+
 
 const BUFF_NPC = "Buff NPC";
 const DIE_MATCH = /(\d+)d(\d+)/g;
@@ -87,7 +88,9 @@ export let actors = {
         let actorData = actorIds.map(actorId => findInScenes(actorId)).filter(a => a);
         let messageData = { content: formatActorScenes(actorData) };
         messageData.whisper = ChatMessage.getWhisperRecipients('GM');
-        ChatMessage.create(messageData);
+        ChatMessage.create(messageData).then(() => {
+            chat.viewLastMessage();
+        });
     }
 }
 

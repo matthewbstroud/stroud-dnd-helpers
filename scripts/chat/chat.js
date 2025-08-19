@@ -85,9 +85,33 @@ export let chat = {
         }
         game.messages.filter(m => m.content.includes("Reveal"))
             .forEach((m) => gmFunctions.revealSecret(m.id));
+    },
+    "viewLastMessage": function _viewLastMessage() {
+        selectChatSidebar();
+        focusLatestChatMessage();
     }
 };
 
+function selectChatSidebar() {
+    const chatTab = ui.sidebar.tabs.chat;
+    if (chatTab) {
+        ui.sidebar.activateTab("chat");
+    } else {
+        console.warn("Chat tab not found in the sidebar.");
+    }
+}
+
+function focusLatestChatMessage() {
+    const chatLog = document.querySelector("#chat-log");
+    if (!chatLog) return;
+
+    const messages = chatLog.querySelectorAll(".message");
+    if (messages.length === 0) return;
+
+    const latestMessage = messages[messages.length - 1];
+    latestMessage.scrollIntoView({ behavior: "smooth", block: "end" });
+    latestMessage.focus();
+}
 
 let chatInternal = {
     "removeRecent": async function _removeRecent() {
