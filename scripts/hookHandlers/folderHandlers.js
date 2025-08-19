@@ -1,12 +1,11 @@
 import { actors } from "../actors/actors.js";
-import { items } from "../items/items.js";
 import { scene } from "../utility/scene.js";
 import { tokens } from "../tokens.js";
 
 class FolderContextOption {
     constructor(handler, label, icon, folderCallback, folderCondition) {
         if (!(handler instanceof FolderHookHandler)) {
-            throw "handler must be SceneHookHandler";
+            throw "handler must be FolderHookHandler";
         }
         this.handler = handler;
         this.name = label;
@@ -75,6 +74,90 @@ class FolderHookHandler {
         }
     }
 }
+class FolderEntryContextOption {
+    constructor(handler, label, icon, folderEntryCallback, folderEntryCondition) {
+        if (!(handler instanceof FolderEntryHookHandler)) {
+            throw "handler must be FolderEntryHookHandler";
+        }
+        this.handler = handler;
+        this.name = label;
+        this.icon = icon;
+        this.folderEntryCallback = folderEntryCallback;
+        if (folderEntryCallback && typeof folderEntryCallback === 'function' && folderEntryCallback.length !== 2) {
+            throw "folderEntryCallback should be (entry, li)";
+        }
+        this.folderEntryCondition = folderEntryCondition;
+        if (folderEntryCondition && typeof folderEntryCondition === 'function' && folderEntryCondition.length !== 2) {
+            throw "folderEntryCondition should be (entry, li)";
+        }
+    }
+    updateOptions(app, options) {
+        options.push({
+            name: game.i18n.localize(this.name),
+            icon: this.icon,
+            callback: async (li) => {
+                const folderEntry = this.handler.resolveFolderEntry(app, li);
+                return await this.folderEntryCallback(folderEntry, li);
+            },
+            condition: (li) => {
+                if (!this.folderEntryCondition) {
+                    return true;
+                }
+                const folderEntry = this.handler.resolveFolderEntry(app, li);
+                if (!folderEntry) {
+                    return false;
+                }
+                return this.folderEntryCondition(folderEntry, li);
+            }
+        });
+    }
+}
+class FolderEntryHookHandler {
+    constructor(handler) {
+        this.handler = handler;
+    }
+    #contextOptions = [];
+
+    AddContextOption(label, icon, folderCallback, folderCondition) {
+        this.#contextOptions.push(new FolderEntryContextOption(
+            this,
+            label,
+            icon,
+            folderCallback,
+            folderCondition
+        ));
+    }
+    #getManager() {
+        if (this.handler === "getActorDirectoryEntryContext") {
+            return game.actors;
+        } else if (this.handler === "getItemDirectoryEntryContext") {
+            return game.items;
+        } else if (this.handler === "getSceneDirectoryEntryContext") {
+            return game.scenes;
+        } else if (this.handler === "getJournalDirectoryEntryContext") {
+            return game.journal;
+        }
+        throw new Error(`Unknown handler: ${this.handler}`);
+    }
+    resolveFolderEntry(app, li) {
+        let entryId = $(li).closest("li").data("entryId");
+        if (!entryId) {
+            return;
+        }
+        return this.#getManager().get(entryId);
+    }
+    async Init() {
+        Hooks.on(this.handler, this.#configureOptions.bind(this))
+    }
+    async #configureOptions(app, options) {
+        if (!game.user?.isGM) {
+            return false;
+        }
+        for (let contextOption of this.#contextOptions) {
+            contextOption.updateOptions(app, options);
+        }
+    }
+}
 
 const getSceneDirectoryFolderContext = new FolderHookHandler("getSceneDirectoryFolderContext");
 getSceneDirectoryFolderContext.AddContextOption(
@@ -125,11 +208,37 @@ getActorDirectoryFolderContext.AddContextOption(
         return actorCount > 0;
     }
 );
+getActorDirectoryFolderContext.AddContextOption(
+    "sdnd.actor.folder.context.findInScenes",
+    '<i class="fa-solid fa-magnifying-glass"></i>',
+    async (folder, li) => {
+        const actorIds = actors.getActorsByFolderId(folder.id).map(a => a._id);
+        actors.findInScenes(actorIds);
+    },
+    (folder, li) => {
+        const actorCount = actors.getActorsByFolderId(folder.id).length;
+        return actorCount > 0;
+    }
+);
 
+const getActorDirectoryEntryContext = new FolderEntryHookHandler("getActorDirectoryEntryContext");
+getActorDirectoryEntryContext.AddContextOption(
+    "sdnd.actor.folder.context.findInScenes",
+    '<i class="fa-solid fa-magnifying-glass"></i>',
+     async (actor, li) => {
+        if (!actor) {
+            return;
+        }
+        actors.findInScenes([actor._id]);
+    }
+);
+
+// <i class="fa-solid fa-magnifying-glass"></i>
 export let FolderHooks = {
     "init": async function _init() {
         const handlers = [
             getActorDirectoryFolderContext,
+            getActorDirectoryEntryContext,
             getSceneDirectoryFolderContext
         ];
         for (let handler of handlers) {

@@ -1,4 +1,5 @@
 import { sdndConstants } from "../constants.js";
+import { chat } from "../chat/chat.js";
 import { items } from "../items/items.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
@@ -7,7 +8,7 @@ import { dialog } from "../dialog/dialog.js";
 import { numbers } from "../utility/numbers.js";
 import { mounts } from "../mounts/mounts.js";
 import { utility } from "../utility/utility.js";
-import { versioning } from "../versioning.js";
+
 
 const BUFF_NPC = "Buff NPC";
 const DIE_MATCH = /(\d+)d(\d+)/g;
@@ -78,6 +79,78 @@ export let actors = {
             return;
         }
         await gmFunctions.removeActorEffects(actorUuid, effectIds);
+    },
+    "findInScenes": function _findInScenes(actorIds) {
+        if (!actorIds || actorIds.length == 0) {
+            ui.notifications.error("No actor ids provided to find in scenes!");
+            return;
+        }
+        let actorData = actorIds.map(actorId => findInScenes(actorId)).filter(a => a);
+        let messageData = { content: formatActorScenes(actorData) };
+        messageData.whisper = ChatMessage.getWhisperRecipients('GM');
+        ChatMessage.create(messageData).then(() => {
+            chat.viewLastMessage();
+        });
+    }
+}
+
+/**
+ * Formats actor and their scenes into HTML
+ * @param {Array} actorData Array of {name: string, scenes: string[]} objects
+ * @returns {string} Formatted HTML string
+ */
+function formatActorScenes(actorData) {
+    if (!actorData) return '';
+    
+    const isSingleActor = actorData.length === 1;
+    
+    const formatSingleActor = (data) => {
+        const sceneList = data.scenes.length === 0 
+            ? '<p>No scenes found for this actor.</p>'
+            : `<ol style="list-style-type: disc; padding-left: 20px;">
+                ${data.scenes.map(scene => `<li>${scene}</li>`).join('')}
+              </ol>`;
+
+        return `
+            <div class="actor-scene-entry">
+                <p class="actor-name"><b>${data.name}</b></p>
+                ${sceneList}
+            </div>`;
+    };
+
+    const formattedActors = actorData
+        .map(actor => isSingleActor 
+            ? formatSingleActor(actor)
+            : `<li>${formatSingleActor(actor)}</li>`
+        )
+        .join('\n');
+
+    const html = isSingleActor
+        ? formattedActors
+        : `<ol style="list-style-type: none">${formattedActors}</ol>`;
+
+    return html;
+}
+
+function findInScenes(actorId) {
+    if (!actorId) {
+        return false;
+    }
+    const actor = game.actors.get(actorId);
+    const sceneNames = game.scenes.filter(s =>
+        s.tokens.some(t =>
+            t.actor?._id == actorId ||
+            isInMorphData(t.actor, actorId)
+        )
+    ).map(s => s.name);
+
+    if (!scenes || scenes.length === 0) {
+        return `<p>${actor.name} not found in any scenes.</p>`;
+    }
+
+    return {
+        "name": actor.name,
+        "scenes": sceneNames
     }
 }
 
@@ -85,7 +158,7 @@ function actorMatchesPattern(actor, searchPattern) {
     return actor.img?.includes(searchPattern) || actor.prototypeToken?.texture?.src?.includes(searchPattern);
 }
 
-function isInMorphData(actor, id){
+function isInMorphData(actor, id) {
     if (!actor) {
         return false;
     }
@@ -100,16 +173,16 @@ function isInMorphData(actor, id){
 }
 
 async function removeUnusedActors(actorIds, source) {
-    if (!game.user?.isGM){
-		console.log("gm only function!");
-	}
+    if (!game.user?.isGM) {
+        console.log("gm only function!");
+    }
     let gameActors = game.actors.filter(a => actorIds.includes(a._id));
     if (!gameActors || gameActors.length === 0) {
         ui.notifications.info(`No actors from ${source} exist in this world...`);
         return;
     }
     let orphaned = gameActors
-        .filter(a => !game.scenes.find(s => 
+        .filter(a => !game.scenes.find(s =>
             s.tokens.find(t => t.actor?._id == a._id || isInMorphData(t.actor, a._id)))
         )
         .sort((a, b) => a.name.localeCompare(b.name));
@@ -118,18 +191,18 @@ async function removeUnusedActors(actorIds, source) {
         ui.notifications.info(`No actors from ${source} are unused in this world...`);
         return;
     }
-    const confirmation = await dialog.confirmation("Remove Unused Actors", `This operation will remove <b>${orphaned.length}</b> unused actor${orphaned.length === 0 ? '': 's'} from this world.<br/><br/>Continue?`);
+    const confirmation = await dialog.confirmation("Remove Unused Actors", `This operation will remove <b>${orphaned.length}</b> unused actor${orphaned.length === 0 ? '' : 's'} from this world.<br/><br/>Continue?`);
     if (!confirmation || confirmation === "False") {
         return;
     }
     console.log(orphaned.map(o => o.name).join(","));
     const totalOrphans = orphaned.length;
-    for (let i=0; i < orphaned.length; i++) {
+    for (let i = 0; i < orphaned.length; i++) {
         console.log(`Deleting ${orphaned[i].name} from world...`);
-        SceneNavigation.displayProgressBar({label: `Removing '${orphaned[i].name}' ${i+1} of ${totalOrphans}`, pct: Math.floor((i / totalOrphans) * 100)});
+        SceneNavigation.displayProgressBar({ label: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`, pct: Math.floor((i / totalOrphans) * 100) });
         await orphaned[i].delete();
     }
-    SceneNavigation.displayProgressBar({label: ``, pct: 100 });
+    SceneNavigation.displayProgressBar({ label: ``, pct: 100 });
     await utility.removeEmptyFolders("Actor");
 }
 
@@ -241,7 +314,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
     }
     const totalNpcs = npcs.length;
     for (let i = 0; i < npcs.length; i++) {
-        SceneNavigation.displayProgressBar({label: `${BUFF_NPC}s: ${i+1} of ${npcs.length}`, pct: Math.floor((i / totalNpcs) * 100)});
+        SceneNavigation.displayProgressBar({ label: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}`, pct: Math.floor((i / totalNpcs) * 100) });
         let npc = npcs[i];
         const hp = npc.system?.attributes?.hp;
         let actorUpdateRequired = false;
@@ -296,7 +369,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         }
 
     }
-    SceneNavigation.displayProgressBar({label: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs}`, pct: 100});
+    SceneNavigation.displayProgressBar({ label: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs}`, pct: 100 });
 }
 
 export function getAverageHpFormula(formula) {
