@@ -91,42 +91,42 @@ export let actors = {
     }
 }
 
-const actorScenesCss = `
-<style>
-.actor-scene-list {
-    list-style: disc!important;
-    margin-left: 20px;
-    padding-left: 0;
-}
-
-.actor-scene-list li {
-    margin: 4px 0;
-}
-</style>
-`;
-
+/**
+ * Formats actor and their scenes into HTML
+ * @param {Array} actorData Array of {name: string, scenes: string[]} objects
+ * @returns {string} Formatted HTML string
+ */
 function formatActorScenes(actorData) {
-    if (!actorData) {
-        return '';
-    }
-    const single = actorData.length === 1;
-    const html = actorData.map((ad) => {
-        const sceneList = ad.scenes.length === 0 ?
-            '<p>No scenes found for this actor.</p>' :
-            `<ol class="actor-scene-list">
-        ${ad.scenes.map(scene => `<li class="actor-scene-list">${scene}</li>`).join('')}
-        </ol>`;
+    if (!actorData) return '';
+    
+    const isSingleActor = actorData.length === 1;
+    
+    const formatSingleActor = (data) => {
+        const sceneList = data.scenes.length === 0 
+            ? '<p>No scenes found for this actor.</p>'
+            : `<ol style="list-style-type: disc; padding-left: 20px;">
+                ${data.scenes.map(scene => `<li>${scene}</li>`).join('')}
+              </ol>`;
 
-        const element = single ? "div" : "li";
-        return `<${element}>
-            <p><strong>${ad.name}</strong></p>
-            ${sceneList}
-    </${element}>`;
-    }).join("\n\r");
-    if (!single) {
-        return `${actorScenesCss}\n\r<ol class="actor-scene-list">${html}</ol>`;
-    }
-    return `${actorScenesCss}\n\r${html}`;
+        return `
+            <div class="actor-scene-entry">
+                <p class="actor-name"><b>${data.name}</b></p>
+                ${sceneList}
+            </div>`;
+    };
+
+    const formattedActors = actorData
+        .map(actor => isSingleActor 
+            ? formatSingleActor(actor)
+            : `<li>${formatSingleActor(actor)}</li>`
+        )
+        .join('\n');
+
+    const html = isSingleActor
+        ? formattedActors
+        : `<ol style="list-style-type: none">${formattedActors}</ol>`;
+
+    return html;
 }
 
 function findInScenes(actorId) {
