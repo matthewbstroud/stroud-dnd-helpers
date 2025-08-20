@@ -1,3 +1,19 @@
+# v12.4.16
+# New Features
+- Added stroudDnD.combat.applyAdhocDamageDirect for use in scripts
+```js
+/**
+ * Apply ad-hoc damage to selected tokens.
+ * @param {string} damageType - The type of damage (e.g., "slashing", "fire", "bludgeoning").
+ * @param {string} damageDice - The number of sides on the dice (e.g., "6" for d6, "8" for d8).
+ * @param {number} diceCount - The number of dice to roll (e.g., 2 for 2d6).
+ * @param {boolean} allowSave - Whether to allow a saving throw (true/false).
+ * @param {string} saveAbility - The ability used for the save (e.g., "str", "dex", "con").
+ * @param {number} saveDC - The DC for the saving throw (e.g., 15).
+ * @param {string} damageOnSave - What happens on a successful save ("half" or "none").
+ */
+async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSave, saveAbility, saveDC, damageOnSave)
+```
 # v12.4.15
 # New Features
 - *Find Actor in Scenes*: You can now get a report of all scenes in your world that contain a reference to the selected actor.
@@ -664,6 +680,7 @@
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

@@ -16,6 +16,7 @@ import { heroicManeuvers } from "./homebrew/heroicManeuvers.js";
 
 export let combat = {
     "applyAdhocDamage": foundry.utils.debounce(applyAdhocDamage, 250),
+    "applyAdhocDamageDirect": _applyAdhocDamageDirect,
     "simulatedAttackers": foundry.utils.debounce(simulateAttackers, 250),
     "startFilteredCombat": foundry.utils.debounce(startFilteredCombat, 250),
     "toggleWallsBlockRange": foundry.utils.debounce(toggleWallsBlockRanged, 250),
@@ -37,6 +38,41 @@ export let combat = {
     "executeHeroicManeuver": heroicManeuvers.execute,
     "autoConsumeUse": autoConsumeUse
 };
+
+/**
+ * Apply ad-hoc damage to selected tokens.
+ * @param {string} damageType - The type of damage (e.g., "slashing", "fire", "bludgeoning").
+ * @param {string} damageDice - The number of sides on the dice (e.g., "6" for d6, "8" for d8).
+ * @param {number} diceCount - The number of dice to roll (e.g., 2 for 2d6).
+ * @param {boolean} allowSave - Whether to allow a saving throw (true/false).
+ * @param {string} saveAbility - The ability used for the save (e.g., "str", "dex", "con").
+ * @param {number} saveDC - The DC for the saving throw (e.g., 15).
+ * @param {string} damageOnSave - What happens on a successful save ("half" or "none").
+ */
+async function _applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSave, saveAbility, saveDC, damageOnSave) {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return;
+    }
+    if (versioning.isLegacyVersion()) {
+        ui.notifications.error("Adhoc direct damage is not supported in legacy DnD versions.");
+        return;
+    }
+    if (allowSave && (!saveAbility || !saveDC || !damageOnSave)) {
+        ui.notifications.error("You must select a save ability, DC, and damage on save option when allowing saves.");
+        return;
+    }
+    const damageData = {
+        "adhocDamageType": allowSave ? "Damage" : "Unavoidable Damage",
+        "damageType": damageType,
+        "damageDice": damageDice,
+        "diceCount": diceCount,
+        "saveAbility": saveAbility,
+        "saveDC": saveDC,
+        "damageOnSave": damageOnSave
+    };
+    _debouncedApplyAdhocDamage(damageData);
+}
 
 const AUTO_TARGET = "autoTarget";
 const AUTO_TARGET_DEFAULT = "wallsBlockIgnoreDefeated";
@@ -244,7 +280,7 @@ async function createAdhocItem(adhocDamageType, damageType, damageDice, diceCoun
 }
 
 // apply adhoc damage to selected tokens
-async function applyAdhocDamage() {
+async function applyAdhocDamage(damageData) {
     if (!game.user.isGM) {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
@@ -291,23 +327,23 @@ async function applyAdhocDamage() {
             ];
             return await dialog.createButtonDialog("Select Damage on Save", values, "column");
         },
-        collectInputData: async function _collectInputData() {
+        collectInputData: async function _collectInputData(damageData) {
             let saveData = null;
-            let adhocDamageType = versioning.isLegacyVersion() ? "legacy" : await adHocDamage.getAdhocDamageType();
+            let adhocDamageType = damageData?.adhocDamageType ?? (versioning.isLegacyVersion() ? "legacy" : await adHocDamage.getAdhocDamageType());
             if (!adhocDamageType) {
                 return;
             }
 
             if (adhocDamageType === "Damage") {
-                const saveAbility = await adHocDamage.getSaveAbility();
+                const saveAbility = damageData?.saveAbility ?? await adHocDamage.getSaveAbility();
                 if (!saveAbility) {
                     return;
                 }
-                const saveDC = await adHocDamage.getSaveDC();
+                const saveDC = damageData?.saveDC ?? await adHocDamage.getSaveDC();
                 if (!saveDC) {
                     return;
                 }
-                const damageOnSave = await adHocDamage.getDamageOnSave();
+                const damageOnSave = damageData?.damageOnSave ?? await adHocDamage.getDamageOnSave();
                 if (!damageOnSave) {
                     return;
                 }
@@ -318,15 +354,15 @@ async function applyAdhocDamage() {
                 };
             }
 
-            let damageType = await adHocDamage.getDamageType();
+            let damageType = damageData?.damageType ?? await adHocDamage.getDamageType();
             if (!damageType) {
                 return;
             }
-            let damageDice = await adHocDamage.getDamageDice();
+            let damageDice = damageData?.damageDice ?? await adHocDamage.getDamageDice();
             if (!damageDice) {
                 return;
             }
-            let diceCount = await adHocDamage.getDiceCount();
+            let diceCount = damageData?.diceCount ?? await adHocDamage.getDiceCount();
             if (!diceCount) {
                 return;
             }
@@ -349,7 +385,7 @@ async function applyAdhocDamage() {
         ui.notifications.notify(`No valid tokens selected!`);
         return;
     }
-    const inputData = await adHocDamage.collectInputData();
+    const inputData = await adHocDamage.collectInputData(damageData);
     if (!inputData) {
         return;
     }
@@ -359,6 +395,8 @@ async function applyAdhocDamage() {
         async () => await applyDamageLegacyMode(damageType, damageDice, diceCount, targets)
     );
 }
+
+const _debouncedApplyAdhocDamage = foundry.utils.debounce(applyAdhocDamage, 250);
 
 // borrowed from chrisPremades.utils.workflowUtils
 async function completeItemUse(item, config = {}, options = {}) {
