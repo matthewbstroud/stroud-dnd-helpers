@@ -194,6 +194,14 @@ getSceneDirectoryFolderContext.AddContextOption(
         ui.notifications.notify(`Removed player tokens from  ${scenes.length} scene${(scenes.length == 1 ? '' : 's')}.`);
     }
 );
+getSceneDirectoryFolderContext.AddContextOption(
+    "sdnd.scenes.folder.context.findActors",
+    '<i class="fa-solid fa-magnifying-glass"></i>',
+    async (folder, li) => {
+        let scenes = await scene.getScenesByFolderId(folder.id);
+        await scene.getActorsInScenes(scenes);
+    }
+);
 
 const getActorDirectoryFolderContext = new FolderHookHandler("getActorDirectoryFolderContext");
 getActorDirectoryFolderContext.AddContextOption(
@@ -233,13 +241,26 @@ getActorDirectoryEntryContext.AddContextOption(
     }
 );
 
+const getSceneDirectoryEntryContext = new FolderEntryHookHandler("getSceneDirectoryEntryContext");
+getSceneDirectoryEntryContext.AddContextOption(
+    "sdnd.actor.folder.context.findInScenes",
+    '<i class="fa-solid fa-magnifying-glass"></i>',
+     async (entry, li) => {
+        if (!entry) {
+            return;
+        }
+        await scene.getActorsInScenes([entry]);
+    }
+);
+
 // <i class="fa-solid fa-magnifying-glass"></i>
 export let FolderHooks = {
     "init": async function _init() {
         const handlers = [
             getActorDirectoryFolderContext,
             getActorDirectoryEntryContext,
-            getSceneDirectoryFolderContext
+            getSceneDirectoryFolderContext,
+            getSceneDirectoryEntryContext
         ];
         for (let handler of handlers) {
             handler.Init();
