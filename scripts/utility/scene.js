@@ -1,3 +1,5 @@
+import { chat } from "../chat/chat.js";
+import { sdndConstants } from "../constants.js";
 import { folders } from "../folders/folders.js";
 
 export let scene = {
@@ -47,7 +49,101 @@ export let scene = {
     "getScenesByFolderId": function _getScenesByFolderId(folderId) {
         return game.scenes.filter(s => folders.childOfFolder(s, folderId));
     },
+    "getActorsInScenes": function _getActorsInScenes(scenes) {
+        if (!scenes || scenes.length == 0) {
+            return [];
+        }
+        return debouncedGetActorsInScenes(scenes);
+    }
 };
+
+function formatSceneActors(sceneData) {
+    if (!sceneData) return '';
+
+    const isSingleScene = sceneData.length === 1;
+
+    const formatSingleScene = (data) => {
+        const actorList = data.actors.length === 0
+            ? '<p>No actors found for this scene.</p>'
+            : `<ol style="list-style-type: disc; padding-left: 20px;">
+                ${data.actors.map(actor => `<li>@Actor[${actor.id}]{${actor.name}}</li>`).join('')}
+              </ol>`;
+
+        return `
+            <div class="actor-scene-entry">
+                <p class="actor-name"><b>${data.name}</b></p>
+                ${actorList}
+            </div>`;
+    };
+
+    const formattedScenes = sceneData
+        .map(actor => isSingleScene
+            ? formatSingleScene(actor)
+            : `<li>${formatSingleScene(actor)}</li>`
+        )
+        .join('\n');
+
+    const html = isSingleScene
+        ? formattedScenes
+        : `<ol style="list-style-type: none">${formattedScenes}</ol>`;
+
+    return html;
+}
+
+async function findActorsAndAlternates(actors) {
+    if (!actors || actors.length == 0) {
+        return [];
+    }
+    let actorsAndAlts = [];
+    for (let actor of actors) {
+        actorsAndAlts.push(actor);
+        const morphData = actor.getFlag(sdndConstants.MODULE_ID, "morphData");
+        if (!morphData) {
+            continue
+        }
+        let altActorUuid = null;
+        if (!morphData.altActorUuid.endsWith(actor._id)) {
+            altActorUuid = morphData.altActorUuid;
+        } else if (!morphData.actorUuid.endsWith(actor._id)) {
+            altActorUuid = morphData.actorUuid;
+        }
+        if (!altActorUuid) {
+            continue;
+        }
+        const altActor = await fromUuid(altActorUuid);
+        if (altActor) {
+            actorsAndAlts.push(altActor);
+        } else {
+            console.warn(`Could not find alternate actor for ${actor.name} with UUID ${altActorUuid}`);
+        }
+    }
+    return Array.from(
+        new Map(
+            actorsAndAlts
+                .map(a => [a._id, { "id": a._id, "name": a.name }])
+        ).values()
+    ).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+async function getActorsInScenes(scenes) {
+    if (!scenes || scenes.length == 0) {
+        return [];
+    }
+    let scenesAndActors = [];
+    for (let scene of scenes) {
+        const sceneActors = await findActorsAndAlternates(scene.tokens.filter(t => t.actor).map(t => t.actor));
+        scenesAndActors.push({
+            "name": scene.name,
+            "actors": sceneActors
+        })
+    }
+    let messageData = { content: formatSceneActors(scenesAndActors) };
+    messageData.whisper = ChatMessage.getWhisperRecipients('GM');
+    await ChatMessage.create(messageData);
+    chat.viewLastMessage();
+}
+
+const debouncedGetActorsInScenes = foundry.utils.debounce(getActorsInScenes, 250);
 
 let exportCounters = {
     skipped: 0,
