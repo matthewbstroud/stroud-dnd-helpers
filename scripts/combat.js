@@ -327,6 +327,19 @@ async function applyAdhocDamage(damageData) {
             ];
             return await dialog.createButtonDialog("Select Damage on Save", values, "column");
         },
+        logFunction: function _logFunction(damageData) {
+            let params = [];
+            params.push(`'${damageData.damageType}'`);
+            params.push(`${damageData.damageDice}`);
+            params.push(`${damageData.diceCount}`);
+            params.push(`${damageData.adhocDamageType === "Damage" ? true : false}`);
+            if (damageData.saveData) {
+                params.push(`'${damageData.saveData.ability}'`);
+                params.push(`${damageData.saveData.dc}`);
+                params.push(`'${damageData.saveData.damageOnSave}'`);
+            }
+            console.log(`stroudDnD.combat.applyAdhocDamageDirect(${params.join(", ")})`);
+        },
         collectInputData: async function _collectInputData(damageData) {
             let saveData = null;
             let adhocDamageType = damageData?.adhocDamageType ?? (versioning.isLegacyVersion() ? "legacy" : await adHocDamage.getAdhocDamageType());
@@ -366,7 +379,6 @@ async function applyAdhocDamage(damageData) {
             if (!diceCount) {
                 return;
             }
-
             return {
                 adhocDamageType,
                 damageType,
@@ -389,6 +401,7 @@ async function applyAdhocDamage(damageData) {
     if (!inputData) {
         return;
     }
+    adHocDamage.logFunction(inputData);
     const { adhocDamageType, damageType, damageDice, diceCount, saveData } = inputData;
     return await versioning.dndVersionedAsync(
         async () => await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets),

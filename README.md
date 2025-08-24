@@ -1,125 +1,128 @@
-# Readme
-My collection of automation for foundy v12 and DND 5e (v4.4.2)
+# Stroud's DnD Helpers
 
-If you appreciate the module support me [HERE](https://ko-fi.com/sdnddonations)
+A comprehensive Foundry VTT module that provides a collection of tools and utilities to enhance your D&D 5e games. This module includes features for combat management, inventory automation, crafting systems, scene organization, and much more.
 
-Configuring midi-QOL tends to be a challenge for new players.  I have included my settings [HERE](/misc/StroudDnDMidiQOLSettings_v11.json "download").  
-Feel free to download them and install them as a starting point.
+If you appreciate the module, support me [HERE](https://ko-fi.com/sdnddonations)
 
-You can install these settings as follows: 
-- Configure Settings
-- midi-QOL Settings
-- Click Workflow Settings
-- Select Misc tab
-- Click the Import midi-qol settings from JSON file. 
+## Features Overview
 
-There are also some convenient effects that I use in the adventures
-Grab them [HERE](/misc/fred_custom_effects.json "download").  
+### **Combat Management**
+- **[Ad-Hoc Damage](documentation/combat/adhocDamage.md)**: Apply custom damage with flexible saving throws and damage types
+- **[Filtered Combat Start](documentation/combat/startFilteredCombat.md)**: Streamlined combat initiation with automatic token filtering
+- **[Heroic Maneuvers](documentation/heroic_maneuvers.md)**: Special combat actions and tactical options for dynamic encounters
 
-# Utility Macros
-- **Chat**
-  - **Prune Chat Log**: Click to gain access to two options
-    - **Remove Recent Messages**:  Delete messages that were created less than a specified number of minutes ago.  (Defaults to 30)
-    - **Remove Old Messages**: Delete messages older than a specified number of days. (Defaults to 7)
-- **Combat**
-  - **Apply Adhoc Damage**: A macro that allows you select 1 to many tokens and then apply any type of damage to them. Creates both a chat message and midi-QOL damage card.  You can specify in settings whether or not to automatically apply the damage card.
-  - **Start Filtered Combat**: Allows you to select everything on the battlefield, but exclude tokens that belong to specific folders or are already dead.
-- **Item Piles Integration**
-  - **Drop Containers**: You can drop a backpack filled with items.  You can open and interact with the backpack on the ground as well as moving its position.  You can pick up the backpack to return it to your inventory with all items still inside.
-- **Identification**: Helper methods for creating unidentified items and allowing them to be identified either by the Gamemaster or through the identify spell.
-  - **Create Unidentified Item**:Create an unidentified item from the currently viewed magic item.  Item will be placed in the same folder as the original.
-  - **Identify Item**: Macro for Gamemaster to identify an item in the player's inventory.  (Useful for NPC based identification.)
-  - **ItemMacro for Identify Spell**:  Allows a player to cast identify and be presented with a list of unidentified items in their inventory.
-- **Journal**
-  - **Session Summaries**:  Generates a journal entry that is a snapshot of each player's current hp, experience, and money.
-- **Lighting**
-  - **Lights**: Helper functions to manage lights.
-    - **Update**: Search for lights based on color and animation and change their settings.
-  - **Fireplaces**:  Functions for creating an active tile to toggle a fireplace light and sound effect on and off.
-    - **Create Fireplace**: draw a tile that overlaps your fireplace light and sound effect, then run this macro to create a monk's active tile that will toggle the fireplace on and off.
-    - **Toggle Fireplace**: a behind the scenes macro triggered by the fireplace tile.
-    - **Rewire Fireplaces**:  looks for fireplaces with the macro toggleFireplace.  This will automatically import the toggleFireplace macro from the compendium and set it as the active macro.  This function is there to fix any copied maps.
-- **Macros**
-  - **Organize**: Automatically organizes all macros under a Player Macros folder.  A sub-folder is created for each user.  If a macro was created by a user that no longer exists, it will be removed.
-- **Manage Money**: Click to activate one of the following
-  - **Give Money**: Specify an amount of money to give to all or specific players.
-  - **Take Money**: Take an specified amount of money from a selected player or evenly from amount all players.
-  - **Equalize Money**: Get the sum of all players money and then distribute it equally across all characters.
-- **Music**
-  - **Combat**: Combat playlist can be set in the module settings.
-    - **Start**: Start combat music if it isn't already playing.
-    - **Toggle**: Toggle the current state of combat music.
-- **Poisons**
-  - Add the ability to craft and use poisons.
-    - Basic Poison
-    - Advanced Poison
-- **Scene**: Scene macros
-  - **Rewire Monk's Active Tiles**: When you duplicate a scene, the links to other scene tiles still point to the original scene.  This macro will rewire them to the current scene.
-- **Tagging**: Allows a simple command-line system for tagging selected placeables and then having the ability to toggle their state.
-  - Doors
-    - tagSelected
-    - setDoorState
-  - Lights
-    - tagSelected
-    - toggle (on/off)
-  - SFX
-    - tagSelected
-    - toggle (on/off)
-  - Tiles
-    - tagSelected
-    - trigger
-- **Tokens**
-  - **Manage Tokens**
-    - **Toggle NPC Name**: Works in conjunction with Hide Name from Combat Utility Belt.  Toggles an NPC token between display name hover owner and display name hover all.  Also toggles the hide npc name in CUB.
-    - **Show Token Art**: Show the character art associated with the selected token as an image popout.
-    - **Push Prototype Changes**: This will allow you to push prototype changes to the current scene.  Simply select a token and run the macro.
-- **Weapons**
-  - **Reload Ranged Weapon**: Allows you to select an equipped ranged weapon and reload it with any available ammo from your inventory.
+### **Inventory & Equipment Systems**
+- **[Backpacks Automation](documentation/backpacks/backpacks.md)**: Drop and retrieve backpacks with full inventory management and Item Piles integration
+- **[Mounts & Hitchables](documentation/mounts/mounts.md)**: Complete mount system with damage sharing, carrying capacity, and vehicle attachments
+- **[Bane Weapons](documentation/items/bane-weapons.md)**: Create weapons that deal bonus damage to specific creature types
 
-# Supported Class Features
-|Class|Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
-|---|---|---|---|---|---|
-|Cleric|Twilight Sanctuary|True|False|None|Handles checking for range to caster for each player at end of turn.  Prompts player to clear a condition or apply temp hp. Automatically rolls a final heal on removal, if out of combat.|
-|Wizard|Portent Dice|False|False|None|Macro under Stroud DnD Shared Macros that will create the players portent dice.  Each die is a single use item and this feature is sync with their Portent daily uses.|
+### **Crafting & Harvesting**
+- **[Harvesting System](documentation/crafting/crafting.md)**: Collect ingredients from defeated creatures using skill checks
+- **[Poison Crafting](documentation/crafting/crafting.md)**: Create various poisons using harvested materials and recipes
+- **Recipe Learning**: Consume recipe items to unlock new crafting formulas
 
-# Feature Helpers
-Feature|Compendium Feature|Cast or Use Macro|Required NPC|Comments|
-|---|---|---|---|---|
-|Enable Great Weapon Master|True|False|None|When used, your next attack will be at -5 attack roll and +10 damage roll.|
-|Enable Sharpshooter|True|False|None|When used, your next ranged attack will be at -5 attack roll and +10 damage roll.|
+### **Scene & Token Management**
+- **[Tagging System](documentation/tagging.md)**: Organize and categorize scene elements with custom tags
+- **[Token Morphing](documentation/morphTokens.md)**: Transform tokens between different forms and appearances
+- **Lighting Controls**: Advanced lighting management and scene organization tools
 
-# Supported Spells
-|Spell|Compendium Spell|Cast or Use Macro|Required NPC|Comments|
-|---|---|---|---|---|
-|Hunter's Mark|True|True|None|Allows multiple players to mark the same target simultaneously.|
-|Spiritual Weapon|True|True|Spiritual Weapon||
+### **GM Utilities**
+- **[Macro Collections](documentation/macros.md)**: Comprehensive GM and shared macro libraries
+- **Music Integration**: Automatic combat music and playlist management
+- **Time Management**: Calendar integration with combat and activity tracking
+- **Folder Organization**: Automated folder management for actors and scenes
 
-# Magic Items
-|Type|Name|Notes|
-|---|---|---|
-|Melee Weapon|Lightbringer|Gives a passive effect that can be enabled/disabled by the user.  When enabled the weapon will hit for an extra 1d6 damage against undead targets.|
-|Melee Weapon|Ogran|+2 Maul that also adds +1 AC.|
-|Melee Weapon|Devotee's Censer|Does radiant damage and can heal allies.|
-  
-# Required Modules  
-| Module | Verified Version | manifest location 
-| --- | --- | --- | 
-| Active Auras | 0.12.2 | https://github.com/kandashi/Active-Auras/releases/latest/download/module.json |
-| Active Token Effects | 0.8.1 | https://github.com/kandashi/Active-Token-Lighting/releases/download/v0.8.1/module.json |
-| Automated Animations | 4.2.74 | https://github.com/otigon/automated-jb2a-animations/releases/latest/download/module.json |
-| Dynamic effects using Active Effects (DAE) | 12.0.25 | https://gitlab.com/tposney/dae/raw/dndv4/package/module.json |
-| Effect Macro | 12.1.1 | https://github.com/krbz999/effectmacro/releases/latest/download/module.json |
-| libWrapper | 1.13.2.0 | https://github.com/ruipin/fvtt-lib-wrapper/releases/latest/download/module.json |
-| Midi QOL | 12.4.53 | https://gitlab.com/tposney/midi-qol/raw/v12dnd4/package/module.json |
-| Monk's Active Tile Triggers | 12.02 | https://github.com/ironmonk88/monks-active-tiles/releases/latest/download/module.json |
-| socketlib | 1.1.2 | https://github.com/farling42/foundryvtt-socketlib/releases/latest/download/module.json |
-  
-# Optional supported modules:  
-- Anonymous
-- D&D Beyond Importer  
-- Token Magic FX  
-- Visual Active Effects  
-- JBA Free or Patreon
-- Simple Calendar
+### **Automation Features**
+- **Damage Distribution**: Automatic damage sharing between riders and mounts
+- **Effect Management**: Temporary and permanent item enhancements
+- **Permission Systems**: Granular access control for backpacks and mounts
+- **Weight Tracking**: Realistic encumbrance with visual feedback
+
+## Documentation
+
+For detailed guides and documentation, see the [Documentation Index](documentation/README.md) which includes:
+
+### **Core Systems**
+- [Macros Guide](documentation/macros.md) - Comprehensive list of available macros and their usage
+- [Backpacks Automation](documentation/backpacks/backpacks.md) - Drop and manage backpacks with full inventory control
+- [Mounts System](documentation/mounts/mounts.md) - Complete guide to mounts, hitchables, and damage sharing
+- [Crafting System](documentation/crafting/crafting.md) - Harvesting ingredients and poison crafting system
+
+### **Combat Tools**
+- [Ad-Hoc Damage](documentation/combat/adhocDamage.md) - Apply custom damage with flexible saving throw options
+- [Filtered Combat Start](documentation/combat/startFilteredCombat.md) - Streamlined combat initiation with music integration
+- [Heroic Maneuvers](documentation/heroic_maneuvers.md) - Special combat actions and tactical maneuvers
+
+### **Item & Equipment Systems**
+- [Bane Weapons](documentation/items/bane-weapons.md) - Create weapons with bonus damage vs. specific creature types
+
+### **Scene & Token Management**
+- [Tagging System](documentation/tagging.md) - Organize scene elements with custom categorization
+- [Token Morphing](documentation/morphTokens.md) - Transform tokens between different forms
+
+## Installation & Requirements
+
+### **Core Requirements**
+All of the following modules are **required** for this module to function properly:
+
+| Module | Minimum Version | Purpose |
+|--------|-----------------|---------|
+| [Active Auras](https://foundryvtt.com/packages/ActiveAuras) | 5.1.0 | Active effect management and area-based effects |
+| [Automated Animations](https://foundryvtt.com/packages/automated-jb2a-patreon) | 4.2.93 | Visual effects for spells and abilities |
+| [Dynamic Active Effects](https://foundryvtt.com/packages/dae) | 12.0.6 | Advanced active effect calculations |
+| [Effect Macro](https://foundryvtt.com/packages/effectmacro) | 12.0.6 | Execute macros from active effects |
+| [libWrapper](https://foundryvtt.com/packages/lib-wrapper) | 1.12.14.0 | Function wrapping for compatibility |
+| [Midi QOL](https://foundryvtt.com/packages/midi-qol) | 11.6.12 | Advanced damage workflows and automation |
+| [Monk's Active Tiles](https://foundryvtt.com/packages/monks-active-tiles) | 12.05 | Interactive scene tiles |
+| [socketlib](https://foundryvtt.com/packages/socketlib) | 1.0.13 | Cross-client communication |
+
+### **Optional Enhancements**
+These modules enhance functionality but are not required:
+
+| Module | Minimum Version | Enhanced Features |
+|--------|-----------------|-------------------|
+| [Item Piles](https://foundryvtt.com/packages/item-piles) | 3.0.8 | Backpack and mount inventory management |
+| [Combat Utility Belt](https://foundryvtt.com/packages/combat-utility-belt) | - | Token visibility and combat enhancements |
+| [Monk's Enhanced Journal](https://foundryvtt.com/packages/monks-enhanced-journal) | - | Improved journal functionality |
+| [Playlist Importer](https://foundryvtt.com/packages/playlist_import) | - | Enhanced music management |
+| [Simple Calendar](https://foundryvtt.com/packages/foundryvtt-simple-calendar) | - | Time tracking integration |
+| [Compendium Folders](https://foundryvtt.com/packages/compendium-folders) | - | Better compendium organization |
+| [Drag Upload](https://foundryvtt.com/packages/dragupload) | - | Simplified file uploads |
+| [DF Chat Enhancements](https://foundryvtt.com/packages/df-chat-enhance) | - | Improved chat functionality |
+
+### **System Requirements**
+- **Foundry VTT**: Version 11 - 12 (optimized for v12)
+- **D&D 5e System**: Version 4.0.0 - 4.4.x
+
+## Installation
+
+1. Install all required modules listed above
+2. In Foundry's Module Management, use the following manifest URL:
+   ```
+   https://github.com/matthewbstroud/stroud-dnd-helpers/releases/latest/download/module.json
+   ```
+3. Enable the module and all required dependencies
+4. Configure module settings in the game settings panel
+
+## Quick Start
+
+1. **Import Compendiums**: The module includes 9 compendium packs with macros, items, and documentation
+2. **Configure Settings**: Review module settings for combat music, backpack permissions, and automation preferences
+3. **Test Core Features**: Try the backpack system, ad-hoc damage, or heroic maneuvers to familiarize yourself with the tools
+4. **Review Documentation**: Check the [Documentation Index](documentation/README.md) for detailed guides on each system
+
+## Support & Contributing
+
+- **Issues**: Report bugs and feature requests on [GitHub](https://github.com/matthewbstroud/stroud-dnd-helpers/issues)
+- **Support**: [Ko-fi Donations](https://ko-fi.com/sdnddonations)
+- **Community**: Join discussions and share feedback
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Changelog
+
+For a complete list of changes and updates, see [CHANGELOG.md](CHANGELOG.md).
 
 
