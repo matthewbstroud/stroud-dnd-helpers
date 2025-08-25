@@ -1,5 +1,6 @@
 import { sdndConstants } from "../constants.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
+import { ThemeHelper } from "../utility/themeHelper.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -94,44 +95,12 @@ export class BaneWeaponApp extends HandlebarsApplicationMixin(ApplicationV2) {
         // Update creature count
         this._updateCreatureCount();
         
-        // Apply theme styling based on Foundry's color scheme setting
-        const colorScheme = game.settings.get("core", "colorScheme");
-        const isDarkMode = colorScheme === "dark" || 
-                          (colorScheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        
-        // Add theme classes for CSS styling
-        const formContainer = this.element.querySelector('.bane-weapon-form-container');
-        if (formContainer) {
-            // Remove existing theme classes
-            formContainer.classList.remove('theme-dark', 'theme-light');
-            // Add appropriate theme class
-            formContainer.classList.add(isDarkMode ? 'theme-dark' : 'theme-light');
-        }
-        
-        if (isDarkMode) {
-            // Apply dark mode styling to override Foundry's background image
-            const windowContent = this.element.querySelector('.window-content');
-            if (windowContent) {
-                windowContent.style.setProperty('background-image', 'none', 'important');
-                windowContent.style.setProperty('background-color', '#2a2a2a', 'important');
-                windowContent.style.setProperty('color', '#e0e0e0', 'important');
-            }
-            
-            const windowHeader = this.element.querySelector('.window-header');
-            if (windowHeader) {
-                windowHeader.style.setProperty('background', 'linear-gradient(135deg, #2d2d2d, #1a1a1a)', 'important');
-                windowHeader.style.setProperty('border-bottom', '1px solid #555', 'important');
-                windowHeader.style.setProperty('color', '#e0e0e0', 'important');
-            }
-        } else {
-            // Apply light mode styling to ensure clean light theme
-            const windowContent = this.element.querySelector('.window-content');
-            if (windowContent) {
-                windowContent.style.setProperty('background-image', 'none', 'important');
-                windowContent.style.setProperty('background-color', '#ffffff', 'important');
-                windowContent.style.setProperty('color', '#333', 'important');
-            }
-        }
+        // Apply theme using helper utility
+        ThemeHelper.applyTheme(this.element, '.bane-weapon-form-container', {
+            includeHeader: true,
+            includeTitle: true,
+            includeButtons: true
+        });
 
         // Add event listeners for creature type checkboxes
         this.element.addEventListener('change', (event) => {

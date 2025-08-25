@@ -1,6 +1,7 @@
 import { sdndConstants } from "../constants.js";
 import { BaneWeaponApp } from "./baneWeaponApp.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
+import { ThemeHelper } from "../utility/themeHelper.js";
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -80,58 +81,12 @@ export class WeaponMenuApp extends HandlebarsApplicationMixin(ApplicationV2) {
     async _onRender(context, options) {
         super._onRender(context, options);
         
-        // Apply theme styling based on Foundry's color scheme setting
-        const colorScheme = game.settings.get("core", "colorScheme");
-        const isDarkMode = colorScheme === "dark" || 
-                          (colorScheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
-        
-        // Add theme classes for CSS styling
-        const menuContainer = this.element.querySelector('.weapon-menu-container');
-        if (menuContainer) {
-            // Remove existing theme classes
-            menuContainer.classList.remove('theme-dark', 'theme-light');
-            // Add appropriate theme class
-            menuContainer.classList.add(isDarkMode ? 'theme-dark' : 'theme-light');
-        }
-        
-        if (isDarkMode) {
-            // Apply dark mode styling to override Foundry's background image
-            const windowContent = this.element.querySelector('.window-content');
-            if (windowContent) {
-                windowContent.style.setProperty('background-image', 'none', 'important');
-                windowContent.style.setProperty('background-color', '#2a2a2a', 'important');
-                windowContent.style.setProperty('color', '#e0e0e0', 'important');
-            }
-            
-            const windowHeader = this.element.querySelector('.window-header');
-            if (windowHeader) {
-                windowHeader.style.setProperty('background', 'linear-gradient(135deg, #2d2d2d, #1a1a1a)', 'important');
-                windowHeader.style.setProperty('border-bottom', '1px solid #555', 'important');
-                windowHeader.style.setProperty('color', '#e0e0e0', 'important');
-            }
-            
-            const windowTitle = this.element.querySelector('.window-title');
-            if (windowTitle) {
-                windowTitle.style.setProperty('color', '#e0e0e0', 'important');
-            }
-            
-            this.element.querySelectorAll('.header-button').forEach(button => {
-                button.style.setProperty('color', '#e0e0e0', 'important');
-                button.style.setProperty('background', 'transparent', 'important');
-            });
-        } else {
-            // Apply light mode styling to ensure clean light theme
-            const windowContent = this.element.querySelector('.window-content');
-            if (windowContent) {
-                windowContent.style.setProperty('background-image', 'none', 'important');
-                windowContent.style.setProperty('background-color', '#ffffff', 'important');
-                windowContent.style.setProperty('color', '#333', 'important');
-            }
-            this.element.querySelectorAll('.header-button').forEach(button => {
-                button.style.setProperty('color', '#333', 'important');
-                button.style.setProperty('background', 'transparent', 'important');
-            });
-        }
+        // Apply theme using helper utility
+        ThemeHelper.applyTheme(this.element, '.weapon-menu-container', {
+            includeHeader: true,
+            includeTitle: true,
+            includeButtons: true
+        });
     }
 
     static async _editBane(event, target) {
