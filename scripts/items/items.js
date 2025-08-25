@@ -3,7 +3,11 @@ import { devoteesCenser } from "./weapons/devoteesCenser.js";
 import { dialog } from "../dialog/dialog.js";
 import { utility } from "../utility/utility.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
+import { WeaponMenuApp } from "./weaponMenuApp.js";
+import { BaneWeaponApp } from "./baneWeaponApp.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { sdndSettings } from "../settings.js";
+import { sdndConstants } from "../constants.js";
 
 export let items = {
 	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -429,3 +433,38 @@ async function convertConsumableToLoot(itemID) {
 	await Item.create(newItem);
 	await Item.deleteDocuments([item.id]);
 }
+
+/**
+ * Creates a header button for weapon items to access bane weapon creation
+ * @param {Object} config - The item sheet configuration
+ * @param {Array} buttons - The array of header buttons
+ */
+export function createWeaponHeaderButton(config, buttons) {
+	if (config.object instanceof Item) {
+		const item = config.object;
+
+		// Only show for weapon items
+		if (item.type !== "weapon") {
+			return;
+		}
+
+		// Only show for GM
+		if (!game.user.isGM) return;
+
+		// Check if it's a melee or ranged weapon with attack activity
+		const actionType = item.system?.actionType;
+		if (!["mwak", "rwak"].includes(actionType)) {
+			return;
+		}
+
+		const label = sdndSettings.HideTextOnActorSheet.getValue() ? '' : 'SDND';
+
+		buttons.unshift({
+			class: 'stroudDnD-menu',
+			icon: 'fa-solid fa-dungeon',
+			label: label,
+			onclick: () => WeaponMenuApp.show(item)
+		});
+	}
+}
+
