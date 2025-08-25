@@ -1,13 +1,14 @@
 import { sdndConstants } from "../../constants.js";
 import { items } from "../items.js";
+import { ThemeHelper } from "../../utility/themeHelper.js";
 
 const BANE_MACRO = "function.stroudDnD.items.weapons.baneWeapon.ItemMacro";
 
 export let baneWeapon = {
-    "CreateBaneWeapon": function _createBaneWeapon(itemUuid, baneCreatureType, dieFaces, dieCount, damageType, durationHours) {
+    "CreateBaneWeapon": async function _createBaneWeapon(itemUuid, baneCreatureType, dieFaces, dieCount, damageType, durationHours) {
         durationHours = durationHours ?? 0;
         let item = fromUuidSync(itemUuid);
-        item.setFlag(sdndConstants.MODULE_ID, "BaneWeaponData", {
+        await item.setFlag(sdndConstants.MODULE_ID, "BaneWeaponData", {
             "CreatureType": baneCreatureType,
             "DieFaces": dieFaces,
             "DieCount": dieCount,
@@ -15,7 +16,35 @@ export let baneWeapon = {
             "Duration": durationHours,
             "StartTime": (durationHours > 0 ? game.time.worldTime : null)
         });
-        items.midiQol.addOnUseMacro(item, "damageBonus", BANE_MACRO);
+        await items.midiQol.addOnUseMacro(item, "damageBonus", BANE_MACRO);
+        let midiConfig = game.settings.get("midi-qol", "ConfigSettings");
+        const autoCheckHit = foundry.utils.getProperty(midiConfig, 'autoCheckHit');
+        if (autoCheckHit === "none") {
+            Dialog.confirm({
+                title: "Bane Weapon Midi Requirements",
+                content: "Bane weapons require that Midi-QOL is set to auto-check hits. Would you like me to enable this feature?",
+                yes: async () => {
+                    foundry.utils.setProperty(midiConfig, 'autoCheckHit', 'all');
+                    await game.settings.set("midi-qol", "ConfigSettings", midiConfig);
+                },
+                no: () => {
+                    ui.notifications.warn("Midi-QOL has not been updated, the additional damage from Bane Weapon will not be applied.");
+                },
+                render: (html) => {
+                    const dialogElement = html.closest('.window-app')[0];
+                    ThemeHelper.applyDialogTheme(dialogElement, {
+                        includeHeader: true,
+                        includeTitle: true,
+                        includeButtons: true
+                    });
+                }
+            });
+        }
+    },
+    "RemoveBaneWeapon": async function _removeBaneWeapon(itemUuid) {
+        let item = fromUuidSync(itemUuid);
+        await item.unsetFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
+        await items.midiQol.removeOnUseMacro(item, "damageBonus", BANE_MACRO);
     },
     "ItemMacro": _itemMacro
 };

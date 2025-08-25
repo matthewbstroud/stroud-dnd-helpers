@@ -1,0 +1,28 @@
+/* Weapon Menu Header Button Styles */
+.window-header .header-button.stroudDnD-menu {
+    position: relative;
+    background: #4a90d9;
+    color: white;
+    border: 1px solid #357abd;
+}
+
+.window-header .header-button.stroudDnD-menu:hover {
+    background: #357abd;
+    color: white;
+}
+
+/* Context Menu Styles */
+.context-menu {
+    z-index: 10000;
+}
+
+.context-menu .context-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.context-menu .context-item i {
+    width: 16px;
+    text-align: center;
+}
