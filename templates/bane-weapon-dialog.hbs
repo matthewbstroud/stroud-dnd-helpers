@@ -1,8 +1,8 @@
-<form class="bane-weapon-form">
-    <div class="form-header">
+<div class="bane-weapon-form-container">
+    {{!-- <div class="form-header">
         <img src="modules/stroud-dnd-helpers/images/icons/berserker.webp" alt="Stroud DnD" class="header-icon">
-        <h2>Create Bane Weapon: {{item.name}}</h2>
-    </div>
+        <h2>{{#if isEdit}}Edit{{else}}Create{{/if}} Bane Weapon: {{item.name}}</h2>
+    </div> --}}
 
     {{#if hasExistingBane}}
     <div class="existing-bane-warning">
@@ -17,8 +17,8 @@
     <div class="form-section">
         <h3>Target Creature Types</h3>
         <div class="creature-type-controls">
-            <button type="button" class="select-all-creatures">Select All</button>
-            <button type="button" class="select-none-creatures">Select None</button>
+            <button type="button" class="select-all-creatures" data-action="selectAllCreatures">Select All</button>
+            <button type="button" class="select-none-creatures" data-action="selectNoneCreatures">Select None</button>
             <span class="selected-creatures-count">0 creature types selected</span>
         </div>
         
@@ -45,7 +45,7 @@
                 <label for="dieType">Die Type:</label>
                 <select name="dieType" id="dieType" required>
                     {{#each diceTypes}}
-                    <option value="{{value}}" {{#if (eq value ../defaultDieType)}}selected{{/if}}>
+                    <option value="{{value}}" {{#if selected}}selected{{/if}}>
                         d{{value}}
                     </option>
                     {{/each}}
@@ -57,63 +57,101 @@
             <label for="damageType">Damage Type:</label>
             <select name="damageType" id="damageType" required>
                 {{#each damageTypes}}
-                <option value="{{value}}" {{#if (eq value ../defaultDamageType)}}selected{{/if}}>
-                    {{{label}}}
+                <option value="{{value}}" {{#if selected}}selected{{/if}}>
+                    {{label}}
                 </option>
                 {{/each}}
             </select>
         </div>
     </div>
 
+    {{#if showDuration}}
     <div class="form-section">
         <h3>Duration (Optional)</h3>
         <div class="form-group">
-            <label for="duration">Duration in Hours (0 = Permanent):</label>
-            <input type="number" name="duration" id="duration" value="{{defaultDuration}}" min="0" max="168">
-            <small class="form-hint">Leave as 0 for permanent enhancement, or specify hours for temporary effect</small>
+            <label for="duration">Duration in Hours:</label>
+            <input type="number" name="duration" id="duration" value="{{defaultDuration}}" min="0" placeholder="0 = Permanent">
+            <div class="form-hint">Set to 0 for permanent effect, or specify hours for temporary enhancement</div>
         </div>
     </div>
+    {{/if}}
 
-    <div class="form-actions">
+    <div class="form-buttons">
         <button type="submit" class="create-bane-weapon">
-            <i class="fas fa-magic"></i>
-            {{#if hasExistingBane}}Update{{else}}Create{{/if}} Bane Weapon
+            <i class="fas fa-{{#if isEdit}}edit{{else}}plus{{/if}}"></i>
+            {{#if isEdit}}Update{{else}}Create{{/if}} Bane Weapon
         </button>
-        <button type="button" class="cancel" onclick="this.closest('.app').querySelector('.header-button.close').click()">
+        <button type="button" class="cancel" data-action="cancel">
             <i class="fas fa-times"></i>
             Cancel
         </button>
     </div>
-</form>
 
-<style>
-.bane-weapon-form {
-    --bg-primary: #ffffff;
-    --bg-secondary: #f8f8f8;
-    --bg-tertiary: #fafafa;
-    --bg-warning: #fff3cd;
-    --text-primary: #333;
-    --text-secondary: #444;
-    --text-muted: #666;
-    --text-hint: #777;
-    --text-warning: #856404;
-    --border-primary: #ccc;
-    --border-secondary: #ddd;
-    --border-light: #eee;
-    --border-warning: #ffecb5;
-    --button-bg: #f8f8f8;
-    --button-hover: #e8e8e8;
-    --checkbox-hover: #f0f0f0;
-    --accent-primary: #4a90d9;
-    --accent-primary-hover: #357abd;
-    --accent-secondary: #6c757d;
-    --accent-secondary-hover: #545b62;
-    --icon-warning: #ff9800;
+    <style>
+    .bane-weapon-form-container {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f8f8;
+        --bg-tertiary: #fafafa;
+        --bg-warning: #fff3cd;
+        --text-primary: #333;
+        --text-secondary: #444;
+        --text-muted: #666;
+        --text-hint: #777;
+        --text-warning: #856404;
+        --border-primary: #ccc;
+        --border-secondary: #ddd;
+        --border-light: #eee;
+        --border-warning: #ffecb5;
+        --button-bg: #f8f8f8;
+        --button-hover: #e8e8e8;
+        --checkbox-hover: #f0f0f0;
+        --accent-primary: #4a90d9;
+        --accent-primary-hover: #357abd;
+        --accent-secondary: #6c757d;
+        --accent-secondary-hover: #545b62;
+        --icon-warning: #ff9800;
+    }
+
+    /* Dark mode color scheme */
+    @media (prefers-color-scheme: dark) {
+        .bane-weapon-form-container {
+            --bg-primary: #2a2a2a;
+            --bg-secondary: #353535;
+            --bg-tertiary: #404040;
+            --bg-warning: #3d3417;
+            --text-primary: #e0e0e0;
+            --text-secondary: #d0d0d0;
+            --text-muted: #b0b0b0;
+            --text-hint: #999;
+            --text-warning: #ffd54f;
+            --border-primary: #555;
+            --border-secondary: #666;
+            --border-light: #777;
+            --border-warning: #665d2a;
+            --button-bg: #404040;
+            --button-hover: #4a4a4a;
+            --checkbox-hover: #484848;
+            --accent-primary: #5a9fd9;
+            --accent-primary-hover: #4a8fc9;
+            --accent-secondary: #7c8591;
+            --accent-secondary-hover: #6c7582;
+            --icon-warning: #ffb74d;
+        }
+    }
+
+    /* Also support Foundry's explicit theme classes */
+    .theme-dark .bane-weapon-form-container,
+    [data-theme="dark"] .bane-weapon-form-container {
+        --bg-primary: #2a2a2a;
+        --bg-secondary: #353535;
+        --bg-tertiary: #404040;
+        --bg-warning: #3d3417;
+        --text-primary: #e0e0e0;
 }
 
 /* Dark mode color scheme */
 @media (prefers-color-scheme: dark) {
-    .bane-weapon-form {
+    .bane-weapon-form-container {
         --bg-primary: #2a2a2a;
         --bg-secondary: #353535;
         --bg-tertiary: #404040;
@@ -138,38 +176,62 @@
     }
 }
 
-/* Also support Foundry's explicit theme classes */
-.theme-dark .bane-weapon-form,
-[data-theme="dark"] .bane-weapon-form {
-    --bg-primary: #2a2a2a;
-    --bg-secondary: #353535;
-    --bg-tertiary: #404040;
-    --bg-warning: #3d3417;
-    --text-primary: #e0e0e0;
-    --text-secondary: #d0d0d0;
-    --text-muted: #b0b0b0;
-    --text-hint: #999;
-    --text-warning: #ffd54f;
-    --border-primary: #555;
-    --border-secondary: #666;
-    --border-light: #777;
-    --border-warning: #665d2a;
-    --button-bg: #404040;
-    --button-hover: #4a4a4a;
-    --checkbox-hover: #484848;
-    --accent-primary: #5a9fd9;
-    --accent-primary-hover: #4a8fc9;
-    --accent-secondary: #7c8591;
-    --accent-secondary-hover: #6c7582;
-    --icon-warning: #ffb74d;
-}
+    /* Also support Foundry's explicit theme classes */
+    .theme-dark .bane-weapon-form-container,
+    [data-theme="dark"] .bane-weapon-form-container {
+        --bg-primary: #2a2a2a;
+        --bg-secondary: #353535;
+        --bg-tertiary: #404040;
+        --bg-warning: #3d3417;
+        --text-primary: #e0e0e0;
+        --text-secondary: #d0d0d0;
+        --text-muted: #b0b0b0;
+        --text-hint: #999;
+        --text-warning: #ffd54f;
+        --border-primary: #555;
+        --border-secondary: #666;
+        --border-light: #777;
+        --border-warning: #665d2a;
+        --button-bg: #404040;
+        --button-hover: #4a4a4a;
+        --checkbox-hover: #484848;
+        --accent-primary: #5a9fd9;
+        --accent-primary-hover: #4a8fc9;
+        --accent-secondary: #7c8591;
+        --accent-secondary-hover: #6c7582;
+        --icon-warning: #ffb74d;
+    }
 
-.bane-weapon-dialog .window-content {
+    /* Explicit light theme overrides */
+    .theme-light .bane-weapon-form-container,
+    [data-theme="light"] .bane-weapon-form-container {
+        --bg-primary: #ffffff;
+        --bg-secondary: #f8f8f8;
+        --bg-tertiary: #fafafa;
+        --bg-warning: #fff3cd;
+        --text-primary: #333;
+        --text-secondary: #444;
+        --text-muted: #666;
+        --text-hint: #777;
+        --text-warning: #856404;
+        --border-primary: #ccc;
+        --border-secondary: #ddd;
+        --border-light: #eee;
+        --border-warning: #ffecb5;
+        --button-bg: #f8f8f8;
+        --button-hover: #e8e8e8;
+        --checkbox-hover: #f0f0f0;
+        --accent-primary: #4a90d9;
+        --accent-primary-hover: #357abd;
+        --accent-secondary: #6c757d;
+        --accent-secondary-hover: #545b62;
+        --icon-warning: #ff9800;
+    }.bane-weapon-dialog .window-content {
     padding: 10px;
     background: var(--bg-primary);
 }
 
-.bane-weapon-form {
+.bane-weapon-form-container {
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -322,6 +384,12 @@
     padding-right: 32px;
 }
 
+/* Light theme dropdown arrow */
+.theme-light .form-group select,
+[data-theme="light"] .form-group select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+}
+
 /* Dark mode dropdown arrow */
 @media (prefers-color-scheme: dark) {
     .form-group select {
@@ -342,13 +410,50 @@
     color: var(--text-primary);
 }
 
-.form-hint {
-    color: var(--text-hint);
-    font-style: italic;
-    font-size: 0.8em;
-}
+    .form-hint {
+        color: var(--text-hint);
+        font-style: italic;
+        font-size: 0.8em;
+    }
 
-.form-actions {
+    /* Light theme explicit overrides for form controls */
+    .theme-light .bane-weapon-form-container .form-group input,
+    .theme-light .bane-weapon-form-container .form-group select,
+    [data-theme="light"] .bane-weapon-form-container .form-group input,
+    [data-theme="light"] .bane-weapon-form-container .form-group select {
+        background: #ffffff !important;
+        color: #333 !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .theme-light .bane-weapon-form-container .creature-type-controls button,
+    [data-theme="light"] .bane-weapon-form-container .creature-type-controls button {
+        background: #f8f8f8 !important;
+        color: #333 !important;
+        border: 1px solid #ccc !important;
+    }
+
+    .theme-light .bane-weapon-form-container .creature-type-controls button:hover,
+    [data-theme="light"] .bane-weapon-form-container .creature-type-controls button:hover {
+        background: #e8e8e8 !important;
+        color: #333 !important;
+    }
+
+    .theme-light .bane-weapon-form-container .creature-types-grid,
+    [data-theme="light"] .bane-weapon-form-container .creature-types-grid {
+        background: #fafafa !important;
+        border: 1px solid #ddd !important;
+    }
+
+    .theme-light .bane-weapon-form-container .creature-type-checkbox,
+    [data-theme="light"] .bane-weapon-form-container .creature-type-checkbox {
+        color: #444 !important;
+    }
+
+    .theme-light .bane-weapon-form-container .creature-type-checkbox:hover,
+    [data-theme="light"] .bane-weapon-form-container .creature-type-checkbox:hover {
+        background: #f0f0f0 !important;
+    }.form-buttons {
     display: flex;
     gap: 10px;
     justify-content: flex-end;
@@ -356,7 +461,7 @@
     border-top: 1px solid var(--border-light);
 }
 
-.form-actions button {
+.form-buttons button {
     padding: 8px 16px;
     border: none;
     border-radius: 3px;
@@ -383,4 +488,5 @@
 .cancel:hover {
     background: var(--accent-secondary-hover);
 }
-</style>
+    </style>
+</div>

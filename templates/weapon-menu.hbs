@@ -1,0 +1,136 @@
+<div class="weapon-menu-container">
+    <div class="weapon-menu">
+        <h3>Available Options:</h3>
+        <div class="menu-items">
+            {{#each menuItems}}
+            <button type="button" class="menu-item" data-action="{{action}}">
+                <i class="{{icon}}"></i>
+                {{label}}
+            </button>
+            {{/each}}
+        </div>
+    </div>
+
+    <style>
+        .weapon-menu {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --bg-hover: #e8e8e8;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-primary: #ccc;
+            --border-hover: #999;
+        }
+        
+        /* Dark mode color scheme */
+        @media (prefers-color-scheme: dark) {
+            .weapon-menu {
+                --bg-primary: #2a2a2a;
+                --bg-secondary: #404040;
+                --bg-hover: #4a4a4a;
+                --text-primary: #e0e0e0;
+                --text-secondary: #b0b0b0;
+                --border-primary: #555;
+                --border-hover: #777;
+            }
+        }
+        
+        /* Support Foundry's explicit theme classes */
+        .theme-dark .weapon-menu,
+        [data-theme="dark"] .weapon-menu {
+            --bg-primary: #2a2a2a;
+            --bg-secondary: #404040;
+            --bg-hover: #4a4a4a;
+            --text-primary: #e0e0e0;
+            --text-secondary: #b0b0b0;
+            --border-primary: #555;
+            --border-hover: #777;
+        }
+
+        /* Explicit light theme overrides */
+        .theme-light .weapon-menu,
+        [data-theme="light"] .weapon-menu {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f8f8;
+            --bg-hover: #e8e8e8;
+            --text-primary: #333;
+            --text-secondary: #666;
+            --border-primary: #ccc;
+            --border-hover: #999;
+        }
+
+        /* Light theme explicit overrides for menu items */
+        .theme-light .weapon-menu-container .menu-item,
+        [data-theme="light"] .weapon-menu-container .menu-item {
+            background: #f8f8f8 !important;
+            color: #333 !important;
+            border: 1px solid #ccc !important;
+        }
+
+        .theme-light .weapon-menu-container .menu-item:hover,
+        [data-theme="light"] .weapon-menu-container .menu-item:hover {
+            background: #e8e8e8 !important;
+            color: #333 !important;
+            border-color: #999 !important;
+        }
+        
+        .weapon-menu h3 {
+            color: var(--text-primary);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        
+        .weapon-menu .menu-items {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .weapon-menu .menu-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border: 1px solid var(--border-primary);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            border-radius: 6px;
+            text-align: left;
+            width: 100%;
+            transition: all 0.2s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .weapon-menu .menu-item:hover {
+            background: var(--bg-hover);
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .weapon-menu .menu-item i {
+            width: 16px;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+        
+        .weapon-menu .menu-item:hover i {
+            color: var(--text-primary);
+        }
+        
+        /* Dark mode specific enhancements */
+        @media (prefers-color-scheme: dark) {
+            .weapon-menu .menu-item:hover {
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            }
+        }
+        
+        .theme-dark .weapon-menu .menu-item:hover,
+        [data-theme="dark"] .weapon-menu .menu-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</div>
