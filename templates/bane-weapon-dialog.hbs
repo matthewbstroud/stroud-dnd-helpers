@@ -367,7 +367,7 @@
     line-height: 1.4;
     font-size: 14px;
     box-sizing: border-box;
-    background: var(--bg-primary);
+    background: var(--bg-secondary) !important;
     color: var(--text-primary);
 }
 
@@ -469,21 +469,23 @@
 }
 
 .create-bane-weapon {
-    background: var(--accent-primary);
-    color: white;
+    background: var(--bg-secondary) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-primary) !important;
 }
 
 .create-bane-weapon:hover {
-    background: var(--accent-primary-hover);
+    background: var(--accent-primary-hover) !important;
+    border: 1px solid var(--border-secondary) !important;
 }
 
 .cancel {
     background: var(--accent-secondary);
-    color: white;
+    color: var(--text-secondary) !important;
 }
 
 .cancel:hover {
-    background: var(--accent-secondary-hover);
+    background: var(--accent-secondary-hover) !important;
 }
     </style>
 </div>

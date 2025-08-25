@@ -1,6 +1,6 @@
 /**
- * Theme Helper Utility for HandlebarsApplicationMixin applications
- * Provides consistent theme detection and application across all dialogs
+ * Theme Helper Utility for HandlebarsApplicationMixin applications and standard Foundry Dialogs
+ * Provides consistent theme detection and application across all dialog types
  */
 export class ThemeHelper {
     
@@ -80,6 +80,9 @@ export class ThemeHelper {
             element.querySelectorAll('.header-button').forEach(button => {
                 this._applyButtonStyles(button, isDark);
             });
+            element.querySelectorAll('.dialog-button').forEach(button => {
+                this._applyButtonStyles(button, isDark);
+            });
         }
     }
 
@@ -92,6 +95,79 @@ export class ThemeHelper {
     static applyTheme(element, containerSelectors, styleOptions = {}) {
         this.applyThemeClasses(element, containerSelectors);
         this.applyThemeStyles(element, styleOptions);
+    }
+
+    /**
+     * Apply theme styling to standard Foundry Dialog elements
+     * This method is designed for standard Dialog HTML structure with classes like:
+     * .window-app, .window-header, .window-title, .window-content, .dialog-content, .dialog-buttons, .dialog-button
+     * @param {Element} element - The dialog element (usually the .window-app element)
+     * @param {Object} options - Configuration options
+     * @param {boolean} options.includeHeader - Whether to style the window header (default: true)
+     * @param {boolean} options.includeTitle - Whether to style the window title (default: true)
+     * @param {boolean} options.includeContent - Whether to style the window content (default: true)
+     * @param {boolean} options.includeButtons - Whether to style dialog buttons (default: true)
+     */
+    static applyDialogTheme(element, options = {}) {
+        const {
+            includeHeader = true,
+            includeTitle = true,
+            includeContent = true,
+            includeButtons = true
+        } = options;
+
+        const isDark = this.isDarkMode();
+        
+        // Apply general dialog container styling
+        this._applyDialogContainerStyles(element, isDark);
+
+        // Apply header styling
+        if (includeHeader) {
+            const windowHeader = element.querySelector('.window-header');
+            if (windowHeader) {
+                this._applyHeaderStyles(windowHeader, isDark);
+            }
+        }
+
+        // Apply title styling
+        if (includeTitle) {
+            const windowTitle = element.querySelector('.window-title, .window-header h4');
+            if (windowTitle) {
+                this._applyTitleStyles(windowTitle, isDark);
+            }
+        }
+
+        // Apply content styling
+        if (includeContent) {
+            const windowContent = element.querySelector('.window-content');
+            if (windowContent) {
+                this._applyContentStyles(windowContent, isDark);
+            }
+
+            const dialogContent = element.querySelector('.dialog-content');
+            if (dialogContent) {
+                this._applyDialogContentStyles(dialogContent, isDark);
+            }
+        }
+
+        // Apply button styling
+        if (includeButtons) {
+            // Header buttons (close button)
+            element.querySelectorAll('.header-button').forEach(button => {
+                this._applyButtonStyles(button, isDark);
+            });
+
+            // Dialog buttons (Yes/No, etc.)
+            element.querySelectorAll('.dialog-button').forEach(button => {
+                this._applyDialogButtonStyles(button, isDark);
+            });
+
+            // Style dialog buttons container
+            const dialogButtons = element.querySelector('.dialog-buttons');
+            if (dialogButtons) {
+                this._applyDialogButtonsContainerStyles(dialogButtons, isDark);
+            }
+        }
     }
 
     // Private methods for applying specific styles
@@ -128,7 +204,127 @@ export class ThemeHelper {
     static _applyButtonStyles(button, isDark) {
         const color = isDark ? '#e0e0e0' : '#333';
         button.style.setProperty('color', color, 'important');
-        button.style.setProperty('background', 'transparent', 'important');
+        if (!isDark) {
+            return;
+        }
+        button.style.setProperty('background', '#404040', 'important');
+    }
+
+    static _applyDialogContainerStyles(element, isDark) {
+        // Apply theme class to the dialog container
+        const themeClass = isDark ? 'theme-dark' : 'theme-light';
+        const removeClass = isDark ? 'theme-light' : 'theme-dark';
+        
+        element.classList.remove(removeClass);
+        element.classList.add(themeClass);
+
+        // Apply basic container styling
+        if (isDark) {
+            element.style.setProperty('background-color', '#2a2a2a', 'important');
+            element.style.setProperty('border', '1px solid #555', 'important');
+            element.style.setProperty('box-shadow', '0 4px 20px rgba(0, 0, 0, 0.5)', 'important');
+        } else {
+            element.style.setProperty('background-color', '#ffffff', 'important');
+            element.style.setProperty('border', '1px solid #ddd', 'important');
+            element.style.setProperty('box-shadow', '0 4px 20px rgba(0, 0, 0, 0.15)', 'important');
+        }
+    }
+
+    static _applyDialogContentStyles(dialogContent, isDark) {
+        if (isDark) {
+            dialogContent.style.setProperty('background-color', '#2a2a2a', 'important');
+            dialogContent.style.setProperty('color', '#e0e0e0', 'important');
+        } else {
+            dialogContent.style.setProperty('background-color', '#ffffff', 'important');
+            dialogContent.style.setProperty('color', '#333', 'important');
+        }
+        
+        // Style any paragraphs and text elements within
+        dialogContent.querySelectorAll('p').forEach(p => {
+            const color = isDark ? '#e0e0e0' : '#333';
+            p.style.setProperty('color', color, 'important');
+        });
+
+        dialogContent.querySelectorAll('strong, em').forEach(elem => {
+            const color = isDark ? '#f0f0f0' : '#222';
+            elem.style.setProperty('color', color, 'important');
+        });
+    }
+
+    static _applyDialogButtonStyles(button, isDark) {
+        if (isDark) {
+            // Default button styling for dark mode
+            button.style.setProperty('background', '#404040', 'important');
+            button.style.setProperty('color', '#e0e0e0', 'important');
+            button.style.setProperty('border', '1px solid #666', 'important');
+            
+            // Special styling for specific button types
+            if (button.classList.contains('yes') || button.classList.contains('bright')) {
+                button.style.setProperty('background', '#5a9fd9', 'important');
+                button.style.setProperty('color', '#ffffff', 'important');
+                button.style.setProperty('border', '1px solid #4a8fc9', 'important');
+            }
+            
+            if (button.classList.contains('no')) {
+                button.style.setProperty('background', '#7c8591', 'important');
+                button.style.setProperty('color', '#ffffff', 'important');
+                button.style.setProperty('border', '1px solid #6c7582', 'important');
+            }
+        } else {
+            // Default button styling for light mode
+            button.style.setProperty('background', '#f8f8f8', 'important');
+            button.style.setProperty('color', '#333', 'important');
+            button.style.setProperty('border', '1px solid #ccc', 'important');
+            
+            // Special styling for specific button types
+            if (button.classList.contains('yes') || button.classList.contains('bright')) {
+                button.style.setProperty('background', '#4a90d9', 'important');
+                button.style.setProperty('color', '#ffffff', 'important');
+                button.style.setProperty('border', '1px solid #357abd', 'important');
+            }
+            
+            if (button.classList.contains('no')) {
+                button.style.setProperty('background', '#6c757d', 'important');
+                button.style.setProperty('color', '#ffffff', 'important');
+                button.style.setProperty('border', '1px solid #545b62', 'important');
+            }
+        }
+
+        // Add hover effects
+        button.addEventListener('mouseenter', () => {
+            if (isDark) {
+                if (button.classList.contains('yes') || button.classList.contains('bright')) {
+                    button.style.setProperty('background', '#4a8fc9', 'important');
+                } else if (button.classList.contains('no')) {
+                    button.style.setProperty('background', '#6c7582', 'important');
+                } else {
+                    button.style.setProperty('background', '#4a4a4a', 'important');
+                }
+            } else {
+                if (button.classList.contains('yes') || button.classList.contains('bright')) {
+                    button.style.setProperty('background', '#357abd', 'important');
+                } else if (button.classList.contains('no')) {
+                    button.style.setProperty('background', '#545b62', 'important');
+                } else {
+                    button.style.setProperty('background', '#e8e8e8', 'important');
+                }
+            }
+        });
+
+        button.addEventListener('mouseleave', () => {
+            // Restore original styling on mouse leave
+            this._applyDialogButtonStyles(button, isDark);
+        });
+    }
+
+    static _applyDialogButtonsContainerStyles(dialogButtons, isDark) {
+        if (isDark) {
+            dialogButtons.style.setProperty('background-color', '#2a2a2a', 'important');
+            dialogButtons.style.setProperty('border-top', '1px solid #555', 'important');
+        } else {
+            dialogButtons.style.setProperty('background-color', '#f8f8f8', 'important');
+            dialogButtons.style.setProperty('border-top', '1px solid #ddd', 'important');
+        }
     }
 
     /**

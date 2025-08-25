@@ -57,13 +57,22 @@ export class BaneWeaponApp extends HandlebarsApplicationMixin(ApplicationV2) {
             selected: this.existingData ? this.existingData.CreatureType.split(",").includes(key) : false
         }));
 
+        // Get the weapon's first damage type as default (when no existing data)
+        let defaultDamageType = 'slashing'; // fallback default
+        if (!this.existingData && this.item.system?.damage?.base?.types) {
+            const weaponDamageTypes = Array.from(this.item.system.damage.base.types);
+            if (weaponDamageTypes.length > 0) {
+                defaultDamageType = weaponDamageTypes[0];
+            }
+        }
+
         // Get damage types with icons from constants
         const damageTypes = sdndConstants.BUTTON_LISTS.DAMAGE_5E
             .filter(dt => !['healing'].includes(dt.value))
             .map(dt => ({
                 value: dt.value,
                 label: dt.label, // This includes the emoji icons
-                selected: this.existingData ? this.existingData.DamageType === dt.value : dt.value === 'slashing'
+                selected: this.existingData ? this.existingData.DamageType === dt.value : dt.value === defaultDamageType
             }));
 
         // Die types
@@ -83,7 +92,7 @@ export class BaneWeaponApp extends HandlebarsApplicationMixin(ApplicationV2) {
             diceTypes,
             defaultDieCount: this.existingData?.DieCount || 1,
             defaultDieType: this.existingData?.DieFaces || 6,
-            defaultDamageType: this.existingData?.DamageType || 'slashing',
+            defaultDamageType: this.existingData?.DamageType || defaultDamageType,
             defaultDuration: this.existingData?.Duration || 0,
             showDuration: true
         };
@@ -99,7 +108,7 @@ export class BaneWeaponApp extends HandlebarsApplicationMixin(ApplicationV2) {
         ThemeHelper.applyTheme(this.element, '.bane-weapon-form-container', {
             includeHeader: true,
             includeTitle: true,
-            includeButtons: true
+            includeButtons: false
         });
 
         // Add event listeners for creature type checkboxes

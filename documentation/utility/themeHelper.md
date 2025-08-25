@@ -1,22 +1,23 @@
 # ThemeHelper Utility
 
-A reusable utility class for applying consistent theme detection and styling across HandlebarsApplicationMixin applications in Foundry VTT modules.
+A reusable utility class for applying consistent theme detection and styling across HandlebarsApplicationMixin applications and standard Foundry Dialogs in Foundry VTT modules.
 
 ## Overview
 
-The `ThemeHelper` class provides a centralized way to handle light/dark theme detection and application, ensuring consistent theming across all dialogs and applications in your module.
+The `ThemeHelper` class provides a centralized way to handle light/dark theme detection and application, ensuring consistent theming across all dialogs, applications, and standard Foundry UI elements in your module.
 
 ## Features
 
 - **Automatic Theme Detection**: Detects theme from Foundry settings and system preferences
 - **CSS Class Management**: Applies theme classes to containers for CSS targeting
 - **Comprehensive Styling**: Handles window content, headers, titles, and buttons
+- **Standard Dialog Support**: Works with both ApplicationV2 and legacy Dialog elements
 - **Flexible Configuration**: Customizable options for different application needs
 - **CSS Custom Properties**: Provides theme-specific CSS variable values
 
 ## Basic Usage
 
-### Simple Theme Application
+### HandlebarsApplicationMixin Applications
 
 ```javascript
 import { ThemeHelper } from "../utility/themeHelper.js";
@@ -29,6 +30,33 @@ class MyApp extends HandlebarsApplicationMixin(ApplicationV2) {
         ThemeHelper.applyTheme(this.element, '.my-app-container');
     }
 }
+```
+
+### Standard Foundry Dialogs
+
+```javascript
+import { ThemeHelper } from "../utility/themeHelper.js";
+
+// For standard Dialog instances
+new Dialog({
+    title: "My Dialog",
+    content: "<p>Dialog content here</p>",
+    buttons: {
+        yes: {
+            label: "Yes",
+            callback: () => {}
+        },
+        no: {
+            label: "No", 
+            callback: () => {}
+        }
+    },
+    render: (html) => {
+        // Apply theme to the dialog
+        const dialogElement = html.closest('.window-app');
+        ThemeHelper.applyDialogTheme(dialogElement);
+    }
+});
 ```
 
 ### Custom Configuration
@@ -127,6 +155,31 @@ ThemeHelper.applyTheme(this.element, '.my-container', {
 });
 ```
 
+#### `applyDialogTheme(element, options)`
+Apply theme styling to standard Foundry Dialog elements.
+
+**Parameters:**
+- `element` (Element): The dialog element (usually the .window-app element)
+- `options` (Object): Configuration options
+  - `includeHeader` (boolean): Style window header (default: true)
+  - `includeTitle` (boolean): Style window title (default: true)
+  - `includeContent` (boolean): Style window content (default: true)
+  - `includeButtons` (boolean): Style dialog buttons (default: true)
+
+```javascript
+// Apply theme to a standard Dialog
+const dialogElement = html.closest('.window-app');
+ThemeHelper.applyDialogTheme(dialogElement);
+
+// Apply theme with specific options
+ThemeHelper.applyDialogTheme(dialogElement, {
+    includeHeader: true,
+    includeTitle: true,
+    includeContent: true,
+    includeButtons: true
+});
+```
+
 #### `getThemeProperties(isDark): Object`
 Returns theme-specific CSS custom property values.
 
@@ -167,6 +220,26 @@ The ThemeHelper applies theme classes that work with CSS selectors in your templ
     --text-primary: #333;
 }
 ```
+
+## Dialog Styling
+
+The ThemeHelper automatically styles these standard Dialog elements:
+
+- **Dialog Container** (`.window-app`): Background, border, shadow, theme classes
+- **Window Header** (`.window-header`): Background gradient, border, color
+- **Window Title** (`.window-title`, `.window-header h4`): Text color
+- **Window Content** (`.window-content`): Background, removes background images
+- **Dialog Content** (`.dialog-content`): Background, text color, paragraph styling
+- **Dialog Buttons** (`.dialog-button`): Background, text color, borders with special styling for `.yes`, `.no`, `.bright` classes
+- **Dialog Buttons Container** (`.dialog-buttons`): Background, border styling
+
+### Button Types
+
+The `applyDialogTheme` method provides special styling for common dialog button classes:
+
+- **`.yes` or `.bright`**: Primary action buttons (blue styling)
+- **`.no`**: Secondary action buttons (gray styling)
+- **Default**: Standard buttons with neutral styling
 
 ## Window Styling
 
@@ -235,4 +308,77 @@ export class MyDialogApp extends HandlebarsApplicationMixin(ApplicationV2) {
 }
 ```
 
-This creates a consistent, maintainable theming system that can be easily applied to any new HandlebarsApplicationMixin application in your module.
+## Example Implementation
+
+```javascript
+import { ThemeHelper } from "../utility/themeHelper.js";
+
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
+
+export class MyDialogApp extends HandlebarsApplicationMixin(ApplicationV2) {
+    constructor(options = {}) {
+        super({ id: 'my-dialog-app' });
+    }
+
+    static DEFAULT_OPTIONS = {
+        tag: 'form',
+        window: {
+            title: 'My Dialog',
+            icon: 'fas fa-cog',
+            resizable: false,
+            positioned: true
+        },
+        classes: ['my-dialog-app']
+    };
+
+    static PARTS = {
+        form: {
+            template: 'modules/my-module/templates/my-dialog.hbs'
+        }
+    };
+
+    async _onRender(context, options) {
+        super._onRender(context, options);
+        
+        // Apply theme with full window styling
+        ThemeHelper.applyTheme(this.element, '.my-dialog-container');
+        
+        // Additional app-specific initialization...
+    }
+}
+
+// Example of using ThemeHelper with standard Foundry Dialog
+export function showRemovalConfirmation(itemName, currentBane) {
+    return new Promise((resolve) => {
+        new Dialog({
+            title: "Remove Bane Weapon",
+            content: `
+                <div class="dialog-content">
+                    <p>Remove bane properties from <strong>${itemName}</strong>?</p>
+                    <p><em>Current: ${currentBane}</em></p>
+                </div>
+            `,
+            buttons: {
+                yes: {
+                    icon: '<i class="fas fa-check"></i>',
+                    label: "Yes",
+                    callback: () => resolve(true)
+                },
+                no: {
+                    icon: '<i class="fas fa-times"></i>',
+                    label: "No",
+                    callback: () => resolve(false)
+                }
+            },
+            default: "no",
+            render: (html) => {
+                // Apply theme to the dialog
+                const dialogElement = html.closest('.window-app');
+                ThemeHelper.applyDialogTheme(dialogElement);
+            }
+        }).render(true);
+    });
+}
+```
+
+This creates a consistent, maintainable theming system that can be easily applied to any new HandlebarsApplicationMixin application or standard Dialog in your module.

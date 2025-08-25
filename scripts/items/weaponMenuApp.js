@@ -80,7 +80,7 @@ export class WeaponMenuApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
     async _onRender(context, options) {
         super._onRender(context, options);
-        
+
         // Apply theme using helper utility
         ThemeHelper.applyTheme(this.element, '.weapon-menu-container', {
             includeHeader: true,
@@ -98,12 +98,23 @@ export class WeaponMenuApp extends HandlebarsApplicationMixin(ApplicationV2) {
 
     static async _removeBane(event, target) {
         const baneData = this.item.getFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
+
+        // Hide the weapon menu before showing the confirmation dialog
+        this.element.style.display = 'none';
         
         const confirmed = await Dialog.confirm({
             title: "Remove Bane Weapon",
             content: `<p>Remove bane properties from <strong>${this.item.name}</strong>?</p>
                      <p><em>Current: ${baneData.DieCount}d${baneData.DieFaces} ${baneData.DamageType} vs ${baneData.CreatureType}</em></p>`,
-            defaultYes: false
+            defaultYes: false,
+            render: (html) => {
+                const dialogElement = html.closest('.window-app')[0];
+                ThemeHelper.applyDialogTheme(dialogElement, {
+                    includeHeader: true,
+                    includeTitle: true,
+                    includeButtons: true
+                });
+            }
         });
 
         if (confirmed) {
@@ -114,8 +125,11 @@ export class WeaponMenuApp extends HandlebarsApplicationMixin(ApplicationV2) {
                 console.error("Error removing bane weapon:", error);
                 ui.notifications.error("Failed to remove bane weapon properties");
             }
+        } else {
+            // If user cancelled, show the weapon menu again
+            this.element.style.display = '';
         }
-        
+
         this.close();
     }
 
