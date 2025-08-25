@@ -1,6 +1,7 @@
 import { backpacks } from './backpacks/backpacks.js';
 import { scene } from './utility/scene.js';
-import { createActorHeaderButton } from './actors/actors.js';
+import { createActorHeaderButton, createItemHeaderButton } from './actors/actors.js';
+import { createWeaponHeaderButton } from './items/items.js';
 import { CompendiumHooks } from './hookHandlers/compendiumHandlers.js';
 import { FolderHooks } from './hookHandlers/folderHandlers.js';
 import { combat } from './combat.js';
@@ -19,6 +20,7 @@ export let hooks = {
         if (game.user?.isGM) {
             Hooks.on('preCreateTile', onPreCreateTile);
             Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
+            Hooks.on('getItemSheet5eHeaderButtons', createWeaponHeaderButton);
             if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
                 Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
                 Hooks.on('updateActor', syncBackpackPermissions);

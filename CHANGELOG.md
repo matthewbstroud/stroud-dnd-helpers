@@ -1,3 +1,8 @@
+# v12.4.19
+# New Features
+- Add new feature description here.
+# Bug Fixes
+- Fix bug description here.
 # v12.4.18
 # New Features
 - Revamped Help System
@@ -689,6 +694,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

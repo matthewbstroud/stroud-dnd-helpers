@@ -4,10 +4,10 @@ import { items } from "../items.js";
 const BANE_MACRO = "function.stroudDnD.items.weapons.baneWeapon.ItemMacro";
 
 export let baneWeapon = {
-    "CreateBaneWeapon": function _createBaneWeapon(itemUuid, baneCreatureType, dieFaces, dieCount, damageType, durationHours) {
+    "CreateBaneWeapon": async function _createBaneWeapon(itemUuid, baneCreatureType, dieFaces, dieCount, damageType, durationHours) {
         durationHours = durationHours ?? 0;
         let item = fromUuidSync(itemUuid);
-        item.setFlag(sdndConstants.MODULE_ID, "BaneWeaponData", {
+        await item.setFlag(sdndConstants.MODULE_ID, "BaneWeaponData", {
             "CreatureType": baneCreatureType,
             "DieFaces": dieFaces,
             "DieCount": dieCount,
@@ -15,7 +15,12 @@ export let baneWeapon = {
             "Duration": durationHours,
             "StartTime": (durationHours > 0 ? game.time.worldTime : null)
         });
-        items.midiQol.addOnUseMacro(item, "damageBonus", BANE_MACRO);
+        await items.midiQol.addOnUseMacro(item, "damageBonus", BANE_MACRO);
+    },
+    "RemoveBaneWeapon": async function _removeBaneWeapon(itemUuid) {
+        let item = fromUuidSync(itemUuid);
+        await item.unsetFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
+        await items.midiQol.removeOnUseMacro(item, "damageBonus", BANE_MACRO);
     },
     "ItemMacro": _itemMacro
 };

@@ -3,7 +3,10 @@ import { devoteesCenser } from "./weapons/devoteesCenser.js";
 import { dialog } from "../dialog/dialog.js";
 import { utility } from "../utility/utility.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
+import { BaneWeaponDialog } from "./weapons/baneWeaponDialog.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
+import { sdndSettings } from "../settings.js";
+import { sdndConstants } from "../constants.js";
 
 export let items = {
 	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -428,4 +431,275 @@ async function convertConsumableToLoot(itemID) {
 	newItem.system.price.denomination = item.system.price.denomination;
 	await Item.create(newItem);
 	await Item.deleteDocuments([item.id]);
+}
+
+/**
+ * Creates a header button for weapon items to access bane weapon creation
+ * @param {Object} config - The item sheet configuration
+ * @param {Array} buttons - The array of header buttons
+ */
+export function createWeaponHeaderButton(config, buttons) {
+	if (config.object instanceof Item) {
+		const item = config.object;
+
+		// Only show for weapon items
+		if (item.type !== "weapon") {
+			return;
+		}
+
+		// Only show for GM
+		if (!game.user.isGM) return;
+
+		// Check if it's a melee or ranged weapon with attack activity
+		const actionType = item.system?.actionType;
+		if (!["mwak", "rwak"].includes(actionType)) {
+			return;
+		}
+
+		const label = sdndSettings.HideTextOnActorSheet.getValue() ? '' : 'SDND';
+
+		buttons.unshift({
+			class: 'stroudDnD-menu',
+			icon: 'fa-solid fa-dungeon',
+			label: label,
+			onclick: () => showWeaponMenu(item)
+		});
+	}
+}
+
+/**
+ * Shows a dropdown menu with weapon enhancement options
+ * @param {Item} item - The weapon item
+ */
+function showWeaponMenu(item) {
+	const baneData = item.getFlag(sdndConstants.MODULE_ID, "BaneWeaponData");
+
+	let menuItems = [];
+
+	if (baneData) {
+		// Weapon has bane data - show edit and remove options
+		menuItems.push({
+			label: "Edit Bane Weapon",
+			icon: "fas fa-edit",
+			action: () => openBaneWeaponDialog(item, null)
+		});
+
+		menuItems.push({
+			label: "Remove Bane Weapon",
+			icon: "fas fa-trash",
+			action: () => showRemoveBaneDialog(item, baneData)
+		});
+	} else {
+		// No bane data - show create option
+		menuItems.push({
+			label: "Create Bane Weapon",
+			icon: "fas fa-plus",
+			action: () => openBaneWeaponDialog(item, null)
+		});
+	}
+
+	// Future enhancement options can be added here
+	// menuItems.push({
+	//     label: "Add Enchantment",
+	//     icon: "fas fa-magic",
+	//     action: () => openEnchantmentDialog(item)
+	// });
+
+	// Create dialog with menu options
+	new Dialog({
+		title: `${item.name} - Weapon Enhancements`,
+		content: `
+            <div class="weapon-menu">
+                <h3>Available Options:</h3>
+                <div class="menu-items">
+                    ${menuItems.map(item => `
+                        <button type="button" class="menu-item" data-action="${menuItems.indexOf(item)}">
+                            <i class="${item.icon}"></i>
+                            ${item.label}
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+            <style>
+                .weapon-menu {
+                    --bg-primary: #ffffff;
+                    --bg-secondary: #f8f8f8;
+                    --bg-hover: #e8e8e8;
+                    --text-primary: #333;
+                    --text-secondary: #666;
+                    --border-primary: #ccc;
+                    --border-hover: #999;
+                }
+                
+                /* Dark mode color scheme */
+                @media (prefers-color-scheme: dark) {
+                    .weapon-menu {
+                        --bg-primary: #2a2a2a;
+                        --bg-secondary: #404040;
+                        --bg-hover: #4a4a4a;
+                        --text-primary: #e0e0e0;
+                        --text-secondary: #b0b0b0;
+                        --border-primary: #555;
+                        --border-hover: #777;
+                    }
+                }
+                
+                /* Support Foundry's explicit theme classes */
+                .theme-dark .weapon-menu,
+                [data-theme="dark"] .weapon-menu {
+                    --bg-primary: #2a2a2a;
+                    --bg-secondary: #404040;
+                    --bg-hover: #4a4a4a;
+                    --text-primary: #e0e0e0;
+                    --text-secondary: #b0b0b0;
+                    --border-primary: #555;
+                    --border-hover: #777;
+                }
+                
+                .weapon-menu h3 {
+                    color: var(--text-primary);
+                    margin-top: 0;
+                    margin-bottom: 10px;
+                }
+                
+                .weapon-menu .menu-items {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 8px;
+                    margin-top: 10px;
+                }
+                
+                .weapon-menu .menu-item {
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                    padding: 12px 16px;
+                    border: 1px solid var(--border-primary);
+                    background: var(--bg-secondary);
+                    color: var(--text-primary);
+                    cursor: pointer;
+                    border-radius: 6px;
+                    text-align: left;
+                    width: 100%;
+                    transition: all 0.2s ease;
+                    font-size: 14px;
+                    font-weight: 500;
+                }
+                
+                .weapon-menu .menu-item:hover {
+                    background: var(--bg-hover);
+                    border-color: var(--border-hover);
+                    transform: translateY(-1px);
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                }
+                
+                .weapon-menu .menu-item i {
+                    width: 16px;
+                    text-align: center;
+                    color: var(--text-secondary);
+                }
+                
+                .weapon-menu .menu-item:hover i {
+                    color: var(--text-primary);
+                }
+                
+                /* Dark mode specific enhancements */
+                @media (prefers-color-scheme: dark) {
+                    .weapon-menu .menu-item:hover {
+                        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                    }
+                }
+                
+                .theme-dark .weapon-menu .menu-item:hover,
+                [data-theme="dark"] .weapon-menu .menu-item:hover {
+                    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+                }
+            </style>
+        `,
+		buttons: {},
+		classes: ["weapon-menu-dialog"],
+		render: (html) => {
+			const dialogApp = html.closest('.app.dialog')[0];
+			dialogApp?.classList.add("weapon-menu-dialog");
+
+			// Apply dark mode styling based on Foundry's color scheme setting
+			const colorScheme = game.settings.get("core", "colorScheme");
+			const isDarkMode = colorScheme === "dark" || 
+							  (colorScheme === null && window.matchMedia('(prefers-color-scheme: dark)').matches);
+			
+			if (isDarkMode) {
+				// Apply dark mode styling to override Foundry's background image
+				const windowContent = html.find('.window-content')[0];
+				if (windowContent) {
+					windowContent.style.setProperty('background-image', 'none', 'important');
+					windowContent.style.setProperty('background-color', '#2a2a2a', 'important');
+					windowContent.style.setProperty('color', '#e0e0e0', 'important');
+				}
+				
+				const windowHeader = html.find('.window-header')[0];
+				if (windowHeader) {
+					windowHeader.style.setProperty('background', 'linear-gradient(135deg, #2d2d2d, #1a1a1a)', 'important');
+					windowHeader.style.setProperty('border-bottom', '1px solid #555', 'important');
+					windowHeader.style.setProperty('color', '#e0e0e0', 'important');
+				}
+				
+				const windowTitle = html.find('.window-title')[0];
+				if (windowTitle) {
+					windowTitle.style.setProperty('color', '#e0e0e0', 'important');
+				}
+				
+				html.find('.header-button').each((i, button) => {
+					if (button) {
+						button.style.setProperty('color', '#e0e0e0', 'important');
+						button.style.setProperty('background', 'transparent', 'important');
+					}
+				});
+			}
+
+			html.find('.menu-item').click((event) => {
+				const actionIndex = parseInt(event.currentTarget.dataset.action);
+				const menuItem = menuItems[actionIndex];
+				if (menuItem && menuItem.action) {
+					menuItem.action();
+				}
+				// Close the dialog
+				html.closest('.app').find('.header-button.close').click();
+			});
+		}
+	}).render(true);
+}
+
+/**
+ * Shows the remove bane weapon confirmation dialog
+ * @param {Item} item - The weapon item
+ * @param {Object} baneData - The bane weapon data
+ */
+function showRemoveBaneDialog(item, baneData) {
+	Dialog.confirm({
+		title: "Remove Bane Weapon",
+		content: `<p>Remove bane properties from <strong>${item.name}</strong>?</p>
+                 <p><em>Current: ${baneData.DieCount}d${baneData.DieFaces} ${baneData.DamageType} vs ${baneData.CreatureType}</em></p>`,
+		yes: async () => {
+			try {
+				await globalThis.stroudDnD.items.weapons.baneWeapon.RemoveBaneWeapon(item.uuid);
+				ui.notifications.info(`Bane properties removed from ${item.name}.`);
+				item.sheet.render(); // Refresh the sheet to update button
+			} catch (error) {
+				console.error("Error removing bane weapon:", error);
+				ui.notifications.error("Failed to remove bane properties.");
+			}
+		},
+		no: () => { },
+		defaultYes: false
+	});
+}
+
+/**
+ * Opens the bane weapon creation/editing dialog
+ * @param {Item} item - The weapon item
+ * @param {Event} event - The click event (unused in menu context)
+ */
+function openBaneWeaponDialog(item, event) {
+	const dialog = new BaneWeaponDialog(item);
+	dialog.render(true);
 }
