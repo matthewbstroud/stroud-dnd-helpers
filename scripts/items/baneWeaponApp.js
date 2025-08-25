@@ -131,13 +131,6 @@ export class BaneWeaponApp extends HandlebarsApplicationMixin(ApplicationV2) {
                 windowContent.style.setProperty('background-color', '#ffffff', 'important');
                 windowContent.style.setProperty('color', '#333', 'important');
             }
-            
-            const windowHeader = this.element.querySelector('.window-header');
-            if (windowHeader) {
-                // windowHeader.style.setProperty('background', 'linear-gradient(135deg, #f8f8f8, #e8e8e8)', 'important');
-                // windowHeader.style.setProperty('border-bottom', '1px solid #ddd', 'important');
-                // windowHeader.style.setProperty('color', '#333', 'important');
-            }
         }
 
         // Add event listeners for creature type checkboxes

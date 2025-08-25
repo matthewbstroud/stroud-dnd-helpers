@@ -1,9 +1,4 @@
 <div class="bane-weapon-form-container">
-    {{!-- <div class="form-header">
-        <img src="modules/stroud-dnd-helpers/images/icons/berserker.webp" alt="Stroud DnD" class="header-icon">
-        <h2>{{#if isEdit}}Edit{{else}}Create{{/if}} Bane Weapon: {{item.name}}</h2>
-    </div> --}}
-
     {{#if hasExistingBane}}
     <div class="existing-bane-warning">
         <i class="fas fa-exclamation-triangle"></i>
@@ -253,6 +248,7 @@
 .form-header h2 {
     margin: 0;
     color: var(--text-primary);
+    text-shadow: none;
 }
 
 .existing-bane-warning {
@@ -287,6 +283,7 @@
     font-size: 1.1em;
     border-bottom: 1px solid var(--border-light);
     padding-bottom: 5px;
+    text-shadow: none;
 }
 
 .creature-type-controls {
