@@ -9,7 +9,6 @@ import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
 import { identification } from './identification/identification.js';
-import { tokens } from './tokens.js';
 
 export let hooks = {
     "init": function _init() {
