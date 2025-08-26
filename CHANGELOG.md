@@ -1,3 +1,10 @@
+# v12.4.20
+# New Features
+- Apply Adhoc Damage Direct
+  - You can now pass an array of targets to the function.  This allows adhoc damage to be used to create traps via Monks Active Tiles.  Create a tile with Enter trigger and run macro action.  Sample script:
+  ![sample macro](images/demos/adhoc_macro.webp)
+# Bug Fixes
+- Fix bug with push common keybindings.
 # v12.4.19
 # New Features
 - Add UI for Bane Weapons.
@@ -8,7 +15,6 @@
 # New Features
 - **Find Actors in Scene** - Creates a chat message with links to all actors in the selected scene.
   - Additionally, you can right-click on a scene folder to do the same for all scenes recursively.
-
 ![alt text](images/demos/actors_in_scene.webp)
 # v12.4.16
 # New Features
@@ -692,6 +698,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
