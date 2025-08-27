@@ -4,10 +4,8 @@ import { dialog } from "../dialog/dialog.js";
 import { utility } from "../utility/utility.js";
 import { baneWeapon } from "./weapons/baneWeapon.js";
 import { WeaponMenuApp } from "./weaponMenuApp.js";
-import { BaneWeaponApp } from "./baneWeaponApp.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
-import { sdndConstants } from "../constants.js";
 
 export let items = {
 	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {

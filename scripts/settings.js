@@ -126,6 +126,18 @@ export let sdndSettings = {
 		},
 		'getValue': () =>  getModuleSettingValue('UseSDnDEncumbrance')
 	},
+	'ToolsHandling': {
+		'config': {
+			'name': 'Use Stroud DnD Tool Enhancements.',
+			'hint': `Thieves tools will automatically break on critical failure.`,
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false,
+			'requiresReload': true
+		},
+		'getValue': () =>  getModuleSettingValue('ToolsHandling')
+	},
 	'UseSDnDEncumbrance': {
 		'config': {
 			'name': 'Use Stroud DnD Helpers encumbrance rules.',

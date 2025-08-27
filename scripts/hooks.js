@@ -9,6 +9,7 @@ import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
 import { identification } from './identification/identification.js';
+import { toolsHandler } from './hookHandlers/toolsHandler.js';
 
 export let hooks = {
     "init": function _init() {
@@ -25,6 +26,7 @@ export let hooks = {
                 Hooks.on('updateActor', syncBackpackPermissions);
             }
             await combat.hooks.ready();
+            await toolsHandler.Init();
             let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
             let options = { "none": "(None)" };
             let playlists = game?.playlists?.contents ?? [];

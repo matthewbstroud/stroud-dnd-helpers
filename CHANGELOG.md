@@ -1,3 +1,7 @@
+# v12.4.21
+# New Features
+- Thieves tools handling.  
+  - Thieves tools will automatically be destroyed on fumble.
 # v12.4.20
 # New Features
 - Apply Adhoc Damage Direct
@@ -698,6 +702,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
