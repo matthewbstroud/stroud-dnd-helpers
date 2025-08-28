@@ -84,8 +84,15 @@ function getUniqueTags(collection, scope, key) {
     return result;
 }
 
-async function toggleLights(name, hidden) {
-    await toggleHidden(canvas.scene.lights, name, hidden);
+/**
+ * Toggles the visibility of lights with a specific name.
+ * @param {string} name - The name of the light to toggle.
+ * @param {boolean} hidden - Whether the light should be hidden or shown.
+ * @param {Scene} scene - The scene to modify.  (Defaults to current scene)
+ */
+async function toggleLights(name, hidden, scene) {
+    const lights = scene?.lights ?? canvas.scene.lights;
+    await toggleHidden(lights, name, hidden);
 }
 
 async function tagControlled(collection, scope, key, value) {
@@ -186,8 +193,14 @@ async function toggleHidden(collection, name, hidden) {
     });
 }
 
-async function toggleDoors(name) {
-    await executeAction(canvas.scene.walls, name, async function (door) {
+/**
+ * Toggles the state of doors with a specific name.
+ * @param {string} name - The tag name of the doors to toggle.
+ * @param {Scene} scene - defaults to current scene
+ */
+async function toggleDoors(name, scene) {
+    const walls = scene?.walls ?? canvas.scene.walls;
+    await executeAction(walls, name, async function (door) {
         let newState = "";
         switch (door.ds) {
             case CONST.WALL_DOOR_STATES.OPEN:
@@ -204,41 +217,87 @@ async function toggleDoors(name) {
     });
 }
 
-async function setDoorState(name, state) {
-    await executeAction(canvas.scene.walls, name, async function (door) {
+/**
+ * Toggles the state of doors with a specific name.
+ * @param {string} name - The tag name of the doors to toggle.
+ * @param {string} state - The new state to set for the doors. CONST.WALL_DOOR_STATES
+ * @param {Scene} scene - defaults to current scene
+ */
+async function setDoorState(name, state, scene) {
+    const walls = scene?.walls ?? canvas.scene.walls;
+    await executeAction(walls, name, async function (door) {
         door.update({ "ds": state });
     });
 }
 
-async function toggleEnabledTiles(name) {
-    await executeAction(canvas.scene.tiles, name, async function (doc) {
+/**
+ * Toggles the state of enabled tiles with a specific name.
+ * @param {string} name - The name of the tile to toggle.
+ * @param {Scene} scene - The scene to modify. (Defaults to current scene)
+ */
+async function toggleEnabledTiles(name, scene) {
+    const tiles = scene?.tiles ?? canvas.scene.tiles;
+    await executeAction(tiles, name, async function (doc) {
         let enabled = !doc.getFlag("monks-active-tiles", "active");
         console.log(`Setting ${doc._id} to ${enabled ? 'enabled' : 'disabled'}`);
         doc.setFlag("monks-active-tiles", "active", enabled);
     });
 }
 
-async function triggerTiles(name) {
-    await executeAction(canvas.scene.tiles, name, async function (doc) {
+/**
+ * Triggers tiles with a specific name.
+ * @param {string} name - The name of the tile to trigger.
+ * @param {Scene} scene - The scene to modify. (Defaults to current scene)
+ */
+async function triggerTiles(name, scene) {
+    const tiles = scene?.tiles ?? canvas.scene.tiles;
+    await executeAction(tiles, name, async function (doc) {
         console.log(doc._id);
         doc.trigger({ method: 'manual' });
     });
 }
 
-async function toggleTiles(name, hidden) {
-    await toggleHidden(canvas.scene.tiles, name, hidden);
+/**
+ * Toggles the visibility of tiles with a specific name.
+ * @param {string} name - The name of the tile to toggle.
+ * @param {boolean} hidden - Whether the tile should be hidden or shown.
+ * @param {Scene} scene - The scene to modify. (Defaults to current scene)
+ */
+async function toggleTiles(name, hidden, scene) {
+    const tiles = scene?.tiles ?? canvas.scene.tiles;
+    await toggleHidden(tiles, name, hidden);
 }
 
-async function toggleSfx(name, hidden) {
-    await toggleHidden(canvas.scene.sounds, name, hidden);
+/**
+ * Toggles the visibility of sound effects with a specific name.
+ * @param {string} name - The name of the sound effect to toggle.
+ * @param {boolean} hidden - Whether the sound effect should be hidden or shown.
+ * @param {Scene} scene - The scene to modify. (Defaults to current scene)
+ */
+async function toggleSfx(name, hidden, scene) {
+    const sounds = scene?.sounds ?? canvas.scene.sounds;
+    await toggleHidden(sounds, name, hidden);
 }
 
-async function toggleTokens(name, hidden) {
-    await toggleHidden(canvas.scene.tokens, name, hidden);
+/**
+ * Toggles the visibility of tokens with a specific name.
+ * @param {string} name - The name of the token to toggle.
+ * @param {boolean} hidden - Whether the token should be hidden or shown.
+ * @param {Scene} scene - The scene to modify. (Defaults to current scene)
+ */
+async function toggleTokens(name, hidden, scene) {
+    const tokens = scene?.tokens ?? canvas.scene.tokens;
+    await toggleHidden(tokens, name, hidden);
 }
 
-async function morphTokens(name) {
-    await executeAction(canvas.scene.tokens, name, async function (token) {
+/**
+ * Morphs tokens with a specific name.
+ * @param {string} name - The name of the token to morph.
+ * @param {Scene} scene - The scene to modify. (Defaults to current scene)
+ */
+async function morphTokens(name, scene) {
+    const tokens = scene?.tokens ?? canvas.scene.tokens;
+    await executeAction(tokens, name, async function (token) {
         if (token instanceof dnd5e.documents.TokenDocument5e) {
             token = canvas.tokens.get(token.id);
         }
