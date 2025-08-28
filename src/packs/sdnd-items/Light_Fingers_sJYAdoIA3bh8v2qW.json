@@ -1,0 +1,22 @@
+{
+  "name": "Light Fingers",
+  "sorting": "a",
+  "folder": "a5sqVJk66SGTwNg9",
+  "type": "Item",
+  "_id": "sJYAdoIA3bh8v2qW",
+  "description": "",
+  "sort": 100000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": null,
+    "modifiedTime": 1756386652275,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!folders!sJYAdoIA3bh8v2qW"
+}

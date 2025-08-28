@@ -48,8 +48,9 @@ export let combat = {
  * @param {string} saveAbility - The ability used for the save (e.g., "str", "dex", "con").
  * @param {number} saveDC - The DC for the saving throw (e.g., 15).
  * @param {string} damageOnSave - What happens on a successful save ("half" or "none").
+ * @param {Array} targets - The array of target tokens to apply damage to.
  */
-async function _applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSave, saveAbility, saveDC, damageOnSave) {
+async function _applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSave, saveAbility, saveDC, damageOnSave, targets) {
     if (!game.user.isGM) {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
@@ -69,7 +70,8 @@ async function _applyAdhocDamageDirect(damageType, damageDice, diceCount, allowS
         "diceCount": diceCount,
         "saveAbility": saveAbility,
         "saveDC": saveDC,
-        "damageOnSave": damageOnSave
+        "damageOnSave": damageOnSave,
+        "targets": targets
     };
     _debouncedApplyAdhocDamage(damageData);
 }
@@ -392,7 +394,7 @@ async function applyAdhocDamage(damageData) {
     // release tokens that shouldn't take damage
     tokens.releaseInvalidTokens(true);
     // get the tokens remaining
-    let targets = canvas.tokens.controlled;
+    let targets = damageData?.targets ?? canvas.tokens.controlled;
     if (!targets || targets.length == 0) {
         ui.notifications.notify(`No valid tokens selected!`);
         return;

@@ -11,13 +11,7 @@ async function setCommonKeybinds() {
         ]);
 
     }
-    game.keybindings.set("midi-qol", "Critical", [
-        {
-            key: "H",
-            modifiers: []
-        }
-    ]);
-    game.keybindings.set("midi-qol", "AdvantageRoll", [
+    game.keybindings.set("dnd5e", "skipDialogAdvantage", [
         {
             key: "ShiftLeft",
             modifiers: []
@@ -25,10 +19,15 @@ async function setCommonKeybinds() {
         {
             key: "ShiftRight",
             modifiers: []
-        },
+        }
     ]);
-    game.keybindings.set("midi-qol", "Critical", []);
-    game.keybindings.set("midi-qol", "DisadvantageRoll", [
+    game.keybindings.set("dnd5e", "skipDialogNormal", [
+        {
+            key: "AltLeft",
+            modifiers: []
+        }
+    ]);
+    game.keybindings.set("dnd5e", "skipDialogDisadvantage", [
         {
             key: "ControlLeft",
             modifiers: []
@@ -36,20 +35,13 @@ async function setCommonKeybinds() {
         {
             key: "ControlRight",
             modifiers: []
-        },
+        }
     ]);
     game.keybindings.set("midi-qol", "Versatile", [
         {
             key: "V",
             modifiers: []
-        }, {
-            key: "AltLeft",
-            modifiers: []
-        },
-        {
-            key: "AltRight",
-            modifiers: []
-        },
+        }
     ]);
     game.keybindings.set("sequencer", "play-tool-hotkey-control", [
     ]);

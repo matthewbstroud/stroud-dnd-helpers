@@ -1,0 +1,101 @@
+{
+  "name": "Peculiar Gloves",
+  "type": "equipment",
+  "img": "icons/equipment/hand/glove-cuffed-leather-purple.webp",
+  "system": {
+    "description": {
+      "value": "<p>These gloves and a particular nature and they do not look like they would fit anyone. </p>",
+      "chat": ""
+    },
+    "quantity": 1,
+    "weight": {
+      "value": 0,
+      "units": "lb"
+    },
+    "attunement": "",
+    "equipped": false,
+    "identified": false,
+    "unidentified": {
+      "description": "Wondrous item",
+      "name": ""
+    },
+    "activities": {},
+    "uses": {
+      "spent": 0,
+      "recovery": [],
+      "max": ""
+    },
+    "identifier": "peculiar-gloves",
+    "source": {
+      "revision": 1,
+      "rules": "2024"
+    },
+    "container": null,
+    "price": {
+      "value": 0,
+      "denomination": "gp"
+    },
+    "rarity": "",
+    "attuned": false,
+    "cover": null,
+    "crewed": false,
+    "armor": {
+      "value": null,
+      "magicalBonus": null,
+      "dex": null
+    },
+    "proficient": null,
+    "properties": [],
+    "strength": null,
+    "type": {
+      "value": "",
+      "baseItem": ""
+    }
+  },
+  "folder": "sJYAdoIA3bh8v2qW",
+  "flags": {
+    "world": {
+      "identified_id": "TvnkGBZxIYExY48b"
+    },
+    "midi-qol": {
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "effectCondition": ""
+    },
+    "midiProperties": {
+      "autoFailFriendly": false,
+      "autoSaveFriendly": false,
+      "magicdam": false,
+      "magiceffect": false,
+      "noConcentrationCheck": false,
+      "toggleEffect": false,
+      "ignoreTotalCover": false
+    },
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
+  },
+  "_id": "IutdnyeORBsuSLds",
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1756386634313,
+    "modifiedTime": 1756386634313,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!items!IutdnyeORBsuSLds"
+}

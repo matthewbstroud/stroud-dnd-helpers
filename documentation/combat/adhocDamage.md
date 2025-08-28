@@ -169,6 +169,7 @@ stroudDnD.combat.applyAdhocDamageDirect(damageType, damageDice, diceCount, allow
 - **saveAbility** (string): Save ability ("str", "dex", "con", "int", "wis", "cha") - required if allowSave is true
 - **saveDC** (number): Save DC value - required if allowSave is true
 - **damageOnSave** (string): "half" or "none" - required if allowSave is true
+- **targets** (Array - optional): an array of tokens to apply the damage to
 
 ### Examples
 
