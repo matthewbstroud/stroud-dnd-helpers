@@ -1,3 +1,7 @@
+# v12.4.22
+# New Features
+- Tagging
+  - Allow tagging to trigger changes in scenes other than the one currently loaded.
 # v12.4.21
 # New Features
 - Thieves tools handling.  
@@ -704,6 +708,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
