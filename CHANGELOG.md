@@ -2,6 +2,8 @@
 # New Features
 - Thieves tools handling.  
   - Thieves tools will automatically be destroyed on fumble.
+- Items 
+  - Light Fingers
 # v12.4.20
 # New Features
 - Apply Adhoc Damage Direct
