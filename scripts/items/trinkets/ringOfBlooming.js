@@ -27,7 +27,7 @@ export class MagicBloom {
             return null;
         }
         const templateTile = foundry.utils.duplicate(tiles[0]);
-        templateTile.sort = Math.max(...canvas.scene.tiles.map(t => t.sort)) + 1;
+        templateTile.sort = Math.max(0, ...canvas.scene.tiles.map(t => t.sort)) + 1;
         templateTile.width = Math.floor(canvas.grid.size / 3);
         templateTile.height = Math.floor(canvas.grid.size / 3);
         templateTile.x = light.x - (templateTile.width / 2);
