@@ -1,0 +1,320 @@
+{
+  "folder": "sXECsf6yVs812iue",
+  "name": "TemplateObjects",
+  "navigation": false,
+  "navOrder": 0,
+  "navName": "",
+  "background": {
+    "src": null,
+    "anchorX": 0,
+    "anchorY": 0,
+    "offsetX": 0,
+    "offsetY": 0,
+    "fit": "fill",
+    "scaleX": 1,
+    "scaleY": 1,
+    "rotation": 0,
+    "tint": "#ffffff",
+    "alphaThreshold": 0
+  },
+  "foreground": null,
+  "foregroundElevation": 20,
+  "thumb": null,
+  "width": 4000,
+  "height": 3000,
+  "padding": 0.25,
+  "initial": {
+    "x": 2739,
+    "y": 1894,
+    "scale": 1.3266488525722113
+  },
+  "backgroundColor": "#5e5e5e",
+  "grid": {
+    "type": 1,
+    "size": 100,
+    "style": "solidLines",
+    "thickness": 1,
+    "color": "#000000",
+    "alpha": 0.2,
+    "distance": 5,
+    "units": "ft"
+  },
+  "tokenVision": true,
+  "fog": {
+    "exploration": true,
+    "overlay": null,
+    "colors": {
+      "explored": null,
+      "unexplored": null
+    }
+  },
+  "environment": {
+    "darknessLevel": 0,
+    "darknessLock": false,
+    "globalLight": {
+      "enabled": false,
+      "alpha": 0.5,
+      "bright": false,
+      "color": null,
+      "coloration": 1,
+      "luminosity": 0,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "cycle": true,
+    "base": {
+      "hue": 0,
+      "intensity": 0,
+      "luminosity": 0,
+      "saturation": 0,
+      "shadows": 0
+    },
+    "dark": {
+      "hue": 0.7138888888888889,
+      "intensity": 0,
+      "luminosity": -0.25,
+      "saturation": 0,
+      "shadows": 0
+    }
+  },
+  "drawings": [],
+  "tokens": [],
+  "lights": [
+    {
+      "x": 2728,
+      "y": 1823,
+      "elevation": 0,
+      "rotation": 0,
+      "walls": true,
+      "vision": false,
+      "config": {
+        "negative": false,
+        "priority": 0,
+        "alpha": 1,
+        "angle": 360,
+        "bright": 1.5,
+        "color": "#fe3939",
+        "coloration": 1,
+        "dim": 1.5,
+        "attenuation": 0.5,
+        "luminosity": 0.5,
+        "saturation": 0,
+        "contrast": 0.1,
+        "shadows": 0,
+        "animation": {
+          "type": "dome",
+          "speed": 5,
+          "intensity": 5,
+          "reverse": false
+        },
+        "darkness": {
+          "min": 0,
+          "max": 1
+        }
+      },
+      "hidden": false,
+      "flags": {
+        "stroud-dnd-helpers": {
+          "tagName": "magic_bloom"
+        }
+      },
+      "_id": "VhGnUvKUlOkSEOia",
+      "_key": "!scenes.lights!18jMQ36ONL81Jy83.VhGnUvKUlOkSEOia"
+    }
+  ],
+  "notes": [],
+  "sounds": [],
+  "regions": [],
+  "templates": [],
+  "tiles": [
+    {
+      "flags": {
+        "monks-active-tiles": {
+          "name": "magic_bloom",
+          "active": true,
+          "record": true,
+          "restriction": "all",
+          "controlled": "all",
+          "trigger": [
+            "",
+            "dblclick"
+          ],
+          "allowpaused": false,
+          "usealpha": false,
+          "pointer": false,
+          "vision": true,
+          "pertoken": true,
+          "minrequired": 0,
+          "cooldown": null,
+          "chance": 100,
+          "fileindex": 0,
+          "actions": [
+            {
+              "action": "chatmessage",
+              "data": {
+                "flavor": "Magic Bloom",
+                "text": "{{actor.name}} picks up the delicate bloom.  Its light swells for a moment casting a glow over the hand that holds it, but then it quickly fades and the once beautiful flower falls to ash.",
+                "entity": "",
+                "incharacter": false,
+                "chatbubble": "true",
+                "showto": "everyone",
+                "language": ""
+              },
+              "id": "bMxcidjsAbMYrcgh"
+            },
+            {
+              "action": "showhide",
+              "data": {
+                "entity": {
+                  "id": "tile",
+                  "name": "This Tile"
+                },
+                "collection": "tokens",
+                "hidden": "hide",
+                "fade": 1
+              },
+              "id": "8o9FNxiF3YF75hKv"
+            },
+            {
+              "action": "delay",
+              "data": {
+                "delay": "1"
+              },
+              "id": "SEnW7uDw0HFzZzPp"
+            },
+            {
+              "action": "activate",
+              "data": {
+                "entity": {
+                  "id": "Scene.wUQz3M0DenQQW5Fl.AmbientLight.VhGnUvKUlOkSEOia",
+                  "name": "AmbientLight: VhGnUvKUlOkSEOia"
+                },
+                "collection": "tiles",
+                "activate": "deactivate"
+              },
+              "id": "zdgrzIwnCW6o2OYR"
+            },
+            {
+              "action": "hurtheal",
+              "data": {
+                "entity": {
+                  "id": "token",
+                  "name": "Triggering Token"
+                },
+                "value": "+[[4d4]]{Bloom Heal}",
+                "chatMessage": true,
+                "rollmode": "roll",
+                "showdice": true
+              },
+              "id": "VKIN7TnY5ujunN26"
+            },
+            {
+              "action": "delete",
+              "data": {
+                "entity": {
+                  "id": "Scene.wUQz3M0DenQQW5Fl.AmbientLight.VhGnUvKUlOkSEOia",
+                  "name": "AmbientLight: VhGnUvKUlOkSEOia"
+                },
+                "collection": "tiles"
+              },
+              "id": "erykZZj5prM2SW3s"
+            },
+            {
+              "action": "delete",
+              "data": {
+                "entity": {
+                  "id": "tile",
+                  "name": "This Tile"
+                },
+                "collection": "tiles"
+              },
+              "id": "Q61cmEQY5bp8QPqz"
+            }
+          ],
+          "files": []
+        },
+        "betterroofs": {
+          "brMode": false,
+          "occlusionLinkId": "",
+          "occlusionLinkSource": false
+        },
+        "region-attacher": {
+          "attachRegionToTile": false
+        },
+        "stroud-dnd-helpers": {
+          "tagName": "magic_bloom"
+        }
+      },
+      "texture": {
+        "src": "modules/stroud-dnd-helpers/images/items/magic_bloom.webp",
+        "scaleX": 0.75,
+        "scaleY": 0.75,
+        "tint": "#ffffff",
+        "anchorX": 0.5,
+        "anchorY": 0.5,
+        "offsetX": 0,
+        "offsetY": 0,
+        "fit": "fill",
+        "rotation": 0,
+        "alphaThreshold": 0.75
+      },
+      "x": 2700,
+      "y": 1800,
+      "sort": 0,
+      "width": 50,
+      "height": 50,
+      "rotation": 0,
+      "alpha": 1,
+      "elevation": 0,
+      "occlusion": {
+        "mode": 0,
+        "alpha": 0
+      },
+      "restrictions": {
+        "light": false,
+        "weather": false
+      },
+      "video": {
+        "loop": true,
+        "autoplay": true,
+        "volume": 0
+      },
+      "_id": "eDAFXMae8bIivRnd",
+      "hidden": false,
+      "locked": false,
+      "_key": "!scenes.tiles!18jMQ36ONL81Jy83.eDAFXMae8bIivRnd"
+    }
+  ],
+  "walls": [],
+  "playlist": null,
+  "playlistSound": null,
+  "journal": null,
+  "journalEntryPage": null,
+  "weather": "",
+  "ownership": {
+    "default": 0,
+    "Xhr6fVPGIbvrReaZ": 3
+  },
+  "flags": {
+    "token-attacher": {}
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": 1756696103092,
+    "modifiedTime": 1756696103092,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+  },
+  "_id": "18jMQ36ONL81Jy83",
+  "active": false,
+  "sort": 0,
+  "_key": "!scenes!18jMQ36ONL81Jy83"
+}

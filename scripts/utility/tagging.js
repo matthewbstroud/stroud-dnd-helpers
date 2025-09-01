@@ -18,8 +18,9 @@ export let tagging = {
         "toggle": toggleDoors
     },
     "lighting": {
-        "getTagged": async function _getTaggedLights(name) {
-            return await getTaggedDocuments(canvas.scene.lights, sdndConstants.MODULE_ID, "tagName", name);
+        "getTagged": async function _getTaggedLights(name, scene) {
+            const lights = scene?.lights ?? canvas.scene.lights;
+            return await getTaggedDocuments(lights, sdndConstants.MODULE_ID, "tagName", name);
         },
         "toggle": toggleLights,
         "tagSelected": async function _tagSelectedLights(name) {
@@ -36,8 +37,9 @@ export let tagging = {
         }
     },
     "tiles": {
-        "getTagged": async function _getTaggedTiles(name) {
-            return await getTaggedDocuments(canvas.scene.tiles, sdndConstants.MODULE_ID, "tagName", name);
+        "getTagged": async function _getTaggedTiles(name, scene) {
+            const tiles = scene?.tiles ?? canvas.scene.tiles;
+            return await getTaggedDocuments(tiles, sdndConstants.MODULE_ID, "tagName", name);
         },
         "toggle": toggleTiles,
         "toggleEnabled": toggleEnabledTiles,

@@ -135,6 +135,9 @@ export const sdndConstants = {
                 "GM": `${MODULE_ID}.SDND-GM-Macros`,
                 "SHARED": `${MODULE_ID}.SDND-Shared-Macros`,
                 "SPELLS": `${MODULE_ID}.SDND-Spells`
+            },
+            "SCENES": {
+                "SCENES": `${MODULE_ID}.SDND-Scenes`
             }
         }
     },

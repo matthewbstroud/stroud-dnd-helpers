@@ -10,6 +10,7 @@ import { harvesting } from './crafting/harvesting.js';
 import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
 import { identification } from './identification/identification.js';
 import { toolsHandler } from './hookHandlers/toolsHandler.js';
+import { ringOfBlooming } from './items/trinkets/ringOfBlooming.js';
 
 export let hooks = {
     "init": function _init() {
@@ -39,6 +40,7 @@ export let hooks = {
         Hooks.on('renderActorSheet5e', actors.renderSheet);
         await backpacks.hooks.ready();
         await harvesting.hooks.ready();
+        await ringOfBlooming.Ready();
         await applyPatches();
     }
 };

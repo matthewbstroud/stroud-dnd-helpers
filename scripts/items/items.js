@@ -6,6 +6,7 @@ import { baneWeapon } from "./weapons/baneWeapon.js";
 import { WeaponMenuApp } from "./weaponMenuApp.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
+import { ringOfBlooming } from "./trinkets/ringOfBlooming.js";
 
 export let items = {
 	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -37,6 +38,9 @@ export let items = {
 		"removeOnUseMacro": removeMidiOnUseMacro,
 		"addBonusDamageSave": addBonusDamageSave,
 		"removeBonusDamageSave": removeBonusDamageSave
+	},
+	"trinkets": {
+		"ringOfBlooming": ringOfBlooming
 	},
 	"weapons": {
 		"baneWeapon": baneWeapon,

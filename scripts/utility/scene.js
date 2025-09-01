@@ -54,6 +54,52 @@ export let scene = {
             return [];
         }
         return debouncedGetActorsInScenes(scenes);
+    },
+    "referenceSceneFromCompendium": async function referenceSceneFromCompendium(compendiumName, sceneName, sceneId = null) {
+        try {
+            // Get the compendium pack
+            const pack = game.packs.get(compendiumName);
+
+            if (!pack) {
+                console.error(`Compendium "${compendiumName}" not found`);
+                ui.notifications.error(`Compendium "${compendiumName}" not found`);
+                return null;
+            }
+
+            // If we have a specific scene ID, try to get it directly
+            if (sceneId) {
+                const scene = await pack.getDocument(sceneId);
+                if (scene) {
+                    console.log(`Found scene "${scene.name}" by ID in compendium "${compendiumName}"`);
+                    return scene;
+                }
+            }
+
+            // Search for the scene by name
+            const index = await pack.getIndex();
+            const sceneIndex = index.find(entry => entry.name === sceneName);
+
+            if (!sceneIndex) {
+                console.error(`Scene "${sceneName}" not found in compendium "${compendiumName}"`);
+                ui.notifications.error(`Scene "${sceneName}" not found in compendium "${compendiumName}"`);
+                return null;
+            }
+
+            // Get the actual scene document
+            const scene = await pack.getDocument(sceneIndex._id);
+
+            if (scene) {
+                console.log(`Successfully referenced scene "${scene.name}" from compendium "${compendiumName}"`);
+                return scene;
+            }
+
+            return null;
+
+        } catch (error) {
+            console.error("Error referencing scene from compendium:", error);
+            ui.notifications.error("Error referencing scene from compendium");
+            return null;
+        }
     }
 };
 
