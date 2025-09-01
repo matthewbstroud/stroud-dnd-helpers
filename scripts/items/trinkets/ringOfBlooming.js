@@ -4,9 +4,11 @@ import { tagging } from "../../utility/tagging.js";
 import { gmFunctions } from "../../gm/gmFunctions.js";
 import { numbers } from "../../utility/numbers.js";
 
+const BLOOM_VACANT_SIZE = 0.5;
+
 export class MagicBloom {
     static async #createLight(tokenCenter, templateScene) {
-        let vacant = await game.MonksActiveTiles?.findVacantSpot(tokenCenter, { width: 0.5, height: 0.5 }, game.canvas.scene, [], tokenCenter, true) ?? tokenCenter;
+        let vacant = await game.MonksActiveTiles?.findVacantSpot(tokenCenter, { width: BLOOM_VACANT_SIZE, height: BLOOM_VACANT_SIZE }, game.canvas.scene, [], tokenCenter, true) ?? tokenCenter;
         const lights = await tagging.lighting.getTagged("magic_bloom", templateScene);
         if (!lights || lights.length === 0) {
             console.error(`Template light not found`);
@@ -32,10 +34,11 @@ export class MagicBloom {
         templateTile.height = Math.floor(canvas.grid.size / 3);
         templateTile.x = light.x - (templateTile.width / 2);
         templateTile.y = light.y - (templateTile.height / 2);
-        templateTile.flags["monks-active-tiles"].actions[3].data.entity.id = light.uuid;
-        templateTile.flags["monks-active-tiles"].actions[3].data.entity.name = `AmbientLight: ${light.id}`;
-        templateTile.flags["monks-active-tiles"].actions[5].data.entity.id = light.uuid;
-        templateTile.flags["monks-active-tiles"].actions[5].data.entity.name = `AmbientLight: ${light.id}`;
+        let ambientLightActions = templateTile.flags["monks-active-tiles"].actions.filter(a => a.data?.entity?.name?.startsWith("AmbientLight:"));
+        ambientLightActions.forEach(a => {
+            a.data.entity.id = light.uuid;
+            a.data.entity.name = `AmbientLight: ${light.id}`;
+        });
         let hurtHeal = templateTile.flags["monks-active-tiles"].actions.find(a => a.action === "hurtheal")
         if (hurtHeal) {
             hurtHeal.data.value = `+[[4d4 + ${spellLevel}]]{Bloom Heal}`
