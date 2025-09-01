@@ -158,7 +158,7 @@ class RingOfBlooming {
         this.#markLastSpellSlot(activity.actor, spellSlot);
         // check if the ring has uses left
         const usesRemaining = this.#getUses(ringOfBlooming);
-        if (usesRemaining == 0) {
+        if (usesRemaining === 0) {
             return;
         }
         const roll = await new Roll('1d10').evaluate();
