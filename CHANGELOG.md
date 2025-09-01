@@ -1,3 +1,6 @@
+# v12.4.23
+# New Features
+- Ring of Blooming
 # v12.4.22
 # New Features
 - Tagging
@@ -708,6 +711,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

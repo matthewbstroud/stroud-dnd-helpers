@@ -5,6 +5,7 @@ import { keybinds } from "../keyboard/keybinds.js";
 import { gmCheckActorWeight, gmDropBackpack, gmPickupBackpack } from "../backpacks/backpacks.js";
 import { gmPickupLightable, gmDropLightable } from "../lighting/lighting.js";
 import { sdndConstants } from "../constants.js";
+import { MagicBloom } from "../items/trinkets/ringOfBlooming.js";
 
 const RUN_MODES = {
     RUN_LOCAL: "RUN_LOCAL",
@@ -321,7 +322,16 @@ export let gmFunctions = {
     },
     "notify": async function _notify(type, message) {
         ui.notifications.notify(message, type);
-    }
+    },
+    "createBloom": async function _createBloom(tokenUuid, spellLevel) {
+        return run(
+            async () => {
+                const token = await fromUuid(tokenUuid);
+                await MagicBloom.create(token, spellLevel);
+            },
+            async () => await socket.executeAsGM("createBloom", tokenUuid, spellLevel)
+        );
+    },
 };
 
 function selectToken(tokenId) {

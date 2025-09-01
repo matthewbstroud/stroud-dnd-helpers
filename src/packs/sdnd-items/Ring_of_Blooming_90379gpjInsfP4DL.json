@@ -1,0 +1,22 @@
+{
+  "name": "Ring of Blooming",
+  "sorting": "a",
+  "folder": "a5sqVJk66SGTwNg9",
+  "type": "Item",
+  "_id": "90379gpjInsfP4DL",
+  "description": "",
+  "sort": 200000,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": null,
+    "modifiedTime": 1756481913545,
+    "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+  },
+  "_key": "!folders!90379gpjInsfP4DL"
+}
