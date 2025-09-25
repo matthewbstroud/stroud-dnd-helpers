@@ -1,0 +1,22 @@
+{
+  "name": "Sunsword",
+  "sorting": "a",
+  "folder": "BeLUfpJ0d2cACd5n",
+  "type": "Item",
+  "_id": "Vh7K3poOnqK1cVw0",
+  "description": "",
+  "sort": 0,
+  "color": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "coreVersion": "12.343",
+    "systemId": "dnd5e",
+    "systemVersion": "4.4.2",
+    "createdTime": null,
+    "modifiedTime": null,
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!Vh7K3poOnqK1cVw0"
+}
