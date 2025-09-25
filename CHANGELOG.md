@@ -1,3 +1,8 @@
+# v12.4.24
+# New Features
+- Implement Sunsword light effects.
+# Bug Fixes
+- Async bug in Backpacks Manager.
 # v12.4.23
 # New Features
 - Ring of Blooming
@@ -711,6 +716,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

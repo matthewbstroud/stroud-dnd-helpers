@@ -7,6 +7,7 @@ import { WeaponMenuApp } from "./weaponMenuApp.js";
 import { gmFunctions } from "../gm/gmFunctions.js";
 import { sdndSettings } from "../settings.js";
 import { ringOfBlooming } from "./trinkets/ringOfBlooming.js";
+import { sunsword } from "./weapons/sunsword.js";
 
 export let items = {
 	'getItemFromCompendium': async function _getItemFromCompendium(key, name, ignoreNotFound, packFolderId) {
@@ -45,7 +46,8 @@ export let items = {
 	"weapons": {
 		"baneWeapon": baneWeapon,
 		"lightBringer": lightBringer,
-		"devoteesCenser": devoteesCenser
+		"devoteesCenser": devoteesCenser,
+		"sunsword": sunsword
 	},
 	"sortByName": function _sortByName(item1, item2) {
 		if (item1.name < item2.name) {

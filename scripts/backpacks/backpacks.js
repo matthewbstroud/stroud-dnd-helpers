@@ -764,7 +764,7 @@ export async function gmPickupBackpack(pileUuid, targetContainerId) {
     } 
     let actor = await fromUuid(actorUuId);
     try {
-        lockActor(actor);
+        await lockActor(actor);
         backpacks.pauseEvents();
         let items = game.itempiles.API.getActorItems(backpack.actor).filter(i => i.system?.container != backpack.id);
         let isPrimary = pile?.actor?.getFlag(sdndConstants.MODULE_ID, "IsPrimary");
