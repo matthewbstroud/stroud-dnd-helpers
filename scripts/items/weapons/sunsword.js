@@ -39,8 +39,8 @@ class Sunsword {
         }
         const brightLightRange = 5 + (this.intensity * 5);
         const dimLightRange = brightLightRange * 2;
-        brightLightChange.value = brightLightRange;
-        dimLightChange.value = dimLightRange;
+        brightLightChange.value = brightLightRange.toString();
+        dimLightChange.value = dimLightRange.toString();
         await effect.update({ changes });
     }
 
