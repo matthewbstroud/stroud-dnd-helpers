@@ -150,7 +150,7 @@ jobs:
 
       # Push to Foundry Registry
       - name: HTTP Request Action
-        uses: fjogeleit/http-request-action@v1.16.4
+        uses: fjogeleit/http-request-action@v1.16.6
         continue-on-error: true
         with:
           url: "https://foundryvtt.com/_api/packages/release_version/"
