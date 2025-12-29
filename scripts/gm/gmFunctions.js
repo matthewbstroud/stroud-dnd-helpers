@@ -245,9 +245,13 @@ export let gmFunctions = {
         return run(
             async () => {
                 for (const effectID of effectIDs) {
-                    const effect = await fromUuid(effectID);
-                    if (effect) {
-                        await effect.delete();
+                    try {
+                        const effect = await fromUuid(effectID);
+                        if (effect) {
+                            await effect.delete();
+                        }
+                    } catch (err) {
+                        console.warn(`Failed to remove effect ${effectID}: ${err.message}`);
                     }
                 }
             },
@@ -299,7 +303,7 @@ export let gmFunctions = {
         );
     },
     "startClock": async function _startClock() {
-        if (!SimpleCalendar) {
+        if (!game.modules.get('simple-calendar')?.active) {
             return;
         }
         if (!SimpleCalendar?.api?.isPrimaryGM() ?? false) {
@@ -311,7 +315,7 @@ export let gmFunctions = {
     "advanceTime": async function _advanceTime(seconds) {
         return run(
             async () => {
-                if (!SimpleCalendar) {
+                if (!game.modules.get('simple-calendar')?.active) {
                     await game.time.advance(seconds);
                     return;
                 }

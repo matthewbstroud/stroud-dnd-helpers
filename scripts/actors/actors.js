@@ -197,12 +197,13 @@ async function removeUnusedActors(actorIds, source) {
     }
     console.log(orphaned.map(o => o.name).join(","));
     const totalOrphans = orphaned.length;
+    const progress = ui.notifications.info("Removing orphaned actors...", {progress: true, permanent: false});
     for (let i = 0; i < orphaned.length; i++) {
         console.log(`Deleting ${orphaned[i].name} from world...`);
-        SceneNavigation.displayProgressBar({ label: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`, pct: Math.floor((i / totalOrphans) * 100) });
+        progress.update({pct: i / totalOrphans, message: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`});
         await orphaned[i].delete();
     }
-    SceneNavigation.displayProgressBar({ label: ``, pct: 100 });
+    progress.update({pct: 1.0, message: `Removed ${totalOrphans} orphaned actors`});
     await utility.removeEmptyFolders("Actor");
 }
 
@@ -313,8 +314,9 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         return;
     }
     const totalNpcs = npcs.length;
+    const progress = ui.notifications.info(`${BUFF_NPC}s...`, {progress: true, permanent: false});
     for (let i = 0; i < npcs.length; i++) {
-        SceneNavigation.displayProgressBar({ label: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}`, pct: Math.floor((i / totalNpcs) * 100) });
+        progress.update({pct: i / totalNpcs, message: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}`});
         let npc = npcs[i];
         const hp = npc.system?.attributes?.hp;
         let actorUpdateRequired = false;
@@ -369,7 +371,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         }
 
     }
-    SceneNavigation.displayProgressBar({ label: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs}`, pct: 100 });
+    progress.update({pct: 1.0, message: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs} complete`});
 }
 
 export function getAverageHpFormula(formula) {

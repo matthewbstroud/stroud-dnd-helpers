@@ -384,7 +384,12 @@ export async function gmCheckActorWeight(actorUuid, force, scope) {
         let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
         if (!effect) {
             if (currentEffects && currentEffects.length > 0) {
-                await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+                try {
+                    await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+                } catch (err) {
+                    console.warn(`Failed to remove effects via UUID, attempting direct deletion`, err);
+                    await actor.deleteEmbeddedDocuments(ActiveEffect.name, currentEffects.map(e => e.id));
+                }
             }
             return;
         }
@@ -394,12 +399,22 @@ export async function gmCheckActorWeight(actorUuid, force, scope) {
         if (existingEffect) {
             let effectsToRemove = currentEffects.filter(e => e.uuid != existingEffect.uuid);
             if (effectsToRemove.length > 0) {
-                await gmFunctions.removeEffects(effectsToRemove.map(e => e.uuid));
+                try {
+                    await gmFunctions.removeEffects(effectsToRemove.map(e => e.uuid));
+                } catch (err) {
+                    console.warn(`Failed to remove effects via UUID, attempting direct deletion`, err);
+                    await actor.deleteEmbeddedDocuments(ActiveEffect.name, effectsToRemove.map(e => e.id));
+                }
             }
             return; // already applied
         }
         if (currentEffects && currentEffects.length > 0) {
-            await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+            try {
+                await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+            } catch (err) {
+                console.warn(`Failed to remove effects via UUID, attempting direct deletion`, err);
+                await actor.deleteEmbeddedDocuments(ActiveEffect.name, currentEffects.map(e => e.id));
+            }
         }
         await gmFunctions.createEffects(actor.uuid, [effect]);
     }

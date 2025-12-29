@@ -197,9 +197,11 @@ async function startFilteredCombat() {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
     }
-    SimpleCalendar?.api?.pauseClock();
+    if (game.modules.get('simple-calendar')?.active) {
+        SimpleCalendar?.api?.pauseClock();
+    }
     tokens.releaseInvalidTokens(false);
-    await TokenDocument.createCombatants(canvas.tokens.controlled);
+    await TokenDocument.createCombatants(canvas.tokens.controlled.map(t => t.document));
     await game.combat.rollNPC();
     if (game.combats.active?.getFlag(sdndConstants.MODULE_ID, "CombatInitialized") ?? false) {
         return;
@@ -211,7 +213,9 @@ async function startFilteredCombat() {
     await game.combats.active?.setFlag(sdndConstants.MODULE_ID, "CombatInitialized", true);
     Hooks.once("deleteCombat", async function () {
         playlists.stop(combatPlaylistId);
-        SimpleCalendar?.api.startClock();
+        if (game.modules.get('simple-calendar')?.active) {
+            SimpleCalendar?.api?.startClock();
+        }
         tagging.sfx.toggle("SceneMusic", false);
     });
     tagging.sfx.toggle("SceneMusic", true);
@@ -425,8 +429,8 @@ async function completeItemUse(item, config = {}, options = {}) {
         options.workflowData = true;
         fixSets = true;
     }
-    // TODO: Make use completeItemUseV2 instead, once everything's ready
-    let workflow = await MidiQOL.completeItemUse(item, config, options);
+    config.midiOptions = foundry.utils.mergeObject(config.midiOptions ?? {}, options);
+    let workflow = await MidiQOL.completeItemUse(item, config);
     if (fixSets) {
         if (workflow.failedSaves) workflow.failedSaves = new Set(workflow.failedSaves);
         if (workflow.hitTargets) workflow.hitTargets = new Set(workflow.hitTargets);
@@ -436,12 +440,12 @@ async function completeItemUse(item, config = {}, options = {}) {
 }
 
 // borrowed from chrisPremades.utils.workflowUtils
-async function syntheticItemRoll(item, targets, { options = {}, config = {}, userId, consumeUsage = false, consumeResources = false } = {}) {
+async function syntheticItemRoll(item, targets, { options = {}, config = {}, userId, consumeUsage = false, consumeResources = false, spellSlot = false } = {}) {
     let defaultConfig = {
         consumeUsage,
-        consumeSpellSlot: false,
         consume: {
-            resources: consumeResources
+            resources: consumeResources,
+            spellSlot
         }
     };
     let autoRollDamage = MidiQOL.configSettings().autoRollDamage;
@@ -449,7 +453,7 @@ async function syntheticItemRoll(item, targets, { options = {}, config = {}, use
     let defaultOptions = {
         targetUuids: targets.map(i => i.document.uuid),
         configureDialog: false,
-        ignoreUserTargets: true,
+        //ignoreUserTargets: true,
         workflowOptions: {
             autoRollDamage,
             autoFastDamage: true,
