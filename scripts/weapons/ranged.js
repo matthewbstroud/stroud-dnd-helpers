@@ -6,7 +6,7 @@ export let ranged = {
 
 let reloader = {
     getEqippedRangedWeapons: function _getEqippedRangedWeapons(target) {
-        return target.items.filter(i => i.system.equipped == true && i.type == "weapon" && i.system.actionType == "rwak");
+        return target.items.filter(i => i.system.equipped == true && i.type == "weapon" && i.system.ammunition?.type);
     },
     getAmmo: function _getAmmo(target, weapon) {
         let ammoType = "unknown";

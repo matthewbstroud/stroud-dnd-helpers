@@ -64,14 +64,13 @@ async function _createUnidentifiedItem() {
         ui.notifications.notify(`Can only be run by the gamemaster!`);
         return;
     }
-    let items = Object.values(ui.windows).filter(w => (w.object instanceof Item));
-
-    if (!items || items.length == 0 || items.length > 1) {
-        ui.notifications.notify(`Must only have one item sheet open!`);
+    let activeWindow = ui.activeWindow;
+    if (!activeWindow || !(activeWindow.document instanceof Item)) {
+        ui.notifications.notify(`Must have an item sheet open!`);
         return;
     }
 
-    let item = items[0].object;
+    let item = activeWindow.document;
 
     function createUnidentifiedItem(item, name, description) {
         let newItem = {

@@ -158,9 +158,9 @@ export let tokens = {
         return useId ? this.gmID() : game.users.get(this.gmID());
     },
     "rollSkillCheck": async function _rollSkillCheck(token, skill, dc, flavor, fastForward) {
-        let userID = this.firstOwner(token, true);
+        let actor = token.actor ?? token;
         let skill5e = dnd5e.config.skills[skill];
-        flavor == flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
+        flavor = flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
         fastForward = fastForward ?? true;
         let options = {
             targetValue: dc,
@@ -168,14 +168,8 @@ export let tokens = {
             chatMessage: true,
             flavor: flavor
         };
-        let data = {
-            targetUuid: token.document.uuid,
-            request: 'skill',
-            ability: skill,
-            options
-        };
 
-        let roll = await MidiQOL.socket().executeAsUser('rollAbility', userID, data);
+        let roll = await actor.rollSkill(skill, options);
         if (!roll) {
             return null;
         }
@@ -241,12 +235,13 @@ async function showTokenArt(token) {
         return;
     }
     // search for existing popout
-    var popout = Object.values(ui.windows)?.find(v => v instanceof ImagePopout && v?.options.uuid == actor.uuid);
+    var popout = [...foundry.applications.instances.values()]
+        .find(i => i instanceof foundry.applications.apps.ImagePopout && i?.options.uuid == actor.uuid);
     if (popout) {
         // already shown
         return;
     }
-    let ip = new ImagePopout(actor.img, { uuid: actor.uuid });
+    let ip = new foundry.applications.apps.ImagePopout({src: actor.img, uuid: actor.uuid });
     ip.render(true); // Display for self
     ip.shareImage(); // Display to all other players
 }

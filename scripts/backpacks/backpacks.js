@@ -159,13 +159,13 @@ async function resolveConsumption(item) {
     let itemData = foundry.utils.duplicate(item.toObject());
     
     let activities = Object.values(itemData.system?.activities ?? {})
-        .filter(a => a.consumption?.targets.find(t => t.type == "itemUses" && t.target.includes("wireup:")));
+        .filter(a => a.consumption?.targets.find(t => t.type == "itemUses" && t.target?.includes("wireup:")));
     if (!activities || activities.length === 0) {
         return;
     }
     for (let activity of activities) {
         for (let target of activity.consumption.targets) {
-            if (target.type == "itemUses" && target.target.includes("wireup:")) {
+            if (target.type == "itemUses" && target.target?.includes("wireup:")) {
                 const identifier = target.target.split(":").pop();
                 const item = actor.items.find(i => i.system?.identifier === identifier);
                 if (!item) {

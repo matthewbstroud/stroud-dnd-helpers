@@ -29,7 +29,7 @@ import { mounts } from './mounts/mounts.js';
 export let socket;
 
 Hooks.once('init', async function() {
-	hooks.init();
+	await hooks.init();
 });
 
 Hooks.once('socketlib.ready', async function() {

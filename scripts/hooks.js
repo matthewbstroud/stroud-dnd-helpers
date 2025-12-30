@@ -20,10 +20,10 @@ export let hooks = {
     "ready": async function _ready() {
         if (game.user?.isGM) {
             Hooks.on('preCreateTile', onPreCreateTile);
-            Hooks.on('getActorSheet5eHeaderButtons', createActorHeaderButton);
-            Hooks.on('getItemSheet5eHeaderButtons', createWeaponHeaderButton);
+            Hooks.on('getActorSheetHeaderButtons', createActorHeaderButton);
+            Hooks.on('getItemSheetHeaderButtons', createWeaponHeaderButton);
             if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
-                Hooks.on('getItemSheet5eHeaderButtons', createItemHeaderButton);
+                Hooks.on('getItemSheetHeaderButtons', createItemHeaderButton);
                 Hooks.on('updateActor', syncBackpackPermissions);
             }
             await combat.hooks.ready();
@@ -37,7 +37,7 @@ export let hooks = {
             setting.choices = options;
 
         }
-        Hooks.on('renderActorSheet5e', actors.renderSheet);
+        Hooks.on('renderActorSheet', actors.renderSheet);
         await backpacks.hooks.ready();
         await harvesting.hooks.ready();
         await ringOfBlooming.Ready();

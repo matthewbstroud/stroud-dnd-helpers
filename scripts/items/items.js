@@ -444,7 +444,7 @@ async function convertConsumableToLoot(itemID) {
  * @param {Object} config - The item sheet configuration
  * @param {Array} buttons - The array of header buttons
  */
-export function createWeaponHeaderButton(config, buttons) {
+export async function createWeaponHeaderButton(config, buttons) {
 	if (config.object instanceof Item) {
 		const item = config.object;
 
