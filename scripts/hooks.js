@@ -1,5 +1,4 @@
 import { backpacks } from './backpacks/backpacks.js';
-import { scene } from './utility/scene.js';
 import { createActorHeaderButton, createItemHeaderButton } from './actors/actors.js';
 import { createWeaponHeaderButton } from './items/items.js';
 import { CompendiumHooks } from './hookHandlers/compendiumHandlers.js';
@@ -7,25 +6,18 @@ import { FolderHooks } from './hookHandlers/folderHandlers.js';
 import { combat } from './combat.js';
 import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
-import { twilightDomain } from './spells/twilightDomain/twilightDomain.js';
-import { identification } from './identification/identification.js';
 import { toolsHandler } from './hookHandlers/toolsHandler.js';
 import { ringOfBlooming } from './items/trinkets/ringOfBlooming.js';
 
 export let hooks = {
-    "init": function _init() {
-        CompendiumHooks.init();
-        FolderHooks.init();
+    "init": async function _init() {
+        await CompendiumHooks.init();
+        await FolderHooks.init();
     },
     "ready": async function _ready() {
         if (game.user?.isGM) {
             Hooks.on('preCreateTile', onPreCreateTile);
-            Hooks.on('getActorSheetHeaderButtons', createActorHeaderButton);
-            Hooks.on('getItemSheetHeaderButtons', createWeaponHeaderButton);
-            if (game.modules.find(m => m.id === "backpack-manager")?.active ?? false) {
-                Hooks.on('getItemSheetHeaderButtons', createItemHeaderButton);
-                Hooks.on('updateActor', syncBackpackPermissions);
-            }
+            Hooks.on("getHeaderControlsApplicationV2", insertHeaderButtons);
             await combat.hooks.ready();
             await toolsHandler.Init();
             let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
@@ -45,13 +37,20 @@ export let hooks = {
     }
 };
 
+function insertHeaderButtons(app, buttons) {
+  if (app.document instanceof foundry.documents.BaseActor) {
+    createActorHeaderButton(app, buttons);
+    return;
+  }
+  if (app.document instanceof foundry.documents.BaseItem) {
+    return createWeaponHeaderButton(app, buttons);
+  }
+}
+
 async function applyPatches() {
     if (!game.user?.isTheGM) {
         return;
     }
-    await twilightDomain.applyPatches();
-    await identification.applyPatches();
-    // await mounts.applyPatches();
     await removeCoreStatusId();
 }
 

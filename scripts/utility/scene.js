@@ -340,6 +340,7 @@ async function _regenerateThumbnails(folder) {
             thumbCount += await _regenerateThumbnails(subFolder);
         }
     }
+    
     let folderScenes = game.scenes.filter(s => s.folder?.id == folder.id);
     if (folderScenes && folderScenes.length > 0) {
         console.log(`Regenerating Thumbnails for Folder: ${folder.name}`);

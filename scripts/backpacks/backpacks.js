@@ -185,12 +185,12 @@ async function resolvePreparation(item) {
         return;
     }
     await item.setFlag(sdndConstants.MODULE_ID, "PrepRewired", true);
-    const comendiumUuid = item?._source?._stats?.compendiumSource;
-    if (!comendiumUuid) {
+    const compendiumUuid = item?._source?._stats?.compendiumSource;
+    if (!compendiumUuid) {
         return;
     }
-    const compendiumItem = await fromUuid(comendiumUuid);
-    if (!comendiumUuid) {
+    const compendiumItem = await fromUuid(compendiumUuid);
+    if (!compendiumItem) {
         return;
     }
     const currentPrepMode = item.system?.preparation?.mode;

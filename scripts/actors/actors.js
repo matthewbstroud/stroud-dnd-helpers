@@ -407,14 +407,14 @@ export function createItemHeaderButton(config, buttons) {
             class: 'stroudDnD',
             icon: 'fa-solid fa-dungeon',
             label: label,
-            onclick: () => createNew ? createBackpack(item) : transferBackpack(item)
+            onclick: async () => createNew ? await createBackpack(item) : await transferBackpack(item)
         });
     }
 }
 
 export function createActorHeaderButton(config, buttons) {
-    if (config.object instanceof Actor) {
-        var overrideableItems = getOverrideableItemsFromActor(config.object);
+    if (config.document instanceof Actor) {
+        var overrideableItems = getOverrideableItemsFromActor(config.document);
         if (!overrideableItems || overrideableItems.length == 0) {
             return;
         }
@@ -423,7 +423,8 @@ export function createActorHeaderButton(config, buttons) {
             class: 'stroudDnD',
             icon: 'fa-solid fa-dungeon',
             label: label,
-            onclick: () => actorConfig(config.object)
+            onclick: async () => await actorConfig(config.document),
+            onClick: async () => await actorConfig(config.document)
         });
     }
 }
