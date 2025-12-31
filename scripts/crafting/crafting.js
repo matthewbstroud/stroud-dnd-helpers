@@ -40,7 +40,7 @@ export let craftingHelpers = {
         };
 
         let roll = await actor.rollSkill(skill, rollOptions);
-        const bonus = (roll?.data?.skills?.[skill]?.total ?? 0);
+        const bonus = actor.system.skills[skill]?.total ?? 0;
         const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
         const minPossible = bonus + 1;
         const maxPossible = bonus + 20;

@@ -453,9 +453,9 @@ export function syncBackpackPermissions(actor, updates, mode, updateUserId) {
 
 // set current permission to defaults and overwrite with new permissions
 function syncPermissions(oldPermissions, newPermissions) {
-    let newOwnership = duplicate(newPermissions);
+    let newOwnership = foundry.utils.duplicate(newPermissions);
     newOwnership['default'] = CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE;
-    var ownership = duplicate(oldPermissions);
+    var ownership = foundry.utils.duplicate(oldPermissions);
     for (let owner in ownership) {
         ownership[owner] = CONST.DOCUMENT_OWNERSHIP_LEVELS.INHERIT;
     }
@@ -592,7 +592,7 @@ async function transferBackpack(item) {
         return;
     }
     var targetPlayer = await game.actors.get(targetPlayerId);
-    let itemData = duplicate(item);
+    let itemData = foundry.utils.duplicate(item.toObject());
     await currentOwner.deleteEmbeddedDocuments("Item", [item.id]);
     await targetPlayer.createEmbeddedDocuments("Item", [itemData]);
     var containerActorUuid = item.getFlag("backpack-manager", "containerActorUuid");

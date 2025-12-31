@@ -147,7 +147,7 @@ export let tokens = {
     "hasPermission": function _hasPermission(entity, userId) {
         let user = game.users.get(userId);
         if (!user) return false;
-        return entity.testUserPermission(user, 'OWNER');
+        return entity.testUserPermission(user, foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER);
     },
     "firstOwner": function _firstOwner(document, useId) {
         if (!document) return;
@@ -173,7 +173,7 @@ export let tokens = {
         if (!roll) {
             return null;
         }
-        const bonus = (roll?.data?.skills?.[skill]?.total ?? 0);
+        const bonus = actor.system.skills[skill]?.total ?? 0;
         const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
         const minPossible = bonus + 1;
         const maxPossible = bonus + 20;

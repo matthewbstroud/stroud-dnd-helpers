@@ -433,7 +433,7 @@ async function interact(pileUuid, token, userId) {
     }
     let user = game.users.get(userId);
 
-    if (!pile.actor.isOwner) {
+    if (!pile.actor.testUserPermission(game.user, foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
         ui.notifications.warn(`This does not belong to you!`);
         return false;
     }
