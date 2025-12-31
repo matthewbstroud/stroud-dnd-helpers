@@ -5,39 +5,58 @@
   "results": [
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         1,
         1
       ],
       "drawn": false,
-      "text": "[[1d8]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.pOLE7QU4RZv3kz3C]{Chocolate}",
-      "documentId": null,
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "ptsuROoZ7cD5fNeZ",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d8]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.pOLE7QU4RZv3kz3C]{Chocolate}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.ptsuROoZ7cD5fNeZ"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         2,
         2
       ],
       "drawn": false,
-      "text": "[[1d4]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.fl1SAHaFmU70SC9K]{Jalapeno Peppers}",
-      "documentId": null,
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "XgBvnrAULW9jjUW7",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.fl1SAHaFmU70SC9K]{Jalapeno Peppers}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.XgBvnrAULW9jjUW7"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         4,
@@ -45,15 +64,25 @@
       ],
       "drawn": false,
       "_id": "m6iV1FCJWpH41uxZ",
-      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.llSG0Hi4eGlRlQ4o]{Phase Spider}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.llSG0Hi4eGlRlQ4o]{Phase Spider}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.m6iV1FCJWpH41uxZ"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         5,
@@ -61,15 +90,25 @@
       ],
       "drawn": false,
       "_id": "CEBUnYFQ41HZ63ca",
-      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.3YwmvDupMwycWNCO]{Giant Crocodile}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.3YwmvDupMwycWNCO]{Giant Crocodile}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.CEBUnYFQ41HZ63ca"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         6,
@@ -77,15 +116,25 @@
       ],
       "drawn": false,
       "_id": "jMUUVYolgvYCO7Rp",
-      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.9g4N9sjyh8Ql46to]{Hill Giant}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.9g4N9sjyh8Ql46to]{Hill Giant}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.jMUUVYolgvYCO7Rp"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         7,
@@ -93,15 +142,25 @@
       ],
       "drawn": false,
       "_id": "cgZv5YeKRMuMI89T",
-      "text": "[[1d6]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.pgC4HXLFDyiEx1WF]{Wyrmtongue Petals}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d6]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.pgC4HXLFDyiEx1WF]{Wyrmtongue Petals}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.cgZv5YeKRMuMI89T"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         3,
@@ -109,15 +168,25 @@
       ],
       "drawn": false,
       "_id": "uCFXs58FJfIXLCWW",
-      "text": "[[1d8]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.lyIJ3JPa8FggZpFx]{Arrow Root}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d8]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.lyIJ3JPa8FggZpFx]{Arrow Root}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.uCFXs58FJfIXLCWW"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         8,
@@ -125,15 +194,25 @@
       ],
       "drawn": false,
       "_id": "2wsIWxoeSDpvlRHP",
-      "text": "[[1d6]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.tVmD6oW7SqkoI2pO]{Ryath Root}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d6]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.tVmD6oW7SqkoI2pO]{Ryath Root}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.2wsIWxoeSDpvlRHP"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         9,
@@ -141,10 +220,21 @@
       ],
       "drawn": false,
       "_id": "5OJgT88NoZsMsQRk",
-      "text": "[[1d6]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.nEzKvyJPCKmupp1k]{Spineflower Berries}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d6]] @UUID[Compendium.stroud-dnd-helpers.SDND-Items.Item.nEzKvyJPCKmupp1k]{Spineflower Berries}",
+      "name": "",
       "_key": "!tables.results!GmDrZFXobtWndJBy.5OJgT88NoZsMsQRk"
     }
   ],
@@ -161,12 +251,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "12.331",
+    "coreVersion": "13.351",
     "createdTime": 1723427432548,
     "modifiedTime": 1723569875024,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "formula": "1d7",
   "_id": "GmDrZFXobtWndJBy",

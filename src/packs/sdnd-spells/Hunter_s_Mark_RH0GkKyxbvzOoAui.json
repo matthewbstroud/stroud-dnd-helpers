@@ -39,7 +39,7 @@
       },
       "template": {
         "type": "",
-        "units": "",
+        "units": "ft",
         "contiguous": false
       }
     },
@@ -140,7 +140,8 @@
         },
         "effects": [],
         "range": {
-          "override": false
+          "override": false,
+          "units": "self"
         },
         "target": {
           "template": {
@@ -174,7 +175,8 @@
           "idi": false,
           "idr": false,
           "idv": false,
-          "ida": false
+          "ida": false,
+          "idm": false
         },
         "midiProperties": {
           "ignoreTraits": [],
@@ -193,17 +195,36 @@
           "rollMode": "default",
           "chooseEffects": false,
           "toggleEffect": false,
-          "ignoreFullCover": false
+          "ignoreFullCover": false,
+          "autoConsume": false,
+          "forceConsumeDialog": "default",
+          "forceRollDialog": "default",
+          "forceDamageDialog": "default",
+          "otherActivityAsParentType": true,
+          "removeChatButtons": "default",
+          "magicEffect": false,
+          "magicDamage": false,
+          "noConcentrationCheck": false,
+          "autoCEEffects": "default"
         },
         "isOverTimeFlag": false,
         "overTimeProperties": {
           "saveRemoves": true,
           "preRemoveConditionText": "",
           "postRemoveConditionText": ""
+        },
+        "flags": {},
+        "visibility": {
+          "level": {},
+          "requireAttunement": false,
+          "requireIdentification": false,
+          "requireMagic": false
         }
       }
     },
-    "identifier": ""
+    "identifier": "",
+    "method": "spell",
+    "prepared": 2
   },
   "name": "Hunter's Mark",
   "flags": {
@@ -323,24 +344,11 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "core": {
-      "sourceId": "Actor.jsFnmyL717S10ISa.Item.UVdRV3e0q27MizHs"
-    },
-    "exportSource": {
-      "world": "lost_mines_template",
-      "system": "dnd5e",
-      "coreVersion": "10.291",
-      "systemVersion": "2.1.5"
-    },
+    "core": {},
     "stroud-dnd-helpers": {
       "importedItem": true
     },
-    "dnd5e": {
-      "riders": {
-        "activity": [],
-        "effect": []
-      }
-    },
+    "dnd5e": {},
     "dae": {
       "macro": {
         "data": {
@@ -443,14 +451,15 @@
       "description": "",
       "statuses": [],
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.351",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
         "lastModifiedBy": null,
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "img": "icons/weapons/bows/shortbow-recurve-yellow.webp",
       "type": "base",
@@ -467,13 +476,20 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "4.4.2",
-    "coreVersion": "12.343",
+    "systemVersion": "5.2.4",
+    "coreVersion": "13.351",
     "createdTime": 1683225374129,
-    "modifiedTime": 1750252965359,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "modifiedTime": 1767212265913,
+    "lastModifiedBy": "wXvVWKeDyStv3bwy",
     "compendiumSource": "Actor.jsFnmyL717S10ISa.Item.UVdRV3e0q27MizHs",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": {
+      "worldId": "lost_mines_template",
+      "uuid": null,
+      "coreVersion": "10.291",
+      "systemId": "dnd5e",
+      "systemVersion": "2.1.5"
+    }
   },
   "folder": null,
   "sort": 500000,

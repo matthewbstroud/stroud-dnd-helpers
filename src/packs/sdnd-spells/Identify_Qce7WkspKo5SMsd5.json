@@ -261,9 +261,7 @@
     "stroud-dnd-helpers": {
       "importedItem": true
     },
-    "core": {
-      "sourceId": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x"
-    },
+    "core": {},
     "dnd5e": {
       "riders": {
         "activity": [],
@@ -297,7 +295,10 @@
     },
     "chris-premades": {
       "info": {
-        "source": "stroud-dnd-helpers.SDND-Features"
+        "source": "stroud-dnd-helpers.SDND-Spells",
+        "version": "1.0.0",
+        "name": "Identify",
+        "identifier": "identify"
       }
     }
   },
@@ -306,12 +307,13 @@
   "_stats": {
     "compendiumSource": "Actor.AicivR4M5MkpW9d7.Item.gkPbnuATbutrgL1x",
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1750250696421,
-    "modifiedTime": 1750253263736,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1767207588126,
+    "lastModifiedBy": "wXvVWKeDyStv3bwy",
+    "exportSource": null
   },
   "folder": null,
   "_id": "Qce7WkspKo5SMsd5",

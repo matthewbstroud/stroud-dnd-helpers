@@ -16,12 +16,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.2.1",
-    "coreVersion": "12.331",
+    "coreVersion": "13.351",
     "createdTime": 1728511199712,
     "modifiedTime": 1728511375357,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_key": "!macros!SsuElaR3kMWAt5Go"
 }

@@ -4,104 +4,169 @@
   "description": "<p>You have discovered something uncommon…</p><p></p>",
   "results": [
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         3,
         3
       ],
       "drawn": false,
-      "text": "Menga Leaves",
-      "documentId": "Ote8rmPIIvh86aOA",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "LvetB8yIPVdHDJzM",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Menga Leaves",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.Ote8rmPIIvh86aOA",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.LvetB8yIPVdHDJzM"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         4,
         4
       ],
       "drawn": false,
-      "text": "Drakkas Flower",
-      "documentId": "Fx9gcDfXkBZQWsGq",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "ZSbrrXbMoWibLqvl",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Drakkas Flower",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.Fx9gcDfXkBZQWsGq",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.ZSbrrXbMoWibLqvl"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         6,
         6
       ],
       "drawn": false,
-      "text": "Dancing Monkey Fruit",
-      "documentId": "SvyzKp9otKKI3Jtj",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "2t1JpkQFZ1YoknwP",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Dancing Monkey Fruit",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.SvyzKp9otKKI3Jtj",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.2t1JpkQFZ1YoknwP"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         7,
         7
       ],
       "drawn": false,
-      "text": "Coffee",
-      "documentId": "90XGsYevDJM4YAPB",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "ZIgKBQz5uHX6Nr7Z",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Coffee",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.90XGsYevDJM4YAPB",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.ZIgKBQz5uHX6Nr7Z"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         8,
         8
       ],
       "drawn": false,
-      "text": "Sour Fruits",
-      "documentId": "Mm4DwDcUwEnOjiHy",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "bwzUwBCo9ATyPWlk",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Sour Fruits",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.Mm4DwDcUwEnOjiHy",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.bwzUwBCo9ATyPWlk"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         1,
         1
       ],
       "drawn": false,
-      "text": "Raw Sugar",
-      "documentId": "FlWre06c9tIMpo8U",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "L2GtCMk0PoxUrsJi",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Raw Sugar",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.FlWre06c9tIMpo8U",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.L2GtCMk0PoxUrsJi"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         10,
@@ -109,15 +174,25 @@
       ],
       "drawn": false,
       "_id": "LovPeTi6ARDxYAIz",
-      "text": "[[1d2]] @UUID[Compendium.dnd5e.monsters.Actor.qoFEjfrANBdrCP6m]{Ghost}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d2]] @UUID[Compendium.dnd5e.monsters.Actor.qoFEjfrANBdrCP6m]{Ghost}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.LovPeTi6ARDxYAIz"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         11,
@@ -125,15 +200,25 @@
       ],
       "drawn": false,
       "_id": "NkWSClRjmP9XBRCV",
-      "text": "[[1d8]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.Qhpoxs3t9W1Q9a48]{Scarecrow}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d8]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.Qhpoxs3t9W1Q9a48]{Scarecrow}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.NkWSClRjmP9XBRCV"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         12,
@@ -141,15 +226,25 @@
       ],
       "drawn": false,
       "_id": "AszDZ4mHnqKpgAZP",
-      "text": "[[1d4]] @UUID[Actor.7Z9A1am0NUV42p3d]{Vampire Spawn}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Actor.7Z9A1am0NUV42p3d]{Vampire Spawn}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.AszDZ4mHnqKpgAZP"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         13,
@@ -157,15 +252,25 @@
       ],
       "drawn": false,
       "_id": "B5EjpBupIITPaMWr",
-      "text": "[[1d8]] @UUID[Compendium.dnd5e.monsters.Actor.4tl0s2SnaLjkoDiI]{Giant Wasp}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d8]] @UUID[Compendium.dnd5e.monsters.Actor.4tl0s2SnaLjkoDiI]{Giant Wasp}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.B5EjpBupIITPaMWr"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         14,
@@ -173,15 +278,25 @@
       ],
       "drawn": false,
       "_id": "jNWv2Xb8tekCisE7",
-      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.EeWTganoVtu0u6gR]{Carrion Crawler}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.EeWTganoVtu0u6gR]{Carrion Crawler}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.jNWv2Xb8tekCisE7"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         15,
@@ -189,15 +304,25 @@
       ],
       "drawn": false,
       "_id": "abSPsTY5kdjtnANM",
-      "text": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.aKt7vFAS1J0x3FQm]{Ettercap}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.dnd5e.monsters.Actor.aKt7vFAS1J0x3FQm]{Ettercap}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.abSPsTY5kdjtnANM"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         16,
@@ -205,15 +330,25 @@
       ],
       "drawn": false,
       "_id": "9QxVR0s1V67qkq8u",
-      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.24BKLX0cjd9XFur4]{Myconid Sovereign}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.24BKLX0cjd9XFur4]{Myconid Sovereign}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.9QxVR0s1V67qkq8u"
     },
     {
       "type": "text",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
       "weight": 1,
       "range": [
         9,
@@ -221,42 +356,75 @@
       ],
       "drawn": false,
       "_id": "DHNLs39I4uIzQPmd",
-      "text": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.L2LwvG6KXQVuFyDN]{Cave Fisher}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d4]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.L2LwvG6KXQVuFyDN]{Cave Fisher}",
+      "name": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.DHNLs39I4uIzQPmd"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         2,
         2
       ],
       "drawn": false,
-      "text": "Harrada Leaf",
-      "documentId": "ATv3jBuBtWp7y04s",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "Hyc5wxISNgrW9Ke5",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Harrada Leaf",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.ATv3jBuBtWp7y04s",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.Hyc5wxISNgrW9Ke5"
     },
     {
-      "type": "pack",
-      "documentCollection": "stroud-dnd-helpers.SDND-Items",
+      "type": "document",
       "weight": 1,
       "range": [
         5,
         5
       ],
       "drawn": false,
-      "text": "Blight Icor",
-      "documentId": "dGwK6fQFkPRQA5na",
       "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
       "_id": "O0ILdHsxpyxmaIkS",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Blight Icor",
+      "documentUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.dGwK6fQFkPRQA5na",
+      "description": "",
       "_key": "!tables.results!vBQVegzVkoxf0m2E.O0ILdHsxpyxmaIkS"
     }
   ],
@@ -273,12 +441,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "12.331",
+    "coreVersion": "13.351",
     "createdTime": 1723425681334,
     "modifiedTime": 1727204492849,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "formula": "1d16",
   "_id": "vBQVegzVkoxf0m2E",

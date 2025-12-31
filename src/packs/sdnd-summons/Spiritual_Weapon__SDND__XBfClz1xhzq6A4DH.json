@@ -690,7 +690,6 @@
     "randomImg": false,
     "appendNumber": false,
     "prependAdjective": false,
-    "hexagonalShape": 0,
     "occludable": {
       "radius": 0
     },
@@ -705,7 +704,14 @@
         "scale": 1,
         "texture": null
       }
-    }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null
   },
   "items": [
     {
@@ -995,12 +1001,13 @@
       "_stats": {
         "systemId": "dnd5e",
         "systemVersion": "2.1.5",
-        "coreVersion": "12.331",
+        "coreVersion": "13.351",
         "createdTime": 1684418369747,
         "modifiedTime": 1684418620785,
         "lastModifiedBy": "6yhz13iFYYklKtgA",
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "_key": "!actors.items!XBfClz1xhzq6A4DH.Gb9rzUpSfEuJ4sca"
     }
@@ -1042,19 +1049,18 @@
       },
       "allow-edit": true
     },
-    "core": {
-      "sourceId": "Actor.nFmuwd4lWxX2z3z7"
-    }
+    "core": {}
   },
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "createdTime": 1684417632792,
     "modifiedTime": 1750248836071,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Actor.nFmuwd4lWxX2z3z7",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "folder": null,
   "sort": 0,

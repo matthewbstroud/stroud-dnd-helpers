@@ -223,9 +223,7 @@
       "ignoreItemImport": true,
       "retainResourceConsumption": false
     },
-    "core": {
-      "sourceId": "Actor.6PgHCGOkartHJJ3U.Item.PCL3jCd4DrrkCEvz"
-    },
+    "core": {},
     "cf": {
       "id": "temp_ue1efz1iyo"
     },
@@ -246,12 +244,13 @@
   "_stats": {
     "compendiumSource": "Actor.6PgHCGOkartHJJ3U.Item.PCL3jCd4DrrkCEvz",
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1747838283605,
     "modifiedTime": 1750248835386,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "exportSource": null
   },
   "folder": "cwfO7DCwPmnA7K6r",
   "_id": "qPDUimUxP92ffmWv",

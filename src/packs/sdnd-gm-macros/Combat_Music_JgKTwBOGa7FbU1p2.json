@@ -13,9 +13,7 @@
       "runAsGM": false,
       "runForSpecificUser": ""
     },
-    "core": {
-      "sourceId": "Macro.9dMUjx4EQowvxazr"
-    },
+    "core": {},
     "cf": {
       "id": "temp_gbszdydmoqh"
     }
@@ -27,12 +25,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "2.4.1",
-    "coreVersion": "12.331",
+    "coreVersion": "13.351",
     "createdTime": 1683057647543,
     "modifiedTime": 1704230475873,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Macro.9dMUjx4EQowvxazr",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "folder": "XOzQrDIZhyNZAS4a",
   "sort": 0,

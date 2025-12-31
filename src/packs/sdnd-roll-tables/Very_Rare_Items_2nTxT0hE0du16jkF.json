@@ -13,58 +13,102 @@
       ],
       "drawn": false,
       "_id": "GkVPfBpP5zWeRY9i",
-      "text": "[[1d2]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.47WDlPX6GnWXb6HF]{Cyclops}",
-      "documentId": null,
       "flags": {},
       "img": "icons/svg/d20-black.svg",
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "description": "[[1d2]] @UUID[Compendium.sdnd-shared.sdnd-ddb-monsters.Actor.47WDlPX6GnWXb6HF]{Cyclops}",
+      "name": "",
       "_key": "!tables.results!2nTxT0hE0du16jkF.GkVPfBpP5zWeRY9i"
     },
     {
-      "type": "pack",
-      "documentCollection": "sdnd-shared.sdnd-ddb-monsters",
+      "type": "document",
       "weight": 1,
       "range": [
         2,
         2
       ],
       "drawn": false,
-      "text": "Purple Worm",
-      "documentId": "3o4gi6EW8PhwaktB",
       "img": "https://www.dndbeyond.com/avatars/30834/703/638063895244767798.png",
       "_id": "pa7Ey6RqMRhkIf9m",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Purple Worm",
+      "documentUuid": "Compendium.sdnd-shared.sdnd-ddb-monsters.3o4gi6EW8PhwaktB",
+      "description": "",
       "_key": "!tables.results!2nTxT0hE0du16jkF.pa7Ey6RqMRhkIf9m"
     },
     {
-      "type": "pack",
-      "documentCollection": "dnd5e.monsters",
+      "type": "document",
       "weight": 1,
       "range": [
         3,
         3
       ],
       "drawn": false,
-      "text": "Wyvern",
-      "documentId": "7198siHjPJf8g0cG",
       "img": "systems/dnd5e/tokens/dragon/Wyvern.webp",
       "_id": "ZKnnA4ZCszzhLySA",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Wyvern",
+      "documentUuid": "Compendium.dnd5e.monsters.Actor.7198siHjPJf8g0cG",
+      "description": "",
       "_key": "!tables.results!2nTxT0hE0du16jkF.ZKnnA4ZCszzhLySA"
     },
     {
-      "type": "pack",
-      "documentCollection": "dnd5e.monsters",
+      "type": "document",
       "weight": 1,
       "range": [
         4,
         4
       ],
       "drawn": false,
-      "text": "Young Green Dragon",
-      "documentId": "85ahD1jEo9B3POaQ",
       "img": "systems/dnd5e/tokens/dragon/YoungGreenDragon.webp",
       "_id": "85dfaZMCrYxJli2t",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Young Green Dragon",
+      "documentUuid": "Compendium.dnd5e.monsters.Actor.85ahD1jEo9B3POaQ",
+      "description": "",
       "_key": "!tables.results!2nTxT0hE0du16jkF.85dfaZMCrYxJli2t"
     }
   ],
@@ -80,12 +124,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "12.331",
+    "coreVersion": "13.351",
     "createdTime": 1723569347988,
     "modifiedTime": 1723569891903,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "formula": "1d4",
   "_id": "2nTxT0hE0du16jkF",

@@ -54,12 +54,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "exportSource": null
       },
       "img": "icons/skills/movement/feet-winged-boots-brown.webp",
       "type": "base",
@@ -193,11 +194,6 @@
       "removeAttackDamageButtons": "default"
     },
     "dnd5e": {
-      "persistSourceMigration": true,
-      "riders": {
-        "activity": [],
-        "effect": []
-      },
       "dependents": [
         {
           "uuid": "Actor.nDUJNncT2UaTeVx4.ActiveEffect.JgmylE2GgGBllxtO"
@@ -234,7 +230,8 @@
     "requirements": "Rogue 5",
     "prerequisites": {
       "level": null,
-      "repeatable": false
+      "repeatable": false,
+      "items": []
     },
     "properties": [],
     "activities": {
@@ -267,7 +264,8 @@
         },
         "effects": [
           {
-            "_id": "ksFos60cgn0TWTFP"
+            "_id": "ksFos60cgn0TWTFP",
+            "level": {}
           }
         ],
         "range": {
@@ -283,7 +281,7 @@
             "size": "",
             "width": "",
             "height": "",
-            "units": ""
+            "units": "ft"
           },
           "affects": {
             "count": "",
@@ -317,7 +315,8 @@
           "idi": false,
           "idr": false,
           "idv": false,
-          "ida": false
+          "ida": false,
+          "idm": false
         },
         "midiProperties": {
           "forceDialog": false,
@@ -336,7 +335,17 @@
           "rollMode": "default",
           "chooseEffects": false,
           "toggleEffect": false,
-          "ignoreFullCover": false
+          "ignoreFullCover": false,
+          "autoConsume": false,
+          "forceConsumeDialog": "default",
+          "forceRollDialog": "default",
+          "forceDamageDialog": "default",
+          "otherActivityAsParentType": true,
+          "removeChatButtons": "default",
+          "magicEffect": false,
+          "magicDamage": false,
+          "noConcentrationCheck": false,
+          "autoCEEffects": "default"
         },
         "useConditionReason": "",
         "otherActivityId": "",
@@ -345,7 +354,15 @@
           "saveRemoves": true,
           "preRemoveConditionText": "",
           "postRemoveConditionText": ""
-        }
+        },
+        "flags": {},
+        "visibility": {
+          "level": {},
+          "requireAttunement": false,
+          "requireIdentification": false,
+          "requireMagic": false
+        },
+        "otherActivityAsParentType": true
       }
     },
     "identifier": "uncanny-dodge-11441",
@@ -357,12 +374,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
-    "systemVersion": "4.4.2",
+    "systemVersion": "5.2.4",
     "createdTime": 1751548673103,
-    "modifiedTime": 1751548688510,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1767212263675,
+    "lastModifiedBy": "wXvVWKeDyStv3bwy",
+    "exportSource": null
   },
   "_id": "kd8vnHBVRIT0hvNm",
   "sort": 150000,
