@@ -1,3 +1,7 @@
+# v13.5.0
+# New Features
+- Foundry v13 Support
+- DnD 5e v5.x support
 # v12.4.24
 # New Features
 - Implement Sunsword light effects.

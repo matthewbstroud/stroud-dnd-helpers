@@ -1,6 +1,6 @@
 {
   "name": "stroud-dnd-helpers",
-  "version": "12.4.24",
+  "version": "13.5.1",
   "description": "Stroud DnD Helpers",
   "main": "module.json",
   "scripts": {
@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/matthewbstroud/stroud-dnd-helpers#readme",
   "devDependencies": {
-    "@foundryvtt/foundryvtt-cli": "^1.0.3"
+    "@foundryvtt/foundryvtt-cli": "^3.0.0"
   }
 }

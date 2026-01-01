@@ -2,8 +2,6 @@ import { extractPack } from "@foundryvtt/foundryvtt-cli";
 import { promises as fs } from "fs";
 import path from "path";
 
-const MODULE_ID = process.cwd();
-
 const packs = await fs.readdir("./packs");
 for (const pack of packs) {
   if (pack === ".gitattributes") continue;
@@ -18,7 +16,8 @@ for (const pack of packs) {
     else console.log(error);
   }
   await extractPack(
-    `${MODULE_ID}/packs/${pack}`,
-    `${MODULE_ID}/src/packs/${pack}`
+    `packs/${pack}`,
+    `src/packs/${pack}`,
+    { log: true }
   );
 }
