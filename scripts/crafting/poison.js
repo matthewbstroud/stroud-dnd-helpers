@@ -828,13 +828,21 @@ async function rollDC(targetActor, poisonData) {
         return false;
     }
     let ability = dnd5e.config.abilities[poisonData.ability];
-    let rollOptions = {
-        targetValue: poisonData.dc,
-        fastForward: true,
-        chatMessage: true,
-        flavor: `(DC ${poisonData.dc}) ${ability.label} save against ${poisonData.name}`
+    let config = {
+        ability: ability.abbreviation,
+        target: poisonData.dc
     };
-    return await targetActor.rollAbilitySave(ability.abbreviation, rollOptions);
+    let dialog = {
+        configure: false
+    };
+    let message = {
+        create: true,
+        data: {
+            flavor: `(DC ${poisonData.dc}) ${ability.label} save against ${poisonData.name}`
+        }
+    };
+    let rolls = await targetActor.rollSavingThrow(config, dialog, message);
+    return rolls?.[0];
 }
 
 async function rollToolCheck(actor, recipie) {

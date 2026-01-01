@@ -107,21 +107,20 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "exportSource": null
       },
       "_key": "!items.effects!Q78rt7WOPFj31y8c.Wk4Z6JOdiobUIciO"
     }
   ],
   "folder": null,
   "flags": {
-    "core": {
-      "sourceId": "Compendium.dnd5e.monsterfeatures.UH57LTsTGDxl2oS6"
-    },
+    "core": {},
     "midi-qol": {
       "rollAttackPerTarget": "default",
       "removeAttackDamageButtons": "default",
@@ -148,12 +147,13 @@
   "_stats": {
     "compendiumSource": "Compendium.dnd5e.monsterfeatures.UH57LTsTGDxl2oS6",
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1750272104528,
     "modifiedTime": 1750272104652,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "exportSource": null
   },
   "_id": "Q78rt7WOPFj31y8c",
   "sort": 100000,

@@ -21,7 +21,9 @@ export class WeaponMenuApp extends HandlebarsApplicationMixin(ApplicationV2) {
         },
         position: {
             width: 400,
-            height: 'auto'
+            height: 'auto',
+            left: null,
+            top: null
         },
         actions: {
             editBane: WeaponMenuApp._editBane,
@@ -76,6 +78,16 @@ export class WeaponMenuApp extends HandlebarsApplicationMixin(ApplicationV2) {
             menuItems,
             baneData
         };
+    }
+
+    async _onFirstRender(context, options) {
+        await super._onFirstRender(context, options);
+        
+        // Center the dialog on first render
+        this.setPosition({
+            left: Math.max((window.innerWidth - this.position.width) / 2, 0),
+            top: Math.max((window.innerHeight - this.element.offsetHeight) / 2, 0)
+        });
     }
 
     async _onRender(context, options) {

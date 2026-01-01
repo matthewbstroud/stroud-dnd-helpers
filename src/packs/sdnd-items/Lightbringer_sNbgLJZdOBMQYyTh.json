@@ -57,14 +57,15 @@
       "description": "",
       "statuses": [],
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.351",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
         "lastModifiedBy": null,
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "img": "icons/weapons/hammers/hammer-war-spiked.webp",
       "type": "base",
@@ -144,9 +145,7 @@
       "reactionCondition": "",
       "otherCondition": ""
     },
-    "core": {
-      "sourceId": "Compendium.world.ddb-lost-mines-phandelver-items.XgOuxM0uNukfa3rC"
-    },
+    "core": {},
     "midiProperties": {
       "nodam": false,
       "fulldam": false,
@@ -491,12 +490,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "createdTime": 1684674601716,
     "modifiedTime": 1755187877881,
     "lastModifiedBy": "Xhr6fVPGIbvrReaZ",
     "compendiumSource": "Compendium.world.ddb-lost-mines-phandelver-items.XgOuxM0uNukfa3rC",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "folder": "BeLUfpJ0d2cACd5n",
   "sort": 300000,

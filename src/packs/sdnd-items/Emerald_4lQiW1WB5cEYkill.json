@@ -88,12 +88,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "createdTime": 1721268424625,
     "modifiedTime": 1750248824429,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_id": "4lQiW1WB5cEYkill",
   "sort": 0,

@@ -128,13 +128,13 @@ class FolderEntryHookHandler {
         ));
     }
     #getManager() {
-        if (this.handler === "getActorDirectoryEntryContext") {
+        if (this.handler === "getActorContextOptions") {
             return game.actors;
-        } else if (this.handler === "getItemDirectoryEntryContext") {
+        } else if (this.handler === "getItemContextOptions") {
             return game.items;
-        } else if (this.handler === "getSceneDirectoryEntryContext") {
+        } else if (this.handler === "getSceneContextOptions") {
             return game.scenes;
-        } else if (this.handler === "getJournalDirectoryEntryContext") {
+        } else if (this.handler === "getJournalContextOptions") {
             return game.journal;
         }
         throw new Error(`Unknown handler: ${this.handler}`);
@@ -159,7 +159,7 @@ class FolderEntryHookHandler {
     }
 }
 
-const getSceneDirectoryFolderContext = new FolderHookHandler("getSceneDirectoryFolderContext");
+const getSceneDirectoryFolderContext = new FolderHookHandler("getFolderContextOptions");
 getSceneDirectoryFolderContext.AddContextOption(
     "sdnd.scenes.folder.context.regenerateThumbs",
     '<i class="fas fa-sync"></i>',
@@ -170,6 +170,9 @@ getSceneDirectoryFolderContext.AddContextOption(
         }
     },
     (folder, li) => {
+        if (folder?.type !== "Scene") {
+            return false;
+        }
         let sceneCount = game.scenes.filter(s => s.folder?.id == folder.id)?.length ?? 0;
         if (sceneCount == 0 && folder.children?.length == 0) {
             return false;
@@ -192,6 +195,9 @@ getSceneDirectoryFolderContext.AddContextOption(
             whisper: ChatMessage.getWhisperRecipients('GM'),
         });
         ui.notifications.notify(`Removed player tokens from  ${scenes.length} scene${(scenes.length == 1 ? '' : 's')}.`);
+    },
+    (folder, li) => {
+        return folder?.type === "Scene";
     }
 );
 getSceneDirectoryFolderContext.AddContextOption(
@@ -200,10 +206,13 @@ getSceneDirectoryFolderContext.AddContextOption(
     async (folder, li) => {
         let scenes = await scene.getScenesByFolderId(folder.id);
         await scene.getActorsInScenes(scenes);
+    },
+    (folder, li) => {
+        return folder?.type === "Scene" ;
     }
 );
 
-const getActorDirectoryFolderContext = new FolderHookHandler("getActorDirectoryFolderContext");
+const getActorDirectoryFolderContext = new FolderHookHandler("getFolderContextOptions");
 getActorDirectoryFolderContext.AddContextOption(
     "sdnd.actor.folder.context.removeUnused",
     '<i class="fa-regular fa-broom"></i>',
@@ -212,6 +221,9 @@ getActorDirectoryFolderContext.AddContextOption(
         await actors.removeUnusedActors(actorIds, folder.name);
     },
     (folder, li) => {
+        if (folder?.type !== "Actor") {
+            return false;
+        }
         const actorCount = actors.getActorsByFolderId(folder.id).length;
         return actorCount > 0;
     }
@@ -224,12 +236,15 @@ getActorDirectoryFolderContext.AddContextOption(
         actors.findInScenes(actorIds);
     },
     (folder, li) => {
+        if (folder?.type !== "Actor") {
+            return false;
+        }
         const actorCount = actors.getActorsByFolderId(folder.id).length;
         return actorCount > 0;
     }
 );
 
-const getActorDirectoryEntryContext = new FolderEntryHookHandler("getActorDirectoryEntryContext");
+const getActorDirectoryEntryContext = new FolderEntryHookHandler("getActorContextOptions");
 getActorDirectoryEntryContext.AddContextOption(
     "sdnd.actor.folder.context.findInScenes",
     '<i class="fa-solid fa-magnifying-glass"></i>',
@@ -241,7 +256,7 @@ getActorDirectoryEntryContext.AddContextOption(
     }
 );
 
-const getSceneDirectoryEntryContext = new FolderEntryHookHandler("getSceneDirectoryEntryContext");
+const getSceneDirectoryEntryContext = new FolderEntryHookHandler("getSceneContextOptions");
 getSceneDirectoryEntryContext.AddContextOption(
     "sdnd.actor.folder.context.findInScenes",
     '<i class="fa-solid fa-magnifying-glass"></i>',

@@ -114,12 +114,13 @@ async function bulkUpdateItems(operationName, items, scope, updateMethod) {
 	console.log(`${operationName} ${items.length} ${scope} items.`);
 	console.log(`------------------------------------------------------`);
 	const totalCount = items.length;
+	const progress = ui.notifications.info(`${operationName} items...`, {progress: true, permanent: false});
 	for (let i = 0; i < items.length; i++) {
 		console.log(`${operationName} ${items[i].name} (${items[i]._id})...`);
-		SceneNavigation.displayProgressBar({ label: `${operationName} '${items[i].name}' ${i + 1} of ${totalCount}`, pct: Math.floor((i / totalCount) * 100) });
+		progress.update({pct: i / totalCount, message: `${operationName} '${items[i].name}' ${i + 1} of ${totalCount}`});
 		await updateMethod(items[i]);
 	}
-	SceneNavigation.displayProgressBar({ label: ``, pct: 100 });
+	progress.update({pct: 1.0, message: `${operationName} ${totalCount} items complete`});
 }
 
 
@@ -443,9 +444,9 @@ async function convertConsumableToLoot(itemID) {
  * @param {Object} config - The item sheet configuration
  * @param {Array} buttons - The array of header buttons
  */
-export function createWeaponHeaderButton(config, buttons) {
-	if (config.object instanceof Item) {
-		const item = config.object;
+export async function createWeaponHeaderButton(config, buttons) {
+	if (config.document instanceof Item) {
+		const item = config.document;
 
 		// Only show for weapon items
 		if (item.type !== "weapon") {
@@ -456,7 +457,9 @@ export function createWeaponHeaderButton(config, buttons) {
 		if (!game.user.isGM) return;
 
 		// Check if it's a melee or ranged weapon with attack activity
-		const actionType = item.system?.actionType;
+		const attackActivity = item.system.activities.find(a => a.type === "attack");
+
+		const actionType = attackActivity?.actionType;
 		if (!["mwak", "rwak"].includes(actionType)) {
 			return;
 		}
@@ -467,7 +470,8 @@ export function createWeaponHeaderButton(config, buttons) {
 			class: 'stroudDnD-menu',
 			icon: 'fa-solid fa-dungeon',
 			label: label,
-			onclick: () => WeaponMenuApp.show(item)
+			onclick: async () => WeaponMenuApp.show(item),
+			onClick: async () => WeaponMenuApp.show(item)
 		});
 	}
 }

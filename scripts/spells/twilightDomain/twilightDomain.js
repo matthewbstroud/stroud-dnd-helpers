@@ -10,15 +10,23 @@ const twilightUtil = {
         if (!channelDivinity) {
             return;
         }
-        if (item.system.consume.target != channelDivinity.id) {
-            await item.update({
-                "system.consume": {
-                    "amount": 1,
-                    "target": `${channelDivinity.id}`,
-                    "type": "charges"
-                }
-            });
+        let activities = [...item.system.activities ?? []];
+        if (!activities.length === 1) {
+            return;
         }
+        let activity = activities[0];
+        let consumptionTargets = foundry.utils.duplicate(activity.consumption?.targets ?? [
+            {
+                target: `${channelDivinity.id}`,
+                type: "itemUses",
+                quantity: 1
+            }
+        ]);
+        if (consumptionTargets[0].target === `${channelDivinity.id}`) {
+            return;
+        }
+        consumptionTargets[0].target = `${channelDivinity.id}`;
+        await item.update({ [`system.activities.${activity._id}.consumption.targets`]: consumptionTargets });
     },
     getDistance: function _getDistance(source, target) {
         let sourceTokens = source.getActiveTokens();
@@ -55,7 +63,7 @@ const twilightUtil = {
 
         healRoll.toMessage({
             user: game.user._id,
-            speaker: ChatMessage._getSpeakerFromActor({actor: target}),
+            speaker: ChatMessage.getSpeaker({ actor: target }),
             flavor: "Twilight Sanctuary - Temp HP"
         });
         // Check if new roll is higher than old temp HP
@@ -87,12 +95,12 @@ const twilightUtil = {
         }
         await gmFunctions.removeEffects(twilightEffects.map(e => e.uuid));
     },
-    itemMacro: async function _itemMacro({speaker, actor, token, character, item, args}) {
+    itemMacro: async function _itemMacro({ speaker, actor, token, character, item, args }) {
         if (args[0]?.macroPass == "preItemRoll") {
             await twilightUtil.ensureResourceLink(actor, item);
         }
         else if (args[0]?.macroPass == "postActiveEffects") {
-            game.user.updateTokenTargets();
+            await canvas.tokens.setTargets([]);
         }
     }
 };
@@ -126,7 +134,7 @@ export let twilightDomain = {
                 await twilightUtil.applyTempHP(caster, actor);
                 break;
             default:
-                await twilightUtil.removeEffect(actor, choice);
+                await twilightUtil.removeEffect(choice);
         }
     },
     "finalTurn": async function _finalTurn(casterUuid, actorUuid, effectName) {
@@ -135,7 +143,7 @@ export let twilightDomain = {
             return;
         }
 
-        if (casterUuid == actorUuid && effectName != "TSAura"){
+        if (casterUuid == actorUuid && effectName != "TSAura") {
             return;
         }
 

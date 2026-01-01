@@ -347,6 +347,10 @@ async function applyBuff(sourceActor, token, buff) {
         console.log(`Target ${token.name} already has the effect ${buff.name}.`);
         return false;
     }
+    if (!buff.flags.dae?.specialDuration?.includes("turnStartSource")) {
+        let specialDuration = buff.flags.dae?.specialDuration ?? [];
+        specialDuration.push("turnStartSource");
+    }
     await gmFunctions.createEffects(token.actor.uuid, [buff]);
     return true;
 }

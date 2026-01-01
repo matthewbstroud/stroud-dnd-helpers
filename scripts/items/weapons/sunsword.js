@@ -25,7 +25,7 @@ class Sunsword {
         await this.#adjustEffect();
     }
     async #adjustEffect() {
-        let effect = this.item.effects.find(e => e.origin === this.item.uuid);
+        let effect = this.item.effects.find(e => e.name === this.item.name)
         if (!effect) {
             console.warn("Sunsword: No effect found on item");
             return;

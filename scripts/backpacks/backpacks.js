@@ -159,13 +159,13 @@ async function resolveConsumption(item) {
     let itemData = foundry.utils.duplicate(item.toObject());
     
     let activities = Object.values(itemData.system?.activities ?? {})
-        .filter(a => a.consumption?.targets.find(t => t.type == "itemUses" && t.target.includes("wireup:")));
+        .filter(a => a.consumption?.targets.find(t => t.type == "itemUses" && t.target?.includes("wireup:")));
     if (!activities || activities.length === 0) {
         return;
     }
     for (let activity of activities) {
         for (let target of activity.consumption.targets) {
-            if (target.type == "itemUses" && target.target.includes("wireup:")) {
+            if (target.type == "itemUses" && target.target?.includes("wireup:")) {
                 const identifier = target.target.split(":").pop();
                 const item = actor.items.find(i => i.system?.identifier === identifier);
                 if (!item) {
@@ -185,12 +185,12 @@ async function resolvePreparation(item) {
         return;
     }
     await item.setFlag(sdndConstants.MODULE_ID, "PrepRewired", true);
-    const comendiumUuid = item?._source?._stats?.compendiumSource;
-    if (!comendiumUuid) {
+    const compendiumUuid = item?._source?._stats?.compendiumSource;
+    if (!compendiumUuid) {
         return;
     }
-    const compendiumItem = await fromUuid(comendiumUuid);
-    if (!comendiumUuid) {
+    const compendiumItem = await fromUuid(compendiumUuid);
+    if (!compendiumItem) {
         return;
     }
     const currentPrepMode = item.system?.preparation?.mode;
@@ -384,7 +384,12 @@ export async function gmCheckActorWeight(actorUuid, force, scope) {
         let currentEffects = actor.effects?.filter(e => e.name == activeEffects.Encumbered.name || e.name == activeEffects.HeavilyEncumbered.name);
         if (!effect) {
             if (currentEffects && currentEffects.length > 0) {
-                await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+                try {
+                    await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+                } catch (err) {
+                    console.warn(`Failed to remove effects via UUID, attempting direct deletion`, err);
+                    await actor.deleteEmbeddedDocuments(ActiveEffect.name, currentEffects.map(e => e.id));
+                }
             }
             return;
         }
@@ -394,12 +399,22 @@ export async function gmCheckActorWeight(actorUuid, force, scope) {
         if (existingEffect) {
             let effectsToRemove = currentEffects.filter(e => e.uuid != existingEffect.uuid);
             if (effectsToRemove.length > 0) {
-                await gmFunctions.removeEffects(effectsToRemove.map(e => e.uuid));
+                try {
+                    await gmFunctions.removeEffects(effectsToRemove.map(e => e.uuid));
+                } catch (err) {
+                    console.warn(`Failed to remove effects via UUID, attempting direct deletion`, err);
+                    await actor.deleteEmbeddedDocuments(ActiveEffect.name, effectsToRemove.map(e => e.id));
+                }
             }
             return; // already applied
         }
         if (currentEffects && currentEffects.length > 0) {
-            await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+            try {
+                await gmFunctions.removeEffects(currentEffects.map(e => e.uuid));
+            } catch (err) {
+                console.warn(`Failed to remove effects via UUID, attempting direct deletion`, err);
+                await actor.deleteEmbeddedDocuments(ActiveEffect.name, currentEffects.map(e => e.id));
+            }
         }
         await gmFunctions.createEffects(actor.uuid, [effect]);
     }
@@ -418,7 +433,7 @@ async function interact(pileUuid, token, userId) {
     }
     let user = game.users.get(userId);
 
-    if (!pile.actor.isOwner) {
+    if (!pile.actor.testUserPermission(game.user, foundry.CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER)) {
         ui.notifications.warn(`This does not belong to you!`);
         return false;
     }

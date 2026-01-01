@@ -180,7 +180,7 @@
         "duration": {
           "concentration": false,
           "value": "",
-          "units": "",
+          "units": "inst",
           "special": "",
           "override": false
         },
@@ -199,7 +199,7 @@
             "size": "",
             "width": "",
             "height": "",
-            "units": ""
+            "units": "ft"
           },
           "affects": {
             "count": "",
@@ -246,7 +246,8 @@
           "idi": false,
           "idr": false,
           "idv": false,
-          "ida": false
+          "ida": false,
+          "idm": false
         },
         "midiProperties": {
           "ignoreTraits": [],
@@ -265,7 +266,17 @@
           "rollMode": "default",
           "chooseEffects": false,
           "toggleEffect": false,
-          "ignoreFullCover": false
+          "ignoreFullCover": false,
+          "autoConsume": false,
+          "forceConsumeDialog": "default",
+          "forceRollDialog": "default",
+          "forceDamageDialog": "default",
+          "otherActivityAsParentType": true,
+          "removeChatButtons": "default",
+          "magicEffect": false,
+          "magicDamage": false,
+          "noConcentrationCheck": false,
+          "autoCEEffects": "default"
         },
         "isOverTimeFlag": false,
         "overTimeProperties": {
@@ -276,12 +287,25 @@
         "otherActivityId": "",
         "attackMode": "oneHanded",
         "ammunition": "",
-        "otherActivityUuid": ""
+        "otherActivityUuid": "",
+        "flags": {},
+        "visibility": {
+          "level": {},
+          "requireAttunement": false,
+          "requireIdentification": false,
+          "requireMagic": false
+        },
+        "otherActivityAsParentType": true,
+        "attackRollPerTarget": "default",
+        "fumbleThreshold": 1
       }
     },
     "identifier": "dagger-of-venom",
     "ammunition": {},
-    "mastery": ""
+    "mastery": "",
+    "crew": {
+      "value": []
+    }
   },
   "effects": [],
   "folder": "BeLUfpJ0d2cACd5n",
@@ -334,22 +358,18 @@
         "applyEffectOnly": false
       }
     },
-    "dnd5e": {
-      "riders": {
-        "activity": [],
-        "effect": []
-      }
-    }
+    "dnd5e": {}
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
-    "systemVersion": "4.4.2",
+    "systemVersion": "5.2.4",
     "createdTime": 1744807001336,
-    "modifiedTime": 1752040186418,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "modifiedTime": 1767212264952,
+    "lastModifiedBy": "wXvVWKeDyStv3bwy",
+    "exportSource": null
   },
   "_id": "dNaBQvqrtFNZgKk9",
   "sort": 0,

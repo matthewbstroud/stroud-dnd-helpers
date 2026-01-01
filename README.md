@@ -67,32 +67,33 @@ All of the following modules are **required** for this module to function proper
 
 | Module | Minimum Version | Purpose |
 |--------|-----------------|---------|
-| [Active Auras](https://foundryvtt.com/packages/ActiveAuras) | 5.1.0 | Active effect management and area-based effects |
-| [Automated Animations](https://foundryvtt.com/packages/automated-jb2a-patreon) | 4.2.93 | Visual effects for spells and abilities |
-| [Dynamic Active Effects](https://foundryvtt.com/packages/dae) | 12.0.6 | Advanced active effect calculations |
-| [Effect Macro](https://foundryvtt.com/packages/effectmacro) | 12.0.6 | Execute macros from active effects |
-| [libWrapper](https://foundryvtt.com/packages/lib-wrapper) | 1.12.14.0 | Function wrapping for compatibility |
-| [Midi QOL](https://foundryvtt.com/packages/midi-qol) | 11.6.12 | Advanced damage workflows and automation |
-| [Monk's Active Tiles](https://foundryvtt.com/packages/monks-active-tiles) | 12.05 | Interactive scene tiles |
-| [socketlib](https://foundryvtt.com/packages/socketlib) | 1.0.13 | Cross-client communication |
+| [Active Auras](https://foundryvtt.com/packages/ActiveAuras) | 0.12.4 | Active effect management and area-based effects |
+| [Automated Animations](https://foundryvtt.com/packages/automated-jb2a-patreon) | 6.5.2 | Visual effects for spells and abilities |
+| [Dynamic Active Effects](https://foundryvtt.com/packages/dae) | 13.0.17 | Advanced active effect calculations |
+| [Effect Macro](https://foundryvtt.com/packages/effectmacro) | 13.0.3 | Execute macros from active effects |
+| [libWrapper](https://foundryvtt.com/packages/lib-wrapper) | 1.13.4.0 | Function wrapping for compatibility |
+| [Midi QOL](https://foundryvtt.com/packages/midi-qol) | 13.0.32 | Advanced damage workflows and automation |
+| [Monk's Active Tiles](https://foundryvtt.com/packages/monks-active-tiles) | 13.06 | Interactive scene tiles |
+| [socketlib](https://foundryvtt.com/packages/socketlib) | 1.1.3 | Cross-client communication |
 
 ### **Optional Enhancements**
 These modules enhance functionality but are not required:
 
 | Module | Minimum Version | Enhanced Features |
 |--------|-----------------|-------------------|
-| [Item Piles](https://foundryvtt.com/packages/item-piles) | 3.0.8 | Backpack and mount inventory management |
+| [Item Piles](https://foundryvtt.com/packages/item-piles) |  3.2.30 | Backpack and mount inventory management |
+| [Item Piles: D&D 5e](https://foundryvtt.com/packages/itempilesdnd5e) |  1.0.8 | Backpack and mount inventory management |
 | [Combat Utility Belt](https://foundryvtt.com/packages/combat-utility-belt) | - | Token visibility and combat enhancements |
 | [Monk's Enhanced Journal](https://foundryvtt.com/packages/monks-enhanced-journal) | - | Improved journal functionality |
 | [Playlist Importer](https://foundryvtt.com/packages/playlist_import) | - | Enhanced music management |
-| [Simple Calendar](https://foundryvtt.com/packages/foundryvtt-simple-calendar) | - | Time tracking integration |
+| [Simple Calendar](https://foundryvtt.com/packages/foundryvtt-simple-calendar) | 2.4.18 | Time tracking integration |
 | [Compendium Folders](https://foundryvtt.com/packages/compendium-folders) | - | Better compendium organization |
 | [Drag Upload](https://foundryvtt.com/packages/dragupload) | - | Simplified file uploads |
 | [DF Chat Enhancements](https://foundryvtt.com/packages/df-chat-enhance) | - | Improved chat functionality |
 
 ### **System Requirements**
-- **Foundry VTT**: Version 11 - 12 (optimized for v12)
-- **D&D 5e System**: Version 4.0.0 - 4.4.x
+- **Foundry VTT**: Version 13
+- **D&D 5e System**: Version 5.x (Verified 5.2.4)
 
 ## Installation
 

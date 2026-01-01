@@ -23,7 +23,18 @@ async function onDamageTaken(actor, changes, update, userId) {
         rollOptions.chatMessage = true;
         rollOptions.flavor = `${actor.name} fights against madness... (${dnd5e.config.abilities.wis.label})`;
     }
-    const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.wis.abbreviation, rollOptions);
+    let config = {
+        ability: dnd5e.config.abilities.wis.abbreviation,
+        target: 15
+    };
+    let dialog = {
+        configure: false
+    };
+    let message = {
+        create: false,
+        data: {}
+    };
+    const dieRoll = await actor.rollSavingThrow(config, dialog, message);
 
     if (dieRoll.options.success) {
         await ChatMessage.create({

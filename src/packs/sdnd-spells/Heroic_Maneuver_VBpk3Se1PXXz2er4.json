@@ -131,12 +131,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253394889,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_key": "!items.effects!VBpk3Se1PXXz2er4.yOOlSe0XZt4mEG1O"
     },
@@ -210,12 +211,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253386281,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "w3ADdlBCtfSctlWl",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.w3ADdlBCtfSctlWl"
@@ -293,12 +295,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253417817,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "bFyVs4daRz46jViH",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.bFyVs4daRz46jViH"
@@ -373,12 +376,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253412491,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "uoMwe4qnhUWSPsgB",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.uoMwe4qnhUWSPsgB"
@@ -456,12 +460,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253349010,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "jhwQBcGdaLHDBQFj",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.jhwQBcGdaLHDBQFj"
@@ -539,12 +544,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253299986,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "9uCgCWDbr9DBYgpY",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.9uCgCWDbr9DBYgpY"
@@ -622,12 +628,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253326926,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "6lwMHG7db6o33KvG",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.6lwMHG7db6o33KvG"
@@ -705,12 +712,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754253268741,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "wOs7m3zGqczbAA10",
       "_key": "!items.effects!VBpk3Se1PXXz2er4.wOs7m3zGqczbAA10"
@@ -743,12 +751,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1754158936578,
     "modifiedTime": 1754158936617,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "exportSource": null
   },
   "_id": "VBpk3Se1PXXz2er4",
   "sort": 126563,

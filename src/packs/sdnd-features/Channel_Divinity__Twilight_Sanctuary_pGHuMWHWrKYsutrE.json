@@ -237,12 +237,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": null,
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "exportSource": null
       },
       "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "type": "base",
@@ -503,12 +504,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
         "modifiedTime": 1754492979980,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "img": "modules/stroud-dnd-helpers/images/icons/twilightsanctuary.webp",
       "type": "base",
@@ -552,9 +554,7 @@
         "text": "Cleric"
       }
     },
-    "core": {
-      "sourceId": "Actor.asd4WPupilrDVJZT.Item.G0HaalgqmTqNv9PE"
-    },
+    "core": {},
     "midi-qol": {
       "effectActivation": false,
       "onUseMacroName": "[preItemRoll]function.stroudDnD.features.TwilightDomain.itemMacro,[postActiveEffects]function.stroudDnD.features.TwilightDomain.itemMacro",
@@ -650,23 +650,24 @@
         "activity": [],
         "effect": []
       }
-    },
-    "exportSource": {
-      "world": "sdnd-cos-tuesday",
-      "system": "dnd5e",
-      "coreVersion": "12.343",
-      "systemVersion": "4.4.2"
     }
   },
   "_stats": {
     "compendiumSource": "Actor.asd4WPupilrDVJZT.Item.G0HaalgqmTqNv9PE",
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1754454729897,
     "modifiedTime": 1754483898659,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "exportSource": {
+      "worldId": "sdnd-cos-tuesday",
+      "uuid": null,
+      "coreVersion": "12.343",
+      "systemId": "dnd5e",
+      "systemVersion": "4.4.2"
+    }
   },
   "_id": "pGHuMWHWrKYsutrE",
   "sort": 100000,

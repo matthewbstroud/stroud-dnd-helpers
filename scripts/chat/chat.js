@@ -93,12 +93,10 @@ export let chat = {
 };
 
 function selectChatSidebar() {
-    const chatTab = ui.sidebar.tabs.chat;
-    if (chatTab) {
-        ui.sidebar.activateTab("chat");
-    } else {
-        console.warn("Chat tab not found in the sidebar.");
+    if (ui.sidebar.activeTab === "chat") {
+        return;
     }
+    ui.sidebar.changeTab("chat", "primary");
 }
 
 function focusLatestChatMessage() {

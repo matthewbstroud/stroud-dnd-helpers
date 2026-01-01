@@ -15,12 +15,20 @@ async function blightIcorItemMacro({ speaker, actor, token, character, item, arg
   let currentTime = game.time.worldTime;
   let lastTaken = await actor.getFlag(sdndConstants.MODULE_ID, "BlightIcorLastTaken");
   if (lastTaken && ((currentTime - lastTaken) / 60 / 60) < 24) {
-    const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.con.abbreviation, {
-      targetValue: 15,
-      fastForward: true,
-      chatMessage: true,
-      flavor: "Consuming excessive Blight Icor (Constitution Save)"
-    });
+    let config = {
+        ability: dnd5e.config.abilities.con.abbreviation,
+        target: 15
+    };
+    let dialog = {
+        configure: false
+    };
+    let message = {
+        create: true,
+        data: {
+            flavor: "Consuming excessive Blight Icor (Constitution Save)"
+        }
+    };
+    const dieRoll = await targetActor.rollSavingThrow(config, dialog, message);
 
     if (!dieRoll.options.success) {
       // add poisoned
@@ -60,12 +68,20 @@ async function ryathRootItemMacro({ speaker, actor, token, character, item, args
   let currentTime = game.time.worldTime;
   let lastTaken = await actor.getFlag(sdndConstants.MODULE_ID, "RyathRootLastTaken");
   if (lastTaken && ((currentTime - lastTaken) / 60 / 60) < 24) {
-    const dieRoll = await actor.rollAbilitySave(dnd5e.config.abilities.con.abbreviation, {
-      targetValue: 13,
-      fastForward: true,
-      chatMessage: true,
-      flavor: "Consuming excessive Ryath Root (Constitution Save)"
-    });
+    let config = {
+        ability: dnd5e.config.abilities.con.abbreviation,
+        target: 13
+    };
+    let dialog = {
+        configure: false
+    };
+    let message = {
+        create: true,
+        data: {
+            flavor: "Consuming excessive Ryath Root (Constitution Save)"
+        }
+    };
+    const dieRoll = await targetActor.rollSavingThrow(config, dialog, message);
 
     if (!dieRoll.options.success) {
       // add poisoned

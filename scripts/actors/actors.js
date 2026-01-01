@@ -197,12 +197,13 @@ async function removeUnusedActors(actorIds, source) {
     }
     console.log(orphaned.map(o => o.name).join(","));
     const totalOrphans = orphaned.length;
+    const progress = ui.notifications.info("Removing orphaned actors...", {progress: true, permanent: false});
     for (let i = 0; i < orphaned.length; i++) {
         console.log(`Deleting ${orphaned[i].name} from world...`);
-        SceneNavigation.displayProgressBar({ label: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`, pct: Math.floor((i / totalOrphans) * 100) });
+        progress.update({pct: i / totalOrphans, message: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`});
         await orphaned[i].delete();
     }
-    SceneNavigation.displayProgressBar({ label: ``, pct: 100 });
+    progress.update({pct: 1.0, message: `Removed ${totalOrphans} orphaned actors`});
     await utility.removeEmptyFolders("Actor");
 }
 
@@ -313,8 +314,9 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         return;
     }
     const totalNpcs = npcs.length;
+    const progress = ui.notifications.info(`${BUFF_NPC}s...`, {progress: true, permanent: false});
     for (let i = 0; i < npcs.length; i++) {
-        SceneNavigation.displayProgressBar({ label: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}`, pct: Math.floor((i / totalNpcs) * 100) });
+        progress.update({pct: i / totalNpcs, message: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}`});
         let npc = npcs[i];
         const hp = npc.system?.attributes?.hp;
         let actorUpdateRequired = false;
@@ -369,7 +371,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         }
 
     }
-    SceneNavigation.displayProgressBar({ label: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs}`, pct: 100 });
+    progress.update({pct: 1.0, message: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs} complete`});
 }
 
 export function getAverageHpFormula(formula) {
@@ -405,14 +407,14 @@ export function createItemHeaderButton(config, buttons) {
             class: 'stroudDnD',
             icon: 'fa-solid fa-dungeon',
             label: label,
-            onclick: () => createNew ? createBackpack(item) : transferBackpack(item)
+            onclick: async () => createNew ? await createBackpack(item) : await transferBackpack(item)
         });
     }
 }
 
 export function createActorHeaderButton(config, buttons) {
-    if (config.object instanceof Actor) {
-        var overrideableItems = getOverrideableItemsFromActor(config.object);
+    if (config.document instanceof Actor) {
+        var overrideableItems = getOverrideableItemsFromActor(config.document);
         if (!overrideableItems || overrideableItems.length == 0) {
             return;
         }
@@ -421,7 +423,8 @@ export function createActorHeaderButton(config, buttons) {
             class: 'stroudDnD',
             icon: 'fa-solid fa-dungeon',
             label: label,
-            onclick: () => actorConfig(config.object)
+            onclick: async () => await actorConfig(config.document),
+            onClick: async () => await actorConfig(config.document)
         });
     }
 }
@@ -450,9 +453,9 @@ export function syncBackpackPermissions(actor, updates, mode, updateUserId) {
 
 // set current permission to defaults and overwrite with new permissions
 function syncPermissions(oldPermissions, newPermissions) {
-    let newOwnership = duplicate(newPermissions);
+    let newOwnership = foundry.utils.duplicate(newPermissions);
     newOwnership['default'] = CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE;
-    var ownership = duplicate(oldPermissions);
+    var ownership = foundry.utils.duplicate(oldPermissions);
     for (let owner in ownership) {
         ownership[owner] = CONST.DOCUMENT_OWNERSHIP_LEVELS.INHERIT;
     }
@@ -589,7 +592,7 @@ async function transferBackpack(item) {
         return;
     }
     var targetPlayer = await game.actors.get(targetPlayerId);
-    let itemData = duplicate(item);
+    let itemData = foundry.utils.duplicate(item.toObject());
     await currentOwner.deleteEmbeddedDocuments("Item", [item.id]);
     await targetPlayer.createEmbeddedDocuments("Item", [itemData]);
     var containerActorUuid = item.getFlag("backpack-manager", "containerActorUuid");

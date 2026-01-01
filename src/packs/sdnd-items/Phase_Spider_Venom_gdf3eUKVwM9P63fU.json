@@ -32,14 +32,7 @@
   "effects": [],
   "folder": "NgOO2DlYU1jrwMT8",
   "flags": {
-    "exportSource": {
-      "system": "dnd5e",
-      "coreVersion": "11.315",
-      "systemVersion": "3.1.2"
-    },
-    "core": {
-      "sourceId": "Item.BTuqggJ5GxK6ztjN"
-    },
+    "core": {},
     "dnd5e": {
       "riders": {
         "activity": []
@@ -49,12 +42,19 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "createdTime": 1723338340157,
     "modifiedTime": 1750248834828,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": "Item.BTuqggJ5GxK6ztjN",
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": {
+      "worldId": null,
+      "uuid": null,
+      "coreVersion": "11.315",
+      "systemId": "dnd5e",
+      "systemVersion": "3.1.2"
+    }
   },
   "ownership": {
     "default": 0,

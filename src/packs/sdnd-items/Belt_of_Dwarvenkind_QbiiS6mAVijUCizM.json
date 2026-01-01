@@ -286,14 +286,15 @@
       "description": "",
       "origin": "Actor.mPuC1Mky8yKGXlQK.Item.f9bIiAbL6QaaUQ3T",
       "_stats": {
-        "coreVersion": "12.331",
+        "coreVersion": "13.351",
         "systemId": null,
         "systemVersion": null,
         "createdTime": null,
         "modifiedTime": null,
         "lastModifiedBy": null,
         "compendiumSource": null,
-        "duplicateSource": null
+        "duplicateSource": null,
+        "exportSource": null
       },
       "img": "ddb-images/other/item-Belt-of-Dwarvenkind.jpeg",
       "type": "base",
@@ -311,12 +312,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "createdTime": 1722303175007,
     "modifiedTime": 1750248834085,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "_id": "QbiiS6mAVijUCizM",
   "sort": 0,

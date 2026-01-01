@@ -143,12 +143,13 @@
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
-        "coreVersion": "12.343",
+        "coreVersion": "13.351",
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": 1754750153808,
         "modifiedTime": 1754770845644,
-        "lastModifiedBy": "6yhz13iFYYklKtgA"
+        "lastModifiedBy": "6yhz13iFYYklKtgA",
+        "exportSource": null
       },
       "_id": "0kCuetVnSmiPGOLs",
       "_key": "!items.effects!O0DP0eKBI9sgj75n.0kCuetVnSmiPGOLs"
@@ -181,12 +182,13 @@
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
-    "coreVersion": "12.343",
+    "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "4.4.2",
     "createdTime": 1754748939923,
     "modifiedTime": 1754748939946,
-    "lastModifiedBy": "6yhz13iFYYklKtgA"
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "exportSource": null
   },
   "_id": "O0DP0eKBI9sgj75n",
   "sort": 125782,

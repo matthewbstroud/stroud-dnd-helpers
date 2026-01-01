@@ -5,67 +5,111 @@
   "description": "",
   "results": [
     {
-      "type": "pack",
-      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "type": "document",
       "weight": 1,
       "range": [
         1,
         50
       ],
       "drawn": false,
-      "text": "Common Items",
-      "documentId": "tp3ssKVmpxZ8AYbY",
       "img": "icons/svg/d20-grey.svg",
       "_id": "3DOyJMaD7lAfxYcs",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Common Items",
+      "documentUuid": "Compendium.sdnd-shared.sdnd-roll-tables.tp3ssKVmpxZ8AYbY",
+      "description": "",
       "_key": "!tables.results!gKM3IHl048QZdMMa.3DOyJMaD7lAfxYcs"
     },
     {
-      "type": "pack",
-      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "type": "document",
       "weight": 1,
       "range": [
         51,
         80
       ],
       "drawn": false,
-      "text": "Uncommon Items",
-      "documentId": "vBQVegzVkoxf0m2E",
       "img": "icons/svg/d20-grey.svg",
       "_id": "Yg4RlBkNOWMwbKvL",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Uncommon Items",
+      "documentUuid": "Compendium.sdnd-shared.sdnd-roll-tables.vBQVegzVkoxf0m2E",
+      "description": "",
       "_key": "!tables.results!gKM3IHl048QZdMMa.Yg4RlBkNOWMwbKvL"
     },
     {
-      "type": "pack",
-      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "type": "document",
       "weight": 1,
       "range": [
         81,
         95
       ],
       "drawn": false,
-      "text": "Rare Items",
-      "documentId": "GmDrZFXobtWndJBy",
       "img": "icons/svg/d20-grey.svg",
       "_id": "Ttw5sgtH9ymWuZLy",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Rare Items",
+      "documentUuid": "Compendium.sdnd-shared.sdnd-roll-tables.GmDrZFXobtWndJBy",
+      "description": "",
       "_key": "!tables.results!gKM3IHl048QZdMMa.Ttw5sgtH9ymWuZLy"
     },
     {
-      "type": "pack",
-      "documentCollection": "sdnd-shared.sdnd-roll-tables",
+      "type": "document",
       "weight": 1,
       "range": [
         96,
         100
       ],
       "drawn": false,
-      "text": "Very Rare Items",
-      "documentId": "2nTxT0hE0du16jkF",
       "img": "icons/svg/d20-grey.svg",
       "_id": "pOgOjDi2DZUezX9v",
       "flags": {},
+      "_stats": {
+        "coreVersion": "13.351",
+        "systemId": null,
+        "systemVersion": null,
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": null,
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "name": "Very Rare Items",
+      "documentUuid": "Compendium.sdnd-shared.sdnd-roll-tables.2nTxT0hE0du16jkF",
+      "description": "",
       "_key": "!tables.results!gKM3IHl048QZdMMa.pOgOjDi2DZUezX9v"
     }
   ],
@@ -81,12 +125,13 @@
   "_stats": {
     "systemId": "dnd5e",
     "systemVersion": "3.1.2",
-    "coreVersion": "12.331",
+    "coreVersion": "13.351",
     "createdTime": 1723425651103,
     "modifiedTime": 1723570499791,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
-    "duplicateSource": null
+    "duplicateSource": null,
+    "exportSource": null
   },
   "formula": "1d100",
   "_key": "!tables!gKM3IHl048QZdMMa"
