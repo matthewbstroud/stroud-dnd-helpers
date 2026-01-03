@@ -98,6 +98,16 @@ export class BaneWeaponApp extends HandlebarsApplicationMixin(ApplicationV2) {
         };
     }
 
+    async _onFirstRender(context, options) {
+        await super._onFirstRender(context, options);
+        
+        // Center the dialog on first render
+        this.setPosition({
+            left: Math.max((window.innerWidth - this.position.width) / 2, 0),
+            top: Math.max((window.innerHeight - this.element.offsetHeight) / 2, 0)
+        });
+    }
+    
     async _onRender(context, options) {
         super._onRender(context, options);
         
