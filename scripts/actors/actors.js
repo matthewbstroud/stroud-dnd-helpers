@@ -498,9 +498,9 @@ async function actorConfig(actorDocument) {
     promptForSpellOverrides(actorDocument, overrideableItems, overriddenItems);
 }
 
-async function ensureActor(actorName, packId, parentFolderName) {
+async function ensureActor(actorName, packId, parentFolderName, checkModifiedDate = false) {
     let actor = game.actors.getName(actorName);
-    if (!actor) {
+    if (!actor || checkModifiedDate) {
         let pack = game.packs.get(packId);
         if (!pack) {
             ui.notifications.error(`Cannot find compendium ${packId}!`);
@@ -511,9 +511,20 @@ async function ensureActor(actorName, packId, parentFolderName) {
             ui.notifications.error(`Cannot find actor ${actorName} compendium ${packId}!`);
             return null;
         }
+        if (checkModifiedDate && actor && !(await isOutOfDate(actor, packActor.uuid))) {
+            return actor;
+        }
+        else if (actor) {
+            await gmFunctions.deleteActor(actor.id);
+        }
         actor = await gmFunctions.importFromCompendium("Actor", packId, packActor._id, parentFolderName);
     }
     return actor;
+}
+
+async function isOutOfDate(actor, packActorUuid) {
+    const packActor = await fromUuid(packActorUuid);
+    return actor?._stats?.modifiedTime <= packActor?._stats?.modifiedTime;
 }
 
 async function overrideSpells(actor, spells) {
@@ -608,8 +619,7 @@ async function transferBackpack(item) {
 
 
 async function promptForSpellOverrides(actor, overrideableItems, overriddenItems) {
-    let options = overrideableItems.map(i => `<input type="checkbox" id="${i.id}" name="${i.id}" value="${i.id}">
-        <label for="${i.id}">${i.name}</label><br>`
+    let options = overrideableItems.map(i => `<div style="display: flex; align-items: center; gap: 0.5em; margin-bottom: 0.25em;"><input type="checkbox" id="${i.id}" name="${i.id}" value="${i.id}"><label for="${i.id}" style="margin: 0;">${i.name}</label></div>`
     ).join('');
     let form = `<h1>Override Spells/Features</h1>
     <form>
@@ -617,34 +627,43 @@ async function promptForSpellOverrides(actor, overrideableItems, overriddenItems
       <br/><br/>
     </form>
     `;
-    new Dialog({
-        title: `SDND Spell/Feature Overrides`,
+    
+    const result = await foundry.applications.api.DialogV2.wait({
+        window: { title: "SDND Spell/Feature Overrides" },
         content: form,
-        buttons: {
-            yes: {
-                icon: "<i class='fas fa-check'></i>",
-                label: `Apply`,
-                callback: (html) => {
+        buttons: [
+            {
+                action: "yes",
+                label: "Apply",
+                icon: "fas fa-check",
+                default: true,
+                callback: (event, button, dialog) => {
                     let selectedSpells = [];
                     overrideableItems.forEach(element => {
-                        if (html.find(`#${element.id}`).is(`:checked`)) {
+                        const checkbox = button.form.elements[element.id];
+                        if (checkbox && checkbox.checked) {
                             selectedSpells.push(element);
                         }
                     });
-                    if (selectedSpells.length == 0) {
-                        ui.notifications.info("Nothing selected...");
-                        return;
-                    }
-                    overrideSpells(actor, selectedSpells);
+                    return selectedSpells;
                 }
             },
-            no: {
-                icon: "<i class='fas fa-times'></i>",
-                label: `Cancel`
-            },
-        },
-        default: "yes"
-    }, { width: 500 }).render(true);
+            {
+                action: "no",
+                label: "Cancel",
+                icon: "fas fa-times"
+            }
+        ],
+        rejectClose: false,
+        modal: true,
+        position: { width: 500 }
+    });
+    if (!result || result === "no") {
+        return;
+    }
+    if (result.length > 0) {
+        overrideSpells(actor, result);
+    }
 }
 
 function renderSheet(sheet, form, data) {
@@ -805,32 +824,41 @@ async function promptForBuff(callback) {
 </div>
 `;
 
-    new Dialog({
-        title: title,
+    const result = await foundry.applications.api.DialogV2.wait({
+        window: { title: title },
         content: `
         <form>
             ${dialogHtml}
         </form>
     `,
-        buttons: {
-            yes: {
-                icon: "<i class='fas fa-check'></i>",
+        buttons: [
+            {
+                action: "yes",
                 label: label,
-                callback: (html) => {
-                    let useMax = html.find('#buffUseMax').val() == "True";
-                    let buffMultiplier = numbers.toNumber(html.find('#buffMultiplier').val());
-                    let hitBonus = numbers.toNumber(html.find('#buffHitBonus').val());
-                    let damageBonus = numbers.toNumber(html.find('#buffDamageBonus').val());
-                    let acBonus = numbers.toNumber(html.find('#buffAcBonus').val());
-                    let dcBonus = numbers.toNumber(html.find('#buffDcBonus').val());
-                    callback("npc", useMax, buffMultiplier, hitBonus, damageBonus, acBonus, dcBonus);
+                icon: "fas fa-check",
+                default: true,
+                callback: (event, button, dialog) => {
+                    const form = button.form;
+                    let useMax = form.elements['buffUseMax'].value == "True";
+                    let buffMultiplier = numbers.toNumber(form.elements['buffMultiplier'].value);
+                    let hitBonus = numbers.toNumber(form.elements['buffHitBonus'].value);
+                    let damageBonus = numbers.toNumber(form.elements['buffDamageBonus'].value);
+                    let acBonus = numbers.toNumber(form.elements['buffAcBonus'].value);
+                    let dcBonus = numbers.toNumber(form.elements['buffDcBonus'].value);
+                    return { useMax, buffMultiplier, hitBonus, damageBonus, acBonus, dcBonus };
                 }
             },
-            no: {
-                icon: "<i class='fas fa-times'></i>",
-                label: `Cancel`
-            },
-        },
-        default: "yes"
-    }).render(true)
+            {
+                action: "no",
+                label: "Cancel",
+                icon: "fas fa-times"
+            }
+        ],
+        rejectClose: false,
+        modal: true
+    });
+    
+    if (result) {
+        callback("npc", result.useMax, result.buffMultiplier, result.hitBonus, result.damageBonus, result.acBonus, result.dcBonus);
+    }
 }

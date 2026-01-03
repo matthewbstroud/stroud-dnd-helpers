@@ -36,7 +36,10 @@ export let combat = {
     },
     "getWeaponDamageTypes": getWeaponDamageTypes,
     "executeHeroicManeuver": heroicManeuvers.execute,
-    "autoConsumeUse": autoConsumeUse
+    "autoConsumeUse": autoConsumeUse,
+    "ensureAdhocActor": async function _ensureAdhocActor() {
+        let adhocActor = await actors.ensureActor("Adhoc Damage", sdndConstants.PACKS.COMPENDIUMS.ACTOR.TEMP, folders.Actor.TempActors.name, true);
+    }
 };
 
 /**
@@ -409,10 +412,7 @@ async function applyAdhocDamage(damageData) {
     }
     adHocDamage.logFunction(inputData);
     const { adhocDamageType, damageType, damageDice, diceCount, saveData } = inputData;
-    return await versioning.dndVersionedAsync(
-        async () => await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets),
-        async () => await applyDamageLegacyMode(damageType, damageDice, diceCount, targets)
-    );
+    return await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets);
 }
 
 const _debouncedApplyAdhocDamage = foundry.utils.debounce(applyAdhocDamage, 250);
