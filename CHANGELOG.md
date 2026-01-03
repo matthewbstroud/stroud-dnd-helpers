@@ -1,3 +1,6 @@
+# v13.5.2
+# Bug Fixes
+- Actually fix bane weapon dialog.
 # v13.5.1
 # New Features
 - Adhoc Damage is now applied as non-spell damage.
@@ -725,6 +728,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
