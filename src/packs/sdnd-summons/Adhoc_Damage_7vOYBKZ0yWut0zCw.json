@@ -701,20 +701,20 @@
   },
   "items": [
     {
-      "name": "Unavoidable Damage",
-      "type": "spell",
-      "img": "modules/stroud-dnd-helpers/images/icons/damageTypes/unavoidable_damage.webp",
-      "_id": "BsPUIKMuzoz3NDow",
+      "name": "Damage",
+      "type": "feat",
+      "_id": "SJxK1Qo4XybCo1hE",
+      "img": "modules/stroud-dnd-helpers/images/icons/damageTypes/damage.webp",
       "system": {
         "activities": {
-          "2qIrFeURR7vagPTb": {
-            "type": "damage",
-            "_id": "2qIrFeURR7vagPTb",
+          "r2RT9KUp7tl0R3Fr": {
+            "type": "save",
+            "_id": "r2RT9KUp7tl0R3Fr",
             "sort": 0,
             "activation": {
-              "type": "action",
-              "value": null,
-              "override": false
+              "type": "special",
+              "override": false,
+              "condition": ""
             },
             "consumption": {
               "scaling": {
@@ -732,16 +732,23 @@
               "override": false
             },
             "effects": [],
+            "flags": {},
             "range": {
-              "override": false
+              "units": "any",
+              "override": false,
+              "special": ""
             },
             "target": {
               "template": {
                 "contiguous": false,
-                "units": "ft"
+                "units": "ft",
+                "type": ""
               },
               "affects": {
-                "choice": false
+                "choice": false,
+                "type": "any",
+                "count": "",
+                "special": ""
               },
               "override": false,
               "prompt": true
@@ -751,23 +758,239 @@
               "recovery": [],
               "max": ""
             },
+            "visibility": {
+              "level": {
+                "min": null,
+                "max": null
+              },
+              "requireAttunement": false,
+              "requireIdentification": false,
+              "requireMagic": false,
+              "identifier": ""
+            },
+            "damage": {
+              "onSave": "half",
+              "critical": {
+                "allow": false
+              },
+              "parts": [
+                {
+                  "custom": {
+                    "enabled": false,
+                    "formula": ""
+                  },
+                  "number": 1,
+                  "denomination": 4,
+                  "bonus": "",
+                  "types": [
+                    "acid"
+                  ]
+                }
+              ]
+            },
+            "save": {
+              "ability": [],
+              "dc": {
+                "calculation": "",
+                "formula": ""
+              }
+            },
+            "useConditionText": "",
+            "useConditionReason": "",
+            "effectConditionText": "",
+            "macroData": {
+              "name": "",
+              "command": ""
+            },
+            "ignoreTraits": {
+              "idi": false,
+              "idr": false,
+              "idv": false,
+              "ida": false,
+              "idm": false
+            },
+            "midiProperties": {
+              "ignoreTraits": [],
+              "triggeredActivityId": "none",
+              "triggeredActivityConditionText": "",
+              "triggeredActivityTargets": "targets",
+              "triggeredActivityRollAs": "self",
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
+              "confirmTargets": "default",
+              "autoTargetType": "any",
+              "autoTargetAction": "default",
+              "automationOnly": false,
+              "otherActivityCompatible": true,
+              "otherActivityAsParentType": true,
+              "identifier": "",
+              "displayActivityName": false,
+              "rollMode": "default",
+              "chooseEffects": false,
+              "toggleEffect": false,
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "skipConcentrationCheck": false,
+              "autoCEEffects": "default"
+            },
+            "isOverTimeFlag": false,
+            "overTimeProperties": {
+              "saveRemoves": true,
+              "preRemoveConditionText": "",
+              "postRemoveConditionText": ""
+            },
+            "otherActivityId": "",
+            "otherActivityAsParentType": true,
+            "friendlySave": "default",
+            "name": "Damage",
+            "img": ""
+          }
+        },
+        "uses": {
+          "spent": 0,
+          "recovery": [],
+          "max": ""
+        },
+        "advancement": [],
+        "description": {
+          "value": "",
+          "chat": ""
+        },
+        "identifier": "feature",
+        "source": {
+          "revision": 1,
+          "rules": "2024"
+        },
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "items": [],
+          "repeatable": false,
+          "level": null
+        },
+        "properties": [],
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
+      },
+      "effects": [],
+      "folder": null,
+      "sort": 0,
+      "ownership": {
+        "default": 0,
+        "Xhr6fVPGIbvrReaZ": 3
+      },
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "activity": []
+          }
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.4",
+        "createdTime": 1767446024579,
+        "modifiedTime": 1767448760783,
+        "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
+      },
+      "_key": "!actors.items!7vOYBKZ0yWut0zCw.SJxK1Qo4XybCo1hE"
+    },
+    {
+      "name": "Unavoidable Damage",
+      "type": "feat",
+      "_id": "ubEbTKwOxZ2HkxxE",
+      "img": "modules/stroud-dnd-helpers/images/icons/damageTypes/unavoidable_damage.webp",
+      "system": {
+        "activities": {
+          "8eCfd00koukF2byq": {
+            "type": "damage",
+            "_id": "8eCfd00koukF2byq",
+            "sort": 0,
+            "activation": {
+              "type": "special",
+              "override": false,
+              "condition": ""
+            },
+            "consumption": {
+              "scaling": {
+                "allowed": false
+              },
+              "spellSlot": true,
+              "targets": []
+            },
+            "description": {
+              "chatFlavor": ""
+            },
+            "duration": {
+              "units": "inst",
+              "concentration": false,
+              "override": false
+            },
+            "effects": [],
+            "flags": {},
+            "range": {
+              "units": "any",
+              "override": false,
+              "special": ""
+            },
+            "target": {
+              "template": {
+                "contiguous": false,
+                "units": "ft",
+                "type": ""
+              },
+              "affects": {
+                "choice": false,
+                "type": "any",
+                "count": "",
+                "special": ""
+              },
+              "override": false,
+              "prompt": true
+            },
+            "uses": {
+              "spent": 0,
+              "recovery": [],
+              "max": ""
+            },
+            "visibility": {
+              "level": {
+                "min": null,
+                "max": null
+              },
+              "requireAttunement": false,
+              "requireIdentification": false,
+              "requireMagic": false,
+              "identifier": ""
+            },
             "damage": {
               "critical": {
                 "allow": false
               },
               "parts": [
                 {
-                  "denomination": 4,
-                  "number": 2,
-                  "types": [
-                    "necrotic"
-                  ],
                   "custom": {
-                    "enabled": false
+                    "enabled": false,
+                    "formula": ""
                   },
-                  "scaling": {
-                    "number": 1
-                  }
+                  "number": 1,
+                  "denomination": 4,
+                  "bonus": "",
+                  "types": [
+                    "acid"
+                  ]
                 }
               ]
             },
@@ -782,7 +1005,8 @@
               "idi": false,
               "idr": false,
               "idv": false,
-              "ida": false
+              "ida": false,
+              "idm": false
             },
             "midiProperties": {
               "ignoreTraits": [],
@@ -790,18 +1014,28 @@
               "triggeredActivityConditionText": "",
               "triggeredActivityTargets": "targets",
               "triggeredActivityRollAs": "self",
-              "forceDialog": false,
+              "autoConsume": false,
+              "forceConsumeDialog": "default",
+              "forceRollDialog": "default",
+              "forceDamageDialog": "default",
               "confirmTargets": "default",
               "autoTargetType": "any",
               "autoTargetAction": "default",
               "automationOnly": false,
               "otherActivityCompatible": true,
+              "otherActivityAsParentType": true,
               "identifier": "",
-              "displayActivityName": true,
+              "displayActivityName": false,
               "rollMode": "default",
               "chooseEffects": false,
               "toggleEffect": false,
-              "ignoreFullCover": false
+              "ignoreFullCover": false,
+              "removeChatButtons": "default",
+              "magicEffect": false,
+              "magicDamage": false,
+              "noConcentrationCheck": false,
+              "skipConcentrationCheck": false,
+              "autoCEEffects": "default"
             },
             "isOverTimeFlag": false,
             "overTimeProperties": {
@@ -809,7 +1043,8 @@
               "preRemoveConditionText": "",
               "postRemoveConditionText": ""
             },
-            "name": "Necrotic"
+            "name": "Unavoidable Damage",
+            "img": ""
           }
         },
         "uses": {
@@ -817,338 +1052,52 @@
           "recovery": [],
           "max": ""
         },
+        "advancement": [],
         "description": {
           "value": "",
           "chat": ""
         },
-        "identifier": "new-spell",
+        "identifier": "feature",
         "source": {
           "revision": 1,
           "rules": "2024"
         },
-        "activation": {
-          "type": "action",
-          "value": null,
-          "condition": ""
-        },
-        "duration": {
-          "units": "inst"
-        },
-        "level": 0,
-        "materials": {
-          "value": "",
-          "consumed": false,
-          "cost": 0,
-          "supply": 0
-        },
-        "preparation": {
-          "mode": "prepared",
-          "prepared": true
+        "crewed": false,
+        "enchant": {},
+        "prerequisites": {
+          "items": [],
+          "repeatable": false,
+          "level": null
         },
         "properties": [],
-        "range": {
-          "units": "any",
-          "special": ""
-        },
-        "school": "",
-        "target": {
-          "template": {
-            "contiguous": false,
-            "units": "ft",
-            "type": ""
-          },
-          "affects": {
-            "choice": false,
-            "type": "any",
-            "count": "100",
-            "special": ""
-          }
-        },
-        "sourceClass": "",
-        "ability": ""
+        "requirements": "",
+        "type": {
+          "value": "monster",
+          "subtype": ""
+        }
       },
       "effects": [],
       "folder": null,
       "sort": 0,
       "ownership": {
         "default": 0,
-        "6yhz13iFYYklKtgA": 3
+        "Xhr6fVPGIbvrReaZ": 3
       },
       "flags": {
-        "midi-qol": {
-          "rollAttackPerTarget": "default",
-          "removeAttackDamageButtons": "default",
-          "itemCondition": "",
-          "reactionCondition": "",
-          "otherCondition": "",
-          "effectCondition": ""
-        },
-        "midiProperties": {
-          "autoFailFriendly": false,
-          "autoSaveFriendly": false,
-          "magicdam": false,
-          "magiceffect": false,
-          "noConcentrationCheck": false,
-          "toggleEffect": false,
-          "ignoreTotalCover": false
-        },
-        "dnd5e": {
-          "riders": {
-            "activity": [],
-            "effect": []
-          },
-          "last": {
-            "2qIrFeURR7vagPTb": {
-              "damageType": {
-                "0": "necrotic"
-              }
-            }
-          }
-        }
+        "dnd5e": {}
       },
       "_stats": {
         "compendiumSource": null,
         "duplicateSource": null,
+        "exportSource": null,
         "coreVersion": "13.351",
         "systemId": "dnd5e",
-        "systemVersion": "4.4.2",
-        "createdTime": null,
-        "modifiedTime": 1748478086975,
-        "lastModifiedBy": "6yhz13iFYYklKtgA",
-        "exportSource": null
+        "systemVersion": "5.2.4",
+        "createdTime": 1767446365093,
+        "modifiedTime": 1767446462131,
+        "lastModifiedBy": "Xhr6fVPGIbvrReaZ"
       },
-      "_key": "!actors.items!7vOYBKZ0yWut0zCw.BsPUIKMuzoz3NDow"
-    },
-    {
-      "name": "Damage",
-      "type": "spell",
-      "img": "modules/stroud-dnd-helpers/images/icons/damageTypes/damage.webp",
-      "_id": "q21EYxdRrx0nnQ4O",
-      "system": {
-        "activities": {
-          "4oCrbUt3vvmLROqr": {
-            "type": "save",
-            "_id": "4oCrbUt3vvmLROqr",
-            "sort": 0,
-            "activation": {
-              "type": "action",
-              "value": null,
-              "override": false
-            },
-            "consumption": {
-              "scaling": {
-                "allowed": false
-              },
-              "spellSlot": true,
-              "targets": []
-            },
-            "description": {
-              "chatFlavor": ""
-            },
-            "duration": {
-              "units": "inst",
-              "concentration": false,
-              "override": false
-            },
-            "effects": [],
-            "range": {
-              "override": false
-            },
-            "target": {
-              "template": {
-                "contiguous": false,
-                "units": "ft"
-              },
-              "affects": {
-                "choice": false
-              },
-              "override": false,
-              "prompt": false
-            },
-            "uses": {
-              "spent": 0,
-              "recovery": [],
-              "max": ""
-            },
-            "damage": {
-              "parts": [
-                {
-                  "denomination": 4,
-                  "number": 2,
-                  "types": [
-                    "acid"
-                  ],
-                  "custom": {
-                    "enabled": false
-                  },
-                  "scaling": {
-                    "number": 1
-                  }
-                }
-              ],
-              "critical": {
-                "allow": false,
-                "bonus": ""
-              },
-              "onSave": "half"
-            },
-            "save": {
-              "ability": [
-                "dex"
-              ],
-              "dc": {
-                "calculation": "",
-                "formula": "15"
-              }
-            },
-            "useConditionText": "",
-            "useConditionReason": "",
-            "effectConditionText": "",
-            "macroData": {
-              "name": "",
-              "command": ""
-            },
-            "ignoreTraits": {
-              "idi": false,
-              "idr": false,
-              "idv": false,
-              "ida": false
-            },
-            "midiProperties": {
-              "ignoreTraits": [],
-              "triggeredActivityId": "none",
-              "triggeredActivityConditionText": "",
-              "triggeredActivityTargets": "targets",
-              "triggeredActivityRollAs": "self",
-              "forceDialog": false,
-              "confirmTargets": "default",
-              "autoTargetType": "any",
-              "autoTargetAction": "default",
-              "automationOnly": false,
-              "otherActivityCompatible": true,
-              "identifier": "",
-              "displayActivityName": true,
-              "rollMode": "default",
-              "chooseEffects": false,
-              "toggleEffect": false,
-              "ignoreFullCover": false
-            },
-            "isOverTimeFlag": false,
-            "overTimeProperties": {
-              "saveRemoves": true,
-              "preRemoveConditionText": "",
-              "postRemoveConditionText": ""
-            },
-            "otherActivityId": "",
-            "name": "Acid"
-          }
-        },
-        "uses": {
-          "spent": 0,
-          "recovery": [],
-          "max": ""
-        },
-        "description": {
-          "value": "",
-          "chat": ""
-        },
-        "identifier": "new-spell",
-        "source": {
-          "revision": 1,
-          "rules": "2024"
-        },
-        "activation": {
-          "type": "action",
-          "value": null,
-          "condition": ""
-        },
-        "duration": {
-          "units": "inst"
-        },
-        "level": 0,
-        "materials": {
-          "value": "",
-          "consumed": false,
-          "cost": 0,
-          "supply": 0
-        },
-        "preparation": {
-          "mode": "prepared",
-          "prepared": true
-        },
-        "properties": [],
-        "range": {
-          "units": "any",
-          "special": ""
-        },
-        "school": "",
-        "target": {
-          "template": {
-            "contiguous": false,
-            "units": "ft",
-            "type": ""
-          },
-          "affects": {
-            "choice": false,
-            "count": "100",
-            "type": "any",
-            "special": ""
-          }
-        },
-        "ability": "",
-        "sourceClass": ""
-      },
-      "effects": [],
-      "folder": null,
-      "sort": 0,
-      "ownership": {
-        "default": 0,
-        "6yhz13iFYYklKtgA": 3
-      },
-      "flags": {
-        "midi-qol": {
-          "rollAttackPerTarget": "default",
-          "removeAttackDamageButtons": "default",
-          "itemCondition": "",
-          "reactionCondition": "",
-          "otherCondition": "",
-          "effectCondition": ""
-        },
-        "midiProperties": {
-          "autoFailFriendly": false,
-          "autoSaveFriendly": false,
-          "magicdam": false,
-          "magiceffect": false,
-          "noConcentrationCheck": false,
-          "toggleEffect": false,
-          "ignoreTotalCover": false
-        },
-        "dnd5e": {
-          "riders": {
-            "activity": [],
-            "effect": []
-          },
-          "last": {
-            "4oCrbUt3vvmLROqr": {
-              "damageType": {
-                "0": "acid"
-              }
-            }
-          }
-        }
-      },
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "coreVersion": "13.351",
-        "systemId": "dnd5e",
-        "systemVersion": "4.4.2",
-        "createdTime": null,
-        "modifiedTime": 1748477792320,
-        "lastModifiedBy": "6yhz13iFYYklKtgA",
-        "exportSource": null
-      },
-      "_key": "!actors.items!7vOYBKZ0yWut0zCw.q21EYxdRrx0nnQ4O"
+      "_key": "!actors.items!7vOYBKZ0yWut0zCw.ubEbTKwOxZ2HkxxE"
     }
   ],
   "effects": [],
@@ -1162,9 +1111,9 @@
     "duplicateSource": null,
     "coreVersion": "13.351",
     "systemId": "dnd5e",
-    "systemVersion": "4.4.2",
+    "systemVersion": "5.2.4",
     "createdTime": 1748462118612,
-    "modifiedTime": 1748462118612,
+    "modifiedTime": 1767448760783,
     "lastModifiedBy": "6yhz13iFYYklKtgA",
     "exportSource": null
   },

@@ -51,6 +51,7 @@ async function applyPatches() {
     if (!game.user?.isTheGM) {
         return;
     }
+    await combat.ensureAdhocActor();
     await removeCoreStatusId();
 }
 

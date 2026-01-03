@@ -1,3 +1,8 @@
+# v13.5.1
+# New Features
+- Adhoc Damage is now applied as non-spell damage.
+# Bug Fixes
+- Dialog for bane weapon should now be centered on screen.
 # v13.5.0
 # New Features
 - Foundry v13 Support
@@ -720,6 +725,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
