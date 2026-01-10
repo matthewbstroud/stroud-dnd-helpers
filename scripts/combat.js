@@ -285,6 +285,10 @@ async function createAdhocItem(adhocDamageType, damageType, damageDice, diceCoun
         }
     }
     await activity.update(changes);
+    if (activity.workflow) {
+
+        await MidiQOL.Workflow.removeWorkflow(activity.workflow.id);
+    }
     return item;
 }
 
