@@ -216,7 +216,7 @@ export let heroicManeuvers = {
         if (!challengeRating) return;
         const dc = await heroicManeuversImp.getDC(challengeRating);
         if (!dc) return;
-        const skillCheck = await tokens.rollSkillCheck(controlledToken, skill, dc, `Heroic Maneuver: ${CONFIG.DND5E.skills[skill].label} (DC${dc})`, false);
+        const skillCheck = await tokens.requestSkillCheck(controlledActor, skill, dc, `Heroic Maneuver: ${CONFIG.DND5E.skills[skill].label} (DC${dc})`, false);
         if (!skillCheck) {
             return;
         }
