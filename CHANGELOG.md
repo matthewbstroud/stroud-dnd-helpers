@@ -1,3 +1,9 @@
+# v13.5.4
+# New Features
+- See Invisibility should actually grant see invisible.
+- Added Mace of Terror
+# Bug Fixes
+- Fix issue where Heroic Maneuvers were not prompting player for the roll.
 # v13.5.3
 # Bug Fixes
 - Fixed weird targeting bug with AdHoc damage.
@@ -731,6 +737,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

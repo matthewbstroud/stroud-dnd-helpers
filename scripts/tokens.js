@@ -3,6 +3,7 @@ import { dialog } from "./dialog/dialog.js";
 import { sdndSettings } from "./settings.js";
 import { actors } from "./actors/actors.js";
 import { scene } from "./utility/scene.js";
+import { socket } from "./module.js";
 
 export let tokens = {
     "manageTokens": foundry.utils.debounce(manageTokens, 250),
@@ -157,39 +158,59 @@ export let tokens = {
         if (playerOwners.length > 0) return useId ? playerOwners[0] : game.users.get(playerOwners[0]);
         return useId ? this.gmID() : game.users.get(this.gmID());
     },
-    "rollSkillCheck": async function _rollSkillCheck(token, skill, dc, flavor, fastForward) {
-        let actor = token.actor ?? token;
-        let skill5e = dnd5e.config.skills[skill];
-        flavor = flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
-        fastForward = fastForward ?? true;
-        let options = {
-            targetValue: dc,
-            fastForward: fastForward,
-            chatMessage: true,
-            flavor: flavor
-        };
-
-        let roll = await actor.rollSkill(skill, options);
-        if (!roll) {
+    "requestSkillCheck": async function _requestSkillCheck(actor, skill, dc, flavor, fastForward) {
+        if (!actor) {
+            ui.notifications.error(`Actor not found for skill check request.`);
             return null;
         }
-        const bonus = actor.system.skills[skill]?.total ?? 0;
-        const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
-        const minPossible = bonus + 1;
-        const maxPossible = bonus + 20;
-        const averageRoll = Math.floor((minPossible + maxPossible) / 2);
-        const actualRoll = roll.total - bonus;
-        return {
-            "isCritical": roll.isCritical,
-            "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
-            "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
-            "total": roll.total,
-            "chanceOfSuccess": chanceOfSuccess,
-            "averageRoll": averageRoll,
-            "actualRoll": actualRoll,
-        };
+        let user = MidiQOL.playerForActor(actor);
+        if (!user || !user.active) {
+            user = game.user;
+        }
+        return await socket.executeAsUser("rollSkillCheckImp", user.id, actor.uuid, skill, dc, flavor, fastForward);
+    },
+    "rollSkillCheck": async function _rollSkillCheck(token, skill, dc, flavor, fastForward) {
+        let actor = token.actor ?? token;
+        return await rollSkillCheckImp(actor.uuid, skill, dc, flavor, fastForward);
     }
 };
+
+export async function rollSkillCheckImp(actorUuid, skill, dc, flavor, fastForward) {
+    let actor = await fromUuid(actorUuid);
+    if (!actor) {
+        ui.notifications.error(`Actor not found for skill check.`);
+        return null;
+    }
+    let skill5e = dnd5e.config.skills[skill];
+    flavor = flavor ?? `(DC ${dc}) check against ${skill5e.label}`;
+    fastForward = fastForward ?? true;
+    let options = {
+        targetValue: dc,
+        fastForward: fastForward,
+        chatMessage: true,
+        flavor: flavor
+    };
+
+    let roll = await actor.rollSkill(skill, options);
+    if (!roll) {
+        return null;
+    }
+    const bonus = actor.system.skills[skill]?.total ?? 0;
+    const chanceOfSuccess = ((21 - dc + bonus) / 20) * 100;
+    const minPossible = bonus + 1;
+    const maxPossible = bonus + 20;
+    const averageRoll = Math.floor((minPossible + maxPossible) / 2);
+    const actualRoll = roll.total - bonus;
+    return {
+        "isCritical": roll.isCritical,
+        "isSuccess": (roll.isCritical || (roll.options?.success ?? roll.isSuccess ?? (roll.total >= dc))),
+        "isFumble": (roll.isFumble ?? (actualRoll <= 1)),
+        "total": roll.total,
+        "chanceOfSuccess": chanceOfSuccess,
+        "averageRoll": averageRoll,
+        "actualRoll": actualRoll,
+    };
+}
 
 function findPlayersInScenes(scenes, playerFolderId) {
     let playerTokenIds = [];

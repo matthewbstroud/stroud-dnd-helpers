@@ -91,7 +91,30 @@ export let actors = {
         ChatMessage.create(messageData).then(() => {
             chat.viewLastMessage();
         });
+    },
+    "rollSave": _rollSave
+}
+
+async function _rollSave(actor, abilityAbbr, dc, effectName) {
+    if (!actor || !abilityAbbr || !dc) {
+        return;
     }
+    const ability = dnd5e.config.abilities[abilityAbbr];
+    const config = {
+        ability: ability.abbreviation,
+        target: dc
+    };
+    const dialog = {
+        configure: false
+    };
+    const message = {
+        create: true,
+        data: {
+            flavor: `(DC ${dc}) ${ability.label} save against ${effectName}.`
+        }
+    };
+    const rolls = await actor.rollSavingThrow(config, dialog, message);
+    return rolls?.[0];
 }
 
 /**
