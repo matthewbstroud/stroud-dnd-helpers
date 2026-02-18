@@ -11,5 +11,6 @@
     "sdnd.compendium.entry.context.normalizeSystemIdentifier":  "Normalize System Identifier",
     "sdnd.compendium.entry.context.removeUnusedActors":  "Remove Unused Actors From World",
     "sdnd.compendium.entry.context.removeUnusedItems":  "Remove Unused Items From World",
-    "sdnd.primary":  "Primary"
+    "sdnd.primary":  "Primary",
+    "sdnd.usable": "Usable"
 }
