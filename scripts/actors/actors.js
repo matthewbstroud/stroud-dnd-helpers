@@ -92,7 +92,8 @@ export let actors = {
             chat.viewLastMessage();
         });
     },
-    "rollSave": _rollSave
+    "rollSave": _rollSave,
+    "onTabChange": changeTab
 }
 
 async function _rollSave(actor, abilityAbbr, dc, effectName) {
@@ -124,11 +125,11 @@ async function _rollSave(actor, abilityAbbr, dc, effectName) {
  */
 function formatActorScenes(actorData) {
     if (!actorData) return '';
-    
+
     const isSingleActor = actorData.length === 1;
-    
+
     const formatSingleActor = (data) => {
-        const sceneList = data.scenes.length === 0 
+        const sceneList = data.scenes.length === 0
             ? '<p>No scenes found for this actor.</p>'
             : `<ol style="list-style-type: disc; padding-left: 20px;">
                 ${data.scenes.map(scene => `<li>${scene}</li>`).join('')}
@@ -142,7 +143,7 @@ function formatActorScenes(actorData) {
     };
 
     const formattedActors = actorData
-        .map(actor => isSingleActor 
+        .map(actor => isSingleActor
             ? formatSingleActor(actor)
             : `<li>${formatSingleActor(actor)}</li>`
         )
@@ -220,13 +221,13 @@ async function removeUnusedActors(actorIds, source) {
     }
     console.log(orphaned.map(o => o.name).join(","));
     const totalOrphans = orphaned.length;
-    const progress = ui.notifications.info("Removing orphaned actors...", {progress: true, permanent: false});
+    const progress = ui.notifications.info("Removing orphaned actors...", { progress: true, permanent: false });
     for (let i = 0; i < orphaned.length; i++) {
         console.log(`Deleting ${orphaned[i].name} from world...`);
-        progress.update({pct: i / totalOrphans, message: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}`});
+        progress.update({ pct: i / totalOrphans, message: `Removing '${orphaned[i].name}' ${i + 1} of ${totalOrphans}` });
         await orphaned[i].delete();
     }
-    progress.update({pct: 1.0, message: `Removed ${totalOrphans} orphaned actors`});
+    progress.update({ pct: 1.0, message: `Removed ${totalOrphans} orphaned actors` });
     await utility.removeEmptyFolders("Actor");
 }
 
@@ -337,9 +338,9 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         return;
     }
     const totalNpcs = npcs.length;
-    const progress = ui.notifications.info(`${BUFF_NPC}s...`, {progress: true, permanent: false});
+    const progress = ui.notifications.info(`${BUFF_NPC}s...`, { progress: true, permanent: false });
     for (let i = 0; i < npcs.length; i++) {
-        progress.update({pct: i / totalNpcs, message: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}`});
+        progress.update({ pct: i / totalNpcs, message: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}` });
         let npc = npcs[i];
         const hp = npc.system?.attributes?.hp;
         let actorUpdateRequired = false;
@@ -394,7 +395,7 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         }
 
     }
-    progress.update({pct: 1.0, message: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs} complete`});
+    progress.update({ pct: 1.0, message: `${BUFF_NPC}s: ${totalNpcs} of ${totalNpcs} complete` });
 }
 
 export function getAverageHpFormula(formula) {
@@ -650,7 +651,7 @@ async function promptForSpellOverrides(actor, overrideableItems, overriddenItems
       <br/><br/>
     </form>
     `;
-    
+
     const result = await foundry.applications.api.DialogV2.wait({
         window: { title: "SDND Spell/Feature Overrides" },
         content: form,
@@ -687,62 +688,6 @@ async function promptForSpellOverrides(actor, overrideableItems, overriddenItems
     if (result.length > 0) {
         overrideSpells(actor, result);
     }
-}
-
-function renderSheet(sheet, form, data) {
-    let actor = data?.actor;
-    if (actor?.type != "character") {
-        return;
-    }
-    let filterEnabled = actor.getFlag(sdndConstants.MODULE_ID, "filterSpellsByUsable");
-    $("div.tab.spells").find("ul.filter-list").append(`<li><button type="button" class="filter-item ${filterEnabled ? 'active' : ''}" data-filter="usable" id="usableFilter">Usable</button></li>`);
-    $("#usableFilter").click(toggleFilter);
-    $("div.tab.spells button[data-action='clear']").click(clearFilters);
-    if (filterEnabled) {
-        applyUsableFilter(actor, filterEnabled);
-    }
-}
-
-const allowPrepModes = ['innate', 'atwill', 'always'];
-
-function applyUsableFilter(actor, enabled) {
-    if (!enabled) {
-        $("section.spells-list li.item").removeAttr("hidden", "hidden");
-        return;
-    }
-    let usableSpellIds = actor.items
-        .filter(
-            i => i.type == "spell" && (i.system.level == 0 || i.system.preparation?.prepared || allowPrepModes.includes(i.system.preparation?.mode) ||
-                (i.system.properties.has("ritual") && actor.classes?.wizard))
-        ).map(i => `li[data-item-id='${i._id}']`)
-        ?.join(", ") ?? "";
-    $("section.spells-list li.item").attr("hidden", "hidden");
-    $(usableSpellIds).removeAttr("hidden");
-}
-
-function toggleFilter(event) {
-    const actorId = $("div.sheet.actor.character")?.attr("id")?.split("-")?.pop();
-    if (!actorId || actorId.length == 0) {
-        ui.notifications.error("Failed to determine sheet's actor id!");
-        return;
-    }
-    let actor = game.actors.get(actorId);
-    let button = $(event.target);
-    if (!button) {
-        ui.notifications.error("Couldn't find the usable filter button!");
-        return;
-    }
-    button.toggleClass("active");
-    let active = button.hasClass("active");
-    actor.setFlag(sdndConstants.MODULE_ID, "filterSpellsByUsable", active);
-    applyUsableFilter(actor, active);
-}
-
-function clearFilters(event) {
-    const actorId = $("div.sheet.actor.character")?.attr("id")?.split("-")?.pop();
-    $("#usableFilter").removeClass("active");
-    game.actors.get(actorId)?.setFlag(sdndConstants.MODULE_ID, "filterSpellsByUsable", false);
-    applyUsableFilter(false);
 }
 
 async function promptForBuff(callback) {
@@ -880,7 +825,7 @@ async function promptForBuff(callback) {
         rejectClose: false,
         modal: true
     });
-    
+
     if (result) {
         callback("npc", result.useMax, result.buffMultiplier, result.hitBonus, result.damageBonus, result.acBonus, result.dcBonus);
     }
