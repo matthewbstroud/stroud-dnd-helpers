@@ -8,6 +8,7 @@ import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { toolsHandler } from './hookHandlers/toolsHandler.js';
 import { ringOfBlooming } from './items/trinkets/ringOfBlooming.js';
+import { customFilters } from './customFilters.js';
 
 export let hooks = {
     "init": async function _init() {
@@ -29,7 +30,7 @@ export let hooks = {
             setting.choices = options;
 
         }
-        Hooks.on('renderActorSheet', actors.renderSheet);
+        Hooks.on("dnd5e.filterItem", customFilters.filterUsableSpells);
         await backpacks.hooks.ready();
         await harvesting.hooks.ready();
         await ringOfBlooming.Ready();
@@ -38,13 +39,13 @@ export let hooks = {
 };
 
 function insertHeaderButtons(app, buttons) {
-  if (app.document instanceof foundry.documents.BaseActor) {
-    createActorHeaderButton(app, buttons);
-    return;
-  }
-  if (app.document instanceof foundry.documents.BaseItem) {
-    return createWeaponHeaderButton(app, buttons);
-  }
+    if (app.document instanceof foundry.documents.BaseActor) {
+        createActorHeaderButton(app, buttons);
+        return;
+    }
+    if (app.document instanceof foundry.documents.BaseItem) {
+        return createWeaponHeaderButton(app, buttons);
+    }
 }
 
 async function applyPatches() {

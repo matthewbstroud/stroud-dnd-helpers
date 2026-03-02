@@ -386,7 +386,7 @@
               "opacity": 0.25,
               "playbackRate": 1,
               "playOn": "source",
-              "size": 16,
+              "size": 12,
               "tint": false,
               "tintColor": "#FFFFFF",
               "tintSaturate": 0,
@@ -508,7 +508,7 @@
         "systemId": "dnd5e",
         "systemVersion": "4.4.2",
         "createdTime": null,
-        "modifiedTime": 1754492979980,
+        "modifiedTime": 1771389237596,
         "lastModifiedBy": "6yhz13iFYYklKtgA",
         "exportSource": null
       },

@@ -24,20 +24,22 @@ import { actors } from './actors/actors.js';
 import { plants } from './plants/plants.js';
 import { mounts } from './mounts/mounts.js';
 import { rollSkillCheckImp } from './tokens.js';
+import { customFilters } from './customFilters.js';
 // CONFIG.debug.hooks = true;
 
 export let socket;
 
-Hooks.once('init', async function() {
+Hooks.once('init', async function () {
 	await hooks.init();
+	await customFilters.prepareSpellListFilters();
 });
 
-Hooks.once('socketlib.ready', async function() {
+Hooks.once('socketlib.ready', async function () {
 	socket = socketlib.registerModule(sdndConstants.MODULE_ID);
 	gmFunctions.registerFunctions(socket);
 	socket.register('rollSkillCheckImp', rollSkillCheckImp);
 });
-Hooks.once('ready', async function() {
+Hooks.once('ready', async function () {
 	sdndSettings.registerSettings();
 	await hooks.ready()
 	console.log("Loaded Stroud's DnD Helpers");
