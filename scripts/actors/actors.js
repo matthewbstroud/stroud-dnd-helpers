@@ -18,7 +18,6 @@ export let actors = {
     "buffNpcs": async function _buffNpcs(useMax, multiplier) {
         return buffActors("npc", useMax, multiplier)
     },
-    "renderSheet": renderSheet,
     "setPrototypeTokenBarsVisibility": setPrototypeTokenBarsVisibility,
     "setTokenBarsVisibility": setTokenBarsVisibility,
     "replaceSpells": replaceSpells,
@@ -92,8 +91,7 @@ export let actors = {
             chat.viewLastMessage();
         });
     },
-    "rollSave": _rollSave,
-    "onTabChange": changeTab
+    "rollSave": _rollSave
 }
 
 async function _rollSave(actor, abilityAbbr, dc, effectName) {

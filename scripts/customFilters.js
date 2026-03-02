@@ -17,12 +17,17 @@ export let customFilters = {
     "filterUsableSpells": function _filterUsableSpells(sheet, item, filters) {
         if (!filters.has("usable")) return;
         if (item.type !== "spell") return;
-
+        const actor = item.parent;
         const prepared = item.system.canPrepare && !!item.system.prepared;
         const ritual = item.system.properties?.has("ritual");
         const atWill = item.system.method === "atwill";
         const innate = item.system.method === "innate";
 
-        return (prepared || ritual || atWill || innate);
+        // Wizards can cast ritual spells without preparing them
+        const spellIsWizard = item.system.sourceClass === "wizard";
+        const actorHasWizard = "wizard" in actor.classes;
+        const ritualUsable = (spellIsWizard && actorHasWizard && ritual) || (ritual && prepared);
+
+        return (prepared || ritualUsable || atWill || innate);
     }
 }
