@@ -341,8 +341,13 @@ async function buffActors(actorType, useMax, multiplier, hitBonus, damageBonus, 
         progress.update({ pct: i / totalNpcs, message: `${BUFF_NPC}s: ${i + 1} of ${npcs.length}` });
         let npc = npcs[i];
         const hp = npc.system?.attributes?.hp;
+        const hpFormula = hp?.formula;
+        if (typeof hpFormula !== "string" || hpFormula.trim().length === 0) {
+            console.log(`Skipping ${npc.name}: hp.formula is blank.`);
+            continue;
+        }
         let actorUpdateRequired = false;
-        const rollFormula = useMax ? hp.formula.replace("d", "*") : getAverageHpFormula(hp.formula);
+        const rollFormula = useMax ? hpFormula.replace("d", "*") : getAverageHpFormula(hpFormula);
         let maxHp = Math.floor(eval(rollFormula));
         if (isNaN(maxHp)) {
             maxHp = hp.max;
