@@ -1,3 +1,8 @@
+# v13.5.7
+# New Features
+- Add new feature description here.
+# Bug Fixes
+- Buff NPCs shouldn't buff any actor that has no hp roll formula.
 # v13.5.6
 # New Features
 - Buff NPCs will remember your last settings.
@@ -744,6 +749,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
