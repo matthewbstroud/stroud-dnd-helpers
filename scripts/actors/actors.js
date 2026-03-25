@@ -688,9 +688,54 @@ async function promptForSpellOverrides(actor, overrideableItems, overriddenItems
     }
 }
 
+function getDefaultNpcBuffValues() {
+    return {
+        useMax: true,
+        buffMultiplier: 1.0,
+        hitBonus: 0,
+        damageBonus: 0,
+        acBonus: 0,
+        dcBonus: 0
+    };
+}
+
+function getCurrentNpcBuffDefaults() {
+    const defaults = getDefaultNpcBuffValues();
+    const currentBuffFlag = game.user?.getFlag(sdndConstants.MODULE_ID, "CurrentNPCBuff");
+    if (!currentBuffFlag) {
+        return defaults;
+    }
+    try {
+        const parsed = typeof currentBuffFlag === "string" ? JSON.parse(currentBuffFlag) : currentBuffFlag;
+        return {
+            useMax: parsed?.useMax ?? defaults.useMax,
+            buffMultiplier: numbers.toNumber(parsed?.buffMultiplier) ?? defaults.buffMultiplier,
+            hitBonus: numbers.toNumber(parsed?.hitBonus) ?? defaults.hitBonus,
+            damageBonus: numbers.toNumber(parsed?.damageBonus) ?? defaults.damageBonus,
+            acBonus: numbers.toNumber(parsed?.acBonus) ?? defaults.acBonus,
+            dcBonus: numbers.toNumber(parsed?.dcBonus) ?? defaults.dcBonus
+        };
+    }
+    catch (error) {
+        console.warn("Failed to parse saved CurrentNPCBuff flag.", error);
+        return defaults;
+    }
+}
+
+async function saveCurrentNpcBuffDefaults(result) {
+    if (!result) {
+        return;
+    }
+    await game.user?.setFlag(sdndConstants.MODULE_ID, "CurrentNPCBuff", JSON.stringify(result));
+}
+
 async function promptForBuff(callback) {
     let title = `Buff NPCs`;
     let label = 'Save';
+    const defaults = getCurrentNpcBuffDefaults();
+
+    const useMaxYesSelected = defaults.useMax ? "selected" : "";
+    const useMaxNoSelected = defaults.useMax ? "" : "selected";
     // ensure that the inputs in diaglogHtml align with each other
     const dialogHtml = `
 <style>
@@ -745,8 +790,8 @@ async function promptForBuff(callback) {
 <div class="form-grid">
     <label for="buffUseMax" class="form-label">Use Max:</label>
     <select name="buffUseMax" id="buffUseMax" class="form-input">
-        <option value="True" selected>Yes</option>
-        <option value="False">No</option>
+        <option value="True" ${useMaxYesSelected}>Yes</option>
+        <option value="False" ${useMaxNoSelected}>No</option>
     </select>
     <div class="tooltip form-tooltip">
         <i class="fa-solid fa-circle-info"></i>
@@ -754,35 +799,35 @@ async function promptForBuff(callback) {
     </div>
 
     <label for="buffMultiplier" class="form-label">Multiplier:</label>
-    <input type="number" id="buffMultiplier" name="buffMultiplier" value="1.0" min="0.1" class="form-input" />
+    <input type="number" id="buffMultiplier" name="buffMultiplier" value="${defaults.buffMultiplier}" min="0.1" class="form-input" />
     <div class="tooltip form-tooltip">
         <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">1.5 would increase by 50%<br/>0.5 would decrease by 50%</span>
     </div>
 
     <label for="buffHitBonus" class="form-label">Hit Bonus:</label>
-    <input type="number" id="buffHitBonus" name="buffHitBonus" value="0" class="form-input" />
+    <input type="number" id="buffHitBonus" name="buffHitBonus" value="${defaults.hitBonus}" class="form-input" />
     <div class="tooltip form-tooltip">
         <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to hit.</span>
     </div>
 
     <label for="buffDamageBonus" class="form-label">Damage Bonus:</label>
-    <input type="number" id="buffDamageBonus" name="buffDamageBonus" value="0" class="form-input" />
+    <input type="number" id="buffDamageBonus" name="buffDamageBonus" value="${defaults.damageBonus}" class="form-input" />
     <div class="tooltip form-tooltip">
         <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to damage.</span>
     </div>
 
     <label for="buffAcBonus" class="form-label">Armor Bonus:</label>
-    <input type="number" id="buffAcBonus" name="buffAcBonus" value="0" class="form-input" />
+    <input type="number" id="buffAcBonus" name="buffAcBonus" value="${defaults.acBonus}" class="form-input" />
     <div class="tooltip form-tooltip">
         <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to armor class.</span>
     </div>
 
     <label for="buffDcBonus" class="form-label">DC Bonus:</label>
-    <input type="number" id="buffDcBonus" name="buffDcBonus" value="0" class="form-input" />
+    <input type="number" id="buffDcBonus" name="buffDcBonus" value="${defaults.dcBonus}" class="form-input" />
     <div class="tooltip form-tooltip">
         <i class="fa-solid fa-circle-info"></i>
         <span class="tooltiptext">Bonus to spell DC.</span>
@@ -824,7 +869,8 @@ async function promptForBuff(callback) {
         modal: true
     });
 
-    if (result) {
+    if (result && result !== "no") {
+        await saveCurrentNpcBuffDefaults(result);
         callback("npc", result.useMax, result.buffMultiplier, result.hitBonus, result.damageBonus, result.acBonus, result.dcBonus);
     }
 }

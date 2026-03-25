@@ -1,3 +1,6 @@
+# v13.5.6
+# New Features
+- Buff NPCs will remember your last settings.
 # v13.5.5
 # Bug Fixes
 - Fix usable spell filter (prepared, ritual, at will, innate).
@@ -741,6 +744,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
