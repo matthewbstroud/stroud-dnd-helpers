@@ -336,6 +336,15 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("createBloom", tokenUuid, spellLevel)
         );
     },
+    "resetFogOfWar": async function _resetFogOfWar(sceneId) {
+        if (!sceneId) {
+            return 0;
+        }
+        return run(
+            async () => await resetFogOfWar(sceneId),
+            async () => await socket.executeAsGM("resetFogOfWar", sceneId)
+        );
+    },
 };
 
 function selectToken(tokenId) {
@@ -345,6 +354,17 @@ function selectToken(tokenId) {
     }
     let token = canvas.tokens.get(tokenId);
     token.control({ releaseOthers: true });
+}
+
+async function resetFogOfWar(sceneId) {
+    if (!sceneId) {
+        return 0;
+    }
+
+    // Match the built-in Lighting control behavior: emit the resetFog socket event.
+    // This clears fog exploration for all users for the target scene, including offline users.
+    game.socket.emit("resetFog", sceneId);
+    return 1;
 }
 
 export async function importFromCompedium(type, packId, packItemId, parentFolderName) {

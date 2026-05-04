@@ -1,0 +1,179 @@
+{
+  "_id": "98S77Pq5R4K5NZyt",
+  "name": "OSD Shield (+2)",
+  "type": "equipment",
+  "img": "modules/stroud-dnd-helpers/images/items/silver_dragon_shield.webp",
+  "system": {
+    "description": {
+      "value": "<p>This shield once belonged to the Order of the Silver Dragon.  The bearer will receive warnings of things to come.</p>",
+      "chat": ""
+    },
+    "source": {
+      "custom": "",
+      "book": "",
+      "page": "",
+      "license": "CC-BY-4.0",
+      "rules": "2014",
+      "revision": 1
+    },
+    "quantity": 1,
+    "weight": {
+      "value": 6,
+      "units": "lb"
+    },
+    "price": {
+      "value": 6000,
+      "denomination": "gp"
+    },
+    "attunement": "required",
+    "equipped": false,
+    "rarity": "rare",
+    "identified": true,
+    "cover": null,
+    "uses": {
+      "max": "",
+      "spent": 0,
+      "recovery": []
+    },
+    "armor": {
+      "value": 2,
+      "dex": null,
+      "magicalBonus": 2
+    },
+    "hp": {
+      "value": 0,
+      "max": 0,
+      "dt": null,
+      "conditions": ""
+    },
+    "speed": {
+      "value": null,
+      "conditions": "",
+      "units": "ft"
+    },
+    "strength": null,
+    "proficient": null,
+    "type": {
+      "value": "shield",
+      "baseItem": "shield"
+    },
+    "unidentified": {
+      "description": "<p>A shield is made from wood or metal and is carried in one hand. Wielding a shield increases your Armor Class by 2. You can benefit from only one shield at a time.</p>",
+      "name": "Unidentified Shield"
+    },
+    "container": null,
+    "properties": [
+      "mgc"
+    ],
+    "activities": {},
+    "attuned": false,
+    "identifier": "shield-2",
+    "crew": {
+      "value": []
+    }
+  },
+  "effects": [
+    {
+      "name": "Dragon Whisper",
+      "img": "modules/stroud-dnd-helpers/images/items/silver_dragon_shield.webp",
+      "origin": "Item.98S77Pq5R4K5NZyt",
+      "_id": "CwTRwONDczUzkc42",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.attributes.init.bonus",
+          "mode": 2,
+          "value": "2",
+          "priority": 20
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {
+        "dnd5e": {
+          "riders": {
+            "statuses": []
+          }
+        },
+        "dae": {
+          "disableCondition": "",
+          "stackable": "noneName",
+          "showIcon": false,
+          "disableIncapacitated": false,
+          "durationExpression": "",
+          "macroRepeat": "none",
+          "specialDuration": []
+        },
+        "core": {
+          "overlay": false
+        },
+        "ActiveAuras": {
+          "isAura": false,
+          "aura": "All",
+          "nameOverride": "",
+          "radius": "",
+          "alignment": "",
+          "type": "",
+          "customCheck": "",
+          "ignoreSelf": false,
+          "height": false,
+          "hidden": false,
+          "displayTemp": false,
+          "hostile": false,
+          "onlyOnce": false,
+          "wallsBlock": "system",
+          "statuses": []
+        }
+      },
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "dnd5e",
+        "systemVersion": "5.2.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!98S77Pq5R4K5NZyt.CwTRwONDczUzkc42"
+    }
+  ],
+  "folder": "dwGos7v1Rk8Wc3I5",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "flags": {
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
+  },
+  "_stats": {
+    "duplicateSource": null,
+    "exportSource": null,
+    "compendiumSource": "Compendium.dnd5e.items.Item.xzZQIIxXjNJwNqnp",
+    "coreVersion": "13.351",
+    "systemId": "dnd5e",
+    "systemVersion": "5.2.4",
+    "createdTime": 1775433801516,
+    "modifiedTime": 1775434027596,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
+  },
+  "_key": "!items!98S77Pq5R4K5NZyt"
+}

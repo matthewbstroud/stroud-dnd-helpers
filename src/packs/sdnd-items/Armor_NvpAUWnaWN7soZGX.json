@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": "JMu5FYOOaPu6qRK5",
+  "name": "Armor",
+  "color": null,
+  "sorting": "a",
+  "_id": "NvpAUWnaWN7soZGX",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "dnd5e",
+    "systemVersion": "5.2.4",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!NvpAUWnaWN7soZGX"
+}

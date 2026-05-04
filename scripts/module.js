@@ -13,6 +13,7 @@ import { money } from './money/money.js';
 import { music } from './playlists.js';
 import { sdndConstants } from './constants.js';
 import { sdndSettings } from './settings.js';
+import { scene } from './utility/scene.js';
 import { spells } from './spells/spells.js';
 import { tokens } from './tokens.js';
 import { macros } from './macros/macros.js';
@@ -67,5 +68,6 @@ globalThis['stroudDnD'] = {
 	spells,
 	tagging,
 	tokens,
+	scene,
 	utility
 }

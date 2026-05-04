@@ -8,6 +8,7 @@ import { bullseyeLantern } from "./bullseye.js";
 
 export let lighting = {
     "fireplace": fireplace,
+    "resetFogOfWar": resetFogOfWar,
     "lights": {
         "update": foundry.utils.debounce(updateLights, 250)
     },
@@ -22,6 +23,15 @@ export let lighting = {
         "ipPreClickItemPile": ipPreClickItemPile,
     }
 };
+
+async function resetFogOfWar(sceneId) {
+    sceneId ??= canvas.scene?.id;
+    if (!sceneId) {
+        ui.notifications.warn("No scene provided to reset fog of war.");
+        return;
+    }
+    let removed = await gmFunctions.resetFogOfWar(sceneId);
+}
 
 function ipPreClickItemPile(target, interactingActor) {
     // is this a light?

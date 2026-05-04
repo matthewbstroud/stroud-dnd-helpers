@@ -1,6 +1,12 @@
-# v13.5.7
+# v13.5.8
 # New Features
-- Add new feature description here.
+- Default Door States.
+- Reset fog of war for all scenes under a folder.
+- Order of the Silver Dragon Shield
+# Bug Fixes
+- Fix the way fireplaces store triggers.
+- Fix unlit torch action
+# v13.5.7
 # Bug Fixes
 - Buff NPCs shouldn't buff any actor that has no hp roll formula.
 # v13.5.6
@@ -749,6 +755,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
