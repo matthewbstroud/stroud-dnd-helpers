@@ -66,6 +66,7 @@ async function _applyAdhocDamageDirect(damageType, damageDice, diceCount, allowS
         ui.notifications.error("You must select a save ability, DC, and damage on save option when allowing saves.");
         return;
     }
+    targets ??= game.user.targets;
     const damageData = {
         "adhocDamageType": allowSave ? "Damage" : "Unavoidable Damage",
         "damageType": damageType,
@@ -151,7 +152,7 @@ async function toggleMidiSetting(settingName, offValue, defaultValue, enable) {
 }
 
 function getSortedNames(targets) {
-    let sortedNames = targets.map(t => t.name).sort();
+    let sortedNames = Array.from(targets.map(t => t.name)).sort();
     let targetNames = sortedNames.slice(0, sortedNames.length - 1).join(`, `);
     if (sortedNames.length > 1) {
         targetNames += ` and ${sortedNames[sortedNames.length - 1]} have`;
@@ -416,7 +417,9 @@ async function applyAdhocDamage(damageData) {
     }
     adHocDamage.logFunction(inputData);
     const { adhocDamageType, damageType, damageDice, diceCount, saveData } = inputData;
-    return await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets);
+    let result = await applyDamage(adhocDamageType, damageType, damageDice, diceCount, saveData, targets);
+    targets.forEach(token => token.setTarget(false, {releaseOthers: false}));
+    return result;
 }
 
 const _debouncedApplyAdhocDamage = foundry.utils.debounce(applyAdhocDamage, 250);

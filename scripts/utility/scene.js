@@ -6,6 +6,8 @@ export let scene = {
     "rewireMonksActiveTiles": foundry.utils.debounce(_rewireMonksActiveTiles, 250),
     "packModuleThumbnails": _packModuleThumbnails,
     "regenerateThumbnails": _regenerateThumbnails,
+    "setDoorDefaults": _setDoorDefaults,
+    "resetDoors": _resetDoors,
     "replaceInScenes": async function _replaceInScenes(searchPattern, replacement, previewOnly) {
         let updates = [];
         for (let scene of game.scenes) {
@@ -266,6 +268,55 @@ async function _rewireMonksActiveTiles() {
         });
     });
     ui.notifications.notify(`Processed tile count was ${tileCount}.`);
+}
+
+async function _setDoorDefaults(sceneDocument = null) {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return 0;
+    }
+    const targetScene = sceneDocument ?? canvas.scene;
+    if (!targetScene) {
+        ui.notifications.warn("No active scene found.");
+        return 0;
+    }
+    const doors = targetScene.walls.filter(wall => wall.door !== CONST.WALL_DOOR_TYPES.NONE);
+    if (!doors || doors.length === 0) {
+        ui.notifications.notify(`No doors found in scene ${targetScene.name}.`);
+        return 0;
+    }
+    await Promise.all(doors.map(door => door.setFlag(sdndConstants.MODULE_ID, "DefaultDoorState", door.ds)));
+    ui.notifications.notify(`Set DefaultDoorState for ${doors.length} doors in scene ${targetScene.name}.`);
+    return doors.length;
+}
+
+async function _resetDoors(sceneDocument = null) {
+    if (!game.user.isGM) {
+        ui.notifications.notify(`Can only be run by the gamemaster!`);
+        return 0;
+    }
+    const targetScene = sceneDocument ?? canvas.scene;
+    if (!targetScene) {
+        ui.notifications.warn("No active scene found.");
+        return 0;
+    }
+    const doorsWithDefaults = targetScene.walls.filter(wall => {
+        if (wall.door === CONST.WALL_DOOR_TYPES.NONE) {
+            return false;
+        }
+        const defaultState = wall.getFlag(sdndConstants.MODULE_ID, "DefaultDoorState");
+        return defaultState !== undefined && defaultState !== null;
+    });
+    if (!doorsWithDefaults || doorsWithDefaults.length === 0) {
+        ui.notifications.notify(`No doors with DefaultDoorState found in scene ${targetScene.name}.`);
+        return 0;
+    }
+    await Promise.all(doorsWithDefaults.map(async (door) => {
+        const defaultState = door.getFlag(sdndConstants.MODULE_ID, "DefaultDoorState");
+        await door.update({ "ds": defaultState });
+    }));
+    ui.notifications.notify(`Reset ${doorsWithDefaults.length} doors in scene ${targetScene.name}.`);
+    return doorsWithDefaults.length;
 }
 
 async function _packModuleThumbnails(moduleId) {

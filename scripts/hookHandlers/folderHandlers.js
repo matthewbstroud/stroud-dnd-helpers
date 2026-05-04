@@ -1,6 +1,7 @@
 import { actors } from "../actors/actors.js";
 import { scene } from "../utility/scene.js";
 import { tokens } from "../tokens.js";
+import { lighting } from "../lighting/lighting.js";
 
 class FolderContextOption {
     constructor(handler, label, icon, folderCallback, folderCondition) {
@@ -211,6 +212,46 @@ getSceneDirectoryFolderContext.AddContextOption(
         return folder?.type === "Scene" ;
     }
 );
+getSceneDirectoryFolderContext.AddContextOption(
+    "sdnd.scenes.folder.context.resetFogOfWar",
+    '<i class="fa-solid fa-cloud"></i>',
+    async (folder, li) => {
+        let scenes = await scene.getScenesByFolderId(folder.id);
+        let sceneIds = scenes.map(s => s.id).filter(id => !!id);
+        if (sceneIds.length == 0) {
+            ui.notifications.notify(`No scenes found under ${folder.name}.`);
+            return;
+        }
+        let resetCount = 0;
+        for (let sceneId of sceneIds) {
+            await lighting.resetFogOfWar(sceneId);
+            resetCount++;
+        }
+        ui.notifications.notify(`Reset fog of war for ${resetCount} scene${(resetCount == 1 ? '' : 's')}.`);
+    },
+    (folder, li) => {
+        return folder?.type === "Scene";
+    }
+);
+getSceneDirectoryFolderContext.AddContextOption(
+    "sdnd.scenes.folder.context.resetDoors",
+    '<i class="fa-solid fa-door-open"></i>',
+    async (folder, li) => {
+        let scenes = await scene.getScenesByFolderId(folder.id);
+        if (!scenes || scenes.length == 0) {
+            ui.notifications.notify(`No scenes found under ${folder.name}.`);
+            return;
+        }
+        let resetDoorCount = 0;
+        for (let sceneDoc of scenes) {
+            resetDoorCount += await scene.resetDoors(sceneDoc);
+        }
+        ui.notifications.notify(`Reset ${resetDoorCount} door${(resetDoorCount == 1 ? '' : 's')} across ${scenes.length} scene${(scenes.length == 1 ? '' : 's')}.`);
+    },
+    (folder, li) => {
+        return folder?.type === "Scene";
+    }
+);
 
 const getActorDirectoryFolderContext = new FolderHookHandler("getFolderContextOptions");
 getActorDirectoryFolderContext.AddContextOption(
@@ -265,6 +306,16 @@ getSceneDirectoryEntryContext.AddContextOption(
             return;
         }
         await scene.getActorsInScenes([entry]);
+    }
+);
+getSceneDirectoryEntryContext.AddContextOption(
+    "sdnd.scenes.entry.context.setDoorDefaults",
+    '<i class="fa-solid fa-door-closed"></i>',
+    async (entry, li) => {
+        if (!entry) {
+            return;
+        }
+        await scene.setDoorDefaults(entry);
     }
 );
 

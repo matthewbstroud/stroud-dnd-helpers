@@ -1,12 +1,12 @@
 import { guid } from "../utility/guid.js";
 import { sdndConstants } from "../constants.js";
-import { macros } from "../macros/macros.js";
 
+const TOGGLE_FIREPLACE_MACRO_UUID = "Compendium.stroud-dnd-helpers.SDND-GM-Macros.Macro.fmvUKqibTHufoKNq";
 export let fireplace = {
     "createFireplace": foundry.utils.debounce(_createFireplace, 250),
     "toggleFireplace": async function _toggleFireplace(fireplaceID) {
-        let light = canvas.scene.lights.find(l => l.getFlag("world", "fireplace") == fireplaceID);
-        let sound = canvas.scene.sounds.find(l => l.getFlag("world", "fireplace") == fireplaceID);
+        let light = canvas.scene.lights.find(l => l.getFlag(sdndConstants.MODULE_ID, "fireplace") == fireplaceID);
+        let sound = canvas.scene.sounds.find(l => l.getFlag(sdndConstants.MODULE_ID, "fireplace") == fireplaceID);
         if (light && sound) {
             let newState = !light.hidden;
             await light.update({ hidden: newState });
@@ -24,7 +24,8 @@ export let fireplace = {
             ui.notifications.notify(`Fireplace ${fireplaceID} does not exist in this scene.`);
         }
     },
-    "rewireFireplaces": foundry.utils.debounce(rewireFireplaces, 250)
+    "rewireFireplaces": foundry.utils.debounce(rewireFireplaces, 250),
+    "rewireAllFireplaces": foundry.utils.debounce(rewireAllFireplaces, 250)
 };
 
 async function _createFireplace() {
@@ -32,12 +33,11 @@ async function _createFireplace() {
         ui.notifications.error(`Can only be run by the gamemaster!`);
         return;
     }
-    await macros.ensureBTS();
-    await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, sdndConstants.FOLDERS.MACROS.BTS);
 
-    let toggleFireplaceMacro = game.macros.getName("toggleFireplace");
+    let toggleFireplaceMacro = await fromUuid(TOGGLE_FIREPLACE_MACRO_UUID);
+
     if (!toggleFireplaceMacro) {
-        ui.notifications.error(`toggleFireplace macro not loaded`);
+        ui.notifications.error(`Stroud DnD Helpers fireplace toggle macro is missing!`);
         return;
     }
 
@@ -61,14 +61,28 @@ async function _createFireplace() {
     createFireplace(guid.uuidv4(), fireplaceTile, lights[0], sounds[0], toggleFireplaceMacro);
 }
 
-async function rewireFireplaces() {
-    let fireplaces = await canvas.scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions?.find(a => a.data?.entity?.name == "toggleFireplace"));
-    await macros.ensureBTS();
-    let toggleFireplaceMacro = await ensureMacro("toggleFireplace", sdndConstants.PACKS.COMPENDIUMS.MACRO.GM, "Behind the Scenes");
+async function rewireAllFireplaces() {
+    for (let scene of game.scenes.contents) {
+        await rewireFireplaces(scene);
+    }
+}
+
+async function rewireFireplaces(scene) {
+
+    if (!scene) {
+        scene = canvas.scene;
+    }
+    let fireplaces = scene.tiles.filter(t => t.flags["monks-active-tiles"]?.actions?.find(a => a.data?.entity?.name == "toggleFireplace"));
+
+    if (fireplaces.length == 0) {
+        return;
+    }
+    console.log(`Scene ${scene.name}: found ${fireplaces.length} fireplaces to rewire.`);
+    let toggleFireplaceMacro = await fromUuid(TOGGLE_FIREPLACE_MACRO_UUID);
     if (!toggleFireplaceMacro) {
         return;
     }
-    let maxSort = Math.max(...canvas.scene.tiles.map(t => t.sort));
+    let maxSort = Math.max(...scene.tiles.map(t => t.sort));
     for (let fireplace of fireplaces) {
         let actions = fireplace.getFlag("monks-active-tiles", "actions");
         let scriptAction = actions.find(a => a.data.entity.name == "toggleFireplace");
@@ -76,31 +90,27 @@ async function rewireFireplaces() {
             continue;
         }
         scriptAction.data.entity.id = toggleFireplaceMacro.uuid;
-        fireplace.setFlag("monks-active-tiles", "actions", actions);
-
+        await fireplace.setFlag("monks-active-tiles", "actions", actions);
+        const args = scriptAction.data.args.split(" ");
+        const fireplaceGuid = args[0].replace(/"/g, '');
+        await transposeFlags(scene, fireplaceGuid);
         if (fireplace.texture.src.endsWith('custom_icons/Fireplace_Icon.webp') || fireplace.sort < maxSort) {
             await fireplace.update({ "texture.src": 'modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp', "sort": (maxSort)});
         }
     }
 }
 
-async function ensureMacro(macroName, packId, parentFolderName) {
-    let macro = await game.macros.getName(macroName);
-    if (!macro) {
-        let pack = game.packs.get(packId);
-        if (!pack) {
-            ui.notifications.error(`Cannot find compendium ${packId}!`);
-            return null;
-        }
-        let packMacro = pack.index.getName(macroName);
-        if (!packMacro) {
-            ui.notifications.error(`Cannot find macro ${macroName} compendium ${packId}!`);
-            return null;
-        }
-        let parentFolder = game.folders.getName(parentFolderName);
-        macro = await game.macros.importFromCompendium(pack, packMacro._id, { "folder": parentFolder?.id });
+async function transposeFlags(scene, fireplaceGuid) {
+    let light = scene.lights.find(l => l.getFlag("world", "fireplace") == fireplaceGuid);
+    let sound = scene.sounds.find(s => s.getFlag("world", "fireplace") == fireplaceGuid);
+    if (light) {
+        await light.setFlag(sdndConstants.MODULE_ID, "fireplace", fireplaceGuid);
+        await light.unsetFlag("world", "fireplace");
     }
-    return macro;
+    if (sound) {
+        await sound.setFlag(sdndConstants.MODULE_ID, "fireplace", fireplaceGuid);
+        await sound.unsetFlag("world", "fireplace");
+    }
 }
 
 function getTileBounds(targetTile) {
@@ -117,8 +127,8 @@ function getTileBounds(targetTile) {
 }
 
 function createFireplace(fpName, tile, light, sound, macro) {
-    light.setFlag("world", "fireplace", fpName);
-    sound.setFlag("world", "fireplace", fpName);
+    light.setFlag(sdndConstants.MODULE_ID, "fireplace", fpName);
+    sound.setFlag(sdndConstants.MODULE_ID, "fireplace", fpName);
     tile.document.update({
         "texture": {
             "src": "modules/stroud-dnd-helpers/images/icons/Fireplace_Icon.webp"

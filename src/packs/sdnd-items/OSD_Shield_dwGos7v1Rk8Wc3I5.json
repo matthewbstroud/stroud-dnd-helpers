@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "NvpAUWnaWN7soZGX",
+  "name": "OSD Shield",
+  "color": null,
+  "sorting": "a",
+  "_id": "dwGos7v1Rk8Wc3I5",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "dnd5e",
+    "systemVersion": "5.2.4",
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
+    "modifiedTime": 1775433801539
+  },
+  "_key": "!folders!dwGos7v1Rk8Wc3I5"
+}
