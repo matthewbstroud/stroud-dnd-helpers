@@ -1,3 +1,6 @@
+# v13.5.9
+# New Features
+- Icon of Ravenloft.
 # v13.5.8
 # New Features
 - Default Door States.
@@ -755,6 +758,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
