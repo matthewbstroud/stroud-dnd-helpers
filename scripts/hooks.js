@@ -1,4 +1,4 @@
-import { backpacks } from './backpacks/backpacks.js';
+import { backpacks, createBackpackHeaderButton } from './backpacks/backpacks.js';
 import { createActorHeaderButton, createItemHeaderButton } from './actors/actors.js';
 import { createWeaponHeaderButton } from './items/items.js';
 import { CompendiumHooks } from './hookHandlers/compendiumHandlers.js';
@@ -16,9 +16,9 @@ export let hooks = {
         await FolderHooks.init();
     },
     "ready": async function _ready() {
+        Hooks.on("getHeaderControlsApplicationV2", insertHeaderButtons);
         if (game.user?.isGM) {
             Hooks.on('preCreateTile', onPreCreateTile);
-            Hooks.on("getHeaderControlsApplicationV2", insertHeaderButtons);
             await combat.hooks.ready();
             await toolsHandler.Init();
             let setting = game.settings.settings.get("stroud-dnd-helpers.CombatPlayList");
@@ -44,7 +44,9 @@ function insertHeaderButtons(app, buttons) {
         return;
     }
     if (app.document instanceof foundry.documents.BaseItem) {
-        return createWeaponHeaderButton(app, buttons);
+        createWeaponHeaderButton(app, buttons);
+        createBackpackHeaderButton(app, buttons);
+        return;
     }
 }
 
