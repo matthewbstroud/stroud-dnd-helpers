@@ -1,3 +1,6 @@
+# v13.5.10
+# Bug Fixes
+- Fix bug where you cannot set primary backpack in V13.
 # v13.5.9
 # New Features
 - Icon of Ravenloft.
@@ -758,6 +761,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

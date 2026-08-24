@@ -56,7 +56,6 @@ export let backpacks = {
             if (!(game.modules.find(m => m.id === "item-piles")?.active ?? false)) {
                 return;
             }
-            Hooks.on('getItemSheet5eHeaderButtons', createBackpackHeaderButton);
             Hooks.on('item-piles-preTransferItems', ipPreTransferItemsHandler);
             Hooks.on('item-piles-preRightClickItem', ipPreRightClickHandler);
             Hooks.on('item-piles-preDropItemDetermined', ipPreDropItemDeterminedHandler);
@@ -138,7 +137,7 @@ function itemHandler(item, scope, action) {
         return;
     }
     let actor = item?.parent;
-    if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
+    if (!(actor instanceof foundry.documents.BaseActor)) {
         return;
     }
     let dt = actor.getFlag("item-piles", "data.type");
@@ -302,7 +301,7 @@ function ipPreDropItemDeterminedHandler(source, target, itemData, position) {
         gmFunctions.dropBackpack(activeToken.id, itemData.item._id, game.user.uuid);
         return false;
     }
-    if (source instanceof dnd5e.documents.Actor5e) {
+    if (source instanceof foundry.documents.BaseActor) {
         let sceneTokens = canvas.scene.tokens.filter(t => t.actor?.id == source.id);
         let backpackId = source.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
         if (itemData.item._id == backpackId) {
@@ -338,7 +337,7 @@ function checkItemParentWeight(item, scope) {
         return;
     }
     let actor = item?.parent;
-    if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
+    if (!(actor instanceof foundry.documents.BaseActor)) {
         return;
     }
     if (actor.getFlag("item-piles", "data.type") || actor?.type != "character") {
@@ -358,7 +357,7 @@ export async function gmCheckActorWeight(actorUuid, force, scope) {
     }
     let actor = actorUuid;
 
-    if (!(actor instanceof dnd5e.documents.Actor5e)) {
+    if (!(actor instanceof foundry.documents.BaseActor)) {
         actor = await fromUuid(actorUuid);
     }
     if (!actor) {
@@ -829,39 +828,57 @@ export async function gmPickupBackpack(pileUuid, targetContainerId) {
 }
 
 export function createBackpackHeaderButton(config, buttons) {
-    if (config.object instanceof Item) {
-        let item = config.object;
-        if (item.type != "container" || mounts.isMount(item)) {
+    if (!(game.modules.find(m => m.id === "item-piles")?.active ?? false)) {
+        return;
+    }
+
+    if (!(config.document instanceof Item)) {
+        return;
+    }
+
+    const item = config.document;
+    if (item.type != "container" || mounts.isMount(item)) {
+        return;
+    }
+
+    const actor = item?.parent;
+    if (!(actor instanceof foundry.documents.BaseActor)) {
+        return;
+    }
+
+    const label = game.i18n.localize("sdnd.primary");
+    const primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+    const icon = (primaryBackpackId && item.id == primaryBackpackId)
+        ? 'fa-solid fa-star'
+        : 'fa-light fa-star';
+
+    const togglePrimaryBackpack = async (event) => {
+        const currentPrimaryId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+        const iconEl = event?.currentTarget?.querySelector?.("i");
+
+        if (currentPrimaryId && item.id == currentPrimaryId) {
+            await actor.unsetFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
+            ui.notifications.notify(`${item.name} is no longer your primary container.`);
+            if (iconEl) {
+                iconEl.classList.remove("fa-solid");
+                iconEl.classList.add("fa-light");
+            }
             return;
         }
 
-        let actor = item?.parent;
-        if (!actor || !actor instanceof dnd5e.documents.Actor5e) {
-            return;
+        await actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", item.id);
+        ui.notifications.notify(`${item.name} is your primary container.`);
+        if (iconEl) {
+            iconEl.classList.remove("fa-light");
+            iconEl.classList.add("fa-solid");
         }
-        let label = game.i18n.localize("sdnd.primary");
-        let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
-        let icon = 'fa-light fa-star';
-        if (primaryBackpackId && item.id == primaryBackpackId) {
-            icon = 'fa-solid fa-star';
-        }
-        buttons.unshift({
-            class: 'stroudDnD',
-            icon: icon,
-            label: label,
-            onclick: () => {
-                let primaryBackpackId = actor.getFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
-                if (primaryBackpackId && item.id == primaryBackpackId) {
-                    actor.unsetFlag(sdndConstants.MODULE_ID, "PrimaryBackpack");
-                    ui.notifications.notify(`${item.name} is no longer your primary container.`);
-                    $('a.header-button.control.stroudDnD').find('i.fa-solid.fa-star').removeClass("fa-solid").addClass("fa-light");
-                }
-                else {
-                    actor.setFlag(sdndConstants.MODULE_ID, "PrimaryBackpack", item.id);
-                    ui.notifications.notify(`${item.name} is your primary container.`);
-                    $('a.header-button.control.stroudDnD').find('i.fa-light.fa-star').removeClass("fa-light").addClass("fa-solid");
-                }
-            }
-        });
-    }
+    };
+
+    buttons.unshift({
+        class: 'stroudDnD',
+        icon,
+        label,
+        onclick: togglePrimaryBackpack,
+        onClick: togglePrimaryBackpack
+    });
 }
