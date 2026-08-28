@@ -50,6 +50,18 @@ export let sdndSettings = {
 		},
 		'getValue': () =>  getModuleSettingValue('PoisonDCModifier')
 	},
+	'ProtectionOfTalismanEnabled': {
+		'config': {
+			'name': 'Enable Protection of the Talisman Automation',
+			'hint': 'Prompts eligible actors to add 1d4 to saving throws using Protection of the Talisman.',
+			'scope': 'world',
+			'config': true,
+			'type': Boolean,
+			'default': false,
+			'requiresReload': true
+		},
+		'getValue': () => getModuleSettingValue('ProtectionOfTalismanEnabled')
+	},
 	'CombatPlayList': {
 		'config': {
 			'name': 'Select Your Combat Music Playlist',

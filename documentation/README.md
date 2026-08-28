@@ -51,6 +51,7 @@ A Foundry VTT module that provides a collection of tools and utilities to enhanc
 
 ### **Item & Equipment Systems**
 - [Bane Weapons](items/bane-weapons.md) - Create weapons with bonus damage vs. specific creature types
+- [Protection of the Talisman](items/protection-of-the-talisman.md) - Offer a `1d4` bonus on eligible saving throws and spend an invocation use when accepted
 
 ### **Scene & Token Management**
 - [Tagging System](tagging.md) - Organize scene elements with custom categorization

@@ -88,6 +88,29 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("createEmbeddedDocuments", uuid, documentType, documentData)
         );
     },
+    "spendItemUse": async function _spendItemUse(actorUuid, itemId) {
+        let actor = await gmFunctions.getTokenOrActor(actorUuid);
+        let item = actor?.items?.get(itemId);
+        if (!item) {
+            return false;
+        }
+        return run(
+            async () => {
+                const uses = item.system?.uses;
+                const spent = Number(uses?.spent ?? 0);
+                if (!uses?.max) {
+                    return false;
+                }
+                const maximum = await new Roll(String(uses.max), actor.getRollData()).evaluate({ allowInteractive: false });
+                if (maximum.total <= spent) {
+                    return false;
+                }
+                await item.update({ "system.uses.spent": spent + 1 });
+                return true;
+            },
+            async () => socket.executeAsGM("spendItemUse", actorUuid, itemId)
+        );
+    },
     "checkActorWeight": async function _checkActorWeight(actorUuid, scope) {
         return run(
             async () => await gmCheckActorWeight(actorUuid, false, scope),

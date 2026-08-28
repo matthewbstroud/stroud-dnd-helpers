@@ -1,3 +1,7 @@
+# v13.5.11
+# New Features
+- Add automation for Eldritch Invocations: Protection of the Talisman
+  - Enabled in SDnD settings.
 # v13.5.10
 # Bug Fixes
 - Fix bug where you cannot set primary backpack in V13.
@@ -761,6 +765,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
