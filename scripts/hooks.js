@@ -8,7 +8,9 @@ import { actors } from './actors/actors.js';
 import { harvesting } from './crafting/harvesting.js';
 import { toolsHandler } from './hookHandlers/toolsHandler.js';
 import { ringOfBlooming } from './items/trinkets/ringOfBlooming.js';
+import { protectionOfTalisman } from './items/trinkets/protectionOfTalisman.js';
 import { customFilters } from './customFilters.js';
+import { sdndSettings } from './settings.js';
 
 export let hooks = {
     "init": async function _init() {
@@ -16,6 +18,9 @@ export let hooks = {
         await FolderHooks.init();
     },
     "ready": async function _ready() {
+        if (sdndSettings.ProtectionOfTalismanEnabled.getValue()) {
+            protectionOfTalisman.init();
+        }
         Hooks.on("getHeaderControlsApplicationV2", insertHeaderButtons);
         if (game.user?.isGM) {
             Hooks.on('preCreateTile', onPreCreateTile);
