@@ -228,7 +228,7 @@
     }
   },
   "effects": [],
-  "folder": null,
+  "folder": "ZM1NlTe3AamhqyuO",
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
@@ -237,13 +237,13 @@
     "systemId": "dnd5e",
     "systemVersion": "5.2.4",
     "createdTime": 1779547872081,
-    "modifiedTime": 1779547872145,
-    "lastModifiedBy": null
+    "modifiedTime": 1788724145555,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
     "default": 0
   },
   "_id": "sdndfeatabjuren1",
-  "sort": 300000,
+  "sort": 100000,
   "_key": "!items!sdndfeatabjuren1"
 }
