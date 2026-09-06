@@ -1,5 +1,5 @@
 {
-  "name": "Torch",
+  "name": "Torch (unlit)",
   "type": "consumable",
   "img": "icons/sundries/lights/torch-brown.webp",
   "system": {
@@ -261,7 +261,7 @@
     "systemId": "dnd5e",
     "systemVersion": "5.2.4",
     "createdTime": 1777729389349,
-    "modifiedTime": 1777730703073,
+    "modifiedTime": 1788103195228,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {

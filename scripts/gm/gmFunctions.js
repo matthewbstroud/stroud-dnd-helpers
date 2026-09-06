@@ -359,6 +359,21 @@ export let gmFunctions = {
             async () => await socket.executeAsGM("createBloom", tokenUuid, spellLevel)
         );
     },
+    "refreshFogForScene": async function _refreshFogForScene(sceneId) {
+        if (canvas?.scene?.id != sceneId) {
+            return;
+        }
+        if (canvas.fog?.reset) {
+            await canvas.fog.reset();
+            return;
+        }
+        canvas.perception?.update({
+            refreshVision: true,
+            refreshLighting: true,
+            refreshTiles: true,
+            forceUpdateFog: true
+        }, true);
+    },
     "resetFogOfWar": async function _resetFogOfWar(sceneId) {
         if (!sceneId) {
             return 0;
@@ -380,14 +395,26 @@ function selectToken(tokenId) {
 }
 
 async function resetFogOfWar(sceneId) {
-    if (!sceneId) {
+    const scene = game.scenes.get(sceneId);
+    if (!scene) {
+        ui.notifications.error(`Cannot find scene with id ${sceneId}.`);
         return 0;
     }
 
-    // Match the built-in Lighting control behavior: emit the resetFog socket event.
-    // This clears fog exploration for all users for the target scene, including offline users.
-    game.socket.emit("resetFog", sceneId);
-    return 1;
+    const explorationCollection = game.collections?.get("FogExploration") ?? [];
+    const fogIds = explorationCollection
+        .filter(f => (f.sceneId ?? f.scene?.id ?? f.scene) == sceneId)
+        .map(f => f.id);
+
+    if (typeof scene.reset === "function") {
+        await scene.reset();
+    }
+    else if (fogIds.length > 0) {
+        await FogExploration.deleteDocuments(fogIds);
+    }
+
+    await socket.executeForEveryone("refreshFogForScene", sceneId);
+    return fogIds.length;
 }
 
 export async function importFromCompedium(type, packId, packItemId, parentFolderName) {

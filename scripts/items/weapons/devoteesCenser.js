@@ -34,7 +34,7 @@ const devoteesCenserUtil = {
 
         healRoll.toMessage({
             user: game.user._id,
-            speaker: ChatMessage._getSpeakerFromActor({actor: target}),
+            speaker: ChatMessage.getSpeaker({actor: target}),
             flavor: "Devotee's Censer Healing Incense"
         });
         // Check if new roll is higher than old temp HP
