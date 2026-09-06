@@ -293,13 +293,17 @@
           "magicEffect": false,
           "magicDamage": false,
           "noConcentrationCheck": false,
-          "autoCEEffects": "default"
+          "autoCEEffects": "default",
+          "triggeredActivityConsume": true,
+          "triggeredActivityConfigure": true,
+          "skipConcentrationCheck": false
         },
         "isOverTimeFlag": false,
         "overTimeProperties": {
           "saveRemoves": true,
           "preRemoveConditionText": "",
-          "postRemoveConditionText": ""
+          "postRemoveConditionText": "",
+          "rollAs": "target"
         },
         "otherActivityId": "",
         "attackMode": "oneHanded",
@@ -396,7 +400,11 @@
       "infused": false
     },
     "core": {},
-    "dnd5e": {}
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
   },
   "effects": [],
   "img": "modules/stroud-dnd-helpers/images/icons/devotees_censer.jpg",
@@ -407,11 +415,11 @@
   },
   "_stats": {
     "systemId": "dnd5e",
-    "systemVersion": "5.2.4",
+    "systemVersion": "5.2.5",
     "coreVersion": "13.351",
     "createdTime": 1708881923741,
-    "modifiedTime": 1767212264570,
-    "lastModifiedBy": "wXvVWKeDyStv3bwy",
+    "modifiedTime": 1788723670919,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

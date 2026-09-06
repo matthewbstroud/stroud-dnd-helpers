@@ -1,86 +1,40 @@
 {
-  "folder": "gUZYCDktNDjtQr59",
-  "name": "Blight Icor",
+  "name": "Torch (unlit)",
   "type": "consumable",
-  "img": "modules/stroud-dnd-helpers/images/items/crafting_ingredient.webp",
+  "img": "icons/sundries/lights/torch-brown.webp",
   "system": {
     "description": {
-      "value": "<p><span style=\"font-family:Arial\">The sickly green liqueur harbors potent psychedelic properties. Provided it is neither a construct nor undead, a creature subjected to a dose of blight ichor gains advantage on Intelligence and Wisdom checks, as well as vulnerability to psychic damage, for 1 hour. For each dose of blight ichor consumed, the creature must succeed on a DC 15 Constitution saving throw or become poisoned for 1d6 hours and suffer the effects of a confusion spell for 1 minute. An undead creature subjected to a dose of blight ichor gains advantage on all Dexterity checks and is immune to the frightened condition for 1 hour.</span></p>",
+      "value": "<p>A torch burns for 1 hour, providing bright light in a 20-foot radius and dim light for an additional 20 feet. If you make a melee attack with a burning torch and hit, it deals 1 fire damage.</p>",
       "chat": ""
     },
     "source": {
+      "custom": "",
+      "book": "SRD 5.1",
+      "page": "",
+      "license": "CC-BY-4.0",
       "revision": 1,
       "rules": "2014"
     },
-    "identified": true,
-    "unidentified": {
-      "description": "<p><span style=\"font-family:Arial\">Green Slime on the Side of a Tree</span></p>"
-    },
-    "container": null,
     "quantity": 1,
     "weight": {
-      "value": 0,
+      "value": 1,
       "units": "lb"
     },
     "price": {
-      "value": 0,
-      "denomination": "gp"
+      "value": 1,
+      "denomination": "cp"
     },
-    "rarity": "uncommon",
     "attunement": "",
     "equipped": false,
-    "activation": {
-      "type": "action",
-      "cost": 1,
-      "condition": ""
-    },
-    "duration": {
-      "value": "1",
-      "units": "minute"
-    },
-    "cover": null,
-    "crewed": false,
-    "target": {
-      "value": null,
-      "width": null,
-      "units": "",
-      "type": "self",
-      "prompt": true
-    },
-    "range": {
-      "value": null,
-      "long": null,
-      "units": "self"
-    },
+    "rarity": "",
+    "identified": true,
     "uses": {
-      "value": 1,
       "max": "1",
-      "per": "charges",
-      "recovery": [],
-      "prompt": true,
       "autoDestroy": true,
-      "spent": 0
-    },
-    "consume": {
-      "type": "",
-      "target": null,
-      "amount": null,
-      "scale": false
-    },
-    "ability": "",
-    "actionType": "util",
-    "attack": {
-      "bonus": "",
-      "flat": false
-    },
-    "chatFlavor": "",
-    "critical": {
-      "threshold": null,
-      "damage": ""
+      "spent": 0,
+      "recovery": []
     },
     "damage": {
-      "parts": [],
-      "versatile": "",
       "base": {
         "number": null,
         "denomination": null,
@@ -94,23 +48,21 @@
       },
       "replace": false
     },
-    "formula": "",
-    "save": {
-      "ability": "",
-      "dc": null,
-      "scaling": "spell"
-    },
-    "summons": null,
     "type": {
-      "value": "potion",
+      "value": "trinket",
       "subtype": ""
     },
-    "magicalBonus": null,
+    "unidentified": {
+      "description": ""
+    },
+    "container": null,
     "properties": [],
+    "magicalBonus": null,
+    "attuned": false,
     "activities": {
       "dnd5eactivity000": {
         "_id": "dnd5eactivity000",
-        "type": "utility",
+        "type": "summon",
         "activation": {
           "type": "action",
           "value": 1,
@@ -141,7 +93,7 @@
         "duration": {
           "concentration": false,
           "value": "1",
-          "units": "minute",
+          "units": "inst",
           "special": "",
           "override": false
         },
@@ -162,8 +114,8 @@
             "units": "ft"
           },
           "affects": {
-            "count": "",
-            "type": "self",
+            "count": "40",
+            "type": "",
             "choice": false,
             "special": ""
           },
@@ -175,11 +127,27 @@
           "max": "",
           "recovery": []
         },
-        "roll": {
-          "formula": "",
-          "name": "",
-          "prompt": false,
-          "visible": false
+        "bonuses": {
+          "ac": "",
+          "hd": "",
+          "hp": "",
+          "attackDamage": "",
+          "saveDamage": "",
+          "healing": ""
+        },
+        "creatureSizes": [],
+        "creatureTypes": [],
+        "match": {
+          "ability": "str",
+          "attacks": false,
+          "proficiency": false,
+          "saves": false,
+          "disposition": false
+        },
+        "profiles": [],
+        "summon": {
+          "mode": "",
+          "prompt": false
         },
         "sort": 0,
         "useConditionText": "",
@@ -202,7 +170,6 @@
           "triggeredActivityConditionText": "",
           "triggeredActivityTargets": "targets",
           "triggeredActivityRollAs": "self",
-          "forceDialog": false,
           "confirmTargets": "default",
           "autoTargetType": "any",
           "autoTargetAction": "default",
@@ -223,19 +190,15 @@
           "magicEffect": false,
           "magicDamage": false,
           "noConcentrationCheck": false,
-          "autoCEEffects": "default",
-          "triggeredActivityConsume": true,
-          "triggeredActivityConfigure": true,
-          "skipConcentrationCheck": false
+          "skipConcentrationCheck": false,
+          "autoCEEffects": "default"
         },
         "isOverTimeFlag": false,
         "overTimeProperties": {
           "saveRemoves": true,
           "preRemoveConditionText": "",
-          "postRemoveConditionText": "",
-          "rollAs": "target"
+          "postRemoveConditionText": ""
         },
-        "otherActivityId": "none",
         "flags": {},
         "visibility": {
           "level": {},
@@ -243,18 +206,25 @@
           "requireIdentification": false,
           "requireMagic": false
         },
-        "otherActivityAsParentType": true
+        "friendlySummon": false
       }
     },
-    "identifier": "blight-icor",
-    "attuned": false
+    "identifier": "torch"
   },
   "effects": [],
-  "ownership": {
-    "default": 0,
-    "6yhz13iFYYklKtgA": 3
-  },
+  "folder": "eXKC0aUuYVn2fN62",
   "flags": {
+    "midi-qol": {
+      "fumbleThreshold": null,
+      "AoETargetType": "any",
+      "AoETargetTypeIncludeSelf": true,
+      "autoTarget": "default",
+      "rollAttackPerTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "itemCondition": "",
+      "effectCondition": "",
+      "onUseMacroName": "[postActiveEffects]function.stroudDnD.lighting.consumables.lightableItemMacro"
+    },
     "midiProperties": {
       "confirmTargets": "default",
       "autoFailFriendly": false,
@@ -265,33 +235,40 @@
       "magiceffect": false,
       "noConcentrationCheck": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false
+      "ignoreTotalCover": false,
+      "idr": false,
+      "idi": false,
+      "idv": false,
+      "ida": false
     },
-    "midi-qol": {
-      "rollAttackPerTarget": "default",
-      "itemCondition": "",
-      "effectCondition": "",
-      "onUseMacroName": "[postActiveEffects]function.stroudDnD.plants.BlightIcorItemMacro"
+    "stroud-dnd-helpers": {
+      "lightable": {
+        "litUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.bA7YCEqL7gBif8ay"
+      }
     },
-    "core": {},
     "dnd5e": {
       "riders": {
-        "activity": []
+        "activity": [],
+        "effect": []
       }
     }
   },
   "_stats": {
-    "systemId": "dnd5e",
-    "systemVersion": "5.2.5",
-    "coreVersion": "13.351",
-    "createdTime": 1723518742590,
-    "modifiedTime": 1788723671316,
-    "lastModifiedBy": "6yhz13iFYYklKtgA",
     "compendiumSource": null,
     "duplicateSource": null,
-    "exportSource": null
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "dnd5e",
+    "systemVersion": "5.2.4",
+    "createdTime": 1777729389349,
+    "modifiedTime": 1788103195228,
+    "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
-  "_id": "dGwK6fQFkPRQA5na",
-  "sort": 0,
-  "_key": "!items!dGwK6fQFkPRQA5na"
+  "ownership": {
+    "default": 0,
+    "6yhz13iFYYklKtgA": 3
+  },
+  "_id": "TzVFoMkClM30Awff",
+  "sort": 250000,
+  "_key": "!items!TzVFoMkClM30Awff"
 }

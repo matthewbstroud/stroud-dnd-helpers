@@ -1,10 +1,10 @@
 {
-  "name": "Torch",
-  "type": "consumable",
-  "img": "icons/sundries/lights/torch-brown.webp",
+  "name": "Channel Divinity: Abjure Enemy",
+  "type": "feat",
+  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
   "system": {
     "description": {
-      "value": "<p>A torch burns for 1 hour, providing bright light in a 20-foot radius and dim light for an additional 20 feet. If you make a melee attack with a burning torch and hit, it deals 1 fire damage.</p>",
+      "value": "<p>As an action, you present your holy symbol and speak a prayer of denunciation, using your Channel Divinity. Choose one creature within 60 feet of you that you can see. That creature must make a Wisdom saving throw, unless it is immune to being frightened. Fiends and undead have disadvantage on this saving throw.</p><p>On a failed save, the creature is frightened for 1 minute or until it takes any damage. While frightened, the creature's speed is 0, and it can't benefit from any bonus to its speed.</p><p>On a successful save, the creature's speed is halved for 1 minute or until the creature takes any damage.</p>",
       "chat": ""
     },
     "source": {
@@ -12,57 +12,24 @@
       "book": "SRD 5.1",
       "page": "",
       "license": "CC-BY-4.0",
-      "revision": 1,
-      "rules": "2014"
+      "rules": "2014",
+      "revision": 1
     },
-    "quantity": 1,
-    "weight": {
-      "value": 1,
-      "units": "lb"
-    },
-    "price": {
-      "value": 1,
-      "denomination": "cp"
-    },
-    "attunement": "",
-    "equipped": false,
-    "rarity": "",
-    "identified": true,
     "uses": {
-      "max": "1",
-      "autoDestroy": true,
-      "spent": 0,
-      "recovery": []
-    },
-    "damage": {
-      "base": {
-        "number": null,
-        "denomination": null,
-        "types": [],
-        "custom": {
-          "enabled": false
-        },
-        "scaling": {
-          "number": 1
-        }
-      },
-      "replace": false
+      "max": "",
+      "recovery": [],
+      "spent": 0
     },
     "type": {
-      "value": "trinket",
-      "subtype": ""
+      "value": "class",
+      "subtype": "channelDivinity"
     },
-    "unidentified": {
-      "description": ""
-    },
-    "container": null,
+    "requirements": "Oath of Vengeance",
     "properties": [],
-    "magicalBonus": null,
-    "attuned": false,
     "activities": {
-      "dnd5eactivity000": {
-        "_id": "dnd5eactivity000",
-        "type": "summon",
+      "sdndactabjuren01": {
+        "_id": "sdndactabjuren01",
+        "type": "save",
         "activation": {
           "type": "action",
           "value": 1,
@@ -73,12 +40,9 @@
           "targets": [
             {
               "type": "itemUses",
-              "target": "",
               "value": "1",
-              "scaling": {
-                "mode": "",
-                "formula": ""
-              }
+              "target": "feat:channel-divinity",
+              "scaling": {}
             }
           ],
           "scaling": {
@@ -93,13 +57,14 @@
         "duration": {
           "concentration": false,
           "value": "1",
-          "units": "inst",
-          "special": "",
+          "units": "minute",
+          "special": "or until takes damage",
           "override": false
         },
         "effects": [],
         "range": {
-          "units": "self",
+          "value": "60",
+          "units": "ft",
           "special": "",
           "override": false
         },
@@ -111,11 +76,11 @@
             "size": "",
             "width": "",
             "height": "",
-            "units": "ft"
+            "units": ""
           },
           "affects": {
-            "count": "40",
-            "type": "",
+            "count": "1",
+            "type": "creature",
             "choice": false,
             "special": ""
           },
@@ -127,32 +92,27 @@
           "max": "",
           "recovery": []
         },
-        "bonuses": {
-          "ac": "",
-          "hd": "",
-          "hp": "",
-          "attackDamage": "",
-          "saveDamage": "",
-          "healing": ""
+        "damage": {
+          "onSave": "none",
+          "parts": [],
+          "critical": {
+            "allow": false
+          }
         },
-        "creatureSizes": [],
-        "creatureTypes": [],
-        "match": {
-          "ability": "str",
-          "attacks": false,
-          "proficiency": false,
-          "saves": false,
-          "disposition": false
-        },
-        "profiles": [],
-        "summon": {
-          "mode": "",
-          "prompt": false
+        "save": {
+          "ability": [
+            "wis"
+          ],
+          "dc": {
+            "calculation": "spellcasting",
+            "formula": ""
+          }
         },
         "sort": 0,
         "useConditionText": "",
-        "useConditionReason": "",
         "effectConditionText": "",
+        "name": "",
+        "useConditionReason": "",
         "macroData": {
           "name": "",
           "command": ""
@@ -170,28 +130,28 @@
           "triggeredActivityConditionText": "",
           "triggeredActivityTargets": "targets",
           "triggeredActivityRollAs": "self",
+          "forceDamageDialog": "",
           "confirmTargets": "default",
           "autoTargetType": "any",
           "autoTargetAction": "default",
           "automationOnly": false,
           "otherActivityCompatible": true,
+          "otherActivityAsParentType": true,
           "identifier": "",
           "displayActivityName": false,
           "rollMode": "default",
           "chooseEffects": false,
           "toggleEffect": false,
           "ignoreFullCover": false,
-          "autoConsume": false,
-          "forceConsumeDialog": "default",
-          "forceRollDialog": "default",
-          "forceDamageDialog": "default",
-          "otherActivityAsParentType": true,
           "removeChatButtons": "default",
           "magicEffect": false,
           "magicDamage": false,
           "noConcentrationCheck": false,
-          "skipConcentrationCheck": false,
-          "autoCEEffects": "default"
+          "autoCEEffects": "default",
+          "autoConsume": false,
+          "forceConsumeDialog": "default",
+          "forceRollDialog": "default",
+          "skipConcentrationCheck": false
         },
         "isOverTimeFlag": false,
         "overTimeProperties": {
@@ -199,60 +159,76 @@
           "preRemoveConditionText": "",
           "postRemoveConditionText": ""
         },
-        "flags": {},
+        "otherActivityId": "",
+        "otherActivityAsParentType": true,
+        "friendlySave": "default",
+        "flags": {
+          "region-attacher": {
+            "attachRegionToTemplate": false
+          }
+        },
         "visibility": {
-          "level": {},
+          "level": {
+            "min": null,
+            "max": null
+          },
           "requireAttunement": false,
           "requireIdentification": false,
-          "requireMagic": false
-        },
-        "friendlySummon": false
+          "requireMagic": false,
+          "identifier": ""
+        }
       }
     },
-    "identifier": "torch"
+    "enchant": {},
+    "prerequisites": {
+      "level": null,
+      "items": [],
+      "repeatable": false
+    },
+    "identifier": "channel-divinity-abjure-enemy",
+    "advancement": [],
+    "crewed": false
   },
-  "effects": [],
-  "folder": "eXKC0aUuYVn2fN62",
   "flags": {
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    },
+    "core": {},
     "midi-qol": {
-      "fumbleThreshold": null,
-      "AoETargetType": "any",
-      "AoETargetTypeIncludeSelf": true,
-      "autoTarget": "default",
+      "effectActivation": false,
+      "forceCEOff": true,
+      "forceCEOn": false,
       "rollAttackPerTarget": "default",
-      "removeAttackDamageButtons": "default",
       "itemCondition": "",
       "effectCondition": "",
-      "onUseMacroName": "[postActiveEffects]function.stroudDnD.lighting.consumables.lightableItemMacro"
+      "AoETargetType": "any",
+      "AoETargetTypeIncludeSelf": false,
+      "autoTarget": "default",
+      "removeAttackDamageButtons": "default",
+      "reactionCondition": "",
+      "otherCondition": "",
+      "onUseMacroName": "[preSave]function.stroudDnD.features.AbjureEnemy.itemMacro,[postActiveEffects]function.stroudDnD.features.AbjureEnemy.itemMacro"
     },
     "midiProperties": {
-      "confirmTargets": "default",
+      "nodam": false,
+      "fulldam": false,
+      "halfdam": false,
       "autoFailFriendly": false,
       "autoSaveFriendly": false,
+      "rollOther": false,
       "critOther": false,
       "offHandWeapon": false,
       "magicdam": false,
       "magiceffect": false,
-      "noConcentrationCheck": false,
+      "concentration": false,
       "toggleEffect": false,
-      "ignoreTotalCover": false,
-      "idr": false,
-      "idi": false,
-      "idv": false,
-      "ida": false
-    },
-    "stroud-dnd-helpers": {
-      "lightable": {
-        "litUuid": "Compendium.stroud-dnd-helpers.SDND-Items.Item.bA7YCEqL7gBif8ay"
-      }
-    },
-    "dnd5e": {
-      "riders": {
-        "activity": [],
-        "effect": []
-      }
+      "ignoreTotalCover": false
     }
   },
+  "effects": [],
+  "folder": "ZM1NlTe3AamhqyuO",
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
@@ -260,15 +236,14 @@
     "coreVersion": "13.351",
     "systemId": "dnd5e",
     "systemVersion": "5.2.4",
-    "createdTime": 1777729389349,
-    "modifiedTime": 1777730703073,
+    "createdTime": 1779547872081,
+    "modifiedTime": 1788724145555,
     "lastModifiedBy": "6yhz13iFYYklKtgA"
   },
   "ownership": {
-    "default": 0,
-    "6yhz13iFYYklKtgA": 3
+    "default": 0
   },
-  "_id": "TzVFoMkClM30Awff",
-  "sort": 250000,
-  "_key": "!items!TzVFoMkClM30Awff"
+  "_id": "sdndfeatabjuren1",
+  "sort": 100000,
+  "_key": "!items!sdndfeatabjuren1"
 }

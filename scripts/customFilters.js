@@ -1,7 +1,11 @@
 
 export let customFilters = {
     "prepareSpellListFilters": async function _prepareSpellListFilters() {
-        const sheetClass = dnd5e.applications.actor.BaseActorSheet;
+        const sheetClass = dnd5e.applications?.actor?.BaseActorSheet;
+        if (!sheetClass?.prototype?._prepareSpellsContext) {
+            console.warn("Stroud DnD Helpers | Unable to add the usable spell filter: dnd5e BaseActorSheet._prepareSpellsContext is unavailable.");
+            return;
+        }
         const original = sheetClass.prototype._prepareSpellsContext;
 
         sheetClass.prototype._prepareSpellsContext = async function (context, options) {

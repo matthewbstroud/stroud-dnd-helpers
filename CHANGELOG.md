@@ -1,3 +1,13 @@
+# v13.5.12
+# Compatibility
+- Update dnd5e compatibility metadata for 5.3.3.
+- Replace private ChatMessage speaker API usage and guard the usable spell filter actor-sheet integration.
+# New Features
+- Class Features
+  - Paladin
+    - Channel Divinity: Abjure Enemy
+# Bug Fixes
+- Fix bug description here.
 # v13.5.11
 # New Features
 - Add automation for Eldritch Invocations: Protection of the Talisman
@@ -765,6 +775,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 

@@ -156,17 +156,21 @@
         "unlitImg": "modules/stroud-dnd-helpers/images/items/bullseye_unlit.webp"
       }
     },
-    "dnd5e": {}
+    "dnd5e": {
+      "riders": {
+        "activity": []
+      }
+    }
   },
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
     "coreVersion": "13.351",
     "systemId": "dnd5e",
-    "systemVersion": "5.2.4",
+    "systemVersion": "5.2.5",
     "createdTime": 1730245821261,
-    "modifiedTime": 1767212264469,
-    "lastModifiedBy": "wXvVWKeDyStv3bwy",
+    "modifiedTime": 1788723670806,
+    "lastModifiedBy": "6yhz13iFYYklKtgA",
     "exportSource": null
   },
   "_id": "NkvmfkKCS5AqAR8f",
