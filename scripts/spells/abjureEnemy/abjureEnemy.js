@@ -1,4 +1,5 @@
 import { sdndConstants } from "../../constants.js";
+import { gmFunctions } from "../../gm/gmFunctions.js";
 
 /**
  * Channel Divinity: Abjure Enemy automation for Midi-QOL
@@ -205,7 +206,7 @@ async function handlePostSave(context) {
             }
         };
 
-        await targetActor.createEmbeddedDocuments("ActiveEffect", [effectData]);
+        await gmFunctions.createEffects(targetActor.uuid, [effectData]);
     } else {
         // Successful save: Speed is halved for 1 minute or until takes damage.
         const effectData = {
@@ -260,6 +261,6 @@ async function handlePostSave(context) {
             }
         };
 
-        await targetActor.createEmbeddedDocuments("ActiveEffect", [effectData]);
+        await gmFunctions.createEffects(targetActor.uuid, [effectData]);
     }
 }
