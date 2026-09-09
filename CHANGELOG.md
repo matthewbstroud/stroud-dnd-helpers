@@ -1,3 +1,6 @@
+# v13.5.13
+# Bug Fixes
+- Fix permission issue with Abjure enemy.
 # v13.5.12
 # Compatibility
 - Update dnd5e compatibility metadata for 5.3.3.
@@ -775,6 +778,7 @@ async function applyAdhocDamageDirect(damageType, damageDice, diceCount, allowSa
 - Fixed missing images.
 # v1.0.0: First test release
 - Included all content converted from v9.
+
 
 
 
